@@ -1,0 +1,202 @@
+<div class="main-content" >
+    <div class="container-fluid">
+
+<!-- To REMOVE -->
+    <div  style="padding-top: 10px; padding-bottom: 10px">
+        <div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary" (click)="prev()">PREV</button>
+                    <button type="button" class="btn btn-primary" (click)="clear()">CLEAR</button>
+                    <button type="button" class="btn btn-primary" (click)="next()">NEXT</button>
+                    <button type="button" class="btn btn-primary" *ngIf="isFormsDisabled" (click)="disable()">DISABLE</button>
+                    <button type="button" class="btn btn-primary" *ngIf="!isFormsDisabled" (click)="disable()">ENABLE</button>
+                </div>
+        </div>
+    </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">Ceramic Processing Details</h4>
+                    </div>
+                    <div class="content">
+                        <form [formGroup]="ceramicsForm">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label>Locus Number</label>
+                                        <input type="text" class="form-control" [disabled]="true"  placeholder="46501B/C" formControlName="locusNumber">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Object Group Number</label>
+                                        <input type="number" class="form-control" placeholder="1" formControlName="objectGroupNumber">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Object Number</label>
+                                        <input type="number" class="form-control" placeholder="1" formControlName="objectNumber">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Number of Objects</label>
+                                        <input type="number" class="form-control" placeholder="1" formControlName="numberOfObjects">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Type Number</label>
+                                        <input type="number" class="form-control" placeholder="1" formControlName="typeNumber">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Type Description</label>
+                                        <textarea rows="3" class="form-control" placeholder="Here can be your description" formControlName="typeDescription"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Weight</label>
+                                        <input type="number" class="form-control" placeholder="Kgs" formControlName="weight">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Fabric</label>
+                                        <input type="text" class="form-control" placeholder="NSI" formControlName="fabric">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Diameter</label>
+                                        <input type="number" class="form-control" placeholder="" formControlName="diameter">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Preservation</label>
+                                        <input type="number" class="form-control" placeholder="1" formControlName="preservation">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>SF Coating</label>
+                                        <input type="text" class="form-control" placeholder="uncoated" formControlName="sfCoating">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>SF Treatment</label>
+                                        <input type="number" class="form-control" placeholder="" formControlName="sfTreatment">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Backend</label>
+                                        <input type="text" class="form-control" placeholder="int" formControlName="blackened">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Incised Decoration</label>
+                                        <input type="text" class="form-control" placeholder="" formControlName="incisedDecoration">
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label>Application</label>
+                                        <input type="text" class="form-control" placeholder="" formControlName="application">
+                                    </div>
+                                </div>
+                            </div>      
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Painted Decoration</label>
+                                        <textarea rows="3" class="form-control" placeholder="Here can be your description" formControlName="paintedDecoration"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Comments</label>
+                                        <textarea rows="5" class="form-control" placeholder="Here can be your description" formControlName="comments"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Processed By</label>
+                                        <input type="text" class="form-control" placeholder="int" formControlName="processedBy">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Process Date</label>
+                                        <input type="text" class="form-control" placeholder="" formControlName="processDate">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Entered By</label>
+                                        <input type="text" class="form-control" placeholder="" formControlName="enteredBy">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Entered Date</label>
+                                        <input type="text" class="form-control" placeholder="" formControlName="enteredDate">
+                                    </div>
+                                </div>
+                            </div>
+                                
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>RL Number</label>
+                                        <input type="number" class="form-control" placeholder="int" formControlName="rlNumber">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Sheet Number</label>
+                                        <input type="number" class="form-control" placeholder="int" formControlName="sheetNumber">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-info btn-fill pull-right" (click)="send()">Process Record</button>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

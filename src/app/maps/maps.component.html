@@ -1,0 +1,26 @@
+<div class="main-content">
+
+          <!-- <ngui-map zoom="13" center="40.748817,-73.985428"style="margin-top:60px;height: 100%; width: 100%; position: absolute;top: 0px;
+    left: 0px;
+    background-color: rgb(229, 227, 223); border: '1px solid red'">
+              <marker [position]="[40.748817,-73.985428]"></marker>
+          </ngui-map> -->
+
+
+                <ngui-map 
+                style="margin-top:60px;height: 93.5%; width: 100%; position: absolute;top: 0px;
+                left: 0px;
+                background-color: rgb(229, 227, 223);"
+                  zoom="16" 
+                  center="[29.97833,31.1342543]" 
+                  (mapReady$)="onMapReady($event)"
+                  (mapClick)="onMapClick($event)"
+                  (idle)="onIdle($event)"
+                  mapTypeId="satellite">
+                      <marker *ngFor="let pos of positions" 
+                      [position]="[29.9792458, 31.125332832]"
+                      (initialized$)="onMarkerInit($event)"></marker>
+                  </ngui-map>
+        
+
+</div>
