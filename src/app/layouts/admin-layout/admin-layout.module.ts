@@ -1,3 +1,4 @@
+import { DataTableComponent } from './../../tables/components/data-table/data-table.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -39,7 +40,8 @@ import { CeramicsFormComponent } from '../../processing/components/ceramics-form
     NotificationsComponent,
     UpgradeComponent,
     ProcessingComponent,
-    CeramicsFormComponent
+    CeramicsFormComponent,
+    DataTableComponent
   ]
 })
 

@@ -1,23 +1,35 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
-import { Http } from '@angular/http';
+import { Http, Headers, Response } from '@angular/http';
+import 'rxjs/Rx';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
 
-  public mockData = new Subject<any>();
+  public elephantineData = new Subject<any>();
+  public redNotebookData = new Subject<any>();
 
   constructor(private _http: Http) { }
 
-  public getMockData(): Observable<any> {
-    return this._http.get('src/data/elephant.json');
+  // Get All Data
+  public getElephantineData() {
+    return this._http.get('http://localhost:3090/elephant')
+    .map((response: Response) => {
+      const data = response.json();
+      return data;
+    });
   }
 
-  public getData(): Observable<any> {
-    return this._http.get('http://localhost:3090/elephant');
+  // Get All Data
+  public getRedNotebookData(): Observable<any> {
+    return this._http.get('http://localhost:3090/red')
+    .map((response: Response) => {
+      const data = response.json();
+      return data;
+    });
   }
 
   postElephantData(record) {

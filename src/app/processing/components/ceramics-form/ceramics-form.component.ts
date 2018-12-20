@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
 import { DataService } from 'app/data.service';
 import { Subscription } from 'rxjs';
+import { ElephantModel } from '../models/elephant-model';
 
 @Component({
   selector: 'app-ceramics-form',
@@ -15,14 +16,13 @@ export class CeramicsFormComponent implements OnInit {
   public elephantData: any;
   public currentRecordIndex = 0;
   public isFormsDisabled = true;
-  mockData: Subscription;
+  public mockData: Subscription;
 
-  @Input() public onPrev: any;
+  constructor(public fb: FormBuilder, private _dataService: DataService) {
 
-  constructor(public fb: FormBuilder, private dataService: DataService) {
-    this.mockData = this.dataService.mockData.subscribe(data => {
-      this.processMockData(data);
-    });
+    this._dataService.getElephantineData()
+    .subscribe((elephantData: ElephantModel[]) => this.processMockData(elephantData),
+    (err) => console.log(err));
 
     this.ceramicsForm = fb.group({
       locusNumber: null,
@@ -49,32 +49,20 @@ export class CeramicsFormComponent implements OnInit {
       enteredDate: null,
       rlNumber: null,
       sheetNumber: null
-    })
-
-    this.send()
-
-
+    });
   }
 
   ngOnInit() {
-    this.getMockData();
+
   }
 
   processMockData(data: any[]) {
     this.elephantData = data;
-    console.log(this.elephantData)
     this.loadRecord(this.currentRecordIndex);
   }
 
-  getMockData() {
-    this.mockData = this.dataService.getMockData().subscribe(data => {
-      const tmpData = JSON.parse(data._body);
-      this.dataService.mockData.next(tmpData);
-    })
-  }
-
   send() {
-    this.dataService.postElephantData(this.ceramicsForm.value);
+    this._dataService.postElephantData(this.ceramicsForm.value);
   }
 
   loadRecord(index) {

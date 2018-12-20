@@ -1,3 +1,4 @@
+import { DataTableService } from './components/data-table/data-table.service';
 import { Component, OnInit } from '@angular/core';
 
 declare interface TableData {
@@ -8,7 +9,8 @@ declare interface TableData {
 @Component({
   selector: 'app-tables',
   templateUrl: './tables.component.html',
-  styleUrls: ['./tables.component.css']
+  styleUrls: ['./tables.component.css'],
+  providers: [DataTableService]
 })
 export class TablesComponent implements OnInit {
     public tableData1: TableData;
