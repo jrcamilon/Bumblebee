@@ -1,14 +1,15 @@
 export interface ElephantModel {
-    locusNumber: string;
-    objectGroupNumber: string;
-    objectNumber: string;
+    locusNum: any;
+    id: any;
+    objectGroupNum: string;
+    objectNum: string;
     numberOfObjects: string;
     typeDescription: string;
-    typeNumber: string;
+    typeNum: string;
     weight: string;
     fabric: string;
     diameter: string;
-    preservation:  string;
+    preservations:  string;
     sfCoating: string;
     sfTreatment: string;
     blackened:  string;
@@ -18,9 +19,9 @@ export interface ElephantModel {
     comments: string;
     photo: string;
     processedBy: string;
-    processDate: string;
+    processedDate: string;
     enteredBy: string;
     enteredDate: string;
-    rlNumber: string;
-    sheetNumber: string;
+    rlNum: string;
+    sheetNum: string;
 }

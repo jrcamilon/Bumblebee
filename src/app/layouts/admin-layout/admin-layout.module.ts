@@ -1,3 +1,6 @@
+
+import { LoadingComponent } from './../../shared/loading/loading.component';
+import { DataGridComponent } from './../../shared/grid/grid.component';
 import { DataTableComponent } from './../../tables/components/data-table/data-table.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -21,6 +24,15 @@ import { ProcessingComponent } from '../../processing/processing.component';
 import { CeramicsFormComponent } from '../../processing/components/ceramics-form/ceramics-form.component';
 
 
+import { ChartsModule } from '@progress/kendo-angular-charts';
+import { GridModule } from '@progress/kendo-angular-grid';
+
+import { AgmCoreModule } from '@agm/core';
+import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
+
+import 'hammerjs';
+
+
 @NgModule({
   imports: [
     CommonModule,
@@ -28,7 +40,11 @@ import { CeramicsFormComponent } from '../../processing/components/ceramics-form
     FormsModule,
     ReactiveFormsModule,
     LbdModule,
-    NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyDFRoFDXtk-oTtHGvxEebGS_Bl8TQABdAM'})
+    NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyDFRoFDXtk-oTtHGvxEebGS_Bl8TQABdAM'}),
+    ChartsModule,
+    GridModule,
+    AgmCoreModule.forRoot({apiKey: 'AIzaSyDFRoFDXtk-oTtHGvxEebGS_Bl8TQABdAM'}),
+    AgmJsMarkerClustererModule
   ],
   declarations: [
     HomeComponent,
@@ -41,7 +57,9 @@ import { CeramicsFormComponent } from '../../processing/components/ceramics-form
     UpgradeComponent,
     ProcessingComponent,
     CeramicsFormComponent,
-    DataTableComponent
+    DataTableComponent,
+    DataGridComponent,
+    LoadingComponent
   ]
 })
 

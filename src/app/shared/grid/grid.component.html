@@ -1,0 +1,34 @@
+<div *ngIf="loading">
+  <app-loading></app-loading>
+</div>
+
+<div class="grid-container">
+    <kendo-grid
+    *ngIf="!loading"
+    [kendoGridBinding]="data"
+    [pageSize]="50"
+    [pageable]="true"
+    [sortable]="true"
+    [filterable]="true"
+    [height]="500"
+    [columnMenu]="true"
+    [selectable]="true">
+
+    <kendo-grid-column field="locusNum" title="Locus Number" [width]="130" ></kendo-grid-column>
+    <kendo-grid-column field="objectGroupNum" title="Object Group Num" [width]="120"></kendo-grid-column>
+    <kendo-grid-column field="typeNum" title="Type Num" [width]="120"></kendo-grid-column>
+    <kendo-grid-column field="Category.comments" title="Comments"></kendo-grid-column>
+
+        <ng-template kendoGridDetailTemplate let-dataItem>
+            <section *ngIf="dataItem.Category">
+            <p class="category-item"><strong>Type Description:</strong> {{dataItem.typeDescription}} units</p>
+            <p class="category-item"><strong>Painted Decoration:</strong> {{dataItem.paintedDecoration}} units</p>
+            <p class="category-item"><strong>SF Coating:</strong> {{dataItem.paintedDecoration}} units</p>
+            <p class="category-item"><strong>Painted Decoration:</strong> {{dataItem.paintedDecoration}}</p>
+            <p class="category-item"><strong>Comments:</strong> {{dataItem.comments}}</p>
+            </section>
+        </ng-template>
+    </kendo-grid>
+
+</div>
+

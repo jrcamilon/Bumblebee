@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { DataService } from 'app/data.service';
+import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy, PopStateEvent } from '@angular/common';
 import 'rxjs/add/operator/filter';
 import { NavbarComponent } from '../../shared/navbar/navbar.component';
@@ -12,15 +13,23 @@ import { Observable } from 'rxjs';
   templateUrl: './admin-layout.component.html',
   styleUrls: ['./admin-layout.component.scss']
 })
-export class AdminLayoutComponent implements OnInit, AfterViewInit {
+export class AdminLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
   private _router: Subscription;
   private lastPoppedUrl: string;
   private yScrollStack: number[] = [];
+  public data: any;
 
-  constructor( public location: Location, private router: Router) {}
+
+  constructor( public location: Location, private router: Router, private _ds: DataService) {
+
+  }
+
+  ngOnDestroy() {
+  }
 
   ngOnInit() {
-    console.log(this.router)
+
+    // console.log(this.router)
       const isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
 
       if (isWindows && !document.getElementsByTagName('body')[0].classList.contains('sidebar-mini')) {
@@ -59,6 +68,7 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
           ps = new PerfectScrollbar(elemSidebar);
       }
   }
+
   ngAfterViewInit() {
       this.runOnRouteChange();
   }

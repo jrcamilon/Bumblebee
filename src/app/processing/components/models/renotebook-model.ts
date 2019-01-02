@@ -25,3 +25,5 @@ export interface RedNotebookModel {
     date: string;
     specialNotes: string;
 }
+
+

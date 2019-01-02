@@ -21,7 +21,11 @@ export class CeramicsFormComponent implements OnInit {
   constructor(public fb: FormBuilder, private _dataService: DataService) {
 
     this._dataService.getElephantineData()
-    .subscribe((elephantData: ElephantModel[]) => this.processMockData(elephantData),
+    .subscribe((elephantData: ElephantModel[]) => {
+      console.log(elephantData);
+      this.processMockData(elephantData)
+      this._dataService.elephantineData.next(elephantData);
+    },
     (err) => console.log(err));
 
     this.ceramicsForm = fb.group({

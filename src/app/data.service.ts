@@ -1,7 +1,8 @@
+import { GridDataService } from './shared/grid/grid-data.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
-import { Http, Headers, Response } from '@angular/http';
+import { Http, Response } from '@angular/http';
 import 'rxjs/Rx';
 
 @Injectable({
@@ -15,20 +16,20 @@ export class DataService {
   constructor(private _http: Http) { }
 
   // Get All Data
-  public getElephantineData() {
+  public getElephantineData(): Observable<any> {
     return this._http.get('http://localhost:3090/elephant')
     .map((response: Response) => {
-      const data = response.json();
-      return data;
-    });
+      const tmpData = response.json();
+      return tmpData;
+    })
   }
 
   // Get All Data
   public getRedNotebookData(): Observable<any> {
     return this._http.get('http://localhost:3090/red')
     .map((response: Response) => {
-      const data = response.json();
-      return data;
+      const tmpData = response.json();
+      return tmpData;
     });
   }
 

@@ -1,25 +1,26 @@
+import { DataService } from 'app/data.service';
 import { Component, OnInit } from '@angular/core';
 import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
 
-     constructor(public location: Location) {}
+    constructor(public location: Location) {}
 
-    ngOnInit(){
+    ngOnInit() {
+
     }
 
-    isMap(path){
-      var titlee = this.location.prepareExternalUrl(this.location.path());
+    isMap (path) {
+      let titlee = this.location.prepareExternalUrl(this.location.path());
       titlee = titlee.slice( 1 );
-      if(path == titlee){
+      if (path === titlee) {
         return false;
-      }
-      else {
+      } else {
         return true;
       }
     }

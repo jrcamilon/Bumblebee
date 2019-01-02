@@ -5,5 +5,9 @@
 
 export const environment = {
   production: false,
-  API_DEV_LOCAL: 'http://localhost:3090'
+  API_DEV_LOCAL: 'http://localhost:3090',
+  ENDPOINTS: {
+    elephantine: '/elephant',
+    rednotebook: '/red'
+  }
 };
