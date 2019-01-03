@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 import { LegendItem, ChartType } from '../lbd/lbd-chart/lbd-chart.component';
 import * as Chartist from 'chartist';
+import { DataService } from 'app/data.service';
 
 @Component({
   selector: 'app-home',
@@ -24,9 +25,10 @@ export class HomeComponent implements OnInit {
     public activityChartOptions: any;
     public activityChartResponsive: any[];
     public activityChartLegendItems: LegendItem[];
-  constructor() { }
+  constructor(private _ds: DataService) { }
 
   ngOnInit() {
+      this.runQueries();
       this.emailChartType = ChartType.Pie;
       this.emailChartData = {
         labels: ['62%', '32%', '6%'],
@@ -107,6 +109,64 @@ export class HomeComponent implements OnInit {
       ];
 
 
-    }
+  }
+
+  runQueries(): void {
+    this.getTotalWeightPerFabric();
+    this.getCountOfWeightPerFabric();
+    this.getPercentOfDiagnostics();
+    this.getPercentOfFireBlackenedExt();
+    this.getCountOfFireBlackenedExt();
+    this.getPercentOfFireBlackenedInt();
+    this.getCountOfFireBlackenedInt();
+    this.getPercentOfFireBlackenedIntExt();
+    this.getCountOfFireBlackenedIntExt();
+  }
+  getTotalWeightPerFabric(): void {
+    this._ds.getTotalWeightPerFabric().subscribe(data => {
+      console.log(data);
+    });
+  }
+  getCountOfWeightPerFabric(): void {
+    this._ds.getCountOfWeightPerFabric().subscribe(data => {
+      console.log(data);
+    });
+  }
+  getPercentOfDiagnostics(): void {
+    this._ds.getPercentOfDiagnostics().subscribe(data => {
+      console.log(data);
+    });
+  }
+  getPercentOfFireBlackenedExt(): void {
+    this._ds.getPercentOfFireBlackenedExt().subscribe(data => {
+      console.log(data);
+    });
+  }
+  getCountOfFireBlackenedExt(): void {
+    this._ds.getCountOfFireBlackenedExt().subscribe(data => {
+      console.log(data);
+    });
+  }
+  getPercentOfFireBlackenedInt(): void {
+    this._ds.getPercentOfFireBlackenedInt().subscribe(data => {
+      console.log(data);
+    });
+  }
+  getCountOfFireBlackenedInt(): void {
+    this._ds.getCountOfFireBlackenedInt().subscribe(data => {
+      console.log(data);
+    });
+  }
+  getPercentOfFireBlackenedIntExt(): void {
+    this._ds.getPercentOfFireBlackenedIntExt().subscribe(data => {
+      console.log(data);
+    });
+  }
+  getCountOfFireBlackenedIntExt(): void {
+    this._ds.getCountOfFireBlackenedIntExt().subscribe(data => {
+      console.log(data);
+    });
+  }
+
 
 }

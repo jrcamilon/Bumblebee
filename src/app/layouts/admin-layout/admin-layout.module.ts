@@ -31,6 +31,7 @@ import { AgmCoreModule } from '@agm/core';
 import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
 
 import 'hammerjs';
+import { TableGridComponent } from 'app/tables/components/table-grid/table-grid.component';
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import 'hammerjs';
     CeramicsFormComponent,
     DataTableComponent,
     DataGridComponent,
-    LoadingComponent
+    LoadingComponent,
+    TableGridComponent
   ]
 })
 

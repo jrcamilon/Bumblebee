@@ -1,0 +1,143 @@
+<div class="grid-container">
+    <p   *ngIf="type === 'Elephantine'">Elephantine</p>
+    <p   *ngIf="type === 'Red Notebook'">Red Notebook</p>
+
+    <!-- Elephantine -->
+    <kendo-grid
+    *ngIf="type === 'Elephantine'"
+    [kendoGridBinding]="data"
+    [pageSize]="50"
+    [pageable]="true"
+    [sortable]="true"
+    [filterable]="true"
+    [height]="500"
+    [columnMenu]="true"
+    [selectable]="true">
+
+    <kendo-grid-column field="locusNum" title="Locus Number" [width]="130" ></kendo-grid-column>
+    <kendo-grid-column field="objectGroupNum" title="Object Group Num" [width]="120"></kendo-grid-column>
+    <kendo-grid-column field="typeNum" title="Type Num" [width]="120"></kendo-grid-column>
+    <kendo-grid-column field="Category.comments" title="Comments"></kendo-grid-column>
+
+        <ng-template kendoGridDetailTemplate let-dataItem>
+            <section *ngIf="dataItem.Category">
+            <p class="category-item"><strong>Type Description:</strong> {{dataItem.typeDescription}} units</p>
+            <p class="category-item"><strong>Painted Decoration:</strong> {{dataItem.paintedDecoration}} units</p>
+            <p class="category-item"><strong>SF Coating:</strong> {{dataItem.paintedDecoration}} units</p>
+            <p class="category-item"><strong>Painted Decoration:</strong> {{dataItem.paintedDecoration}}</p>
+            <p class="category-item"><strong>Comments:</strong> {{dataItem.comments}}</p>
+            </section>
+        </ng-template>
+    </kendo-grid>
+
+    <!-- Red Notebook -->
+    <kendo-grid
+    *ngIf="type === 'Red Notebook'"
+    [kendoGridBinding]="data"
+    [pageSize]="50"
+    [pageable]="true"
+    [sortable]="true"
+    [filterable]="true"
+    [height]="700"
+    [columnMenu]="true"
+    [selectable]="true">
+
+    <kendo-grid-column field="locusNum" title="Locus Number" [width]="130" ></kendo-grid-column>
+    <kendo-grid-column field="objectNum" title="Object Num" [width]="120"></kendo-grid-column>
+    <kendo-grid-column field="unitNum" title="Unit Num" [width]="120"></kendo-grid-column>
+    <kendo-grid-column field="specialNotes" title="Special Notes" ></kendo-grid-column>
+
+    <!-- Rest of it -->
+    <!-- addition -->
+    <kendo-grid-column [hidden]="true" filter="numeric" field="Category.bodyCoarseCount" title="Body Coarse Count" [width]="130"></kendo-grid-column>
+    <kendo-grid-column [hidden]="true" filter="numeric" field="Category.bodyCoarseWeight" title="Body Coarse Weight" [width]="120"></kendo-grid-column>
+    <kendo-grid-column [hidden]="true" filter="numeric" field="Category.bodyFineCount" title="Body Fine Count" [width]="120"></kendo-grid-column>
+    <kendo-grid-column [hidden]="true" filter="numeric" field="Category.bodyFineWeight" title="Body Fine Weight" [width]="120"></kendo-grid-column>
+
+    <kendo-grid-column [hidden]="true" filter="numeric" field="Category.bodyMarlCount" title="Body Marl Count" [width]="130"></kendo-grid-column>
+    <kendo-grid-column [hidden]="true" filter="numeric" field="Category.bodyMarlWeight" title="Body Marl Weight" [width]="120"></kendo-grid-column>
+    <kendo-grid-column [hidden]="true" filter="numeric" field="Category.bodyMediumCount" title="Body Medium Count" [width]="120"></kendo-grid-column>
+    <kendo-grid-column [hidden]="true" filter="numeric" field="Category.bodyMediumWeight" title="Body Medium Weight" [width]="120"></kendo-grid-column>
+    <kendo-grid-column [hidden]="true" filter="numeric" field="Category.bodyTotalCount" title="Body Total Count" [width]="130"></kendo-grid-column>
+
+    <kendo-grid-column [hidden]="true" filter="numeric" field="Category.diagnosticCoarseCount" title="Diagnostic Coarse Count" [width]="120"></kendo-grid-column>
+    <kendo-grid-column [hidden]="true" filter="numeric" field="Category.diagnosticCoarseWeight" title="Diagnostic Coarse Weight" [width]="120"></kendo-grid-column>
+    <kendo-grid-column [hidden]="true" filter="numeric" field="Category.diagnosticFineCount" title="Diagnostic Fine Count" [width]="120"></kendo-grid-column>
+
+    <kendo-grid-column [hidden]="true" filter="numeric" field="Category.diagnosticFineWeight" title="Diagnostic Fine Weight" [width]="120"></kendo-grid-column>
+    <kendo-grid-column [hidden]="true" filter="numeric" field="Category.diagnosticMarlCount" title="Diagnostic Marl Count" [width]="120"></kendo-grid-column>
+    <kendo-grid-column [hidden]="true" filter="numeric" field="Category.diagnosticMarlWeight" title="Diagnostic Marl Weight" [width]="120"></kendo-grid-column>
+
+    <kendo-grid-column [hidden]="true" filter="numeric" field="Category.diagnosticMediumCount" title="Diagnostic Medium Count" [width]="120"></kendo-grid-column>
+    <kendo-grid-column [hidden]="true" filter="numeric" field="Category.diagnosticMediumWeight" title="Diagnostic Medium Weight" [width]="120"></kendo-grid-column>
+    <kendo-grid-column [hidden]="true" filter="numeric" field="Category.diagnosticTotalCount" title="Diagnostic Total Count" [width]="120"></kendo-grid-column>
+
+    <kendo-grid-column [hidden]="true" filter="date" field="Category.dateOfEntry" title="Date of Entry" [width]="120" format="{0:d}"></kendo-grid-column>
+   
+
+        <ng-template kendoGridDetailTemplate let-dataItem>
+            <div *ngIf="dataItem.Category">
+                <section>
+
+                    <div class="col-md-6">
+                        <div class="card">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                    <th>body</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr><td>Corase Count</td><td>{{dataItem.Category?.bodyCoarseCount}}</td></tr>
+                                    <tr><td>Corase Weight</td><td>{{dataItem.Category?.bodyCoarseWeight}}</td></tr>
+                                    <tr><td>Fine Count</td><td>{{dataItem.Category?.bodyFineCount}}</td></tr>
+                                    <tr><td>Fine Weight</td><td>{{dataItem.Category?.bodyFineWeight}}</td></tr>  
+                                    <tr><td>Marl Count</td><td>{{dataItem.Category?.bodyMarlCount}}</td></tr>
+                                    <tr><td>Marl Weight</td><td>{{dataItem.Category?.bodyMarlWeight}}</td></tr>
+                                    <tr><td>Medium Count</td><td>{{dataItem.Category?.bodyMediumCount}}</td></tr> 
+                                    <tr><td>Medium Weight</td><td>{{dataItem.Category?.bodyMediumWeight}}</td></tr>                                    
+                                    <tr><td><b>Body Total Count</b></td><td><b>{{dataItem.Category?.bodyTotalCount}}</b></td></tr>   
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                            <div class="card">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                            <th>Diagnostic</th>
+                                            </tr>
+                                        </thead>
+        
+                                        <tbody>
+                                            <tr><td style="background-color: rgba(255, 0, 0, 0.253);">Corase Count</td><td>{{dataItem.Category?.diagnosticCoarseCount}}</td></tr>
+                                            <tr><td style="background-color: rgba(255, 0, 0, 0.253);">Corase Weight</td><td>{{dataItem.Category?.diagnosticCoarseWeight}}</td></tr>
+                                            <tr><td style="background-color: rgba(255, 217, 0, 0.253);">Fine Count</td><td>{{dataItem.Category?.diagnosticFineCount}}</td></tr>
+                                            <tr><td style="background-color: rgba(255, 217, 0, 0.253);">Fine Weight</td><td>{{dataItem.Category?.diagnosticFineWeight}}</td></tr>  
+                                            <tr><td>Marl Count</td><td>{{dataItem.Category?.diagnosticMarlCount}}</td></tr>
+                                            <tr><td>Marl Weight</td><td>{{dataItem.Category?.diagnosticMarlWeight}}</td></tr>
+                                            <tr><td>Medium Count</td><td>{{dataItem.Category?.diagnosticMediumCount}}</td></tr> 
+                                            <tr><td>Medium Weight</td><td>{{dataItem.Category?.diagnosticMediumWeight}}</td></tr>                                    
+                                            <tr><td><b>Body Total Count</b></td><td><b>{{dataItem.Category?.diagnosticTotalCount}}</b></td></tr>   
+                                        </tbody>
+                                    </table>
+                                </div>
+                    </div>
+
+                    <!-- <p class="category-item"><strong>Body Coarse Count:</strong> {{dataItem.Category?.bodyCoarseCount}} units</p>
+                    <p class="category-item"><strong>Body Coarse Weight:</strong> {{dataItem.Category?.bodyCoarseWeight}} units</p>
+                    <p class="category-item"><strong>Body Fine Count:</strong> {{dataItem.Category?.bodyFineCount}} units</p>
+                    <p class="category-item"><strong>Body Fine Weight:</strong> {{dataItem.Category?.bodyFineWeight}} units</p>
+
+                    <p class="category-item"><strong>Body Marl Count:</strong> {{dataItem.Category?.bodyMarlCount}} units</p>
+                    <p class="category-item"><strong>Body Marl Weight:</strong> {{dataItem.Category?.bodyMarlWeight}} units</p> -->
+                </section>
+            </div>
+        </ng-template>
+        
+    </kendo-grid>
+
+</div>

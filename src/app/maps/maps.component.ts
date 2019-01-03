@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { config } from './map-config';
+import { DataService } from 'app/data.service';
 
 @Component({
   selector: 'app-maps',
@@ -176,9 +177,24 @@ export class MapsComponent implements OnInit {
 
   mapStyles = config.styles;
 
-  constructor() { }
+  constructor(private _ds: DataService) {
+    console.log('here');
+    this._ds.elephantineData.subscribe(res => {
+      this.markers = res.map(rec => {
+        return new Object({lat: rec.lat, lng: rec.lng});
+      })
+    })
+  }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this._ds.getElephantineData()
+    .subscribe((res) => {
+      this._ds.elephantineData.next(res);
+    },
+    (err) => {
+      alert('error with api');
+    });
+  }
 
 
 }

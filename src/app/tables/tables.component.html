@@ -1,51 +1,13 @@
 <div class="main-content">
     <div class="container-fluid">
-        <!-- <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="header">
-                        <h4 class="title">Striped Table with Hover</h4>
-                        <p class="category">Here is a subtitle for this table</p>
-                    </div>
-                    <div class="content table-responsive table-full-width">
-                          <table class="table table-hover table-striped">
-                                <thead>
-                                    <tr>
-                                        <th *ngFor="let cell of tableData1.headerRow">{{ cell }}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let row of tableData1.dataRows">
-                                        <td *ngFor="let cell of row">{{cell}}</td>
-                                    </tr>
-                                </tbody>
-                          </table>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <div class="card card-plain">
-                    <div class="header">
-                        <h4 class="title">Table on Plain Background</h4>
-                        <p class="category">Here is a subtitle for this table</p>
-                    </div>
-                    <div class="content table-responsive table-full-width">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th *ngFor="let cell of tableData2.headerRow">{{ cell }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let row of tableData2.dataRows">
-                                    <td *ngFor="let cell of row">{{cell}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div> -->
+            <div class="dropdown" style="padding-bottom: 2%">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">{{selection}}
+                    <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                      <li *ngFor="let form of forms; let i = index" (click)=onFormSelect(forms[i])><a >{{form}}</a></li>
+                    </ul>
+                  </div>
+       <app-table-grid [data]="data" type="Red Notebook" *ngIf="selection === 'Red Notebook'"></app-table-grid>
+       <app-table-grid [data]="data" type="Elephantine" *ngIf="selection === 'Elephantine'"></app-table-grid>
     </div>
 </div>

@@ -33,9 +33,82 @@ export class DataService {
     });
   }
 
-  postElephantData(record) {
+  public postElephantData(record) {
     // post to the db
     console.log(record);
   }
+
+  public getTotalWeightPerFabric(): Observable<any> {
+    return this._http.get('http://localhost:3090/weight/total')
+    .map((response: Response) => {
+      const tmpData = response.json();
+      return tmpData;
+    })
+  }
+
+  public getCountOfWeightPerFabric(): Observable<any> {
+    return this._http.get('http://localhost:3090/weight/count')
+    .map((response: Response) => {
+      const tmpData = response.json();
+      return tmpData;
+    })
+  }
+
+  public getPercentOfDiagnostics(): Observable<any> {
+    return this._http.get('http://localhost:3090/percent/diagnostics')
+    .map((response: Response) => {
+      const tmpData = response.json();
+      return tmpData;
+    })
+  }
+
+  public getPercentOfFireBlackenedExt(): Observable<any> {
+    return this._http.get('http://localhost:3090/percent/blackened/ext')
+    .map((response: Response) => {
+      const tmpData = response.json();
+      return tmpData;
+    })
+  }
+
+  public getCountOfFireBlackenedExt(): Observable<any> {
+    return this._http.get('http://localhost:3090/weight/blackened/total/ext')
+    .map((response: Response) => {
+      const tmpData = response.json();
+      return tmpData;
+    })
+  }
+
+  public getPercentOfFireBlackenedInt(): Observable<any> {
+    return this._http.get('http://localhost:3090/percent/blackened/int')
+    .map((response: Response) => {
+      const tmpData = response.json();
+      return tmpData;
+    })
+  }
+
+  public getCountOfFireBlackenedInt(): Observable<any> {
+    return this._http.get('http://localhost:3090/weight/blackened/total/int')
+    .map((response: Response) => {
+      const tmpData = response.json();
+      return tmpData;
+    })
+  }
+
+  public getPercentOfFireBlackenedIntExt(): Observable<any> {
+    return this._http.get('http://localhost:3090/percent/blackened/both')
+    .map((response: Response) => {
+      const tmpData = response.json();
+      return tmpData;
+    })
+  }
+
+  public getCountOfFireBlackenedIntExt(): Observable<any> {
+    return this._http.get('http://localhost:3090/weight/blackened/total/both')
+    .map((response: Response) => {
+      const tmpData = response.json();
+      return tmpData;
+    })
+  }
+
 
 }
