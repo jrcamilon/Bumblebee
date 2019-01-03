@@ -1,13 +1,40 @@
 <div class="main-content">
     <div class="container-fluid">
-            <div class="dropdown" style="padding-bottom: 2%">
+            <!-- <div class="dropdown" style="padding-bottom: 2%">
                     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">{{selection}}
                     <span class="caret"></span></button>
                     <ul class="dropdown-menu">
                       <li *ngFor="let form of forms; let i = index" (click)=onFormSelect(forms[i])><a >{{form}}</a></li>
                     </ul>
-                  </div>
-       <app-table-grid [data]="data" type="Red Notebook" *ngIf="selection === 'Red Notebook'"></app-table-grid>
-       <app-table-grid [data]="data" type="Elephantine" *ngIf="selection === 'Elephantine'"></app-table-grid>
+                  </div> -->
+                  <!-- <mat-select placeholder="Placeholder" [(ngModel)]="selectedValue" name="item">
+                    <mat-option *ngFor="let item of items" [value]="item.value">
+                      {{item.viewValue}}
+                    </mat-option>
+                  </mat-select> -->
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+              <mat-form-field>
+                <mat-select placeholder="Data Set">
+                    <mat-option *ngFor="let form of forms; let i = index" [value]="selection" (click)="onFormSelect(forms[i])">
+                      {{forms[i]}}
+                    </mat-option>
+                  </mat-select>
+              </mat-form-field>
+          </mat-card-title>
+          <mat-card-subtitle>Currently showing a view of your {{selection}} Data Set</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+        
+        </mat-card-content>
+          <app-table-grid [data]="data" type="Red Notebook" *ngIf="selection === 'Red Notebook'"></app-table-grid>
+          <app-table-grid [data]="data" type="Elephantine" *ngIf="selection === 'Elephantine'"></app-table-grid>
+        <mat-card-actions>
+          <!-- <button mat-button>Ok</button> -->
+        </mat-card-actions>
+      </mat-card>
+      
+
     </div>
 </div>

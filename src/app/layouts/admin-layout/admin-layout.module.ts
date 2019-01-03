@@ -32,7 +32,7 @@ import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
 
 import 'hammerjs';
 import { TableGridComponent } from 'app/tables/components/table-grid/table-grid.component';
-
+import { MatCardModule, MatButtonModule, MatSelectModule} from '@angular/material';
 
 @NgModule({
   imports: [
@@ -45,7 +45,11 @@ import { TableGridComponent } from 'app/tables/components/table-grid/table-grid.
     ChartsModule,
     GridModule,
     AgmCoreModule.forRoot({apiKey: 'AIzaSyDFRoFDXtk-oTtHGvxEebGS_Bl8TQABdAM'}),
-    AgmJsMarkerClustererModule
+    AgmJsMarkerClustererModule,
+    MatCardModule,
+    MatButtonModule,
+    MatSelectModule
+
   ],
   declarations: [
     HomeComponent,
