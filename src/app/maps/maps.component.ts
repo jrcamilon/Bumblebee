@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { config } from './map-config';
 import { DataService } from 'app/data.service';
+import { ElephantModel } from 'app/processing/components/models/elephant-model';
 
 @Component({
   selector: 'app-maps',
@@ -9,16 +10,19 @@ import { DataService } from 'app/data.service';
 })
 
 export class MapsComponent implements OnInit {
+  public opened = true;
+  public markers = [{lat: 24.08532911, lng: 32.88544272}];
+  public elephantineData: ElephantModel[];
+  public mapStyles = config.styles;
+  public selectedArtifactObject: any;
 
-  markers = [{lat: 24.08532911, lng: 32.88544272}];
 
-  mapStyles = config.styles;
-
-  constructor(private _ds: DataService) {
+  constructor(private _ds: DataService ) {
     this._ds.elephantineData.subscribe(res => {
       this.markers = res.map(rec => {
         return new Object({lat: rec.lat, lng: rec.lng});
-      })
+      });
+      this.elephantineData = res;
     })
   }
 
@@ -32,5 +36,17 @@ export class MapsComponent implements OnInit {
     });
   }
 
+  public close(): void { this.opened = false; }
+
+  public open(): void { this.opened = true; }
+
+  public onMarkerClick(event: any, index: any) {
+    console.log(this.elephantineData[index]);
+    this.selectedArtifactObject = this.elephantineData[index];
+
+    this.open();
+  }
+
 
 }
+
