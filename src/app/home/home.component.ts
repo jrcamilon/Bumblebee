@@ -25,6 +25,7 @@ export class HomeComponent implements OnInit {
     // public activityChartOptions: any;
     // public activityChartResponsive: any[];
     // public activityChartLegendItems: LegendItem[];
+    public panel1Data: any[] = [];
   constructor(private _ds: DataService) { }
 
   ngOnInit() {
@@ -130,6 +131,7 @@ export class HomeComponent implements OnInit {
   getCountOfWeightPerFabric(): void {
     this._ds.getCountOfWeightPerFabric().subscribe(data => {
       console.log(data);
+      this.panel1Data =  data;
     });
   }
   getPercentOfDiagnostics(): void {
