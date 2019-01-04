@@ -7,13 +7,13 @@
         <div *ngIf="isPanel1">
             <kendo-chart>
                 <kendo-chart-series>
-                    <kendo-chart-series-item type="radarLine" name="Total Artifacts" [data]="banksData" field="pre"
+                    <kendo-chart-series-item type="radarLine" name="Total Artifacts" [data]="panel1Data" field="value"
                         categoryField="name">
                     </kendo-chart-series-item>
 
                 </kendo-chart-series>
                 <kendo-chart-value-axis>
-                    <kendo-chart-value-axis-item [labels]="{ format: 'C0' }">
+                    <kendo-chart-value-axis-item [labels]="{ format: 'P0' }">
                     </kendo-chart-value-axis-item>
                 </kendo-chart-value-axis>
                 <kendo-chart-legend position="bottom"></kendo-chart-legend>
@@ -22,7 +22,7 @@
         <div *ngIf="isPanel2">
             <kendo-chart>
                 <kendo-chart-series>
-                    <kendo-chart-series-item type="radarLine" name="value" [data]="banksData" field="pre" categoryField="name">
+                    <kendo-chart-series-item type="radarLine" name="value" [data]="panel2Data" field="value" categoryField="name">
                     </kendo-chart-series-item>
 
                 </kendo-chart-series>
