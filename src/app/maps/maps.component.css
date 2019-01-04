@@ -3,7 +3,7 @@ agm-map {
     margin-top:60px;
     height: 96.5%; 
     width: 100%; 
-    position: absolute;
+    position: fixed;
     top: 0px;
     left: 0px;
     background-color: rgb(229, 227, 223);

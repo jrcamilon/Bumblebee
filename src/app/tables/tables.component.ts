@@ -19,12 +19,12 @@ export class TablesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.selection = this.forms[1];
+    this.selection = this.forms[0];
     this.onFormSelect(this.selection);
   }
 
   runQueries() {
-    this.selection = this.forms[1];
+    this.selection = this.forms[0];
     this.getAllElephantine();
     this.getAllRedData();
   }
@@ -45,6 +45,7 @@ export class TablesComponent implements OnInit {
     this._ds.getElephantineData()
     .subscribe((res) => {
       this.data = this._tableGirdService.processElephantine(res);
+      console.log(this.data);
     },
     (err) => {
       alert('error with api');

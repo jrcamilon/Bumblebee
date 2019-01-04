@@ -27,7 +27,7 @@ processRed(data: any[]) {
         bodyMediumWeight: res.bodyMediumWeight,
         bodyTotalCount: res.bodyTotalCount,
         bodyTotalWeight: res.bodyTotalWeight,
-        dateOfEntry: this.dateFormatter(res.dateOfEntry),
+        dateOfEntry: this.dateFormatter(res.dateOfEntry, 'dd/mm/yyyy'),
         diagnosticCoarseCount: res.diagnosticCoarseCount,
         diagnosticCoarseWeight: res.diagnosticCoarseWeight,
         diagnosticFineCount: res.diagnosticFineCount,
@@ -43,9 +43,20 @@ processRed(data: any[]) {
   })
 }
 
-dateFormatter(stringDate: string) {
-  return new Date(stringDate);
+dateFormatter(stringDate: string, currentFormat: string) {
+  let returnDate;
+  switch (currentFormat) {
+    case 'dd/mm/yyyy':
+      returnDate = new Date(stringDate);
+      break;
+    case 'mm/dd/yyyy':
+      const datearray = stringDate.split("/");
+      returnDate = datearray[1] + '/' + datearray[0] + '/' + datearray[2];
+      break;
+  }
+  return returnDate;
 }
+
 
 processElephantine(data: ElephantModel[]) {
   return data.map(res => {
@@ -65,9 +76,9 @@ processElephantine(data: ElephantModel[]) {
         paintedDecoration: res.paintedDecoration,
         photo: res.photo,
         processedBy: res.processedBy,
-        processedDate: res.processedDate,
+        processedDate: this.dateFormatter(res.processedDate, 'mm/dd/yyyy'),
         enteredBy: res.enteredBy,
-        enteredDate: res.enteredDate,
+        enteredDate: this.dateFormatter(res.enteredDate, 'dd/mm/yyyy'),
         preservations:  res.preservations,
         sfCoating: res.sfCoating,
         sfTreatment: res.sfTreatment,
