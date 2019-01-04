@@ -1,0 +1,125 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>{{Title}}</mat-card-title>
+        <!-- <mat-card-subtitle>subtitle</mat-card-subtitle> -->
+    </mat-card-header>
+    <mat-card-content>
+        <div *ngIf="isPanel1">
+            <kendo-chart>
+                <kendo-chart-series>
+                    <kendo-chart-series-item type="radarLine" name="Total Artifacts" [data]="banksData" field="pre"
+                        categoryField="name">
+                    </kendo-chart-series-item>
+
+                </kendo-chart-series>
+                <kendo-chart-value-axis>
+                    <kendo-chart-value-axis-item [labels]="{ format: 'C0' }">
+                    </kendo-chart-value-axis-item>
+                </kendo-chart-value-axis>
+                <kendo-chart-legend position="bottom"></kendo-chart-legend>
+            </kendo-chart>
+        </div>
+        <div *ngIf="isPanel2">
+            <kendo-chart>
+                <kendo-chart-series>
+                    <kendo-chart-series-item type="radarLine" name="value" [data]="banksData" field="pre" categoryField="name">
+                    </kendo-chart-series-item>
+
+                </kendo-chart-series>
+                <kendo-chart-value-axis>
+                    <kendo-chart-value-axis-item [labels]="{ format: 'P0' }">
+                    </kendo-chart-value-axis-item>
+                </kendo-chart-value-axis>
+                <kendo-chart-legend position="bottom"></kendo-chart-legend>
+            </kendo-chart>
+        </div>
+
+        <div *ngIf="isPanel3">
+            <kendo-chart>
+                <kendo-chart-series>
+                    <kendo-chart-series-item type="radarLine" name="value" [data]="banksData" field="pre" categoryField="name">
+                    </kendo-chart-series-item>
+
+                </kendo-chart-series>
+                <kendo-chart-value-axis>
+                    <kendo-chart-value-axis-item [labels]="{ format: 'P0' }">
+                    </kendo-chart-value-axis-item>
+                </kendo-chart-value-axis>
+                <kendo-chart-legend position="bottom"></kendo-chart-legend>
+            </kendo-chart>
+        </div>
+        <div *ngIf="isPanel4">
+            <kendo-chart>
+                <kendo-chart-series>
+                    <kendo-chart-series-item type="radarLine" name="value" [data]="banksData" field="pre" categoryField="name">
+                    </kendo-chart-series-item>
+
+                </kendo-chart-series>
+                <kendo-chart-value-axis>
+                    <kendo-chart-value-axis-item [labels]="{ format: 'P0' }">
+                    </kendo-chart-value-axis-item>
+                </kendo-chart-value-axis>
+                <kendo-chart-legend position="bottom"></kendo-chart-legend>
+            </kendo-chart>
+        </div>
+        <div *ngIf="isPanel5">
+            <kendo-chart>
+                <kendo-chart-series>
+                    <kendo-chart-series-item type="radarLine" name="value" [data]="banksData" field="pre" categoryField="name">
+                    </kendo-chart-series-item>
+
+                </kendo-chart-series>
+                <kendo-chart-value-axis>
+                    <kendo-chart-value-axis-item [labels]="{ format: 'P0' }">
+                    </kendo-chart-value-axis-item>
+                </kendo-chart-value-axis>
+                <kendo-chart-legend position="bottom"></kendo-chart-legend>
+            </kendo-chart>
+        </div>
+        <div *ngIf="isPanel6">
+            <kendo-chart>
+                <kendo-chart-series>
+                    <kendo-chart-series-item type="radarLine" name="value" [data]="banksData" field="pre" categoryField="name">
+                    </kendo-chart-series-item>
+
+                </kendo-chart-series>
+                <kendo-chart-value-axis>
+                    <kendo-chart-value-axis-item [labels]="{ format: 'P0' }">
+                    </kendo-chart-value-axis-item>
+                </kendo-chart-value-axis>
+                <kendo-chart-legend position="bottom"></kendo-chart-legend>
+            </kendo-chart>
+        </div>
+        <div *ngIf="isPanel7">
+            <kendo-chart>
+                <kendo-chart-series>
+                    <kendo-chart-series-item type="radarLine" name="value" [data]="banksData" field="pre" categoryField="name">
+                    </kendo-chart-series-item>
+
+                </kendo-chart-series>
+                <kendo-chart-value-axis>
+                    <kendo-chart-value-axis-item [labels]="{ format: 'P0' }">
+                    </kendo-chart-value-axis-item>
+                </kendo-chart-value-axis>
+                <kendo-chart-legend position="bottom"></kendo-chart-legend>
+            </kendo-chart>
+        </div>
+        <div *ngIf="isPanel8">
+            <kendo-chart>
+                <kendo-chart-series>
+                    <kendo-chart-series-item type="radarLine" name="value" [data]="banksData" field="pre" categoryField="name">
+                    </kendo-chart-series-item>
+
+                </kendo-chart-series>
+                <kendo-chart-value-axis>
+                    <kendo-chart-value-axis-item [labels]="{ format: 'P0' }">
+                    </kendo-chart-value-axis-item>
+                </kendo-chart-value-axis>
+                <kendo-chart-legend position="bottom"></kendo-chart-legend>
+            </kendo-chart>
+        </div>
+    </mat-card-content>
+    <!-- <mat-card-actions>
+      <button mat-button>Ok</button>
+  </mat-card-actions> -->
+</mat-card>

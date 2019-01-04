@@ -16,6 +16,7 @@ import { GridModule } from '@progress/kendo-angular-grid';
 
 
 
+
 @NgModule({
    imports: [
       BrowserAnimationsModule,
@@ -27,11 +28,12 @@ import { GridModule } from '@progress/kendo-angular-grid';
       SidebarModule,
       AppRoutingModule,
       ReactiveFormsModule,
-      GridModule
+      GridModule,
    ],
    declarations: [
       AppComponent,
-      AdminLayoutComponent
+      AdminLayoutComponent,
+  
    ],
    providers: [],
    bootstrap: [

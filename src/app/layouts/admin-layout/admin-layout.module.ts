@@ -22,7 +22,9 @@ import { NotificationsComponent } from '../../notifications/notifications.compon
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { ProcessingComponent } from '../../processing/processing.component';
 import { CeramicsFormComponent } from '../../processing/components/ceramics-form/ceramics-form.component';
-
+import {Panel1radarComponent} from '../../visualizations/panel1radar/panel1radar.component'
+import {Panel2radarComponent} from '../../visualizations/panel2radar/panel2radar.component'
+import { MaterialcardComponent} from '../../materialcard/materialcard.component';
 import { DialogModule } from '@progress/kendo-angular-dialog';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
 
@@ -73,7 +75,10 @@ import { MatCardModule, MatButtonModule, MatSelectModule, MatToolbarModule, MatT
     DataTableComponent,
     DataGridComponent,
     LoadingComponent,
-    TableGridComponent
+    TableGridComponent,
+    Panel1radarComponent,
+    Panel2radarComponent,
+    MaterialcardComponent,
   ]
 })
 
