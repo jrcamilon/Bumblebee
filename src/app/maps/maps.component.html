@@ -1,17 +1,69 @@
-<div class="main-content no-scroll">
+<div class="main-content" style="margin: 0px; padding: 0px;">
+ 
+         
+    <kendo-dialog title="Artifact Details" *ngIf="opened" (close)="close()" [minWidth]="250" [width]="768" [height]="768">
+
+      <kendo-splitter orientation="vertical" style="height: 710px;">
+
+          <kendo-splitter-pane>
+            <kendo-splitter>
+  
+              <kendo-splitter-pane [collapsible]="true" size="50%">
+                <div class="pane-content">
+                  <!-- <h3>Inner splitter / left pane</h3>
+                  <p>Resizable and collapsible.</p> -->
+                  <img src="assets/img/sherd.jpg" style="height: 100%; width: 100%;">
+                </div>
+              </kendo-splitter-pane>
+  
+              <kendo-splitter-pane>
+                <div class="pane-content">
+                  <h3>Inner splitter / center pane</h3>
+                  <p>Resizable only.</p>
+                </div>
+              </kendo-splitter-pane>
+  
+              <!-- <kendo-splitter-pane [collapsible]="true" size="30%">
+                <div class="pane-content">
+                  <h3>Inner splitter / right pane</h3>
+                  <p>Resizable and collapsible.</p>
+                </div>
+              </kendo-splitter-pane> -->
+  
+            </kendo-splitter>
+          </kendo-splitter-pane>
+  
+          <kendo-splitter-pane size="200px">
+            <div class="pane-content">
+              <h3>Outer splitter / Middle pane</h3>
+              <p>Resizable only.</p>
+            </div>
+          </kendo-splitter-pane>
+  
+          <kendo-splitter-pane [resizable]="false" size="200px">
+            <div class="pane-content">
+              <h3>Outer splitter / Bottom pane</h3>
+              <p>Non-resizable and non-collapsible.</p>
+            </div>
+          </kendo-splitter-pane>
+        </kendo-splitter>
+    </kendo-dialog>
+        
 
     <agm-map 
         [zoom]="18" 
+        [maxZoom]="25"
         [longitude]="markers[0].lng" 
         [latitude]="markers[0].lat" 
         [fullscreenControl]="true"
         [mapTypeControl]="true"
         [styles]="mapStyles">
-        <agm-marker-cluster imagePath="https://raw.githubusercontent.com/googlemaps/v3-utility-library/master/markerclustererplus/images/m">
-            <agm-marker *ngFor="let marker of markers; let i = index" 
-            [latitude]="marker.lat" 
-            [longitude]="marker.lng" 
-            [draggable]="true"></agm-marker>
+        <agm-marker-cluster [minimumClusterSize]="2" [maxZoom]="20" imagePath="https://raw.githubusercontent.com/googlemaps/v3-utility-library/master/markerclustererplus/images/m">
+            <agm-marker 
+                *ngFor="let marker of markers; let i = index" 
+                [latitude]="marker.lat" 
+                [longitude]="marker.lng" 
+                [draggable]="true" (markerClick)="onMarkerClick($event, i)"></agm-marker>
         </agm-marker-cluster>
     </agm-map>
 

@@ -23,16 +23,19 @@ import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { ProcessingComponent } from '../../processing/processing.component';
 import { CeramicsFormComponent } from '../../processing/components/ceramics-form/ceramics-form.component';
 
+import { DialogModule } from '@progress/kendo-angular-dialog';
+import { ButtonsModule } from '@progress/kendo-angular-buttons';
 
 import { ChartsModule } from '@progress/kendo-angular-charts';
 import { GridModule } from '@progress/kendo-angular-grid';
+import { LayoutModule } from '@progress/kendo-angular-layout';
 
 import { AgmCoreModule } from '@agm/core';
 import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
 
 import 'hammerjs';
 import { TableGridComponent } from 'app/tables/components/table-grid/table-grid.component';
-import { MatCardModule, MatButtonModule, MatSelectModule} from '@angular/material';
+import { MatCardModule, MatButtonModule, MatSelectModule, MatToolbarModule, MatTableModule } from '@angular/material';
 
 @NgModule({
   imports: [
@@ -48,7 +51,12 @@ import { MatCardModule, MatButtonModule, MatSelectModule} from '@angular/materia
     AgmJsMarkerClustererModule,
     MatCardModule,
     MatButtonModule,
-    MatSelectModule
+    MatSelectModule,
+    MatToolbarModule,
+    MatTableModule,
+    DialogModule,
+    ButtonsModule,
+    LayoutModule
 
   ],
   declarations: [
