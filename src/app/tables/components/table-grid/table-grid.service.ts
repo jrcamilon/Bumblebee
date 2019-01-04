@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { ElephantModel } from 'app/processing/components/models/elephant-model';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TableGridService {
+
+public selectedMarkers = new Subject<any>();
 
 constructor() { }
 
@@ -58,7 +61,7 @@ dateFormatter(stringDate: string, currentFormat: string) {
 }
 
 
-processElephantine(data: ElephantModel[]) {
+processElephantine(data: any[]) {
   return data.map(res => {
     return new Object({
       locusNum: res.locusNum,
@@ -70,6 +73,8 @@ processElephantine(data: ElephantModel[]) {
       weight: res.weight,
       fabric: res.fabric,
       diameter: res.diameter,
+      lat: res.lat,
+      lng: res.lng,
       Category: {
         typeDescription: res.typeDescription,
         comments: res.comments,

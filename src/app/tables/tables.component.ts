@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'app/data.service';
 import { TableGridService } from './components/table-grid/table-grid.service';
+import { config } from '../maps/map-config';
+
 
 @Component({
   selector: 'app-tables',
@@ -10,23 +12,51 @@ import { TableGridService } from './components/table-grid/table-grid.service';
 })
 export class TablesComponent implements OnInit {
 
-  selection: string;
-  data: any;
-  forms = ['Red Notebook', 'Elephantine'];
+  public selection: string;
+  public data: any;
+  public forms = ['Red Notebook', 'Elephantine'];
+  public mapStyles = config.styles;
+  public markers = [{lat: 24.08532911, lng: 32.88544272}];
+  public tableHeight = 650;
+  public isMapVisible = false;
 
-  constructor(private _ds: DataService, private _tableGirdService: TableGridService) {
-    console.log('here');
-  }
+  constructor(
+    private _ds: DataService,
+    private _tableGirdService: TableGridService
+    ) {
+      this._tableGirdService.selectedMarkers.subscribe(data => {
+        this.loadMapMarkers(data);
+      })
+    }
 
   ngOnInit() {
     this.selection = this.forms[0];
     this.onFormSelect(this.selection);
+
   }
 
-  runQueries() {
-    this.selection = this.forms[0];
-    this.getAllElephantine();
-    this.getAllRedData();
+  loadMapMarkers(idArray: any) {
+    if (idArray.length !== 0) {
+      this.tableHeight = 350;
+      this.isMapVisible = true;
+      const arr = [];
+      for (let i = 0; i < this.data.length; i++) {
+        for (let j = 0; j < idArray.length; j++) {
+          if (idArray[j] === this.data[i].id) {
+            arr.push(this.data[i]);
+          }
+        }
+      }
+
+      this.markers = arr.map(ele => {
+        return {lat: ele.lat, lng: ele.lng}
+      })
+
+
+    } else {
+      this.tableHeight = 650;
+      this.isMapVisible = false;
+    }
   }
 
   onFormSelect(form: any) {
@@ -45,7 +75,10 @@ export class TablesComponent implements OnInit {
     this._ds.getElephantineData()
     .subscribe((res) => {
       this.data = this._tableGirdService.processElephantine(res);
-      console.log(this.data);
+      this._ds.selectedData.next(this._tableGirdService.processElephantine(res));
+        this.markers = res.map(rec => {
+          return new Object({lat: rec.lat, lng: rec.lng});
+        });
     },
     (err) => {
       alert('error with api');
@@ -57,7 +90,7 @@ export class TablesComponent implements OnInit {
     this._ds.getRedNotebookData()
     .subscribe((res) => {
       this.data = this._tableGirdService.processRed(res);
-      console.log(this.data);
+      this._ds.selectedData.next(this._tableGirdService.processRed(res));
     },
     (err) => {
       alert('error with api');

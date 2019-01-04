@@ -12,6 +12,7 @@ export class DataService {
 
   public elephantineData = new Subject<any>();
   public redNotebookData = new Subject<any>();
+  public selectedData = new Subject<any>();
 
   constructor(private _http: Http) { }
 
