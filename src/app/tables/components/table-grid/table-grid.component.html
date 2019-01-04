@@ -12,14 +12,30 @@
     [filterable]="true"
     [height]="tableHeight"
     [columnMenu]="true"
-    [selectable]="true">
+    [kendoGridSelectBy]="'id'"
+    [selectedKeys]="mySelection"
+    [kendoGridSelectBy]="'id'"
+    [selectedKeys]="mySelection"
+    (selectedKeysChange)="onSelectedKeysChange($event)"
+    [selectable]="{enabled: true, checkboxOnly: true }">
+
 
     <kendo-grid-column [hidden]="true" field="id" title="ID"></kendo-grid-column>
     <kendo-grid-column field="locusNum" title="Locus Number" [width]="130" ></kendo-grid-column>
     <kendo-grid-column field="objectGroupNum" title="Object Group Num" [width]="120"></kendo-grid-column>
     <kendo-grid-column filter="numeric" field="objectNum" [width]="120" title="Object Num"></kendo-grid-column>
     <kendo-grid-column field="typeNum" title="Type Num" [width]="120"></kendo-grid-column>
-    <kendo-grid-column field="Category.comments" title="Comments"></kendo-grid-column>
+    <kendo-grid-column field="Category.comments" title="Comments" ></kendo-grid-column>
+
+    <!-- Controls -->
+    <kendo-grid-checkbox-column title="Map Options" >
+        <ng-template kendoGridHeaderTemplate>
+            <input class="k-checkbox" id="selectAllCheckboxId" kendoGridSelectAllCheckbox
+                    [state]="selectAllState"
+                    (selectAllChange)="onSelectAllChange($event)">
+             <label class="k-checkbox-label" for="selectAllCheckboxId"></label>
+        </ng-template>
+    </kendo-grid-checkbox-column>
 
     <!-- Rest of the stuff -->
     <kendo-grid-column [hidden]="true" filter="numeric" field="diameter" title="Diameter"></kendo-grid-column>

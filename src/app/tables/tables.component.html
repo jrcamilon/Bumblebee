@@ -1,29 +1,37 @@
-<div class="main-content" style="background-color: rgba(0, 0, 0, 0.664) !important">
+<div class="main-content">
     <div class="container-fluid">
 
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title>
-              <mat-form-field>
-                <mat-select placeholder="Data Set">
-                    <mat-option *ngFor="let form of forms; let i = index" [value]="selection" (click)="onFormSelect(forms[i])">
-                      {{forms[i]}}
-                    </mat-option>
-                  </mat-select>
-              </mat-form-field>
-          </mat-card-title>
-          <mat-card-subtitle>Currently showing a view of your {{selection}} Data Set</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-        
-        </mat-card-content>
-          <app-table-grid [data]="data" type="Red Notebook" *ngIf="selection === 'Red Notebook'"></app-table-grid>
-          <app-table-grid [data]="data" type="Elephantine" *ngIf="selection === 'Elephantine'"></app-table-grid>
-        <mat-card-actions>
-          <!-- <button mat-button>Ok</button> -->
-        </mat-card-actions>
-      </mat-card>
-      
+      <!-- AG Map -->
+      <agm-map 
+      *ngIf="isMapVisible"
+      [zoom]="18" 
+      [maxZoom]="25"
+      [longitude]="markers[0].lng" 
+      [latitude]="markers[0].lat" 
+      [fullscreenControl]="true"
+      [mapTypeControl]="true"
+      [styles]="mapStyles">
+        <agm-marker-cluster [minimumClusterSize]="2" [maxZoom]="20" imagePath="https://raw.githubusercontent.com/googlemaps/v3-utility-library/master/markerclustererplus/images/m">
+          <agm-marker 
+              *ngFor="let marker of markers; let i = index" 
+              [latitude]="marker.lat" 
+              [longitude]="marker.lng" 
+              [draggable]="true"></agm-marker>
+        </agm-marker-cluster>
+      </agm-map>
+
+      <!-- Form Selector -->
+      <mat-form-field>
+        <mat-select placeholder="Data Set">
+            <mat-option *ngFor="let form of forms; let i = index" [value]="selection" (click)="onFormSelect(forms[i])">
+              {{forms[i]}}
+            </mat-option>
+          </mat-select>
+      </mat-form-field>
+
+      <!-- Two Grid Forms -->
+      <app-table-grid [data]="data" type="Red Notebook" *ngIf="selection === 'Red Notebook'" [tableHeight]="tableHeight"></app-table-grid>
+      <app-table-grid [data]="data" type="Elephantine" *ngIf="selection === 'Elephantine'" [tableHeight]="tableHeight"></app-table-grid>
 
     </div>
 </div>
