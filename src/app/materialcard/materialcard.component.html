@@ -7,10 +7,12 @@
         <div *ngIf="isPanel1">
             <kendo-chart>
                 <kendo-chart-series>
-                    <kendo-chart-series-item type="radarLine" name="Total Artifacts" [data]="chartdata" field="weightPercent"
-                        categoryField="fabric">
+                    <kendo-chart-series-item type="radarLine" name="Weight" [data]="chartdata" field="weight"
+                        categoryField="type">
                     </kendo-chart-series-item>
-
+                    <kendo-chart-series-item type="radarLine" name="Count" [data]="chartdata" field="count"
+                    categoryField="type">
+                </kendo-chart-series-item>
                 </kendo-chart-series>
                 <kendo-chart-value-axis>
                     <kendo-chart-value-axis-item [labels]="{ format: 'P0' }">

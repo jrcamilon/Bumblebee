@@ -39,21 +39,27 @@ export class DataService {
     console.log(record);
   }
 
-  public getTotalWeightPerFabric(): Observable<any> {
-    return this._http.get('http://localhost:3090/weight/total')
-    .map((response: Response) => {
-      const tmpData = response.json();
+  // public getTotalWeightPerFabric(): Observable<any> {
+  //   return this._http.get('http://localhost:3090/weight/total')
+  //   .map((response: Response) => {
+  //     const tmpData = response.json();
+  //     return tmpData;
+  //   })
+  // }
+  public getTotalWeightCountPerFabric(): Observable<any> {
+    return this._http.get('http://localhost:3090/dash/panel1')
+    .map((response: Response)=>{
+      const tmpData= response.json();
       return tmpData;
     })
   }
-
-  public getCountOfWeightPerFabric(): Observable<any> {
-    return this._http.get('http://localhost:3090/weight/count')
-    .map((response: Response) => {
-      const tmpData = response.json();
-      return tmpData;
-    })
-  }
+  // public getCountOfWeightPerFabric(): Observable<any> {
+  //   return this._http.get('http://localhost:3090/weight/count')
+  //   .map((response: Response) => {
+  //     const tmpData = response.json();
+  //     return tmpData;
+  //   })
+  // }
 
   public getPercentOfDiagnostics(): Observable<any> {
     return this._http.get('http://localhost:3090/percent/diagnostics')

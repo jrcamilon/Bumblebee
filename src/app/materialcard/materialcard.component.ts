@@ -79,8 +79,8 @@ export class MaterialcardComponent implements OnInit {
       return `${ e.dataItem.time.substring(0, 2) }h`;
   }
   runQueries(): void {
-    this.getTotalWeightPerFabric();
-    this.getCountOfWeightPerFabric();
+
+    this.getCountWeightPerFabric();
     this.getPercentOfDiagnostics();
     this.getPercentOfFireBlackenedExt();
     this.getCountOfFireBlackenedExt();
@@ -89,16 +89,17 @@ export class MaterialcardComponent implements OnInit {
     this.getPercentOfFireBlackenedIntExt();
     this.getCountOfFireBlackenedIntExt();
   }
-  getTotalWeightPerFabric(): void {
-    this._ds.getTotalWeightPerFabric().subscribe(data => {
-      if(this.isPanel2){
-        this.chartdata = data;
-      }
-      console.log(data);
-    });
-  }
-  getCountOfWeightPerFabric(): void {
-    this._ds.getCountOfWeightPerFabric().subscribe(data => {
+  /** TODO: Remove once validate that Panel 1 Visualization is OK */
+  // getTotalWeightPerFabric(): void {
+  //   this._ds.getTotalWeightPerFabric().subscribe(data => {
+  //     if(this.isPanel2){
+  //       this.chartdata = data;
+  //     }
+  //     console.log(data);
+  //   });
+  // }
+  getCountWeightPerFabric(): void {
+    this._ds.getTotalWeightCountPerFabric().subscribe(data => {
       console.log(data);
       if(this.isPanel1){
         this.chartdata = data;

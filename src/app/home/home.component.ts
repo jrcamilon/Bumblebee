@@ -113,8 +113,9 @@ export class HomeComponent implements OnInit {
   }
 
   runQueries(): void {
-    this.getTotalWeightPerFabric();
-    this.getCountOfWeightPerFabric();
+    // this.getTotalWeightPerFabric();
+    // this.getCountOfWeightPerFabric();
+    this.getTotalWeightCountPerFabric();
     this.getPercentOfDiagnostics();
     this.getPercentOfFireBlackenedExt();
     this.getCountOfFireBlackenedExt();
@@ -123,17 +124,26 @@ export class HomeComponent implements OnInit {
     this.getPercentOfFireBlackenedIntExt();
     this.getCountOfFireBlackenedIntExt();
   }
-  getTotalWeightPerFabric(): void {
-    this._ds.getTotalWeightPerFabric().subscribe(data => {
+  getTotalWeightCountPerFabric(): void {
+    this._ds.getTotalWeightCountPerFabric().subscribe(data => {
       console.log(data);
+      this.panel1Data = data;
     });
   }
-  getCountOfWeightPerFabric(): void {
-    this._ds.getCountOfWeightPerFabric().subscribe(data => {
-      console.log(data);
-      this.panel1Data =  data;
-    });
-  }
+  /** These can be removed as getTotalWeightCountPerFabric includes both accumulation fields
+   * Delete when reviewed
+   */
+  // getTotalWeightPerFabric(): void {
+  //   this._ds.getTotalWeightPerFabric().subscribe(data => {
+  //     console.log(data);
+  //   });
+  // }
+  // getCountOfWeightPerFabric(): void {
+  //   this._ds.getCountOfWeightPerFabric().subscribe(data => {
+  //     console.log(data);
+  //     this.panel1Data =  data;
+  //   });
+  // }
   getPercentOfDiagnostics(): void {
     this._ds.getPercentOfDiagnostics().subscribe(data => {
       console.log(data);
