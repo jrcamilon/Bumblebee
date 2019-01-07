@@ -28,8 +28,9 @@ import { MaterialcardComponent} from '../../materialcard/materialcard.component'
 import { DialogModule } from '@progress/kendo-angular-dialog';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
 
+
 import { ChartsModule } from '@progress/kendo-angular-charts';
-import { GridModule } from '@progress/kendo-angular-grid';
+import { GridModule, ExcelModule, PDFModule } from '@progress/kendo-angular-grid';
 import { LayoutModule } from '@progress/kendo-angular-layout';
 
 import { AgmCoreModule } from '@agm/core';
@@ -37,7 +38,42 @@ import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
 
 import 'hammerjs';
 import { TableGridComponent } from 'app/tables/components/table-grid/table-grid.component';
-import { MatCardModule, MatButtonModule, MatSelectModule, MatToolbarModule, MatTableModule } from '@angular/material';
+import { MatAutocompleteModule,
+  MatBadgeModule,
+  MatBottomSheetModule,
+  MatButtonModule,
+  MatButtonToggleModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatChipsModule,
+  MatDatepickerModule,
+  MatDialogModule,
+  MatDividerModule,
+  MatExpansionModule,
+  MatGridListModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatMenuModule,
+  MatNativeDateModule,
+  MatPaginatorModule,
+  MatProgressBarModule,
+  MatProgressSpinnerModule,
+  MatRadioModule,
+  MatRippleModule,
+  MatSelectModule,
+  MatSidenavModule,
+  MatSliderModule,
+  MatSlideToggleModule,
+  MatSnackBarModule,
+  MatSortModule,
+  MatStepperModule,
+  MatTableModule,
+  MatTabsModule,
+  MatToolbarModule,
+  MatTooltipModule} from '@angular/material';
+import { SplitterPaneRowComponent } from 'app/maps/components/splitter-pane-row/splitter-pane-row.component';
+import { RednotebookFormComponent } from 'app/processing/components/rednotebook-form/rednotebook-form.component';
 
 @NgModule({
   imports: [
@@ -49,13 +85,44 @@ import { MatCardModule, MatButtonModule, MatSelectModule, MatToolbarModule, MatT
     NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyDFRoFDXtk-oTtHGvxEebGS_Bl8TQABdAM'}),
     ChartsModule,
     GridModule,
+    ExcelModule,
+    PDFModule,
     AgmCoreModule.forRoot({apiKey: 'AIzaSyDFRoFDXtk-oTtHGvxEebGS_Bl8TQABdAM'}),
     AgmJsMarkerClustererModule,
-    MatCardModule,
+    MatAutocompleteModule,
+    MatBadgeModule,
+    MatBottomSheetModule,
     MatButtonModule,
+    MatButtonToggleModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatChipsModule,
+    MatDatepickerModule,
+    MatDialogModule,
+    MatDividerModule,
+    MatExpansionModule,
+    MatGridListModule,
+    MatIconModule,
+    MatInputModule,
+    MatListModule,
+    MatMenuModule,
+    MatNativeDateModule,
+    MatPaginatorModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
+    MatRadioModule,
+    MatRippleModule,
     MatSelectModule,
-    MatToolbarModule,
+    MatSidenavModule,
+    MatSliderModule,
+    MatSlideToggleModule,
+    MatSnackBarModule,
+    MatSortModule,
+    MatStepperModule,
     MatTableModule,
+    MatTabsModule,
+    MatToolbarModule,
+    MatTooltipModule,
     DialogModule,
     ButtonsModule,
     LayoutModule
@@ -72,6 +139,7 @@ import { MatCardModule, MatButtonModule, MatSelectModule, MatToolbarModule, MatT
     UpgradeComponent,
     ProcessingComponent,
     CeramicsFormComponent,
+    RednotebookFormComponent,
     DataTableComponent,
     DataGridComponent,
     LoadingComponent,
@@ -79,6 +147,7 @@ import { MatCardModule, MatButtonModule, MatSelectModule, MatToolbarModule, MatT
     Panel1radarComponent,
     Panel2radarComponent,
     MaterialcardComponent,
+    SplitterPaneRowComponent
   ]
 })
 

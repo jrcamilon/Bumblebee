@@ -1,24 +1,11 @@
 <div class="main-content" >
     <div class="container-fluid">
 
-<!-- To REMOVE -->
-    <div  style="padding-top: 10px; padding-bottom: 10px">
-        <div>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-primary" (click)="prev()">PREV</button>
-                    <button type="button" class="btn btn-primary" (click)="clear()">CLEAR</button>
-                    <button type="button" class="btn btn-primary" (click)="next()">NEXT</button>
-                    <button type="button" class="btn btn-primary" *ngIf="isFormsDisabled" (click)="disable()">DISABLE</button>
-                    <button type="button" class="btn btn-primary" *ngIf="!isFormsDisabled" (click)="disable()">ENABLE</button>
-                </div>
-        </div>
-    </div>
-
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="header">
-                        <h4 class="title">Ceramic Processing Details</h4>
+                        <h4 class="title">Elephantine Processing Details</h4>
                     </div>
                     <div class="content">
                         <form [formGroup]="ceramicsForm">
@@ -190,7 +177,8 @@
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-info btn-fill pull-right" (click)="send()">Process Record</button>
+                            <button type="submit" class="btn btn-info btn-fill pull-right" (click)="send()">{{buttonMode}}</button>
+    
                             <div class="clearfix"></div>
                         </form>
                     </div>

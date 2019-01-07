@@ -19,6 +19,7 @@ export class MapsComponent implements OnInit {
 
   constructor(private _ds: DataService ) {
     this._ds.elephantineData.subscribe(res => {
+      this.selectedArtifactObject = res[0];
       this.markers = res.map(rec => {
         return new Object({lat: rec.lat, lng: rec.lng});
       });
@@ -43,7 +44,6 @@ export class MapsComponent implements OnInit {
   public onMarkerClick(event: any, index: any) {
     console.log(this.elephantineData[index]);
     this.selectedArtifactObject = this.elephantineData[index];
-
     this.open();
   }
 

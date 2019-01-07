@@ -18,8 +18,37 @@
   
               <kendo-splitter-pane>
                 <div class="pane-content">
-                  <h3>Inner splitter / center pane</h3>
-                  <p>Resizable only.</p>
+                  <app-splitter-pane-row [rowTitle]="'Record ID'" [rowValue]="selectedArtifactObject.id"></app-splitter-pane-row>
+                  <app-splitter-pane-row [rowTitle]="'Locus Number'" [rowValue]="selectedArtifactObject.locusNum"></app-splitter-pane-row>
+                  <app-splitter-pane-row [rowTitle]="'Object Group Number'" [rowValue]="selectedArtifactObject.objectGroupNum"></app-splitter-pane-row>
+                  <app-splitter-pane-row [rowTitle]="'Object Number'" [rowValue]="selectedArtifactObject.objectNum"></app-splitter-pane-row>
+                  <app-splitter-pane-row [rowTitle]="'Number of Objects'" [rowValue]="selectedArtifactObject.numberOfObjects"></app-splitter-pane-row>
+                  <app-splitter-pane-row [rowTitle]="'Type Number'" [rowValue]="selectedArtifactObject.typeNum"></app-splitter-pane-row>
+                  <app-splitter-pane-row [rowTitle]="'RL Number'" [rowValue]="selectedArtifactObject.rlNum"></app-splitter-pane-row>
+                  <app-splitter-pane-row [rowTitle]="'Sheet Number'" [rowValue]="selectedArtifactObject.sheetNum"></app-splitter-pane-row>
+                  
+
+                  <div class="row">
+                    <div class="col-xs-12 col-sm-12">
+                        <p><b>Type Description</b></p>
+                    </div>
+                    <div class="col-xs-12 col-sm-12">
+                        <p>{{selectedArtifactObject.typeDescription}}</p>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-xs-12 col-sm-12">
+                        <p><b>Comments</b></p>
+                    </div>
+                    <div class="col-xs-12 col-sm-12">
+                        <p>{{selectedArtifactObject.comments}} </p>
+                    </div>
+                  </div>
+
+
+
+           
                 </div>
               </kendo-splitter-pane>
   
@@ -35,15 +64,15 @@
   
           <kendo-splitter-pane size="200px">
             <div class="pane-content">
-              <h3>Outer splitter / Middle pane</h3>
-              <p>Resizable only.</p>
+                <h3>Feature Not Implemented</h3>
+                <p>Empty Panel</p>
             </div>
           </kendo-splitter-pane>
   
           <kendo-splitter-pane [resizable]="false" size="200px">
             <div class="pane-content">
-              <h3>Outer splitter / Bottom pane</h3>
-              <p>Non-resizable and non-collapsible.</p>
+              <h3>Feature Not Implemented</h3>
+              <p>Empty Panel</p>
             </div>
           </kendo-splitter-pane>
         </kendo-splitter>

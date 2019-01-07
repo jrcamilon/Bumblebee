@@ -7,10 +7,12 @@
         <div *ngIf="isPanel1">
             <kendo-chart>
                 <kendo-chart-series>
-                    <kendo-chart-series-item type="radarLine" name="Total Artifacts" [data]="panel1Data" field="value"
-                        categoryField="name">
+                    <kendo-chart-series-item type="radarLine" name="Weight" [data]="chartdata" field="weight"
+                        categoryField="type">
                     </kendo-chart-series-item>
-
+                    <kendo-chart-series-item type="radarLine" name="Count" [data]="chartdata" field="count"
+                    categoryField="type">
+                </kendo-chart-series-item>
                 </kendo-chart-series>
                 <kendo-chart-value-axis>
                     <kendo-chart-value-axis-item [labels]="{ format: 'P0' }">
@@ -22,7 +24,7 @@
         <div *ngIf="isPanel2">
             <kendo-chart>
                 <kendo-chart-series>
-                    <kendo-chart-series-item type="radarLine" name="value" [data]="panel2Data" field="value" categoryField="name">
+                    <kendo-chart-series-item type="radarLine" name="Total Artifacts" [data]="chartdata" field="weightPercent" categoryField="fabric">
                     </kendo-chart-series-item>
 
                 </kendo-chart-series>
@@ -35,46 +37,58 @@
         </div>
 
         <div *ngIf="isPanel3">
-            <kendo-chart>
-                <kendo-chart-series>
-                    <kendo-chart-series-item type="radarLine" name="value" [data]="banksData" field="pre" categoryField="name">
-                    </kendo-chart-series-item>
-
-                </kendo-chart-series>
-                <kendo-chart-value-axis>
-                    <kendo-chart-value-axis-item [labels]="{ format: 'P0' }">
-                    </kendo-chart-value-axis-item>
-                </kendo-chart-value-axis>
-                <kendo-chart-legend position="bottom"></kendo-chart-legend>
-            </kendo-chart>
+                <kendo-chart>
+                        <kendo-chart-category-axis>
+                                <kendo-chart-category-axis-item [categories]="['NSI', 'NSII', 'NSIII', 'MARL']">
+                                </kendo-chart-category-axis-item>
+                            </kendo-chart-category-axis>
+                        <kendo-chart-series>
+                          <kendo-chart-series-item type="bar" name="Interior" [stack]="{ type: '100%' }" [data]="[1, 2, 3, 5]">
+                          </kendo-chart-series-item>
+                          <kendo-chart-series-item type="bar" name = "Exterior" [data]="[1, 1, 1, 1]">
+                          </kendo-chart-series-item>
+                          <kendo-chart-series-item type="bar" name = "Null" [data]="[1, 1, 1, 1]">
+                            </kendo-chart-series-item>
+                            <kendo-chart-series-item type="bar" name = "Int / Ext" [data]="[1, 1, 1, 1]">
+                            </kendo-chart-series-item>
+                        </kendo-chart-series>
+                      </kendo-chart>
         </div>
         <div *ngIf="isPanel4">
-            <kendo-chart>
-                <kendo-chart-series>
-                    <kendo-chart-series-item type="radarLine" name="value" [data]="banksData" field="pre" categoryField="name">
-                    </kendo-chart-series-item>
-
-                </kendo-chart-series>
-                <kendo-chart-value-axis>
-                    <kendo-chart-value-axis-item [labels]="{ format: 'P0' }">
-                    </kendo-chart-value-axis-item>
-                </kendo-chart-value-axis>
-                <kendo-chart-legend position="bottom"></kendo-chart-legend>
-            </kendo-chart>
+                <kendo-chart>
+                        <kendo-chart-category-axis>
+                                <kendo-chart-category-axis-item [categories]="['NSI', 'NSII', 'NSIII', 'MARL']">
+                                </kendo-chart-category-axis-item>
+                            </kendo-chart-category-axis>
+                        <kendo-chart-series>
+                                <kendo-chart-series-item type="bar" name="Interior" [stack]="{ type: '100%' }" [data]="[1, 2, 3, 5]">
+                                    </kendo-chart-series-item>
+                                    <kendo-chart-series-item type="bar" name = "Exterior" [data]="[1, 1, 1, 1]">
+                                    </kendo-chart-series-item>
+                                    <kendo-chart-series-item type="bar" name = "Null" [data]="[1, 1, 1, 1]">
+                                      </kendo-chart-series-item>
+                                      <kendo-chart-series-item type="bar" name = "Int / Ext" [data]="[1, 1, 1, 1]">
+                                      </kendo-chart-series-item>
+                        </kendo-chart-series>
+                      </kendo-chart>
         </div>
         <div *ngIf="isPanel5">
-            <kendo-chart>
-                <kendo-chart-series>
-                    <kendo-chart-series-item type="radarLine" name="value" [data]="banksData" field="pre" categoryField="name">
-                    </kendo-chart-series-item>
-
-                </kendo-chart-series>
-                <kendo-chart-value-axis>
-                    <kendo-chart-value-axis-item [labels]="{ format: 'P0' }">
-                    </kendo-chart-value-axis-item>
-                </kendo-chart-value-axis>
-                <kendo-chart-legend position="bottom"></kendo-chart-legend>
-            </kendo-chart>
+                <kendo-chart>
+                        <kendo-chart-title text="Sales funnel"></kendo-chart-title>
+                        <kendo-chart-series>
+                          <kendo-chart-series-item type="funnel" [data]="model"
+                                                   field="count" categoryField="stat" colorField="color">
+                            <kendo-chart-series-item-labels background="none" color="white" format="N0">
+                            </kendo-chart-series-item-labels>
+                          </kendo-chart-series-item>
+                        </kendo-chart-series>
+                        <kendo-chart-tooltip>
+                          <ng-template kendoChartSeriesTooltipTemplate let-category="category">
+                              {{ category }}
+                          </ng-template>
+                        </kendo-chart-tooltip>
+                        <kendo-chart-legend [visible]="true"></kendo-chart-legend>
+                      </kendo-chart>
         </div>
         <div *ngIf="isPanel6">
             <kendo-chart>
@@ -91,32 +105,40 @@
             </kendo-chart>
         </div>
         <div *ngIf="isPanel7">
-            <kendo-chart>
-                <kendo-chart-series>
-                    <kendo-chart-series-item type="radarLine" name="value" [data]="banksData" field="pre" categoryField="name">
-                    </kendo-chart-series-item>
-
-                </kendo-chart-series>
-                <kendo-chart-value-axis>
-                    <kendo-chart-value-axis-item [labels]="{ format: 'P0' }">
-                    </kendo-chart-value-axis-item>
-                </kendo-chart-value-axis>
-                <kendo-chart-legend position="bottom"></kendo-chart-legend>
-            </kendo-chart>
+                <kendo-chart>
+                        <kendo-chart-title text="Sales funnel"></kendo-chart-title>
+                        <kendo-chart-series>
+                          <kendo-chart-series-item type="funnel" [data]="model"
+                                                   field="count" categoryField="stat" colorField="color">
+                            <kendo-chart-series-item-labels background="none" color="white" format="N0">
+                            </kendo-chart-series-item-labels>
+                          </kendo-chart-series-item>
+                        </kendo-chart-series>
+                        <kendo-chart-tooltip>
+                          <ng-template kendoChartSeriesTooltipTemplate let-category="category">
+                              {{ category }}
+                          </ng-template>
+                        </kendo-chart-tooltip>
+                        <kendo-chart-legend [visible]="true"></kendo-chart-legend>
+                      </kendo-chart>
         </div>
         <div *ngIf="isPanel8">
-            <kendo-chart>
-                <kendo-chart-series>
-                    <kendo-chart-series-item type="radarLine" name="value" [data]="banksData" field="pre" categoryField="name">
-                    </kendo-chart-series-item>
-
-                </kendo-chart-series>
-                <kendo-chart-value-axis>
-                    <kendo-chart-value-axis-item [labels]="{ format: 'P0' }">
-                    </kendo-chart-value-axis-item>
-                </kendo-chart-value-axis>
-                <kendo-chart-legend position="bottom"></kendo-chart-legend>
-            </kendo-chart>
+                <kendo-chart>
+                        <kendo-chart-title text="Sales funnel"></kendo-chart-title>
+                        <kendo-chart-series>
+                          <kendo-chart-series-item type="funnel" [data]="model"
+                                                   field="count" categoryField="stat" colorField="color">
+                            <kendo-chart-series-item-labels background="none" color="white" format="N0">
+                            </kendo-chart-series-item-labels>
+                          </kendo-chart-series-item>
+                        </kendo-chart-series>
+                        <kendo-chart-tooltip>
+                          <ng-template kendoChartSeriesTooltipTemplate let-category="category">
+                              {{ category }}
+                          </ng-template>
+                        </kendo-chart-tooltip>
+                        <kendo-chart-legend [visible]="true"></kendo-chart-legend>
+                      </kendo-chart>
         </div>
     </mat-card-content>
     <!-- <mat-card-actions>

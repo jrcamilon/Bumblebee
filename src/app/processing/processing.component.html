@@ -1,20 +1,43 @@
-<!-- 
 
+<mat-toolbar>
+    
+        <div class="col-md-6">
+            <mat-form-field>
+                <mat-select >
+                    <mat-option *ngFor="let form of forms; let i = index" [value]="selection" (click)="onFormSelect(forms[i])">
+                        {{forms[i]}}
+                    </mat-option>
+                    </mat-select>
+                </mat-form-field>
+        </div>
+        <div class="col-md-6">
+
+        <div style="float: right">
+                <!-- <span><button mat-icon-button><mat-icon>edit</mat-icon></button></span>
+                <span><button mat-icon-button><mat-icon>undo</mat-icon></button></span>
+                <span><button mat-icon-button (click)="save()"><mat-icon>save</mat-icon></button></span> -->
+                <span ><button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
+                        <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="save()">
+                            <mat-icon>unarchive</mat-icon>
+                            <span >Save Record to DB</span>
+                        </button>
+                        <button mat-menu-item disabled>
+                            <mat-icon>delete_forever</mat-icon>
+                            <span>Delete Record from DB</span>
+                        </button>
+                    </mat-menu>
+                </span>
+        </div>
+        
+        </div>
+    
+</mat-toolbar>
+        
 <div class="main-content">
     <div class="container-fluid">
-
-                    <mat-form-field>
-                        <mat-select placeholder="Data Set">
-                            <mat-option *ngFor="let form of forms; let i = index" [value]="selection" (click)="onFormSelect(forms[i])">
-                            {{forms[i]}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-
-                <app-table-grid [data]="data" type="Red Notebook" *ngIf="selection === 'Red Notebook'"></app-table-grid>
-                <app-table-grid [data]="data" type="Elephantine" *ngIf="selection === 'Elephantine'"></app-table-grid>
-
-
+        <app-ceramics-form *ngIf="selection === 'Elephantine'"></app-ceramics-form>
+        <app-rednotebook-form *ngIf="selection === 'Red Notebook'"></app-rednotebook-form>
 
     </div>
-</div> -->
+</div> 

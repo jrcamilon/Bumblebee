@@ -1,26 +1,26 @@
 <div class="main-content" >
     <div class="container-fluid">
         <!-- Primary Row showing the percentage of fabrics by count and weight -->
-        <div class="primaryDashboardRow row">
-            <div id='panel-1' class="col-lg-6"><app-materialcard Title="Fabric Frequency" Content="panel1"> </app-materialcard>  </div>
+        <div class="primaryDashboardRow row blank">
+            <div id='panel-1' class="col-lg-6"><app-materialcard [Data]="[panel1Data]" Title="Fabric Frequency" Content="panel1"> </app-materialcard>  </div>
             <div id='panel-2' class="col-lg-6"><app-materialcard Title="Fabric Total Weight " Content="panel2"> </app-materialcard> </div>
         </div>
         <!-- Secondary row showing the percentage of fabrics that were blackened on
         the interior, exterior, none or both -->
         
-        Fire Blackened
+ 
         
-        <div class="secondaryDashboardRow row">
-                <div  id='panel-3' class="col-lg-3"> <app-materialcard Title="Interior" Content="panel1"> </app-materialcard>   </div>
-                <div  id='panel-4' class="col-lg-3"> <app-materialcard Title="Exterior" Content="panel1"> </app-materialcard> </div>
-                <div  id='panel-5'class="col-lg-3"> <app-materialcard Title="Null" Content="panel1"> </app-materialcard> </div>
-                <div  id='panel-6' class="col-lg-3"> <app-materialcard Title="Interior / Exterior" Content="panel1"> </app-materialcard> </div>
+        <div class="secondaryDashboardRow row blank">
+                <div  id='panel-3' class="col-lg-6"> <app-materialcard Title="Blackened" Content="panel3"> </app-materialcard>   </div>
+                <div  id='panel-4' class="col-lg-6"> <app-materialcard Title="Not Blackened" Content="panel4"> </app-materialcard> </div>
+                <!-- <div  id='panel-5'class="col-lg-3"> <app-materialcard Title="Null" Content="panel1"> </app-materialcard> </div>
+                <div  id='panel-6' class="col-lg-3"> <app-materialcard Title="Interior / Exterior" Content="panel1"> </app-materialcard> </div> -->
         </div>
         <!-- Third Row showing the percentage of weight and count per type Descriptions  -->
-        Type Topology
-        <div class="thirdDashboardRow row">
-                <div id='panel-7' class="col-lg-7"> <app-materialcard Title="Interior" Content="panel1"> </app-materialcard> </div>
-                <div id='panel-8'class="col-lg-5"> <app-materialcard Title="Interior" Content="panel1"> </app-materialcard> </div>
+   
+        <div class="thirdDashboardRow row blank">
+                <div id='panel-7' class="col-lg-7"> <app-materialcard Title="Type By Count" Content="panel7"> </app-materialcard> </div>
+                <div id='panel-8'class="col-lg-5"> <app-materialcard Title="Type By Weight" Content="panel8"> </app-materialcard> </div>
         </div>
     </div>
 </div>

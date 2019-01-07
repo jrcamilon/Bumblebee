@@ -21,13 +21,34 @@
       </agm-map>
 
       <!-- Form Selector -->
-      <mat-form-field>
-        <mat-select placeholder="Data Set">
-            <mat-option *ngFor="let form of forms; let i = index" [value]="selection" (click)="onFormSelect(forms[i])">
-              {{forms[i]}}
-            </mat-option>
-          </mat-select>
-      </mat-form-field>
+      <div class="row">
+        <div class="col-md-6">
+            <mat-form-field>
+                <mat-select placeholder="Data Set">
+                    <mat-option *ngFor="let form of forms; let i = index" [value]="selection" (click)="onFormSelect(forms[i])">
+                      {{forms[i]}}
+                    </mat-option>
+                  </mat-select>
+              </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          <div style="float: right;">
+              <button mat-icon-button [matMenuTriggerFor]="menu">
+                  <mat-icon>save_alt</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item>
+                    <mat-icon>picture_as_pdf</mat-icon>
+                    <span>Export to PDF</span>
+                  </button>
+                  <button mat-menu-item>
+                    <mat-icon>sort</mat-icon>
+                    <span>Export to PDF</span>
+                  </button>
+                </mat-menu>
+          </div>
+        </div>
+      </div>
 
       <!-- Two Grid Forms -->
       <app-table-grid [data]="data" type="Red Notebook" *ngIf="selection === 'Red Notebook'" [tableHeight]="tableHeight"></app-table-grid>

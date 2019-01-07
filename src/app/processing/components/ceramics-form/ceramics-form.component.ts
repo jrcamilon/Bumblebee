@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
 import { DataService } from 'app/data.service';
 import { Subscription } from 'rxjs';
 import { ElephantModel } from '../models/elephant-model';
+import { CeramicsFormService } from './ceramics-form.service';
 
 @Component({
   selector: 'app-ceramics-form',
@@ -17,16 +18,9 @@ export class CeramicsFormComponent implements OnInit {
   public currentRecordIndex = 0;
   public isFormsDisabled = true;
   public mockData: Subscription;
+  public buttonMode = 'Save';
 
-  constructor(public fb: FormBuilder, private _dataService: DataService) {
-
-    this._dataService.getElephantineData()
-    .subscribe((elephantData: ElephantModel[]) => {
-      console.log(elephantData);
-      this.processMockData(elephantData)
-      this._dataService.elephantineData.next(elephantData);
-    },
-    (err) => console.log(err));
+  constructor(public fb: FormBuilder, private _dataService: DataService, private _formService: CeramicsFormService) {
 
     this.ceramicsForm = fb.group({
       locusNumber: null,
@@ -60,34 +54,16 @@ export class CeramicsFormComponent implements OnInit {
 
   }
 
-  processMockData(data: any[]) {
-    this.elephantData = data;
-    this.loadRecord(this.currentRecordIndex);
-  }
-
   send() {
-    this._dataService.postElephantData(this.ceramicsForm.value);
-  }
-
-  loadRecord(index) {
-    const record = this.elephantData[index];
-    this.ceramicsForm = this.formBuilder.group(record);
-  }
-
-  prev() {
-    if (this.currentRecordIndex !== 0) {
-      this.currentRecordIndex--;
-      this.loadRecord(this.currentRecordIndex);
+    if (this.buttonMode === 'Save') {
+      this._formService.formValue.next(this.ceramicsForm.value);
+      this.buttonMode = 'Edit';
+      this.disable();
+    } else {
+      this.buttonMode = 'Save';
+      this.disable();
     }
-  }
 
-  clear() {
-    this.ceramicsForm.reset();
-  }
-
-  next() {
-    this.currentRecordIndex++;
-    this.loadRecord(this.currentRecordIndex);
   }
 
   disable() {

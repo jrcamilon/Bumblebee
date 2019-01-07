@@ -1,9 +1,8 @@
 <div class="grid-container">
-    <!-- <p   *ngIf="type === 'Elephantine'">Elephantine</p>
-    <p   *ngIf="type === 'Red Notebook'">Red Notebook</p> -->
 
     <!-- Elephantine -->
     <kendo-grid
+    #grid="kendoGrid"
     *ngIf="type === 'Elephantine'"
     [kendoGridBinding]="data"
     [pageSize]="100"
@@ -18,7 +17,6 @@
     [selectedKeys]="mySelection"
     (selectedKeysChange)="onSelectedKeysChange($event)"
     [selectable]="{enabled: true, checkboxOnly: true }">
-
 
     <kendo-grid-column [hidden]="true" field="id" title="ID"></kendo-grid-column>
     <kendo-grid-column field="locusNum" title="Locus Number" [width]="130" ></kendo-grid-column>
@@ -115,6 +113,7 @@
     <kendo-grid-column [hidden]="true" filter="numeric" field="Category.diagnosticTotalCount" title="Diagnostic Total Count" [width]="120"></kendo-grid-column>
 
     <kendo-grid-column [hidden]="true" filter="date" format="{0:d}" field="Category.dateOfEntry" title="Date of Entry" [width]="120" ></kendo-grid-column>
+    
 
         <ng-template kendoGridDetailTemplate let-dataItem>
             <div *ngIf="dataItem.Category">
@@ -170,7 +169,9 @@
                 </section>
             </div>
         </ng-template>
+
         
     </kendo-grid>
+
 
 </div>
