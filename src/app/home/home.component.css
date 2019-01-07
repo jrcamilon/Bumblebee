@@ -1,10 +1,5 @@
-.primaryDashboardRow {
+.primaryDashboardRow, .secondaryDashboardRow, .thirdDashboardRow {
+       margin-bottom: 20px;
 
 }
 
-.secondaryDashboardRow{
-
-}
-.thirdDashboardRow{
-    
-}
