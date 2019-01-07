@@ -53,6 +53,14 @@ export class DataService {
       return tmpData;
     })
   }
+  public getTotalPercentBlackened(): Observable<any> {
+    return this._http.get('http://localhost:3090/dash/panel2')
+    .map((response: Response)=>{
+      const tmpData= response.json();
+      return tmpData;
+    })
+  }
+
   // public getCountOfWeightPerFabric(): Observable<any> {
   //   return this._http.get('http://localhost:3090/weight/count')
   //   .map((response: Response) => {

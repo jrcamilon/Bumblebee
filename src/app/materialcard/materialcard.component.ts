@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input,Output } from '@angular/core';
 import { DataService } from 'app/data.service';
+import { PlotBand } from '@progress/kendo-angular-charts';
 
 @Component({
   selector: 'app-materialcard',
@@ -12,6 +13,7 @@ export class MaterialcardComponent implements OnInit {
   @Input() Subtitle: String;
   @Input() Content: String;
   @Input() Data: any[];
+  @Output() panel3Title: String = 'Blackened';
   isPanel1: any = false;
   isPanel2: any= false;
   isPanel3: any = false;
@@ -21,7 +23,49 @@ export class MaterialcardComponent implements OnInit {
   isPanel7: any = false;
   isPanel8: any= false;
   public chartdata= [];
-
+  public panel2interior =[];
+  public panel2exterior=[];
+  public panel2both=[];
+  public  panel2null = [];
+  public barChartObj  = {};
+  public pieData: any = [
+    { category: 'Eaten', value: 0.42 },
+    { category: 'Not eaten', value: 0.58 }
+  ]
+  // public panel3Title = 'Blackened'
+  public hidden: any = { visible: false };
+  public tempPlotBands: PlotBand[] = [{
+      from: 30, to: 45, color: '#e62325', opacity: 1
+  }, {
+      from: 15, to: 30, color: '#ffc000', opacity: 1
+  }, {
+      from: 0, to: 15, color: '#37b400', opacity: 1
+  }, {
+      from: -10, to: 0, color: '#5392ff', opacity: 1
+  }];
+  public humPlotBands: PlotBand[] = [{
+      from: 0, to: 33, color: '#ccc', opacity: .6
+  }, {
+      from: 33, to: 66, color: '#ccc', opacity: .3
+  }];
+  public mmhgPlotBands: PlotBand[] = [{
+      from: 715, to: 752, color: '#ccc', opacity: .6
+  }, {
+      from: 752, to: 772, color: '#ccc', opacity: .3
+  }];
+  public temp: any[] = [[25, 22]];
+  public hum: any[] = [[45, 60]];
+  public mmhg: any[] = [[750, 762]];
+  public style: string = 'normal';
+  public data: any[] = [
+      [0, 20], [1, 1], [2, 18], [3, 3],
+      [4, 15], [5, 5], [6, 10], [7, 6],
+      [8, 9], [9, 6], [10, 10], [11, 5],
+      [12, 13], [13, 3], [14, 16], [15, 1],
+      [16, 19], [17, 1], [18, 20], [19, 2],
+      [20, 18], [21, 5], [22, 12], [23, 7],
+      [24, 10], [25, 8]
+  ];
   public model = [{
     stat: 'Body Sherds ',
     count: 434823,
@@ -51,12 +95,12 @@ export class MaterialcardComponent implements OnInit {
       { name: "MARL", value: .40 }
     ];
     // Percentage of Fabrics Total Count
-    public panel2Data = [
-      { name: "NS I", value: .24 },
-      { name: "NS II", value: .25 },
-      { name: "NS III", value: .40},
-      { name: "MARL", value: .11 }
-    ];
+    public panel3BlackenedData = [
+      
+    ]
+    public panel3NonBlackenedData = [
+      
+    ]
   constructor(private _ds: DataService) { 
   
 }
@@ -81,6 +125,8 @@ export class MaterialcardComponent implements OnInit {
   runQueries(): void {
 
     this.getCountWeightPerFabric();
+    this.getTotalPercentBlackened();
+
     this.getPercentOfDiagnostics();
     this.getPercentOfFireBlackenedExt();
     this.getCountOfFireBlackenedExt();
@@ -89,7 +135,7 @@ export class MaterialcardComponent implements OnInit {
     this.getPercentOfFireBlackenedIntExt();
     this.getCountOfFireBlackenedIntExt();
   }
-  /** TODO: Remove once validate that Panel 1 Visualization is OK */
+  /** TODO: Remove once validated that Panel 1 Visualization is OK */
   // getTotalWeightPerFabric(): void {
   //   this._ds.getTotalWeightPerFabric().subscribe(data => {
   //     if(this.isPanel2){
@@ -106,6 +152,17 @@ export class MaterialcardComponent implements OnInit {
       }
     });
   }
+  getTotalPercentBlackened(): void {
+    this._ds.getTotalPercentBlackened().subscribe(data => {
+      console.log(data);
+      if(this.isPanel2){
+        this.panel2exterior = data.exterior;
+        this.panel2interior = data.interior;
+        this.panel2both= data.both;
+        this.panel2null = data.empty;
+      }
+    });
+  }
   getPercentOfDiagnostics(): void {
     this._ds.getPercentOfDiagnostics().subscribe(data => {
       console.log(data);
@@ -118,6 +175,9 @@ export class MaterialcardComponent implements OnInit {
   }
   getCountOfFireBlackenedExt(): void {
     this._ds.getCountOfFireBlackenedExt().subscribe(data => {
+      if(this.isPanel3){
+        // this.barChartObj = this.panel3Data;
+      }
       console.log(data);
     });
   }
@@ -141,4 +201,5 @@ export class MaterialcardComponent implements OnInit {
       console.log(data);
     });
   }
+ 
 }
