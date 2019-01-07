@@ -13,7 +13,8 @@ export class MaterialcardComponent implements OnInit {
   @Input() Subtitle: String;
   @Input() Content: String;
   @Input() Data: any[];
-  @Output() Panel2Title: String = 'Count Proportion of Fabrics Blackened';
+  @Output() DynamicTitle: String = 'Count Proportion of Fabrics Blackened';
+
   isPanel1: any = false;
   isPanel2: any= false;
   isPanel3: any = false;
@@ -115,7 +116,12 @@ export class MaterialcardComponent implements OnInit {
   this.isPanel6 = (this.Content === 'panel6');
   this.isPanel7 = (this.Content === 'panel7');
   this.isPanel8 = (this.Content === 'panel8');
-  
+  if(this.isPanel2){
+    this.DynamicTitle = 'Count Proportion of Fabrics Blackened';
+  }
+  if(this.isPanel3){
+    this.DynamicTitle= 'Count Proportion of Types'
+  }
   }
 
 
@@ -127,7 +133,8 @@ export class MaterialcardComponent implements OnInit {
 
     this.getCountWeightPerFabric();
     this.getTotalPercentBlackened();
-
+    this.getTotalPercentType();
+    this.getWeightPercentType();
     this.getPercentOfDiagnostics();
     this.getPercentOfFireBlackenedExt();
     this.getCountOfFireBlackenedExt();
@@ -162,6 +169,19 @@ export class MaterialcardComponent implements OnInit {
         this.panel2both= data.both;
         this.panel2null = data.empty;
       }
+    });
+  }
+  getTotalPercentType():void{
+    this._ds.getTotalPercentType().subscribe(data => {
+      console.log(data);
+      this.model=data;
+    });
+
+  }
+  getWeightPercentType():void{
+    this._ds.getWeightPercentType().subscribe(data => {
+      console.log(data);
+      this.model=data;
     });
   }
   getPercentOfDiagnostics(): void {
@@ -202,26 +222,48 @@ export class MaterialcardComponent implements OnInit {
       console.log(data);
     });
   }
-  changePanel2(): void {
-    let isCount = (this.Panel2Title === 'Count Proportion of Fabrics Blackened');
-    if(isCount){
-      this.Panel2Title = 'Weight Proportion of Fabrics Blackened'
-      this._ds.getWeightPercentBlackened().subscribe(data => {
-          this.panel2exterior = data.exterior;
-          this.panel2interior = data.interior;
-          this.panel2both= data.both;
-          this.panel2null = data.empty;
-      });
-    } 
-    else {
-      this.Panel2Title = 'Count Proportion of Fabrics Blackened'
-      this._ds.getTotalPercentBlackened().subscribe(data => {
-          this.panel2exterior = data.exterior;
-          this.panel2interior = data.interior;
-          this.panel2both= data.both;
-          this.panel2null = data.empty;
-      });
+  changePanel(): void {
+    let isCount ;
+
+    if(this.isPanel2){
+      isCount = (this.DynamicTitle === 'Count Proportion of Fabrics Blackened');
+      if(isCount){
+        this.DynamicTitle = 'Weight Proportion of Fabrics Blackened'
+        this._ds.getWeightPercentBlackened().subscribe(data => {
+            this.panel2exterior = data.exterior;
+            this.panel2interior = data.interior;
+            this.panel2both= data.both;
+            this.panel2null = data.empty;
+        });
+      } 
+      else {
+        this.DynamicTitle = 'Count Proportion of Fabrics Blackened'
+        this._ds.getTotalPercentBlackened().subscribe(data => {
+            this.panel2exterior = data.exterior;
+            this.panel2interior = data.interior;
+            this.panel2both= data.both;
+            this.panel2null = data.empty;
+        });
+      }
+    }else if(this.isPanel3){
+      isCount = (this.DynamicTitle === 'Count Proportion of Types');
+      if(isCount){
+        this.DynamicTitle = 'Weight Proportion of Types'
+        this._ds.getTotalPercentType().subscribe(data => {
+          console.log(data);
+          this.model=data;
+        });
+      } 
+      else {
+        this.DynamicTitle = 'Count Proportion of types'
+        this._ds.getWeightPercentType().subscribe(data => {
+          console.log(data);
+          this.model=data;
+        });
+      }
     }
     
+    
   }
+ 
 }

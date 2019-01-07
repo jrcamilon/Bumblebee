@@ -25,6 +25,7 @@ export class DataService {
     })
   }
 
+  //Processing and Input Data Services
   // Get All Data
   public getRedNotebookData(): Observable<any> {
     return this._http.get('http://localhost:3090/red')
@@ -39,13 +40,9 @@ export class DataService {
     console.log(record);
   }
 
-  // public getTotalWeightPerFabric(): Observable<any> {
-  //   return this._http.get('http://localhost:3090/weight/total')
-  //   .map((response: Response) => {
-  //     const tmpData = response.json();
-  //     return tmpData;
-  //   })
-  // }
+  // Dashboard Services
+
+  // Panel 1 - Total weight and count percentages for fabrics
   public getTotalWeightCountPerFabric(): Observable<any> {
     return this._http.get('http://localhost:3090/dash/panel1')
     .map((response: Response)=>{
@@ -53,6 +50,8 @@ export class DataService {
       return tmpData;
     })
   }
+
+  // Panel 2 - Total count percentages for blackened fabrics
   public getTotalPercentBlackened(): Observable<any> {
     return this._http.get('http://localhost:3090/dash/panel2/count')
     .map((response: Response)=>{
@@ -60,6 +59,7 @@ export class DataService {
       return tmpData;
     })
   }
+  // Panel 2 - Total weight percentages for blackened fabrics
   public getWeightPercentBlackened(): Observable<any> {
     return this._http.get('http://localhost:3090/dash/panel2/weight')
     .map((response: Response)=>{
@@ -68,6 +68,22 @@ export class DataService {
     })
   }
 
+  // Panel 3 - Total count percentages for types 
+  public getTotalPercentType(): Observable<any> {
+    return this._http.get('http://localhost:3090/dash/panel3/count')
+    .map((response: Response) => {
+      const tmpData = response.json();
+      return tmpData;
+    })
+  }
+  // Panel 3 - Total count percentages for types 
+  public getWeightPercentType(): Observable<any> {
+    return this._http.get('http://localhost:3090/dash/panel3/weight')
+    .map((response: Response) => {
+      const tmpData = response.json();
+      return tmpData;
+    })
+  }
   // public getCountOfWeightPerFabric(): Observable<any> {
   //   return this._http.get('http://localhost:3090/weight/count')
   //   .map((response: Response) => {

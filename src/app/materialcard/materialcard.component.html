@@ -1,9 +1,9 @@
 <mat-card>
     <mat-card-header>
 
-            <div *ngIf="isPanel2; then content; else other_content"></div>
+            <div *ngIf="isPanel2 || isPanel3; then content; else other_content"></div>
             <ng-template #content>
-            <mat-card-title (dblclick)="changePanel2()">{{Panel2Title}}</mat-card-title>
+            <mat-card-title (dblclick)="changePanel()">{{DynamicTitle}}</mat-card-title>
 
             </ng-template>
             <ng-template #other_content>
