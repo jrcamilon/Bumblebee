@@ -1,4 +1,3 @@
-
 import { LoadingComponent } from './../../shared/loading/loading.component';
 import { DataGridComponent } from './../../shared/grid/grid.component';
 import { DataTableComponent } from './../../tables/components/data-table/data-table.component';
@@ -20,7 +19,7 @@ import { IconsComponent } from '../../icons/icons.component';
 import { MapsComponent } from '../../maps/maps.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
-import { ProcessingComponent } from '../../processing/processing.component';
+import { ProcessingComponent, SnackBarComponent } from '../../processing/processing.component';
 import { CeramicsFormComponent } from '../../processing/components/ceramics-form/ceramics-form.component';
 import {Panel1radarComponent} from '../../visualizations/panel1radar/panel1radar.component'
 import {Panel2radarComponent} from '../../visualizations/panel2radar/panel2radar.component'
@@ -126,8 +125,8 @@ import { RednotebookFormComponent } from 'app/processing/components/rednotebook-
     DialogModule,
     ButtonsModule,
     LayoutModule
-
   ],
+  entryComponents: [ProcessingComponent, SnackBarComponent],
   declarations: [
     HomeComponent,
     UserComponent,
@@ -147,7 +146,8 @@ import { RednotebookFormComponent } from 'app/processing/components/rednotebook-
     Panel1radarComponent,
     Panel2radarComponent,
     MaterialcardComponent,
-    SplitterPaneRowComponent
+    SplitterPaneRowComponent,
+    SnackBarComponent
   ]
 })
 

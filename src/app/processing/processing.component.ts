@@ -2,6 +2,8 @@ import { TableGridService } from './../tables/components/table-grid/table-grid.s
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'app/data.service';
 import { CeramicsFormService } from './components/ceramics-form/ceramics-form.service';
+import {MatSnackBar} from '@angular/material';
+
 
 
 @Component({
@@ -27,7 +29,12 @@ export class ProcessingComponent implements OnInit {
         break;
     }
   }
-  constructor(private _ds: DataService, public _tableGridService: TableGridService, public _ceramicFormService: CeramicsFormService) {
+  constructor(
+    private _ds: DataService,
+    public _tableGridService: TableGridService,
+    public _ceramicFormService: CeramicsFormService,
+    public snackBar: MatSnackBar
+    ) {
     this._ceramicFormService.formValue.subscribe(value => {
       console.log(value);
       this.formValue = value;
@@ -35,7 +42,7 @@ export class ProcessingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.selection = this.forms[0];
+    this.selection = this.forms[1];
     this.onFormSelect(this.selection);
   }
 
@@ -47,31 +54,28 @@ export class ProcessingComponent implements OnInit {
         break;
       case 'Elephantine':
         // this.getAllElephantine();
-        this._ds.postElephantData(this.formValue)
+        this._ds.postElephantData(this.formValue);
+        this.openSnackBar();
+
         break;
     }
   }
 
-  // getAllElephantine(): void {
-  //   this._ds.getElephantineData()
-  //   .subscribe((res) => {
-  //     this.data = this._tableGridService.processElephantine(res);
-  //     console.log(this.data);
-  //   },
-  //   (err) => {
-  //     alert('error with api');
-  //   });
-  // }
-
-  // getAllRedData(): void {
-  //   this._ds.getRedNotebookData()
-  //   .subscribe((res) => {
-  //     this.data = this._tableGridService.processRed(res);
-  //     console.log(this.data);
-  //   },
-  //   (err) => {
-  //     alert('error with api');
-  //   });
-  // }
+  openSnackBar() {
+    this.snackBar.openFromComponent(SnackBarComponent, {
+      duration: 3000,
+    });
+  }
 
 }
+
+@Component({
+  selector: 'app-snack-bar-component',
+  templateUrl: './snack-bar-component-example-snack.html',
+  styles: [`
+    .snackbar-container {
+      color: white;
+    }
+  `],
+})
+export class SnackBarComponent {}
