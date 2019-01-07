@@ -34,8 +34,6 @@ export class TableGridComponent implements OnInit {
     } else {
         this.selectAllState = 'checked';
     }
-
-    // console.log(this.mySelection);
     this._tg.selectedMarkers.next(this.mySelection);
   }
 
@@ -49,7 +47,6 @@ export class TableGridComponent implements OnInit {
         this.selectAllState = 'unchecked';
     }
 
-    // console.log(this.mySelection);
     this._tg.selectedMarkers.next(this.mySelection);
 }
 

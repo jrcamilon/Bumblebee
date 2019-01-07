@@ -10,7 +10,7 @@ import { ElephantModel } from 'app/processing/components/models/elephant-model';
 })
 
 export class MapsComponent implements OnInit {
-  public opened = true;
+  public opened = false;
   public markers = [{lat: 24.08532911, lng: 32.88544272}];
   public elephantineData: ElephantModel[];
   public mapStyles = config.styles;

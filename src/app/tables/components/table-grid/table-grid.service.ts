@@ -9,6 +9,7 @@ export class TableGridService {
 
 public selectedMarkers = new Subject<any>();
 
+
 constructor() { }
 
 processRed(data: any[]) {
@@ -59,7 +60,6 @@ dateFormatter(stringDate: string, currentFormat: string) {
   }
   return returnDate;
 }
-
 
 processElephantine(data: any[]) {
   return data.map(res => {
