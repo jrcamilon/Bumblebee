@@ -1,7 +1,16 @@
 <mat-card>
     <mat-card-header>
 
+            <div *ngIf="isPanel2; then content; else other_content"></div>
+            <ng-template #content>
+            <mat-card-title (dblclick)="changePanel2()">{{Panel2Title}}</mat-card-title>
+
+            </ng-template>
+            <ng-template #other_content>
             <mat-card-title>{{Title}}</mat-card-title>
+
+            </ng-template>
+
         <!-- <mat-card-subtitle>subtitle</mat-card-subtitle> -->
     </mat-card-header>
     <mat-card-content>

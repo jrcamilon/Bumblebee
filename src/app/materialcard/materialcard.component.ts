@@ -13,7 +13,7 @@ export class MaterialcardComponent implements OnInit {
   @Input() Subtitle: String;
   @Input() Content: String;
   @Input() Data: any[];
-  @Output() panel3Title: String = 'Blackened';
+  @Output() Panel2Title: String = 'Count Proportion of Fabrics Blackened';
   isPanel1: any = false;
   isPanel2: any= false;
   isPanel3: any = false;
@@ -101,6 +101,7 @@ export class MaterialcardComponent implements OnInit {
     public panel3NonBlackenedData = [
       
     ]
+    
   constructor(private _ds: DataService) { 
   
 }
@@ -201,5 +202,26 @@ export class MaterialcardComponent implements OnInit {
       console.log(data);
     });
   }
- 
+  changePanel2(): void {
+    let isCount = (this.Panel2Title === 'Count Proportion of Fabrics Blackened');
+    if(isCount){
+      this.Panel2Title = 'Weight Proportion of Fabrics Blackened'
+      this._ds.getWeightPercentBlackened().subscribe(data => {
+          this.panel2exterior = data.exterior;
+          this.panel2interior = data.interior;
+          this.panel2both= data.both;
+          this.panel2null = data.empty;
+      });
+    } 
+    else {
+      this.Panel2Title = 'Count Proportion of Fabrics Blackened'
+      this._ds.getTotalPercentBlackened().subscribe(data => {
+          this.panel2exterior = data.exterior;
+          this.panel2interior = data.interior;
+          this.panel2both= data.both;
+          this.panel2null = data.empty;
+      });
+    }
+    
+  }
 }

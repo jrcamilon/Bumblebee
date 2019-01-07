@@ -54,7 +54,14 @@ export class DataService {
     })
   }
   public getTotalPercentBlackened(): Observable<any> {
-    return this._http.get('http://localhost:3090/dash/panel2')
+    return this._http.get('http://localhost:3090/dash/panel2/count')
+    .map((response: Response)=>{
+      const tmpData= response.json();
+      return tmpData;
+    })
+  }
+  public getWeightPercentBlackened(): Observable<any> {
+    return this._http.get('http://localhost:3090/dash/panel2/weight')
     .map((response: Response)=>{
       const tmpData= response.json();
       return tmpData;
