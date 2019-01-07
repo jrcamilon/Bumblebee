@@ -32,7 +32,7 @@ import { GridModule } from '@progress/kendo-angular-grid';
    ],
    declarations: [
       AppComponent,
-      AdminLayoutComponent,
+      AdminLayoutComponent
   
    ],
    providers: [],
