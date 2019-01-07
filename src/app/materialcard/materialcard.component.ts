@@ -249,14 +249,15 @@ export class MaterialcardComponent implements OnInit {
       isCount = (this.DynamicTitle === 'Count Proportion of Types');
       if(isCount){
         this.DynamicTitle = 'Weight Proportion of Types'
-        this._ds.getTotalPercentType().subscribe(data => {
+        
+        this._ds.getWeightPercentType().subscribe(data => {
           console.log(data);
           this.model=data;
         });
       } 
       else {
-        this.DynamicTitle = 'Count Proportion of types'
-        this._ds.getWeightPercentType().subscribe(data => {
+        this.DynamicTitle = 'Count Proportion of Types'
+        this._ds.getTotalPercentType().subscribe(data => {
           console.log(data);
           this.model=data;
         });
