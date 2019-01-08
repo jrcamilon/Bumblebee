@@ -4,7 +4,7 @@
     <kendo-grid
     #grid="kendoGrid"
     *ngIf="type === 'Elephantine'"
-    [kendoGridBinding]="data"
+    [kendoGridBinding]="dataGrid"
     [pageSize]="100"
     [pageable]="true"
     [sortable]="true"
@@ -15,6 +15,7 @@
     [selectedKeys]="mySelection"
     [kendoGridSelectBy]="'id'"
     [selectedKeys]="mySelection"
+    (dataStateChange)="dataStateChange($event)"
     (selectedKeysChange)="onSelectedKeysChange($event)"
     [selectable]="{enabled: true, checkboxOnly: true }">
 
@@ -73,7 +74,7 @@
     <!-- Red Notebook -->
     <kendo-grid
     *ngIf="type === 'Red Notebook'"
-    [kendoGridBinding]="data"
+    [kendoGridBinding]="dataGrid"
     [pageSize]="50"
     [pageable]="true"
     [sortable]="true"

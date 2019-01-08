@@ -30,9 +30,9 @@ export class TablesComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.selection = this.forms[0];
+    this.selection = this.forms[1];
+    console.log(this.selection);
     this.onFormSelect(this.selection);
-
   }
 
   loadMapMarkers(idArray: any) {
@@ -59,8 +59,9 @@ export class TablesComponent implements OnInit {
     }
   }
 
-  onFormSelect(form: any) {
-    this.selection = form;
+  onFormSelect(selection: any) {
+    console.log(selection);
+    this.selection = selection;
     switch (this.selection) {
       case 'Red Notebook':
         this.getAllRedData();
@@ -79,6 +80,8 @@ export class TablesComponent implements OnInit {
         this.markers = res.map(rec => {
           return new Object({lat: rec.lat, lng: rec.lng});
         });
+      console.log(this.data);
+      console.log(this.selection);
     },
     (err) => {
       alert('error with api');
@@ -91,6 +94,7 @@ export class TablesComponent implements OnInit {
     .subscribe((res) => {
       this.data = this._tableGirdService.processRed(res);
       this._ds.selectedData.next(this._tableGirdService.processRed(res));
+      console.log(this.data);
     },
     (err) => {
       alert('error with api');

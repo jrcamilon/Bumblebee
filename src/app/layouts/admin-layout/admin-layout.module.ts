@@ -1,6 +1,5 @@
 import { LoadingComponent } from './../../shared/loading/loading.component';
 import { DataGridComponent } from './../../shared/grid/grid.component';
-import { DataTableComponent } from './../../tables/components/data-table/data-table.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -139,7 +138,6 @@ import { RednotebookFormComponent } from 'app/processing/components/rednotebook-
     ProcessingComponent,
     CeramicsFormComponent,
     RednotebookFormComponent,
-    DataTableComponent,
     DataGridComponent,
     LoadingComponent,
     TableGridComponent,
