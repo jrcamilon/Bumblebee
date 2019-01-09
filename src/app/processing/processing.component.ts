@@ -44,6 +44,12 @@ export class ProcessingComponent implements OnInit {
   ngOnInit() {
     this.selection = this.forms[1];
     this.onFormSelect(this.selection);
+
+    // test endpoint
+    this._ds.getEndpointWithParams().subscribe(res => {
+      console.log(res);
+    })
+
   }
 
   save() {

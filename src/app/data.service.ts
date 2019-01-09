@@ -2,7 +2,7 @@ import { GridDataService } from './shared/grid/grid-data.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
-import { Http, Response } from '@angular/http';
+import { Http, Response, Headers } from '@angular/http';
 import 'rxjs/Rx';
 
 @Injectable({
@@ -142,6 +142,18 @@ export class DataService {
 
   public getCountOfFireBlackenedIntExt(): Observable<any> {
     return this._http.get('http://localhost:3090/weight/blackened/total/both')
+    .map((response: Response) => {
+      const tmpData = response.json();
+      return tmpData;
+    })
+  }
+
+  public getEndpointWithParams(_body: any): Observable<any> {
+
+    const body = { message: 'hello node!'}
+    const headers = new Headers({'Content-Type': 'application/json'});
+
+    return this._http.post('http://localhost:3090/test', body, {headers: headers})
     .map((response: Response) => {
       const tmpData = response.json();
       return tmpData;
