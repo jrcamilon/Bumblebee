@@ -25,7 +25,10 @@ import { MaterialcardComponent} from '../../materialcard/materialcard.component'
 import { DialogModule } from '@progress/kendo-angular-dialog';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { QuadseriesstackedbarComponent } from '../../quadseriesstackedbar/quadseriesstackedbar.component';
-import {FunnelComponent} from '../../funnel/funnel.component'
+import {FunnelComponent} from '../../funnel/funnel.component';
+import {FilterbarComponent} from '../../filterbar/filterbar.component';
+import { InputsModule } from '@progress/kendo-angular-inputs';
+import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 
 import { ChartsModule } from '@progress/kendo-angular-charts';
 import { GridModule, ExcelModule, PDFModule } from '@progress/kendo-angular-grid';
@@ -124,7 +127,9 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     MatTooltipModule,
     DialogModule,
     ButtonsModule,
-    LayoutModule
+    LayoutModule,
+    InputsModule,
+    DropDownsModule
   ],
   entryComponents: [ProcessingComponent, SnackBarComponent],
   declarations: [
@@ -148,6 +153,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     DualseriesradarComponent,
     QuadseriesstackedbarComponent,
     FunnelComponent,
+    FilterbarComponent
   ],
    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

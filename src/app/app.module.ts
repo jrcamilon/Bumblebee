@@ -13,6 +13,8 @@ import { AppComponent } from './app.component';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { GridModule } from '@progress/kendo-angular-grid';
+import { InputsModule } from '@progress/kendo-angular-inputs';
+
 // import { DualseriesradarComponent } from './dualseriesradar/dualseriesradar.component';
 
 
@@ -29,11 +31,12 @@ import { GridModule } from '@progress/kendo-angular-grid';
       SidebarModule,
       AppRoutingModule,
       ReactiveFormsModule,
-      GridModule
+      GridModule,
+      InputsModule
    ],
    declarations: [
       AppComponent,
-      AdminLayoutComponent,
+      AdminLayoutComponent
    ],
    providers: [],
    bootstrap: [
