@@ -9,6 +9,7 @@ export class MaterialcardService {
 
 public isCount = new Subject<any>();
 
-constructor() { }
+constructor() {
+}
 
 }

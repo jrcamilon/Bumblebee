@@ -46,9 +46,9 @@ export class ProcessingComponent implements OnInit {
     this.onFormSelect(this.selection);
 
     // test endpoint
-    this._ds.getEndpointWithParams().subscribe(res => {
-      console.log(res);
-    })
+    // this._ds.getEndpointWithParams().subscribe(res => {
+    //   console.log(res);
+    // })
 
   }
 

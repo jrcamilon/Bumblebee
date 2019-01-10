@@ -8,7 +8,6 @@ import { DataService } from 'app/data.service';
   styleUrls: ['./quadseriesstackedbar.component.scss']
 })
 export class QuadseriesstackedbarComponent implements OnInit {
-  @Input() DynamicTitle: String;
   public panel2interior =[];
   public panel2exterior=[];
   public panel2both=[];
@@ -37,25 +36,43 @@ export class QuadseriesstackedbarComponent implements OnInit {
   constructor(
     private _ds: DataService, 
     public _materialCardService: MaterialcardService) { 
-  console.log("Constructor from quad: ", this.DynamicTitle);
-    this._materialCardService.isCount.subscribe(res => {
-      console.log(res);
-    });
+      this._materialCardService.isCount.subscribe(res => {
+        console.log(res);
+        if(res===true || res === undefined){
+          this.getTotalPercentType();
+        } else {
+          this.getWeightPercentType();
+        }
+  
+      });
   }
   ngOnInit() {
+    this.runQueries();
   }
 
+  runQueries(): void {
+    this._materialCardService.isCount.subscribe(res => {
+      if(res===true || res === undefined){
+        this.getTotalPercentType();
+      } else {
+        this.getWeightPercentType();
+      }
+    });
+  }
   getTotalPercentType():void{
-    this._ds.getTotalPercentType().subscribe(data => {
-      console.log(data);
-      this.model=data;
+    this._ds.getTotalPercentBlackened().subscribe(data => {
+      this.panel2exterior = data.exterior;
+      this.panel2interior = data.interior;
+      this.panel2both = data.both;
+      this.panel2null = data.empty;
   });
-
   }
   getWeightPercentType():void{
-    this._ds.getWeightPercentType().subscribe(data => {
-      console.log(data);
-      this.model=data;
-    });
+    this._ds.getWeightPercentBlackened().subscribe(data => {
+      this.panel2exterior = data.exterior;
+      this.panel2interior = data.interior;
+      this.panel2both= data.both;
+      this.panel2null = data.empty;
+  });
   }
 }

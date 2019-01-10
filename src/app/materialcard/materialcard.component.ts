@@ -218,32 +218,21 @@ export class MaterialcardComponent implements OnInit {
     });
   }
   changePanel(): void {
-    let isCount ;
+    let isCount;
     
-    this._materialCardService.isCount.next(isCount);
 
     if(this.isPanel2) {
       isCount = (this.DynamicTitle === 'Count Proportion of Fabrics Blackened');
+   
       if(isCount){
         this.DynamicTitle = 'Weight Proportion of Fabrics Blackened'
-        this._ds.getWeightPercentBlackened().subscribe(data => {
-            this.panel2exterior = data.exterior;
-            this.panel2interior = data.interior;
-            this.panel2both= data.both;
-            this.panel2null = data.empty;
-        });
       } 
       else {
         this.DynamicTitle = 'Count Proportion of Fabrics Blackened'
-        this._ds.getTotalPercentBlackened().subscribe(data => {
-            this.panel2exterior = data.exterior;
-            this.panel2interior = data.interior;
-            this.panel2both = data.both;
-            this.panel2null = data.empty;
-        });
       }
     } else if (this.isPanel3) {
       isCount = (this.DynamicTitle === 'Count Proportion of Types');
+
       if(isCount){
         this.DynamicTitle = 'Weight Proportion of Types'
         
@@ -260,6 +249,7 @@ export class MaterialcardComponent implements OnInit {
         });
       }
     }
+    this._materialCardService.isCount.next(isCount);
     
     
   }
