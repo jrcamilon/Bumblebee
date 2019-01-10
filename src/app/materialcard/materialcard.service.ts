@@ -1,4 +1,4 @@
-import { Subject } from 'rxjs/Subject';
+import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 
@@ -7,9 +7,10 @@ import { Injectable } from '@angular/core';
 })
 export class MaterialcardService {
 
-public isCount = new Subject<any>();
+  public isCount = new BehaviorSubject<any>(true);
+  public panel3IsCount = new BehaviorSubject<any>(true);
 
-constructor() {
-}
+  constructor() {
+  }
 
 }

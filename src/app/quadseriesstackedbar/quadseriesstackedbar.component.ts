@@ -1,5 +1,5 @@
 import { MaterialcardService } from './../materialcard/materialcard.service';
-import { Component, OnInit,Input, Output } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { DataService } from 'app/data.service';
 
 @Component({
@@ -8,10 +8,10 @@ import { DataService } from 'app/data.service';
   styleUrls: ['./quadseriesstackedbar.component.scss']
 })
 export class QuadseriesstackedbarComponent implements OnInit {
-  public panel2interior =[];
-  public panel2exterior=[];
-  public panel2both=[];
-  public  panel2null = [];
+  public panel2interior = [];
+  public panel2exterior = [];
+  public panel2both = [];
+  public panel2null = [];
   public model = [{
     stat: 'Body Sherds ',
     count: 434823,
@@ -34,17 +34,10 @@ export class QuadseriesstackedbarComponent implements OnInit {
     color: '#3eaee2'
   }];
   constructor(
-    private _ds: DataService, 
-    public _materialCardService: MaterialcardService) { 
-      this._materialCardService.isCount.subscribe(res => {
-        console.log(res);
-        if(res===true || res === undefined){
-          this.getTotalPercentType();
-        } else {
-          this.getWeightPercentType();
-        }
-  
-      });
+    private _ds: DataService,
+    public _materialCardService: MaterialcardService) {
+    this.runQueries();
+
   }
   ngOnInit() {
     this.runQueries();
@@ -52,27 +45,28 @@ export class QuadseriesstackedbarComponent implements OnInit {
 
   runQueries(): void {
     this._materialCardService.isCount.subscribe(res => {
-      if(res===true || res === undefined){
+      if (res === true) {
         this.getTotalPercentType();
       } else {
         this.getWeightPercentType();
       }
     });
   }
-  getTotalPercentType():void{
+  getWeightPercentType(): void {
+    this._ds.getWeightPercentBlackened().subscribe(data => {
+
+      this.panel2exterior = data.exterior;
+      this.panel2interior = data.interior;
+      this.panel2both = data.both;
+      this.panel2null = data.empty;
+    });
+  }
+  getTotalPercentType(): void {
     this._ds.getTotalPercentBlackened().subscribe(data => {
       this.panel2exterior = data.exterior;
       this.panel2interior = data.interior;
       this.panel2both = data.both;
       this.panel2null = data.empty;
-  });
-  }
-  getWeightPercentType():void{
-    this._ds.getWeightPercentBlackened().subscribe(data => {
-      this.panel2exterior = data.exterior;
-      this.panel2interior = data.interior;
-      this.panel2both= data.both;
-      this.panel2null = data.empty;
-  });
+    });
   }
 }

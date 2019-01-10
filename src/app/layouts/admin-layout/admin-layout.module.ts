@@ -25,7 +25,7 @@ import { MaterialcardComponent} from '../../materialcard/materialcard.component'
 import { DialogModule } from '@progress/kendo-angular-dialog';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { QuadseriesstackedbarComponent } from '../../quadseriesstackedbar/quadseriesstackedbar.component';
-
+import {FunnelComponent} from '../../funnel/funnel.component'
 
 import { ChartsModule } from '@progress/kendo-angular-charts';
 import { GridModule, ExcelModule, PDFModule } from '@progress/kendo-angular-grid';
@@ -146,7 +146,8 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     SplitterPaneRowComponent,
     SnackBarComponent,
     DualseriesradarComponent,
-    QuadseriesstackedbarComponent
+    QuadseriesstackedbarComponent,
+    FunnelComponent,
   ],
    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

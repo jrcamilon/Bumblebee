@@ -29,12 +29,11 @@ import { GridModule } from '@progress/kendo-angular-grid';
       SidebarModule,
       AppRoutingModule,
       ReactiveFormsModule,
-      GridModule,
+      GridModule
    ],
    declarations: [
       AppComponent,
       AdminLayoutComponent,
-  
    ],
    providers: [],
    bootstrap: [
