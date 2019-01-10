@@ -1,0 +1,17 @@
+<div> 
+    <kendo-chart>
+  <kendo-chart-series>
+      <kendo-chart-series-item type="radarLine" name="Weight" [data]="chartdata" field="weight"
+          categoryField="type">
+      </kendo-chart-series-item>
+      <kendo-chart-series-item type="radarLine" name="Count" [data]="chartdata" field="count"
+          categoryField="type">
+      </kendo-chart-series-item>
+  </kendo-chart-series>
+  <kendo-chart-value-axis>
+      <kendo-chart-value-axis-item [labels]="{ format: 'P0' }">
+      </kendo-chart-value-axis-item>
+  </kendo-chart-value-axis>
+  <kendo-chart-legend position="bottom"></kendo-chart-legend>
+</kendo-chart>
+</div>

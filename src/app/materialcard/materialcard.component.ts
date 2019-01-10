@@ -1,3 +1,4 @@
+import { MaterialcardService } from './materialcard.service';
 import { Component, OnInit, Input,Output } from '@angular/core';
 import { DataService } from 'app/data.service';
 import { PlotBand } from '@progress/kendo-angular-charts';
@@ -103,7 +104,9 @@ export class MaterialcardComponent implements OnInit {
       
     ]
     
-  constructor(private _ds: DataService) { 
+  constructor(
+    private _ds: DataService,
+    public _materialCardService: MaterialcardService) { 
   
 }
   ngOnInit() {
@@ -134,7 +137,7 @@ export class MaterialcardComponent implements OnInit {
     this.getCountWeightPerFabric();
     this.getTotalPercentBlackened();
     this.getTotalPercentType();
-    this.getWeightPercentType();
+    // this.getWeightPercentType();
     this.getPercentOfDiagnostics();
     this.getPercentOfFireBlackenedExt();
     this.getCountOfFireBlackenedExt();
@@ -143,15 +146,7 @@ export class MaterialcardComponent implements OnInit {
     this.getPercentOfFireBlackenedIntExt();
     this.getCountOfFireBlackenedIntExt();
   }
-  /** TODO: Remove once validated that Panel 1 Visualization is OK */
-  // getTotalWeightPerFabric(): void {
-  //   this._ds.getTotalWeightPerFabric().subscribe(data => {
-  //     if(this.isPanel2){
-  //       this.chartdata = data;
-  //     }
-  //     console.log(data);
-  //   });
-  // }
+
   getCountWeightPerFabric(): void {
     this._ds.getTotalWeightCountPerFabric().subscribe(data => {
       console.log(data);
@@ -224,8 +219,10 @@ export class MaterialcardComponent implements OnInit {
   }
   changePanel(): void {
     let isCount ;
+    
+    this._materialCardService.isCount.next(isCount);
 
-    if(this.isPanel2){
+    if(this.isPanel2) {
       isCount = (this.DynamicTitle === 'Count Proportion of Fabrics Blackened');
       if(isCount){
         this.DynamicTitle = 'Weight Proportion of Fabrics Blackened'
@@ -241,18 +238,18 @@ export class MaterialcardComponent implements OnInit {
         this._ds.getTotalPercentBlackened().subscribe(data => {
             this.panel2exterior = data.exterior;
             this.panel2interior = data.interior;
-            this.panel2both= data.both;
+            this.panel2both = data.both;
             this.panel2null = data.empty;
         });
       }
-    }else if(this.isPanel3){
+    } else if (this.isPanel3) {
       isCount = (this.DynamicTitle === 'Count Proportion of Types');
       if(isCount){
         this.DynamicTitle = 'Weight Proportion of Types'
         
         this._ds.getWeightPercentType().subscribe(data => {
           console.log(data);
-          this.model=data;
+          this.model = data;
         });
       } 
       else {

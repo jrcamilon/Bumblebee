@@ -1,0 +1,16 @@
+<kendo-chart>
+    <kendo-chart-category-axis>
+        <kendo-chart-category-axis-item [categories]="['MARL','NSI', 'NSII', 'NSIII','NS V','Empty']">
+        </kendo-chart-category-axis-item>
+    </kendo-chart-category-axis>
+    <kendo-chart-series>
+        <kendo-chart-series-item type="bar" name="Interior" [stack]="{ type: '100%' }" [data]="panel2interior">
+        </kendo-chart-series-item>
+        <kendo-chart-series-item type="bar" name="Exterior" [data]="panel2exterior">
+        </kendo-chart-series-item>
+        <kendo-chart-series-item type="bar" name="Null" [data]="panel2null">
+        </kendo-chart-series-item>
+        <kendo-chart-series-item type="bar" name="Int / Ext" [data]="panel2both">
+        </kendo-chart-series-item>
+    </kendo-chart-series>
+</kendo-chart>

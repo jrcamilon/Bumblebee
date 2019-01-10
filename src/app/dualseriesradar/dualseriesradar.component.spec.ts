@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Panel2radarComponent } from './panel2radar.component';
+import { DualseriesradarComponent } from './dualseriesradar.component';
 
-describe('Panel2radarComponent', () => {
-  let component: Panel2radarComponent;
-  let fixture: ComponentFixture<Panel2radarComponent>;
+describe('DualseriesradarComponent', () => {
+  let component: DualseriesradarComponent;
+  let fixture: ComponentFixture<DualseriesradarComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ Panel2radarComponent ]
+      declarations: [ DualseriesradarComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(Panel2radarComponent);
+    fixture = TestBed.createComponent(DualseriesradarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

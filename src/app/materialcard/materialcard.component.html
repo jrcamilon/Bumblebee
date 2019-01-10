@@ -15,39 +15,10 @@
     </mat-card-header>
     <mat-card-content>
         <div *ngIf="isPanel1">
-            <kendo-chart>
-                <kendo-chart-series>
-                    <kendo-chart-series-item type="radarLine" name="Weight" [data]="chartdata" field="weight"
-                        categoryField="type">
-                    </kendo-chart-series-item>
-                    <kendo-chart-series-item type="radarLine" name="Count" [data]="chartdata" field="count"
-                        categoryField="type">
-                    </kendo-chart-series-item>
-                </kendo-chart-series>
-                <kendo-chart-value-axis>
-                    <kendo-chart-value-axis-item [labels]="{ format: 'P0' }">
-                    </kendo-chart-value-axis-item>
-                </kendo-chart-value-axis>
-                <kendo-chart-legend position="bottom"></kendo-chart-legend>
-            </kendo-chart>
+            <app-dualseriesradar></app-dualseriesradar>
         </div>
         <div *ngIf="isPanel2">
-            <kendo-chart>
-                <kendo-chart-category-axis>
-                    <kendo-chart-category-axis-item [categories]="['MARL','NSI', 'NSII', 'NSIII','NS V','Empty']">
-                    </kendo-chart-category-axis-item>
-                </kendo-chart-category-axis>
-                <kendo-chart-series>
-                    <kendo-chart-series-item type="bar" name="Interior" [stack]="{ type: '100%' }" [data]="panel2interior">
-                    </kendo-chart-series-item>
-                    <kendo-chart-series-item type="bar" name="Exterior" [data]="panel2exterior">
-                    </kendo-chart-series-item>
-                    <kendo-chart-series-item type="bar" name="Null" [data]="panel2null">
-                    </kendo-chart-series-item>
-                    <kendo-chart-series-item type="bar" name="Int / Ext" [data]="panel2both">
-                    </kendo-chart-series-item>
-                </kendo-chart-series>
-            </kendo-chart>
+           <app-quadseriesstackedbar DynamicTitle="DynamicTitle"></app-quadseriesstackedbar>>
         </div>
 
         <div *ngIf="isPanel3">

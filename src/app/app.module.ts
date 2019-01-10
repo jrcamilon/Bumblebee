@@ -13,6 +13,7 @@ import { AppComponent } from './app.component';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { GridModule } from '@progress/kendo-angular-grid';
+// import { DualseriesradarComponent } from './dualseriesradar/dualseriesradar.component';
 
 
 
@@ -32,7 +33,7 @@ import { GridModule } from '@progress/kendo-angular-grid';
    ],
    declarations: [
       AppComponent,
-      AdminLayoutComponent
+      AdminLayoutComponent,
   
    ],
    providers: [],
