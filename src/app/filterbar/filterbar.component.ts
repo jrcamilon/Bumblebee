@@ -7,16 +7,18 @@ import { FiltersService} from './Filters.service'
 })
 export class FilterbarComponent {
   public listItems: any[];
-  public value: any = [{value: 1 },{value: 2 },{value: 3 },{value: 4 },{value: 5 },{value: 6 }];
+  public value: any[];
   constructor(private fs: FiltersService) {
-    
-   }
-
+  }
    ngOnInit(): void {
      //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
      //Add 'implements OnInit' to the class.
       this.fs.LocationFilterArray.subscribe(res=>{
         this.listItems = res;
+        this.value = res;
       });
    }
+   public sayHello(value:any):void{
+    console.log(value);
+  }
 }

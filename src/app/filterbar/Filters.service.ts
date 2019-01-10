@@ -14,4 +14,5 @@ export class FiltersService {
     { text: "45501", value: 6,category: 'locusnum' }]);
 constructor() { }
 
+
 }
