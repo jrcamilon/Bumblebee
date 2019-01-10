@@ -134,7 +134,7 @@ export class MaterialcardComponent implements OnInit {
     this.getCountWeightPerFabric();
     this.getTotalPercentBlackened();
     this.getTotalPercentType();
-    this.getWeightPercentType();
+    // this.getWeightPercentType();
     this.getPercentOfDiagnostics();
     this.getPercentOfFireBlackenedExt();
     this.getCountOfFireBlackenedExt();
@@ -143,15 +143,7 @@ export class MaterialcardComponent implements OnInit {
     this.getPercentOfFireBlackenedIntExt();
     this.getCountOfFireBlackenedIntExt();
   }
-  /** TODO: Remove once validated that Panel 1 Visualization is OK */
-  // getTotalWeightPerFabric(): void {
-  //   this._ds.getTotalWeightPerFabric().subscribe(data => {
-  //     if(this.isPanel2){
-  //       this.chartdata = data;
-  //     }
-  //     console.log(data);
-  //   });
-  // }
+
   getCountWeightPerFabric(): void {
     this._ds.getTotalWeightCountPerFabric().subscribe(data => {
       console.log(data);

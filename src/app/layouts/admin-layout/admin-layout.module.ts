@@ -20,11 +20,11 @@ import { NotificationsComponent } from '../../notifications/notifications.compon
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { ProcessingComponent, SnackBarComponent } from '../../processing/processing.component';
 import { CeramicsFormComponent } from '../../processing/components/ceramics-form/ceramics-form.component';
-import {Panel1radarComponent} from '../../visualizations/panel1radar/panel1radar.component'
-import {Panel2radarComponent} from '../../visualizations/panel2radar/panel2radar.component'
+import {DualseriesradarComponent} from '../../dualseriesradar/dualseriesradar.component';
 import { MaterialcardComponent} from '../../materialcard/materialcard.component';
 import { DialogModule } from '@progress/kendo-angular-dialog';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
+import { QuadseriesstackedbarComponent } from '../../quadseriesstackedbar/quadseriesstackedbar.component';
 
 
 import { ChartsModule } from '@progress/kendo-angular-charts';
@@ -72,6 +72,7 @@ import { MatAutocompleteModule,
   MatTooltipModule} from '@angular/material';
 import { SplitterPaneRowComponent } from 'app/maps/components/splitter-pane-row/splitter-pane-row.component';
 import { RednotebookFormComponent } from 'app/processing/components/rednotebook-form/rednotebook-form.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @NgModule({
   imports: [
@@ -141,12 +142,13 @@ import { RednotebookFormComponent } from 'app/processing/components/rednotebook-
     DataGridComponent,
     LoadingComponent,
     TableGridComponent,
-    Panel1radarComponent,
-    Panel2radarComponent,
     MaterialcardComponent,
     SplitterPaneRowComponent,
-    SnackBarComponent
-  ]
+    SnackBarComponent,
+    DualseriesradarComponent,
+    QuadseriesstackedbarComponent
+  ],
+   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 
 export class AdminLayoutModule {}
