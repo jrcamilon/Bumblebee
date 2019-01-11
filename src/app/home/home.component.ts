@@ -21,9 +21,20 @@ export class HomeComponent implements OnInit {
   }
 
   runQueries(): void {
-   
+   this.getLocusGroups();
+   this.getBlackenedByLocusGroups();
   }
- 
+  
+  getLocusGroups(){
+    this._ds.getLatLangsLocusGroup().subscribe(res=>{
+      console.log('Locus Lat Langs', res);
+    })
+  }
 
+  getBlackenedByLocusGroups(){
+    this._ds.getBlackenedByLocusGroup().subscribe(res=>{
+      console.log('Locus Lat Langs Blackened', res);
+    })
+  }
 
 }

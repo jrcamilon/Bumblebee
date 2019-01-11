@@ -84,6 +84,23 @@ export class DataService {
       return tmpData;
     })
   }
+  // Latitude and longitude for each locus group
+  public getLatLangsLocusGroup(): Observable<any> {
+    return this._http.get('http://localhost:3090/dash/latlang')
+    .map((response: Response) => {
+      const tmpData = response.json();
+      return tmpData;
+    })
+  }
+  // Latitude and longitude for each locus group
+  public getBlackenedByLocusGroup(): Observable<any> {
+    return this._http.get('http://localhost:3090/dash/blackenedlatlang')
+    .map((response: Response) => {
+      const tmpData = response.json();
+      return tmpData;
+    })
+  }
+
 
 
   public getEndpointWithParams(_body: any): Observable<any> {
