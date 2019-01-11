@@ -1,7 +1,7 @@
-import { DataService } from './../../../data.service';
+import { DataService } from 'app/data.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { GridDataResult, PageChangeEvent, SelectAllCheckboxState, DataStateChangeEvent } from '@progress/kendo-angular-grid';
-import { TableGridService } from './table-grid.service';
+import { TableGridService } from 'services/TableGridService/table-grid.service';
 import { GridComponent } from '@progress/kendo-angular-grid';
 import { process, State } from '@progress/kendo-data-query';
 

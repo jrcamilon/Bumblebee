@@ -1,7 +1,7 @@
-import { TableGridService } from './../tables/components/table-grid/table-grid.service';
+import { TableGridService } from 'services/TableGridService/table-grid.service';
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'app/data.service';
-import { CeramicsFormService } from './components/ceramics-form/ceramics-form.service';
+import { CeramicsFormService } from 'services/CeramicFormService/ceramics-form.service';
 import {MatSnackBar} from '@angular/material';
 
 

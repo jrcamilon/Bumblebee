@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'app/data.service';
-import { TableGridService } from './components/table-grid/table-grid.service';
+import { TableGridService } from 'services/TableGridService/table-grid.service';
 import { config } from '../maps/map-config';
 
 

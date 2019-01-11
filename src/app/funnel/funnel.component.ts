@@ -1,4 +1,4 @@
-import { MaterialcardService } from 'app/materialcard/materialcard.service';
+import { MaterialcardService } from 'services/MaterialCardService/materialcard.service';
 import { Component, OnInit, Input, Output } from '@angular/core';
 import { DataService } from 'app/data.service';
 

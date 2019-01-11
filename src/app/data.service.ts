@@ -13,7 +13,7 @@ export class DataService {
   public elephantineData = new Subject<any>();
   public redNotebookData = new Subject<any>();
   public selectedData = new Subject<any>();
-
+  public headers = new Headers({'Content-Type': 'application/json'});
   constructor(private _http: Http) { }
 
   // Get All Data
@@ -85,8 +85,8 @@ export class DataService {
     })
   }
   // Latitude and longitude for each locus group
-  public getLatLangsLocusGroup(): Observable<any> {
-    return this._http.get('http://localhost:3090/dash/latlang')
+  public getLatLangsLocusGroup(_body: any): Observable<any> {
+    return this._http.post('http://localhost:3090/dash/latlang',_body,{headers:this.headers})
     .map((response: Response) => {
       const tmpData = response.json();
       return tmpData;
@@ -106,9 +106,8 @@ export class DataService {
   public getEndpointWithParams(_body: any): Observable<any> {
 
     const body = { message: 'hello node!'}
-    const headers = new Headers({'Content-Type': 'application/json'});
 
-    return this._http.post('http://localhost:3090/test', body, {headers: headers})
+    return this._http.post('http://localhost:3090/test', body, {headers: this.headers})
     .map((response: Response) => {
       const tmpData = response.json();
       return tmpData;

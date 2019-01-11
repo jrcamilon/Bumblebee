@@ -27,6 +27,9 @@ import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { QuadseriesstackedbarComponent } from '../../quadseriesstackedbar/quadseriesstackedbar.component';
 import {FunnelComponent} from '../../funnel/funnel.component';
 import {FilterbarComponent} from '../../filterbar/filterbar.component';
+import { MaindashmapComponent } from '../../maindashmap/maindashmap.component';
+import { DetailspanelComponent } from '../../detailspanel/detailspanel.component';
+
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 
@@ -153,7 +156,9 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     DualseriesradarComponent,
     QuadseriesstackedbarComponent,
     FunnelComponent,
-    FilterbarComponent
+    FilterbarComponent,
+    MaindashmapComponent,
+    DetailspanelComponent
   ],
    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

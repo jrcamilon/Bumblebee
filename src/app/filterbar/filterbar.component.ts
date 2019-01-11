@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FiltersService} from './Filters.service'
+import { FiltersService} from 'services/FilterService/Filters.service';
 @Component({
   selector: 'app-filterbar',
   templateUrl: './filterbar.component.html',
@@ -20,5 +20,6 @@ export class FilterbarComponent {
    }
    public sayHello(value:any):void{
     console.log(value);
+    this.fs.LocationFilterValues.next(value);
   }
 }

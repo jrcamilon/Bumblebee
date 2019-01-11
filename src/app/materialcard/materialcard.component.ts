@@ -1,4 +1,4 @@
-import { MaterialcardService } from './materialcard.service';
+import { MaterialcardService } from 'services/MaterialCardService/materialcard.service';
 import { Component, OnInit, Input, Output } from '@angular/core';
 import { DataService } from 'app/data.service';
 import { PlotBand } from '@progress/kendo-angular-charts';
@@ -40,7 +40,7 @@ export class MaterialcardComponent implements OnInit {
     this.isPanel6 = (this.Content === 'panel6');
     this.isPanel7 = (this.Content === 'panel7');
     this.isPanel8 = (this.Content === 'panel8');
-    if (this.isPanel2) {
+    if (this.isPanel7) {
       this.DynamicTitle = 'Count Proportion of Fabrics Blackened';
     }
     if (this.isPanel3) {
@@ -59,7 +59,8 @@ export class MaterialcardComponent implements OnInit {
   changePanel(): void {
     let isCount;
 
-    if (this.isPanel2) {
+    console.log('hi');
+    if (this.isPanel7) {
       isCount = (this.DynamicTitle === 'Count Proportion of Fabrics Blackened');
       if (isCount) {
         this.DynamicTitle = 'Weight Proportion of Fabrics Blackened'

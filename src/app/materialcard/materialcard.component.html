@@ -1,9 +1,9 @@
 <mat-card>
     <mat-card-header>
 
-        <div *ngIf="isPanel2 || isPanel3; then content; else other_content"></div>
+        <div *ngIf="isPanel3 || isPanel7; then content; else other_content"></div>
         <ng-template #content>
-            <mat-card-title (dblclick)="changePanel()">{{DynamicTitle}}</mat-card-title>
+            <mat-card-title (click)="changePanel()">{{DynamicTitle}}</mat-card-title>
         </ng-template>
         <ng-template #other_content>
             <mat-card-title>{{Title}}</mat-card-title>
@@ -13,31 +13,31 @@
         <!-- <mat-card-subtitle>subtitle</mat-card-subtitle> -->
     </mat-card-header>
     <mat-card-content>
-        <div *ngIf="isPanel1">
-            <app-dualseriesradar></app-dualseriesradar>
+        <div class='map'  *ngIf="isPanel1">
+            <app-maindashmap></app-maindashmap>
+
         </div>
         <div *ngIf="isPanel2">
-            <app-quadseriesstackedbar></app-quadseriesstackedbar>
+           <app-detailspanel></app-detailspanel>
+
         </div>
 
         <div *ngIf="isPanel3">
             <app-funnel></app-funnel>
         </div>
         <div *ngIf="isPanel4">
-            
+            <app-dualseriesradar></app-dualseriesradar>
         </div>
         <div *ngIf="isPanel5">
-
         </div>
         <div *ngIf="isPanel6">
             
         </div>
-        <div class='map' *ngIf="isPanel7" >
-            <app-maps></app-maps>
+        <div *ngIf="isPanel7" >
+            <app-quadseriesstackedbar></app-quadseriesstackedbar>
         </div>
         <div *ngIf="isPanel8">
 
-           
         </div>
     </mat-card-content>
     <!-- <mat-card-actions>
