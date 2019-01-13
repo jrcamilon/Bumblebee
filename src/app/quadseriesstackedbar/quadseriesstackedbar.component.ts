@@ -1,7 +1,7 @@
 import { MaterialcardService } from 'services/MaterialCardService/materialcard.service';
 import { Component, OnInit, Input, Output } from '@angular/core';
 import { DataService } from 'app/data.service';
-
+import {FiltersService} from 'services/FilterService/Filters.service'
 @Component({
   selector: 'app-quadseriesstackedbar',
   templateUrl: './quadseriesstackedbar.component.html',
@@ -35,7 +35,8 @@ export class QuadseriesstackedbarComponent implements OnInit {
   }];
   constructor(
     private _ds: DataService,
-    public _materialCardService: MaterialcardService) {
+    public _materialCardService: MaterialcardService,
+    public _fs: FiltersService) {
     this.runQueries();
 
   }
@@ -53,20 +54,26 @@ export class QuadseriesstackedbarComponent implements OnInit {
     });
   }
   getWeightPercentType(): void {
-    this._ds.getWeightPercentBlackened().subscribe(data => {
+    this._fs.LocationFilterValues.subscribe(item=>{
+      this._ds.getWeightPercentBlackened(item).subscribe(data => {
 
-      this.panel2exterior = data.exterior;
-      this.panel2interior = data.interior;
-      this.panel2both = data.both;
-      this.panel2null = data.empty;
-    });
+        this.panel2exterior = data.exterior;
+        this.panel2interior = data.interior;
+        this.panel2both = data.both;
+        this.panel2null = data.empty;
+      });
+    })
+    
   }
   getTotalPercentType(): void {
-    this._ds.getTotalPercentBlackened().subscribe(data => {
+    this._fs.LocationFilterValues.subscribe(item=>{
+    this._ds.getTotalPercentBlackened(item).subscribe(data => {
       this.panel2exterior = data.exterior;
       this.panel2interior = data.interior;
       this.panel2both = data.both;
       this.panel2null = data.empty;
     });
+  });
+
   }
 }

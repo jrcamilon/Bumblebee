@@ -13,7 +13,7 @@
               *ngFor="let marker of markers; let i = index" 
               [latitude]="marker.lat" 
               [longitude]="marker.lng" 
-              [draggable]="true" (markerClick)="onMarkerClick($event, i)"></agm-marker>
+              [draggable]="true"  (markerClick)="onMarkerClick($event, i)"></agm-marker>
       </agm-marker-cluster>
   </agm-map>
 

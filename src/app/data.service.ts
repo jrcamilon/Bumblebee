@@ -43,8 +43,8 @@ export class DataService {
   // Dashboard Services
 
   // Panel 1 - Total weight and count percentages for fabrics
-  public getTotalWeightCountPerFabric(): Observable<any> {
-    return this._http.get('http://localhost:3090/dash/panel1')
+  public getTotalWeightCountPerFabric(_body: any): Observable<any> {
+    return this._http.post('http://localhost:3090/dash/panel1',_body,{headers:this.headers})
     .map((response: Response)=>{
       const tmpData= response.json();
       return tmpData;
@@ -52,16 +52,16 @@ export class DataService {
   }
 
   // Panel 2 - Total count percentages for blackened fabrics
-  public getTotalPercentBlackened(): Observable<any> {
-    return this._http.get('http://localhost:3090/dash/panel2/count')
+  public getTotalPercentBlackened(_body: any): Observable<any> {
+    return this._http.post('http://localhost:3090/dash/panel2/count',_body,{headers:this.headers})
     .map((response: Response)=>{
       const tmpData= response.json();
       return tmpData;
     })
   }
   // Panel 2 - Total weight percentages for blackened fabrics
-  public getWeightPercentBlackened(): Observable<any> {
-    return this._http.get('http://localhost:3090/dash/panel2/weight')
+  public getWeightPercentBlackened(_body: any): Observable<any> {
+    return this._http.post('http://localhost:3090/dash/panel2/weight',_body,{headers:this.headers})
     .map((response: Response)=>{
       const tmpData= response.json();
       return tmpData;
@@ -69,16 +69,16 @@ export class DataService {
   }
 
   // Panel 3 - Total count percentages for types 
-  public getTotalPercentType(): Observable<any> {
-    return this._http.get('http://localhost:3090/dash/panel3/count')
+  public getTotalPercentType(_body: any): Observable<any> {
+    return this._http.post('http://localhost:3090/dash/panel3/count',_body,{headers:this.headers})
     .map((response: Response) => {
       const tmpData = response.json();
       return tmpData;
     })
   }
   // Panel 3 - Total count percentages for types 
-  public getWeightPercentType(): Observable<any> {
-    return this._http.get('http://localhost:3090/dash/panel3/weight')
+  public getWeightPercentType(_body: any): Observable<any> {
+    return this._http.post('http://localhost:3090/dash/panel3/weight',_body,{headers:this.headers})
     .map((response: Response) => {
       const tmpData = response.json();
       return tmpData;
@@ -92,16 +92,23 @@ export class DataService {
       return tmpData;
     })
   }
-  // Latitude and longitude for each locus group
-  public getBlackenedByLocusGroup(): Observable<any> {
-    return this._http.get('http://localhost:3090/dash/blackenedlatlang')
+
+  // Dashboard Details Totals
+  public getDashboardDetailTotals(body:any): Observable<any> {
+    return this._http.post('http://localhost:3090/dash/details/totals',body,{headers:this.headers})
     .map((response: Response) => {
       const tmpData = response.json();
       return tmpData;
     })
   }
-
-
+  // Dashboard Details Table
+  public getDashboardDetailTable(body:any): Observable<any> {
+    return this._http.post('http://localhost:3090/dash/details/table',body,{headers:this.headers})
+    .map((response: Response) => {
+      const tmpData = response.json();
+      return tmpData;
+    })
+  }
 
   public getEndpointWithParams(_body: any): Observable<any> {
 

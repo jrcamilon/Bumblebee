@@ -1,30 +1,65 @@
-<div class="main-content" >
+<div class="main-content">
     <div class="container-fluid">
-        <div>
-                <app-filterbar></app-filterbar>
+        <!-- <div class="col-lg-6"></div> Template -->
+
+        <!-- Filter Bar -->
+        <div class="row filterBar blank ">
+            <div class="col-lg-12 ">
+                    <button class="fl-right" active='false' (click)="handleResetLocus()" mat-button>Reset to All</button>
+                    <app-filterbar></app-filterbar>
+            </div>
         </div>
-        <!-- Primary Row showing the percentage of fabrics by count and weight -->
+
+        <!-- Primary Row for Map and Details -->
+        <div class="row  primary blank">
+            <div class="panel1 col-lg-6">
+                <mat-card class="card1">
+                    <mat-card-header class="header">
+                        <mat-card-title>Map of Elephantine</mat-card-title> 
+                    </mat-card-header>
+                    <mat-card-content class='map '>
+                        <div >
+                            <app-maindashmap></app-maindashmap>
+                        </div>
+                    </mat-card-content>
+              
+                </mat-card></div>
+                <div class="panel2 row col-lg-6">
+                        <mat-card class="card2">
+                            <mat-card-content class='details '>
+                                <div >
+                                        <app-detailspanel></app-detailspanel>
+
+                                </div>
+                                <div>
+                                        <app-table-grid [data]="data" type="Elephantine" [tableHeight]="350"></app-table-grid>
+
+                                </div>
+                            </mat-card-content>
+                      
+                        </mat-card></div>
+        
+            <!-- <div class="col-lg-6">
+                <app-materialcard Title="Details" Content="panel2"> </app-materialcard>
+            </div> -->
+
+        </div>
+        
+
+
+        
+
+        <!-- 1st of Visualizations
         <div class="primaryDashboardRow row blank">
-            <div  class="col-lg-6"><app-materialcard Title="Map" Content="panel1"> </app-materialcard>  </div>
+            <div  class="col-lg-6"><app-materialcard Title="Select a Locus Group" Content="panel1"> </app-materialcard>  </div>
             <div  class="col-lg-6"><app-materialcard Title="Details" Content="panel2"> </app-materialcard> </div>
-        </div>
-        <!-- Secondary row showing the percentage of fabrics that were blackened on
-        the interior, exterior, none or both -->
-        
- 
-        
-        <div class="secondaryDashboardRow row blank">
-                <div   class="col-lg-6"> <app-materialcard Title="Type Distribution" Content="panel3"> </app-materialcard>   </div>
-                <div   class="col-lg-6"> <app-materialcard Title="Proportion of Fabrics" Content="panel4"> </app-materialcard> </div>
-                <!-- <div  id='panel-5'class="col-lg-3"> <app-materialcard Title="Null" Content="panel1"> </app-materialcard> </div>
-                <div  id='panel-6' class="col-lg-3"> <app-materialcard Title="Interior / Exterior" Content="panel1"> </app-materialcard> </div> -->
-        </div>
-        <!-- Third Row showing the percentage of weight and count per type Descriptions  -->
-   
-        <div class="thirdDashboardRow row blank">
-                <div class="col-lg-7" > <app-materialcard Title="Blackened" Content="panel7"> </app-materialcard> </div>
-                <div class="col-lg-5"> <app-materialcard Title="Extra Card 3" Content="panel8"> </app-materialcard> </div>
-        </div>
+        </div> -->
+        <!-- 2nd row Of Visualizations -->
+             <div class="secondaryDashboardRow row blank">
+                <div   class="col-lg-4"> <app-materialcard Title="Type Distribution" Content="panel3"> </app-materialcard>   </div>
+                <div   class="col-lg-4"> <app-materialcard Title="Proportion of Fabrics" Content="panel4"> </app-materialcard> </div>
+                <div class="col-lg-4">
+                        <app-materialcard Title="Blackened" Content="panel7"> </app-materialcard>
+                </div>
     </div>
 </div>
-

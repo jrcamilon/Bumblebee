@@ -1,6 +1,7 @@
 import { MaterialcardService } from 'services/MaterialCardService/materialcard.service';
 import { Component, OnInit, Input, Output } from '@angular/core';
 import { DataService } from 'app/data.service';
+import { FiltersService } from 'services/FilterService/Filters.service';
 
 @Component({
   selector: 'app-funnel',
@@ -31,7 +32,8 @@ export class FunnelComponent implements OnInit {
   }];
   constructor(
     private _ds: DataService,
-    public _materialCardService: MaterialcardService) {
+    public _materialCardService: MaterialcardService,
+    private _fs: FiltersService) {
     this.runQueries();
 
   }
@@ -48,16 +50,26 @@ export class FunnelComponent implements OnInit {
         this.getWeightPercentType();
       }
     });
+    console.log(this.model);
   }
   getTotalPercentType(): void {
-    this._ds.getTotalPercentType().subscribe(data => {
+    this._fs.LocationFilterValues.subscribe(item=>{
+      console.log(item);
 
-     this.model = data;
-    });
+      this._ds.getTotalPercentType(item).subscribe(data => {
+      
+        this.model = data;
+       });
+    })
+   
   }
   getWeightPercentType(): void {
-    this._ds.getWeightPercentType().subscribe(data => {
+    this._fs.LocationFilterValues.subscribe(item=>{
+      console.log(item);
+    this._ds.getWeightPercentType(item).subscribe(data => {
       this.model = data;
     });
+  });
+
   }
 }

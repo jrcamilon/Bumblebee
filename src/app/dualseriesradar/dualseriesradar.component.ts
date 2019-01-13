@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'app/data.service';
+import { FiltersService } from 'services/FilterService/Filters.service';
 
 @Component({
   selector: 'app-dualseriesradar',
@@ -9,15 +10,19 @@ import { DataService } from 'app/data.service';
 export class DualseriesradarComponent implements OnInit {
   public chartdata= [];
 
-  constructor(private _ds: DataService) { 
+  constructor(private _ds: DataService, private _fs: FiltersService) { 
   
   }
   ngOnInit() {
     this.getCountWeightPerFabric();
   }
   getCountWeightPerFabric(): void {
-    this._ds.getTotalWeightCountPerFabric().subscribe(data => {
+    this._fs.LocationFilterValues.subscribe(item=>{
+
+    this._ds.getTotalWeightCountPerFabric(item).subscribe(data => {
         this.chartdata = data;
     });
+  });
+
   }
 }

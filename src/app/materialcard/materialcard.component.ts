@@ -31,6 +31,7 @@ export class MaterialcardComponent implements OnInit {
     public _materialCardService: MaterialcardService) {
 
   }
+  
   ngOnInit() {
     this.isPanel1 = (this.Content === 'panel1');
     this.isPanel2 = (this.Content === 'panel2');
@@ -59,7 +60,6 @@ export class MaterialcardComponent implements OnInit {
   changePanel(): void {
     let isCount;
 
-    console.log('hi');
     if (this.isPanel7) {
       isCount = (this.DynamicTitle === 'Count Proportion of Fabrics Blackened');
       if (isCount) {
