@@ -23,7 +23,8 @@ export class DetailspanelComponent implements OnInit {
       private _fs: FiltersService
       ) {
     this.getLocusId();
-    
+    this.getDetailsTotals();
+    this.getDetailsTables();
    }
 
   ngOnInit() {

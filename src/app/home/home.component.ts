@@ -42,7 +42,8 @@ export class HomeComponent implements OnInit {
   }
 
   getAllElephantine(): void {
-    this._ds.getElephantineData()
+    this._fs.LocationFilterValues.subscribe(item=>{
+    this._ds.getFilteredElephantineData(item)
     .subscribe((res) => {
       this.data = this._tgs.processElephantine(res);
       this._ds.selectedData.next(this._tgs.processElephantine(res));
@@ -51,6 +52,7 @@ export class HomeComponent implements OnInit {
     (err) => {
       alert('error with api');
     });
+  });
 
   }
   

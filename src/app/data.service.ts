@@ -41,7 +41,14 @@ export class DataService {
   }
 
   // Dashboard Services
-
+ // Get All Data
+ public getFilteredElephantineData(_body): Observable<any> {
+  return this._http.post('http://localhost:3090/dash/elephant',_body,{headers:this.headers})
+  .map((response: Response) => {
+    const tmpData = response.json();
+    return tmpData;
+  })
+}
   // Panel 1 - Total weight and count percentages for fabrics
   public getTotalWeightCountPerFabric(_body: any): Observable<any> {
     return this._http.post('http://localhost:3090/dash/panel1',_body,{headers:this.headers})

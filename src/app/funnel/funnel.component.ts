@@ -54,10 +54,7 @@ export class FunnelComponent implements OnInit {
   }
   getTotalPercentType(): void {
     this._fs.LocationFilterValues.subscribe(item=>{
-      console.log(item);
-
       this._ds.getTotalPercentType(item).subscribe(data => {
-      
         this.model = data;
        });
     })
@@ -65,7 +62,6 @@ export class FunnelComponent implements OnInit {
   }
   getWeightPercentType(): void {
     this._fs.LocationFilterValues.subscribe(item=>{
-      console.log(item);
     this._ds.getWeightPercentType(item).subscribe(data => {
       this.model = data;
     });
