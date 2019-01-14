@@ -25,6 +25,7 @@ export class TablesComponent implements OnInit {
     private _tableGirdService: TableGridService
     ) {
       this._tableGirdService.selectedMarkers.subscribe(data => {
+        console.log(data);
         this.loadMapMarkers(data);
       })
     }

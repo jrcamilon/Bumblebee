@@ -15,7 +15,7 @@
     [selectedKeys]="mySelection"
     [kendoGridSelectBy]="'id'"
     [selectedKeys]="mySelection"
-    (dataStateChange)="dataStateChange($event)"
+    (filterChange)="onFilterChange($event)"
     (selectedKeysChange)="onSelectedKeysChange($event)"
     [selectable]="{enabled: true, checkboxOnly: true }">
 

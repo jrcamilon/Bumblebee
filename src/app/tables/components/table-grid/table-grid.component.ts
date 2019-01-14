@@ -1,6 +1,6 @@
-import { DataService } from 'app/data.service';
+import { DataService } from './../../../data.service';
 import { Component, OnInit, Input } from '@angular/core';
-import { GridDataResult, PageChangeEvent, SelectAllCheckboxState, DataStateChangeEvent } from '@progress/kendo-angular-grid';
+import { SelectAllCheckboxState } from '@progress/kendo-angular-grid';
 import { TableGridService } from 'services/TableGridService/table-grid.service';
 import { GridComponent } from '@progress/kendo-angular-grid';
 import { process, State } from '@progress/kendo-data-query';
@@ -15,7 +15,7 @@ export class TableGridComponent implements OnInit {
     @Input() type: string;
     @Input() tableHeight: number;
     public dataGrid: any[];
-
+    public filterState: any;
     public mySelection: number[] = [];
     public selectAllState: SelectAllCheckboxState = 'unchecked';
 
@@ -26,7 +26,7 @@ export class TableGridComponent implements OnInit {
     }
 
     ngOnInit() {
-        // console.log(this.data);
+
     }
 
     public onSelectedKeysChange(e) {
@@ -41,15 +41,16 @@ export class TableGridComponent implements OnInit {
         this._tg.selectedMarkers.next(this.mySelection);
     }
 
-    public dataStateChange(state: DataStateChangeEvent): void {
-        const newDataState = process(this.data, state);
-        this.dataGrid = newDataState.data;
-        // console.log(this.dataGrid);
+    public onFilterChange(filter: any) {
+        this.filterState = filter;
     }
+
 
     public onSelectAllChange(checkedState: SelectAllCheckboxState, ) {
         if (checkedState === 'checked') {
-            this.mySelection = this.dataGrid.map((item) => item.id);
+            const newState: State = { filter: this.filterState };
+            const newDataState = process(this.data, newState );
+            this.mySelection = newDataState.data.map(ele => { return ele.id});
             this.selectAllState = 'checked';
         } else {
             this.mySelection = [];
@@ -60,12 +61,10 @@ export class TableGridComponent implements OnInit {
 
     public exportToPDF(grid: GridComponent): void {
         console.log(grid);
-        // grid.saveAsPDF();
     }
 
     public exportToExcel(grid: GridComponent): void {
         console.log(grid);
-        // grid.saveAsExcel();
       }
 
 }

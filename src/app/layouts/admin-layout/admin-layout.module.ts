@@ -29,6 +29,7 @@ import {FunnelComponent} from '../../funnel/funnel.component';
 import {FilterbarComponent} from '../../filterbar/filterbar.component';
 import { MaindashmapComponent } from '../../maindashmap/maindashmap.component';
 import { DetailspanelComponent } from '../../detailspanel/detailspanel.component';
+import { DetailgridComponent } from '../../detailgrid/detailgrid.component';
 
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
@@ -158,9 +159,12 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     FunnelComponent,
     FilterbarComponent,
     MaindashmapComponent,
-    DetailspanelComponent
+    DetailspanelComponent,
+    DetailgridComponent
+
+
   ],
-   schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  //  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 
 export class AdminLayoutModule {}
