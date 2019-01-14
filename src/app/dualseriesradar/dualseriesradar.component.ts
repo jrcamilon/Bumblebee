@@ -18,10 +18,18 @@ export class DualseriesradarComponent implements OnInit {
   }
   getCountWeightPerFabric(): void {
     this._fs.LocationFilterValues.subscribe(item=>{
+      if(item.length>0){
+        this._ds.getTotalWeightCountPerFabric(item).subscribe(data => {
+          this.chartdata = data;
+      });
+      } else {
+        this._fs.DefaultFilterArray.subscribe(item=>{
+            this._ds.getTotalWeightCountPerFabric(item).subscribe(data => {
+              this.chartdata = data;
+          });
+      });
 
-    this._ds.getTotalWeightCountPerFabric(item).subscribe(data => {
-        this.chartdata = data;
-    });
+    }
   });
 
   }

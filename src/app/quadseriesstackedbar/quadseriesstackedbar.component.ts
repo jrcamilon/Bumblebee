@@ -55,25 +55,52 @@ export class QuadseriesstackedbarComponent implements OnInit {
   }
   getWeightPercentType(): void {
     this._fs.LocationFilterValues.subscribe(item=>{
-      this._ds.getWeightPercentBlackened(item).subscribe(data => {
+      if(item.length> 0){
+        this._ds.getWeightPercentBlackened(item).subscribe(data => {
 
-        this.panel2exterior = data.exterior;
-        this.panel2interior = data.interior;
-        this.panel2both = data.both;
-        this.panel2null = data.empty;
-      });
+          this.panel2exterior = data.exterior;
+          this.panel2interior = data.interior;
+          this.panel2both = data.both;
+          this.panel2null = data.empty;
+        });
+      } else {
+        this._fs.DefaultFilterArray.subscribe(item=>{
+          this._ds.getWeightPercentBlackened(item).subscribe(data => {
+
+            this.panel2exterior = data.exterior;
+            this.panel2interior = data.interior;
+            this.panel2both = data.both;
+            this.panel2null = data.empty;
+          });
+        })
+      }
+    
     })
     
   }
   getTotalPercentType(): void {
     this._fs.LocationFilterValues.subscribe(item=>{
-    this._ds.getTotalPercentBlackened(item).subscribe(data => {
-      this.panel2exterior = data.exterior;
-      this.panel2interior = data.interior;
-      this.panel2both = data.both;
-      this.panel2null = data.empty;
-    });
-  });
+      if(item.lenth> 0){
+        this._ds.getTotalPercentBlackened(item).subscribe(data => {
+
+          this.panel2exterior = data.exterior;
+          this.panel2interior = data.interior;
+          this.panel2both = data.both;
+          this.panel2null = data.empty;
+        });
+      } else {
+        this._fs.DefaultFilterArray.subscribe(item=>{
+          this._ds.getTotalPercentBlackened(item).subscribe(data => {
+
+            this.panel2exterior = data.exterior;
+            this.panel2interior = data.interior;
+            this.panel2both = data.both;
+            this.panel2null = data.empty;
+          });
+        })
+      }
+    
+    })
 
   }
 }

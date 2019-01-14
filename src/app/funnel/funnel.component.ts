@@ -41,7 +41,7 @@ export class FunnelComponent implements OnInit {
     this.runQueries();
   }
 
-  
+
   runQueries(): void {
     this._materialCardService.panel3IsCount.subscribe(res => {
       if (res === true) {
@@ -53,19 +53,64 @@ export class FunnelComponent implements OnInit {
     console.log(this.model);
   }
   getTotalPercentType(): void {
-    this._fs.LocationFilterValues.subscribe(item=>{
-      this._ds.getTotalPercentType(item).subscribe(data => {
-        this.model = data;
-       });
-    })
+    this._fs.LocationFilterValues.subscribe(item => {
+      if (item.length > 0) {
+        this._ds.getTotalPercentType(item).subscribe(data => {
+          this.model = data.map(item => {
+            return {
+              stat: item.stat,
+              count: item.count / 100,
+              color: item.color
+            }
+          })
+        });
+      } else {
+        this._fs.DefaultFilterArray.subscribe(item => {
+
+          this._ds.getTotalPercentType(item).subscribe(data => {
+            this.model = data.map(item => {
+              return {
+                stat: item.stat,
+                count: item.count / 100,
+                color: item.color
+              }
+            })
+          });
+        });
+
+        }
    
+    })
+
   }
   getWeightPercentType(): void {
-    this._fs.LocationFilterValues.subscribe(item=>{
-    this._ds.getWeightPercentType(item).subscribe(data => {
-      this.model = data;
-    });
-  });
+    this._fs.LocationFilterValues.subscribe(item => {
+      if (item.length > 0) {
+        this._ds.getWeightPercentType(item).subscribe(data => {
+          this.model = data.map(item => {
+            return {
+              stat: item.stat,
+              count: item.count / 100,
+              color: item.color
+            }
+          })
+        });
+      } else {
+        this._fs.DefaultFilterArray.subscribe(item => {
 
+          this._ds.getWeightPercentType(item).subscribe(data => {
+            this.model = data.map(item => {
+              return {
+                stat: item.stat,
+                count: item.count / 100,
+                color: item.color
+              }
+            })
+          });
+        });
+
+        }
+   
+    })
   }
 }

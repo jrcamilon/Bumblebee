@@ -41,13 +41,26 @@ export class DetailspanelComponent implements OnInit {
   }
   getDetailsTotals():void {
     this._fs.LocationFilterValues.subscribe(response=>{
-      this._ds.getDashboardDetailTotals(response).subscribe(res=>{
-        console.log(res);
-        this.totalArtifacts = res.artifact;
-        this.totalWeight = res.weight
-        this.totalFabrics = res.fabric
-        this.totalTypes = res.type
-      })
+      if(response.length>0){
+        this._ds.getDashboardDetailTotals(response).subscribe(res=>{
+          console.log(res);
+          this.totalArtifacts = res.artifact;
+          this.totalWeight = res.weight
+          this.totalFabrics = res.fabric
+          this.totalTypes = res.type
+        })
+      } else {
+        this._fs.DefaultFilterArray.subscribe(response2=>{
+          this._ds.getDashboardDetailTotals(response2).subscribe(res=>{
+            console.log(res);
+            this.totalArtifacts = res.artifact;
+            this.totalWeight = res.weight
+            this.totalFabrics = res.fabric
+            this.totalTypes = res.type
+          })
+        })
+      }
+      
     })
     
   }

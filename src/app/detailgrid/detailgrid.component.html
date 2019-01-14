@@ -16,12 +16,12 @@
 
         <!-- Rest of the stuff -->
         <kendo-grid-column [hidden]="true" filter="numeric" field="diameter" title="Diameter"></kendo-grid-column>
-        <kendo-grid-column [hidden]="true" field="fabric" title="Fabric"></kendo-grid-column>
+        <kendo-grid-column [hidden]="false" field="fabric" title="Fabric"></kendo-grid-column>
         <kendo-grid-column [hidden]="true" field="numberOfObjects" title="Number of Objects"></kendo-grid-column>
         <kendo-grid-column [hidden]="true" filter="numeric" field="typeNum" title="Type Num"></kendo-grid-column>
         <kendo-grid-column [hidden]="true" filter="numeric" field="weight" title="Weight"></kendo-grid-column>
         <kendo-grid-column [hidden]="true" field="Category.application" title="Application"></kendo-grid-column>
-        <kendo-grid-column [hidden]="true" field="Category.blackened" title="Blackened"></kendo-grid-column>
+        <kendo-grid-column [hidden]="false" field="Category.blackened" title="Blackened"></kendo-grid-column>
         <kendo-grid-column [hidden]="true" field="Category.comments" title="Comments"></kendo-grid-column>
         <kendo-grid-column [hidden]="true" field="Category.enteredBy" title="Entered By"></kendo-grid-column>
         <kendo-grid-column [hidden]="true" filter="date" format="{0:d}" field="Category.enteredDate" title="Entered Date"></kendo-grid-column>
@@ -35,7 +35,7 @@
         <kendo-grid-column [hidden]="true" field="Category.sfCoating" title="SF Coating"></kendo-grid-column>
         <kendo-grid-column [hidden]="true" field="Category.sfTreatment" title="SF Treatment"></kendo-grid-column>
         <kendo-grid-column [hidden]="true" filter="numeric" field="Category.sheetNum" title="Sheet Num"></kendo-grid-column>
-        <kendo-grid-column [hidden]="true" field="Category.typeDescription" title="Type Description"></kendo-grid-column>
+        <kendo-grid-column [hidden]="false" field="Category.typeDescription" title="Type Description"></kendo-grid-column>
 
         <ng-template kendoGridDetailTemplate let-dataItem>
             <section *ngIf="dataItem.Category">
