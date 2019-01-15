@@ -1,45 +1,44 @@
 <div class="row ">
     <div class="">
-        <mat-card class="col-lg-3">
+        <mat-card class="col-lg-3" style="background-color: rgba(255, 255, 255, 0);">
             <mat-card-header>
-                <mat-card-title>Total Artifacts</mat-card-title>
+                <mat-card-title><p style="font-size: 15px; text-align: center;"><b style="text-align: center;">Total Artifacts</b></p></mat-card-title>
             </mat-card-header>
             <mat-card-content>
-                {{totalArtifacts}}
+                <p style="text-align: center;">{{totalArtifacts}}</p>
             </mat-card-content>
 
         </mat-card>
-        <mat-card class="col-lg-3">
+        <mat-card class="col-lg-3" style="background-color: rgba(255, 255, 255, 0);">
             <mat-card-header>
-                <mat-card-title>Total Weight </mat-card-title>
+                <mat-card-title><p style="font-size: 15px; text-align: center;"><b style="margin: 0 auto;">Total Weight</b></p></mat-card-title>
             </mat-card-header>
             <mat-card-content>
-                    {{totalWeight}}
+                    <p style="text-align: center;">{{ totalWeight | number }} grams</p>
             </mat-card-content>
 
         </mat-card>
 
 
     <div class="">
-            <mat-card class="col-lg-3">
-                    <mat-card-header>
-                        <mat-card-title>Total  Types</mat-card-title>
-                    </mat-card-header>
-                    <mat-card-content>
-                            {{totalTypes}}
-                    </mat-card-content>
-        
-                </mat-card>
-                <mat-card class="col-lg-3">
-                    <mat-card-header>
-                        <mat-card-title>Total  Fabrics</mat-card-title>
-                    </mat-card-header>
-                    <mat-card-content>
-                            {{totalFabrics}}
-                    </mat-card-content>
-        
-                </mat-card>
-       
+        <mat-card class="col-lg-3" style="background-color:rgba(255, 255, 255, 0);">
+            <mat-card-header>
+                <mat-card-title><p style="font-size: 15px; text-align: center;"><b style="margin: 0 auto;">Total Types</b></p></mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                    <p style="text-align: center;">{{totalTypes}}</p>
+            </mat-card-content>
+
+        </mat-card>
+        <mat-card class="col-lg-3" style="background-color: rgba(255, 255, 255, 0);">
+            <mat-card-header>
+                <mat-card-title><p style="font-size: 15px; text-align: center;"><b style="margin: 0 auto;">Total Fabrics</b></p></mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                    <p style="text-align: center">{{totalFabrics}}</p>
+            </mat-card-content>
+
+        </mat-card>  
     </div>
 
 </div>

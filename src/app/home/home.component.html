@@ -5,14 +5,14 @@
         <!-- Filter Bar -->
         <div class="row filterBar blank ">
             <div class="col-lg-12 ">
-                    <button class="fl-right" active='false' (click)="handleResetLocus()" mat-button>Reset to All</button>
+                    <!-- <button class="fl-right" active='false' (click)="handleResetLocus()" mat-button>Reset to All</button> -->
                     <app-filterbar></app-filterbar>
             </div>
         </div>
 
         <!-- Primary Row for Map and Details -->
         <div class="row  primary blank">
-            <div class="panel1 col-lg-6">
+            <div class="panel1 col-lg-5">
                 <mat-card class="card1">
                     <mat-card-header class="header">
                         <mat-card-title>Map of Elephantine</mat-card-title> 
@@ -24,14 +24,14 @@
                     </mat-card-content>
               
                 </mat-card></div>
-                <div class="panel2 row col-lg-6">
+                <div class="panel2 row col-lg-7">
                         <mat-card class="card2">
                             <mat-card-content class='details '>
                                 <div >
                                         <app-detailspanel></app-detailspanel>
 
                                 </div>
-                                <div>
+                                <div style="padding-top:16px">
                                         <!-- <app-table-grid [data]="data" type="Elephantine" [tableHeight]="350"></app-table-grid> -->
                                         <app-detailgrid [data]="data" type="Elephantine" [tableHeight]="350"></app-detailgrid>
 
