@@ -1,0 +1,6 @@
+<button (click)="toggleLayer('layer1')">R01</button><button (click)="toggleLayer('layer2')">R02</button>
+<div class="parent">
+  <img src="assets/img/floorplan.png" class="image1">
+  <img *ngIf="layer1" src="assets/img/layer1.png" class="image2">
+  <img *ngIf="layer2" src="assets/img/layer2.png" class="image2">
+</div>
