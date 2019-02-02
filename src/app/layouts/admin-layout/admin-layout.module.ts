@@ -1,3 +1,4 @@
+import { HomeMapComponent } from './../../home-map/home-map.component';
 import { LoadingComponent } from './../../shared/loading/loading.component';
 import { DataGridComponent } from './../../shared/grid/grid.component';
 import { NgModule } from '@angular/core';
@@ -42,6 +43,7 @@ import { LayoutModule } from '@progress/kendo-angular-layout';
 
 import { AgmCoreModule } from '@agm/core';
 import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
+
 
 import 'hammerjs';
 import { TableGridComponent } from 'app/tables/components/table-grid/table-grid.component';
@@ -167,7 +169,8 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     DetailgridComponent,
     MainDashboardComponent,
     SiteMapComponent,
-    MainDashMenuComponent
+    MainDashMenuComponent,
+    HomeMapComponent
 
 
   ],

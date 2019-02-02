@@ -1,3 +1,4 @@
+import { HomeMapComponent } from './../../home-map/home-map.component';
 import { Routes } from '@angular/router';
 
 import { HomeComponent } from '../../home/home.component';
@@ -8,6 +9,7 @@ import { NotificationsComponent } from '../../notifications/notifications.compon
 import { ProcessingComponent } from '../../processing/processing.component';
 import { MainDashboardComponent } from '../../main-dashboard/main-dashboard.component';
 
+
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard', component: MainDashboardComponent },
     { path: 'dashboard1', component: HomeComponent },
@@ -16,4 +18,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'maps', component: MapsComponent },
     { path: 'notifications', component: NotificationsComponent },
     { path: 'processing', component: ProcessingComponent },
+    { path: 'homemap', component: HomeMapComponent }
+
+
 ];
