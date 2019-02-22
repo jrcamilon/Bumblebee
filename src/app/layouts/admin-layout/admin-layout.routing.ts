@@ -11,8 +11,8 @@ import { MainDashboardComponent } from '../../main-dashboard/main-dashboard.comp
 
 
 export const AdminLayoutRoutes: Routes = [
-    { path: 'dashboard', component: MainDashboardComponent },
-    { path: 'dashboard1', component: HomeComponent },
+    // { path: 'dashboard', component: MainDashboardComponent },
+    { path: 'dashboard', component: HomeComponent },
     { path: 'user', component: UserComponent },
     { path: 'table', component: TablesComponent },
     { path: 'maps', component: MapsComponent },
