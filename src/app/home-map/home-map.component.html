@@ -1,6 +1,69 @@
-<button (click)="toggleLayer('layer1')">R01</button><button (click)="toggleLayer('layer2')">R02</button>
-<div class="parent">
-  <img src="assets/img/floorplan.png" class="image1">
-  <img *ngIf="layer1" src="assets/img/layer1.png" class="image2">
-  <img *ngIf="layer2" src="assets/img/layer2.png" class="image2">
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+        <button (click)="togglePhases('E1')">Phase E3</button>
+        <button (click)="togglePhases('E2')">Phase E2</button>
+        <button (click)="togglePhases('E3')">Phase E1</button>
+    </div>
+   
+    <div *ngIf="E1FloorPlan">
+      <!-- E1 Layers -->
+      <div class="row">
+        <div class="row">
+          <button *ngFor="let layer of E1Layers" (click)="toggleE1Layers(layer.room)">{{layer.room}}</button>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+              <div class="parent">
+                <img src="assets/img/E1.png" class="image1">
+                  <span *ngFor="let layer of E1Layers">
+                    <img *ngIf="layer.isVisible" [src]="layer.imagePath" class="layers">
+                  </span>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="E2FloorPlan">
+        <!-- E1 Layers -->
+        <div class="row">
+          <div class="row">
+            <button *ngFor="let layer of E2Layers" (click)="toggleE2Layers(layer.room)">{{layer.room}}</button>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+                <div class="parent">
+                  <img src="assets/img/E2.png" class="image1">
+                    <span *ngFor="let layer of E2Layers">
+                      <img *ngIf="layer.isVisible" [src]="layer.imagePath" class="layers">
+                    </span>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="E3FloorPlan">
+          <!-- E1 Layers -->
+          <div class="row">
+            <div class="row">
+              <button *ngFor="let layer of E3Layers" (click)="toggleE3Layers(layer.room)">{{layer.room}}</button>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                  <div class="parent">
+                    <img src="assets/img/E3.png" class="image1">
+                      <span *ngFor="let layer of E3Layers">
+                        <img *ngIf="layer.isVisible" [src]="layer.imagePath" class="layers">
+                      </span>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+    </div> 
 </div>
+

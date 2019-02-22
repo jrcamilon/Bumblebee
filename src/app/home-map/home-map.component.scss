@@ -2,17 +2,21 @@
     position: relative;
     top: 0;
     left: 0;
-  }
-  .image1 {
+}
+
+// Main Floor Plan
+.image1 {
     position: relative;
     top: 0;
     left: 0;
-    width: 768px;
-  }
-  .image2 {
+    width: 100%;
+}
+
+// Images on Top (Red)
+.layers {
     position: absolute;
-    width: 768px;
+    width: 100%;
     top: 1px;
     left: 1px;
     opacity: 20%;
-  }
+}
