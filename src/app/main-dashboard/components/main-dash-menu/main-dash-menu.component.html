@@ -1,0 +1,13 @@
+<div class="row menuContainer">
+  <div class="siteSelectorContainer col-sm-12 col-md-12 col-lg-12">
+    <div class="siteLabel  col-sm-0 col-md-1 col-lg-1">
+      Site:
+    </div>
+    <div class=" col-sm-7 col-md-10 col-lg-10">
+      <kendo-multiselect class="" [data]="listItems" [(ngModel)]="value" [textField]="'text'" [valueField]="'value'"
+        (valueChange)="changeSite($event)"></kendo-multiselect>
+    </div>
+
+
+  </div>
+</div>
