@@ -1,10 +1,14 @@
-<div class="filterBarContainer" 
->
-<kendo-multiselect
+<div class="filterBarContainer">
+  <!-- <kendo-multiselect
 class="kmulti"
         [data]="listItems"
         [(ngModel)]="value"
         [textField]="'text'"
         [valueField]="'value'"
         (valueChange)="sayHello($event)"
-      ></kendo-multiselect>  </div>
+      ></kendo-multiselect>   -->
+  <kendo-dropdownlist class="kmulti" [data]="phaseFilterList" [(ngModel)]="phase" (valueChange)="changePhase($event)">
+  </kendo-dropdownlist>
+  <kendo-multiselect class="kmulti" [data]="roomFilterList" [(ngModel)]="rooms" [textField]="'room'"
+    [valueField]="'room'" (valueChange)="changeRoom($event)"></kendo-multiselect>
+</div>

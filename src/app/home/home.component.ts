@@ -6,6 +6,7 @@ import { DataService } from 'app/data.service';
 import { FiltersService } from 'services/FilterService/Filters.service';
 import { MainDashMapService } from 'services/MainDashMapService/MainDashMap.service';
 import { TableGridService } from 'services/TableGridService/table-grid.service'
+import { HomeFilterService } from 'services/HomeFilterService/HomeFilterService';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -14,16 +15,27 @@ import { TableGridService } from 'services/TableGridService/table-grid.service'
 export class HomeComponent implements OnInit {
   public panel1Data: any[] = [];
   public currentlySelected: String;
+  public currentPhase: String;
+  public currentRooms: any[];
   public data: any[];
   constructor(
     private _ds: DataService,
     private _fs: FiltersService,
     private _ms: MainDashMapService,
-    private _tgs: TableGridService) {
+    private _tgs: TableGridService,
+    private _hfs: HomeFilterService) {
     this._ms.currentLocusGroup.subscribe(item => {
       this.currentlySelected = item;
     })
+    this._hfs.ChosenPhaseFilters.subscribe(phase => {
+      this.currentPhase = phase;
+      console.log(this.currentPhase);
+    });
+    this._hfs.ChosenRoomFilters.subscribe(rooms => {
+      this.currentRooms = rooms;
+      console.log(this.currentRooms);
 
+    });
     this.getAllElephantine();
 
   }
@@ -31,6 +43,17 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.currentlySelected = "All";
     this.getAllElephantine();
+    this._hfs.ChosenPhaseFilters.subscribe(phase => {
+      this.currentPhase = phase;
+      console.log(this.currentPhase);
+    });
+    this._hfs.ChosenRoomFilters.subscribe(rooms => {
+      this.currentRooms = rooms.map(item => {
+        return item.room;
+      });
+      console.log(this.currentRooms);
+
+    });
   }
   handleResetLocus(): void {
 
@@ -56,14 +79,14 @@ export class HomeComponent implements OnInit {
       } else {
         this._fs.DefaultFilterArray.subscribe(item => {
           this._ds.getFilteredElephantineData(item)
-          .subscribe((res) => {
-            this.data = this._tgs.processElephantine(res);
-            this._ds.selectedData.next(this._tgs.processElephantine(res));
+            .subscribe((res) => {
+              this.data = this._tgs.processElephantine(res);
+              this._ds.selectedData.next(this._tgs.processElephantine(res));
 
-          },
-            (err) => {
-              alert('error with api 2');
-            });
+            },
+              (err) => {
+                alert('error with api 2');
+              });
         });
       }
 

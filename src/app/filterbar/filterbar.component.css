@@ -2,6 +2,7 @@
     float:left;
     width:100%
 }
-kmulti {
-    width:100%
+.kmulti {
+    width:50%;
+    padding-right: 5%;
 }
