@@ -44,6 +44,8 @@ import { LayoutModule } from '@progress/kendo-angular-layout';
 import { AgmCoreModule } from '@agm/core';
 import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
 
+import { WebcamModule } from 'ngx-webcam';
+
 
 import 'hammerjs';
 import { TableGridComponent } from 'app/tables/components/table-grid/table-grid.component';
@@ -88,6 +90,7 @@ import { RednotebookFormComponent } from 'app/processing/components/rednotebook-
 
 @NgModule({
   imports: [
+    WebcamModule,
     CommonModule,
     RouterModule.forChild(AdminLayoutRoutes),
     FormsModule,

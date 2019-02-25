@@ -55,6 +55,7 @@
     "hammerjs": "^2.0.0",
     "jquery": "3.3.1",
     "js-marker-clusterer": "^1.0.0",
+    "ngx-webcam": "^0.2.2",
     "perfect-scrollbar": "^1.4.0",
     "rxjs": "6.3.3",
     "rxjs-compat": "^6.3.3",

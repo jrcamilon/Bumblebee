@@ -35,11 +35,6 @@ export class DataService {
       });
   }
 
-  public postElephantData(record) {
-    // post to the db
-    console.log(record);
-  }
-
   // Dashboard Services
   // Get All Data
   public getFilteredElephantineData(_body): Observable<any> {

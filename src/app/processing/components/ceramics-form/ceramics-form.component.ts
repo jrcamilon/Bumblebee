@@ -1,9 +1,9 @@
+import { FormsService } from './../../services/forms.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
 import { DataService } from 'app/data.service';
 import { Subscription } from 'rxjs';
 import { ElephantModel } from '../models/elephant-model';
-import { CeramicsFormService } from './ceramics-form.service';
 
 @Component({
   selector: 'app-ceramics-form',
@@ -19,15 +19,37 @@ export class CeramicsFormComponent implements OnInit {
   public isFormsDisabled = true;
   public mockData: Subscription;
   public buttonMode = 'Save';
+  public formsSubmitted = [];
 
-  constructor(public fb: FormBuilder, private _dataService: DataService, private _formService: CeramicsFormService) {
+  constructor(public fb: FormBuilder, public _dataService: DataService, public _formsService: FormsService) {
 
     this.ceramicsForm = fb.group({
-      locusNumber: null,
-      objectGroupNumber: null,
-      objectNumber: null,
-      numberOfObjects: null,
-      typeDescription: null,
+      locusNumber: ['', Validators.compose([Validators.required])],
+      locusNumPre: ['', Validators.compose([
+        Validators.required,
+        Validators.minLength(1),
+        Validators.pattern('[a-zA-z]*'),
+        Validators.maxLength(1)])],
+      locusNumSuf: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern('[a-zA-z]*'),
+        Validators.minLength(1),
+        Validators.maxLength(1)])],
+      objectGroupNumber: ['', Validators.compose([
+        Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(1),
+        Validators.pattern('[0-9]*')])],
+      objectNumber: ['', Validators.compose([
+        Validators.minLength(1),
+        Validators.maxLength(2),
+        Validators.pattern('[0-9]*')])],
+      numberOfObjects: ['', Validators.compose([
+        Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(4),
+        Validators.pattern('[0-9]*')])],
+      typeDescription: ['', Validators.compose([Validators.required, Validators.minLength(5)])],
       typeNumber: null,
       weight: null,
       fabric: null,
@@ -54,15 +76,11 @@ export class CeramicsFormComponent implements OnInit {
 
   }
 
-  send() {
-    if (this.buttonMode === 'Save') {
-      this._formService.formValue.next(this.ceramicsForm.value);
-      this.buttonMode = 'Edit';
-      this.disable();
-    } else {
-      this.buttonMode = 'Save';
-      this.disable();
-    }
+  submitForm(formValue: any) {
+    console.log(formValue);
+    this.formsSubmitted.push(formValue);
+    this.ceramicsForm.reset();
+    this._formsService.activeForm.next(this.formsSubmitted);
 
   }
 
@@ -70,9 +88,7 @@ export class CeramicsFormComponent implements OnInit {
     const state = this.isFormsDisabled;
     if (state) { this.ceramicsForm.disable();
     } else { this.ceramicsForm.enable(); }
-
     this.isFormsDisabled = !state;
-
   }
 
 

@@ -1,6 +1,5 @@
 
 <mat-toolbar>
-    
         <div class="col-md-6">
             <mat-form-field>
                 <mat-select >
@@ -11,35 +10,68 @@
                 </mat-form-field>
         </div>
         <div class="col-md-6">
-
-        <div style="float: right">
-                <!-- <span><button mat-icon-button><mat-icon>edit</mat-icon></button></span>
-                <span><button mat-icon-button><mat-icon>undo</mat-icon></button></span>
-                <span><button mat-icon-button (click)="save()"><mat-icon>save</mat-icon></button></span> -->
-                <span ><button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
-                        <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="save()">
-                            <mat-icon>unarchive</mat-icon>
-                            <span >Save Record to DB</span>
-                        </button>
-                        <button mat-menu-item disabled>
-                            <mat-icon>delete_forever</mat-icon>
-                            <span>Delete Record from DB</span>
-                        </button>
-                    </mat-menu>
-                </span>
+            <div style="float: right">
+                    <!-- <span><button mat-icon-button><mat-icon>edit</mat-icon></button></span>
+                    <span><button mat-icon-button><mat-icon>undo</mat-icon></button></span>
+                    <span><button mat-icon-button (click)="save()"><mat-icon>save</mat-icon></button></span> -->
+                    <span ><button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
+                            <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="save()">
+                                <mat-icon>unarchive</mat-icon>
+                                <span >Save <b>{{completedForms.length}}</b> Records to DB</span>
+                            </button>
+                            <button mat-menu-item disabled>
+                                <mat-icon>delete_forever</mat-icon>
+                                <span>Delete Record from DB</span>
+                            </button>
+                        </mat-menu>
+                    </span>
+            </div>
         </div>
-        
-        </div>
-    
 </mat-toolbar>
-        
+
+
 <div class="main-content">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div style="text-align:center; padding-top: 20px;" *ngIf="!webcamImage" >
+
+                <div (click)="triggerSnapshot();">
+                    <webcam [height]="500" [width]="500" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
+                            [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
+                            [videoOptions]="videoOptions"
+                            [imageQuality]="1"
+                            (cameraSwitched)="cameraWasSwitched($event)"
+                            (initError)="handleInitError($event)"
+                    ></webcam>
+                    <br/>
+                    <!-- <button class="actionBtn" (click)="triggerSnapshot();">Take A Snapshot</button> -->
+                    <button class="actionBtn" (click)="toggleWebcam();">Add Image</button>
+                    <br/>
+                    <!-- <button class="actionBtn" (click)="showNextWebcam(true);" [disabled]="!multipleWebcamsAvailable">Next Webcam</button>
+                    <input id="cameraSwitchCheckbox" type="checkbox" [(ngModel)]="allowCameraSwitch"><label for="cameraSwitchCheckbox">Allow Camera Switch</label>
+                    <br/> -->
+                    <!-- DeviceId: <input id="deviceId" type="text" [(ngModel)]="deviceId" style="width: 500px">
+                    <button (click)="showNextWebcam(deviceId);">Activate</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+  
+    <div class="snapshot" *ngIf="webcamImage" style="text-align:center; padding-top: 20px;" (click)="onCapturedImageClick()">
+    <!-- <h2>Results</h2> -->
+    <img [src]="webcamImage.imageAsDataUrl" style="height: 500px;"/>
+    </div>
+
+    <h4 *ngIf="errors.length > 0">Messages:</h4>
+    <ul *ngFor="let error of errors">
+    <li>{{error | json}}</li>
+    </ul>
+
     <div class="container-fluid">
         <app-ceramics-form *ngIf="selection === 'Elephantine'"></app-ceramics-form>
         <app-rednotebook-form *ngIf="selection === 'Red Notebook'"></app-rednotebook-form>
     </div>
-
-
 </div> 
 
