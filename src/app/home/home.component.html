@@ -13,11 +13,11 @@
         <!-- Primary Row for Map and Details -->
         <div class="row  primary blank">
             <div class="panel1 col-lg-5">
-                <mat-card class="card1">
+                <mat-card class="card1" style="height: 800px;">
                     <mat-card-header class="header">
                         <mat-card-title>Map of Elephantine</mat-card-title>
                     </mat-card-header>
-                    <mat-card-content class='map '>
+                    <mat-card-content class='map'>
                         <div>
                             <app-home-map></app-home-map>
                         </div>
@@ -26,7 +26,7 @@
                 </mat-card>
             </div>
             <div class="panel2 row col-lg-7">
-                <mat-card class="card2">
+                <mat-card class="card2" style="height: 800px;">
                     <mat-card-content class='details '>
                         <div>
                             <app-detailspanel></app-detailspanel>
@@ -34,7 +34,7 @@
                         </div>
                         <div style="padding-top:16px">
                             <!-- <app-table-grid [data]="data" type="Elephantine" [tableHeight]="350"></app-table-grid> -->
-                            <app-detailgrid [data]="data" type="Elephantine" [tableHeight]="550"></app-detailgrid>
+                            <app-detailgrid [data]="data" type="Elephantine" [tableHeight]="650"></app-detailgrid>
 
                         </div>
                     </mat-card-content>
@@ -58,7 +58,7 @@
             <div  class="col-lg-6"><app-materialcard Title="Details" Content="panel2"> </app-materialcard> </div>
         </div> -->
         <!-- 2nd row Of Visualizations -->
-        <div class="secondaryDashboardRow row blank">
+        <div class="secondaryDashboardRow row blank" style="padding-top: 80px;">
             <div class="col-lg-4">
                 <app-materialcard Title="Type Distribution" Content="panel3"> </app-materialcard>
             </div>
