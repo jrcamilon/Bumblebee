@@ -5,12 +5,12 @@
                 <mat-card-title><p style="font-size: 15px; text-align: center;"><b style="text-align: center;">Total Artifacts</b></p></mat-card-title>
             </mat-card-header>
             <mat-card-content>
-                <p style="text-align: center;">{{totalArtifacts}}</p>
+                <p style="text-align: center;">{{totalArtifacts | number}}</p>
             </mat-card-content>
 
         </mat-card>
         <mat-card class="col-lg-3" style="background-color: rgba(255, 255, 255, 0);">
-            <mat-card-header>
+            <mat-card-header> 
                 <mat-card-title><p style="font-size: 15px; text-align: center;"><b style="margin: 0 auto;">Total Weight</b></p></mat-card-title>
             </mat-card-header>
             <mat-card-content>
@@ -26,7 +26,7 @@
                 <mat-card-title><p style="font-size: 15px; text-align: center;"><b style="margin: 0 auto;">Total Types</b></p></mat-card-title>
             </mat-card-header>
             <mat-card-content>
-                    <p style="text-align: center;">{{totalTypes}}</p>
+                    <p style="text-align: center;">{{totalTypes| number}}</p>
             </mat-card-content>
 
         </mat-card>
@@ -35,7 +35,7 @@
                 <mat-card-title><p style="font-size: 15px; text-align: center;"><b style="margin: 0 auto;">Total Fabrics</b></p></mat-card-title>
             </mat-card-header>
             <mat-card-content>
-                    <p style="text-align: center">{{totalFabrics}}</p>
+                    <p style="text-align: center">{{totalFabrics | number}}</p>
             </mat-card-content>
 
         </mat-card>  
