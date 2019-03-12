@@ -7,6 +7,7 @@ import { FiltersService } from 'services/FilterService/Filters.service';
 import { MainDashMapService } from 'services/MainDashMapService/MainDashMap.service';
 import { TableGridService } from 'services/TableGridService/table-grid.service'
 import { HomeFilterService } from 'services/HomeFilterService/HomeFilterService';
+import {OnlineServiceService} from 'services/OnlineServices/online-service.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -23,10 +24,14 @@ export class HomeComponent implements OnInit {
     private _fs: FiltersService,
     private _ms: MainDashMapService,
     private _tgs: TableGridService,
-    private _hfs: HomeFilterService) {
+    private _hfs: HomeFilterService,
+    private _ofs: OnlineServiceService) {
+    this._ofs.isOnline.subscribe(item => {
+      console.log('Hello From Home: ONLINE: ', item);
+    });
     this._ms.currentLocusGroup.subscribe(item => {
       this.currentlySelected = item;
-    })
+    });
     this._hfs.ChosenPhaseFilters.subscribe(phase => {
       this.currentPhase = phase;
       console.log(this.currentPhase);
@@ -41,6 +46,9 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this._ofs.isOnline.subscribe(item => {
+      console.log('Hello From Home: ONLINE: ', item);
+    });
     this.currentlySelected = "All";
     this.getAllElephantine();
     this._hfs.ChosenPhaseFilters.subscribe(phase => {
