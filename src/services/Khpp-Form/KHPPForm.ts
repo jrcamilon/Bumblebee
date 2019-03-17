@@ -2,7 +2,8 @@ export class KHPPForm {
        private _tagNumber: String;
        private _dueDate: Date;
        private _processedBy: String;
-       private _type: String;
+       private _fabricType: String;
+     
        private _comments: String;
        private _decoratorWeight: Number;
        private _decoratorCount: Number;
@@ -61,11 +62,11 @@ export class KHPPForm {
        public set comments(value: String) {
               this._comments = value;
        }
-       public get type(): String {
-              return this._type;
+       public get fabricType(): String {
+              return this._fabricType;
        }
-       public set type(value: String) {
-              this._type = value;
+       public set fabricType(value: String) {
+              this._fabricType = value;
        }
        public get processedBy(): String {
               return this._processedBy;
