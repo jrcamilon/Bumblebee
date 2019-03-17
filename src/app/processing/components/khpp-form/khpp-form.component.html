@@ -12,18 +12,18 @@
 <ng-template kendoGridToolbarTemplate>
   <button kendoGridAddCommand>Add new</button>
 </ng-template>
-<kendo-grid-column field="TagNumber" title="Tag Number"></kendo-grid-column>
-<kendo-grid-column field="ProcessedBy" editor="string" title="Processed By"></kendo-grid-column>
-<kendo-grid-column field="DueDate" editor="date" title="Due Date"></kendo-grid-column>
-<kendo-grid-column field="type" editor="string" title="Type"></kendo-grid-column>
-<kendo-grid-column field="BodyOrDiagnostic" editor="string" title="Body Or Diagnostic"></kendo-grid-column>
+<kendo-grid-column field="TagNumber" width="200" title="Tag Number"></kendo-grid-column>
+<kendo-grid-column field="ProcessedBy" width="200" editor="string" title="Processed By"></kendo-grid-column>
+<kendo-grid-column field="DueDate" width="200" editor="date" title="Due Date"></kendo-grid-column>
+<kendo-grid-column field="type" width="200" editor="string" title="Type"></kendo-grid-column>
+<kendo-grid-column field="BodyOrDiagnostic" width="200" editor="string" title="Body Or Diagnostic"></kendo-grid-column>
 
-<kendo-grid-column field="RimCount" editor="numeric" title="Rim Count"></kendo-grid-column>
-<kendo-grid-column field="RimWeight" editor="numeric" title="Rim Weight"></kendo-grid-column>
-<kendo-grid-column field="BaseCount" editor="numeric" title="Base Count"></kendo-grid-column>
-<kendo-grid-column field="BaseWeight" editor="numeric" title="Base Weight"></kendo-grid-column>
-<kendo-grid-column field="DecoratorCount" editor="numeric" title="Decorator Count"></kendo-grid-column>
-<kendo-grid-column field="DecoratorWeight" editor="numeric" title="Decorator Weight"></kendo-grid-column>
+<kendo-grid-column field="RimCount" width="200" editor="numeric" title="Rim Count"></kendo-grid-column>
+<kendo-grid-column field="RimWeight" width="200" editor="numeric" title="Rim Weight"></kendo-grid-column>
+<kendo-grid-column field="BaseCount" width="200" editor="numeric" title="Base Count"></kendo-grid-column>
+<kendo-grid-column field="BaseWeight" width="200" editor="numeric" title="Base Weight"></kendo-grid-column>
+<kendo-grid-column field="DecoratorCount" width="200" editor="numeric" title="Decorator Count"></kendo-grid-column>
+<kendo-grid-column field="DecoratorWeight" width="200" editor="numeric" title="Decorator Weight"></kendo-grid-column>
 <kendo-grid-command-column title="command" width="220">
   <ng-template kendoGridCellTemplate let-isNew="isNew">
       <button kendoGridEditCommand [primary]="true">Edit</button>
