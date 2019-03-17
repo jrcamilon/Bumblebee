@@ -1,3 +1,4 @@
+import { OnlineServiceService } from './../../services/OnlineServices/online-service.service';
 import { TableGridService } from 'services/TableGridService/table-grid.service';
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'app/data.service';
@@ -53,11 +54,15 @@ export class ProcessingComponent implements OnInit {
 
   constructor(
     public snackBar: MatSnackBar,
-    public _formsService: FormsService
+    public _formsService: FormsService,
+    public _onlineService: OnlineServiceService
     ) {
       this._formsService.activeForm.subscribe(res => {
         console.log(res);
         this.completedForms = res;
+      })
+      this._onlineService.isOnline.subscribe(isOnline => {
+        console.log('ONLINE STATEUS', isOnline);
       })
     console.log(this.webcamImageArray);
 

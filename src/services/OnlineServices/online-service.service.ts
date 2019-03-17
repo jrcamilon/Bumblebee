@@ -19,12 +19,7 @@ export class OnlineServiceService implements OnInit {
   }
 
   ngOnInit() {
-    // window.addEventListener('online', () => {
-    //   this.isOnline.next(navigator.onLine);
-    //   });
-    //   window.addEventListener('offline', () => {
-    //     this.isOnline.next(navigator.onLine);
-    //   });
+
   }
 
 

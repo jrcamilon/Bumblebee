@@ -1,3 +1,4 @@
+import { CoreModule } from './../services/OfflineDB/core/core.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -15,11 +16,7 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { GridModule } from '@progress/kendo-angular-grid';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 
-
 // import { DualseriesradarComponent } from './dualseriesradar/dualseriesradar.component';
-
-
-
 
 @NgModule({
    imports: [
@@ -33,7 +30,8 @@ import { InputsModule } from '@progress/kendo-angular-inputs';
       AppRoutingModule,
       ReactiveFormsModule,
       GridModule,
-      InputsModule
+      InputsModule,
+      CoreModule
    ],
    declarations: [
       AppComponent,
