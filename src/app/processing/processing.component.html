@@ -33,27 +33,7 @@
 
 <div class="main-content">
 
-    <div class="row">
-        <div class="col-md-12">
-            <div style="text-align:center; padding-top: 20px;" *ngIf="!webcamImage" >
-
-                <div (click)="triggerSnapshot();">
-                    <webcam [height]="500" [width]="500" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
-                            [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
-                            [videoOptions]="videoOptions"
-                            [imageQuality]="1"
-                            (cameraSwitched)="cameraWasSwitched($event)"
-                            (initError)="handleInitError($event)"
-                    ></webcam>
-                    <br/>
-
-                    <button class="actionBtn" (click)="toggleWebcam();">Toggle Camera</button>
-                    <br/>
-
-                </div>
-            </div>
-        </div>
-    </div> -->
+  
   
     <div class="snapshot" *ngIf="webcamImage" style="text-align:center; padding-top: 20px;" (click)="onCapturedImageClick()">
 
