@@ -103,7 +103,7 @@ class="processingForm"
 <kendo-grid
 class="processingForm"
 
-[data]="bodySherd"
+[data]="view"
 [height]="533"
 [pageSize]="gridState.take" [skip]="gridState.skip" [sort]="gridState.sort"
 [pageable]="true" [sortable]="true"
@@ -124,7 +124,7 @@ class="processingForm"
   <ng-template kendoGridEditTemplate
     let-dataItem="dataItem"
     let-column="column"
-    let-bodyFormGroup="bodySherdFormGroup"
+    let-formGroup="bodySherdFormGroup"
     >
     <kendo-dropdownlist
       #ddl="popupAnchor"
@@ -133,13 +133,13 @@ class="processingForm"
       textField="FabricType"
       valueField="FabricID"
       [valuePrimitive]="true"
-      [formControl]="dataItem"
-      (valueChange)="onBodyFabricChange($event)"
+      [formControl]="formGroup.get('FabricID')"
+      (valueChange)="onFabricChange($event)"
     >
     </kendo-dropdownlist>
     <kendo-popup
         [anchor]="ddl.element"
-        *ngIf="bodyFormGroup.get(column.field).invalid && !(isNew && bodyFormGroup.get(column.field).untouched)"
+        *ngIf="formGroup.get(column.field).invalid && !(isNew && formGroup.get(column.field).untouched)"
         popupClass="k-widget k-tooltip k-tooltip-validation k-invalid-msg"
        >
         <span class="k-icon k-i-warning"></span>
@@ -155,7 +155,7 @@ class="processingForm"
   <ng-template kendoGridEditTemplate
     let-dataItem="dataItem"
     let-column="column"
-    let-bodyFormGroup="bodySherdFormGroup"
+    let-formGroup="bodySherdFormGroup"
    >
     <kendo-dropdownlist
       #ddl="popupAnchor"
@@ -164,14 +164,14 @@ class="processingForm"
       textField="ST"
       valueField="stID"
       [valuePrimitive]="true"
-      [formControl]="bodyFormGroup.get('stID')"
-      (valueChange)="onBodySurfaceChange($event)"
+      [formControl]="formGroup.get('stID')"
+      (valueChange)="onBodDiagnosticChange($event)"
 
     >
     </kendo-dropdownlist>
     <kendo-popup
         [anchor]="ddl.element"
-        *ngIf="bodyFormGroup.get(column.field).invalid && !(isNew && bodyFormGroup.get(column.field).untouched)"
+        *ngIf="formGroup.get(column.field).invalid && !(isNew && formGroup.get(column.field).untouched)"
         popupClass="k-widget k-tooltip k-tooltip-validation k-invalid-msg"
        >
         <span class="k-icon k-i-warning"></span>
@@ -187,10 +187,10 @@ class="processingForm"
 <kendo-grid-column field="Other" width="200" editor="numeric" title="Other"></kendo-grid-column>
 
 <kendo-grid-command-column title="command" width="220">
-  <ng-template kendoGridCellTemplate let-bodyFormGroup="bodySherdFormGroup" let-isNew="isNew">
+  <ng-template kendoGridCellTemplate let-formGroup="bodySherdFormGroup" let-isNew="isNew">
       <button kendoGridEditCommand [primary]="true">Edit</button>
       <button kendoGridRemoveCommand>Remove</button>
-      <button kendoGridSaveCommand [disabled]="bodyFormGroup?.invalid">{{ isNew ? 'Add' : 'Update' }}</button>
+      <button kendoGridSaveCommand [disabled]="formGroup?.invalid">{{ isNew ? 'Add' : 'Update' }}</button>
       <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
   </ng-template>
 </kendo-grid-command-column>
