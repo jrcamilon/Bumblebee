@@ -5,12 +5,13 @@
 <h2>Coarse Triage Processing</h2>
 <!-- Coarse Triage -->
 <kendo-grid
+name='grid1'
 class="processingForm"
 [data]="view"
 [height]="533"
 [pageSize]="gridState.take" [skip]="gridState.skip" [sort]="gridState.sort"
 [pageable]="true" [sortable]="true"
-(dataStateChange)="onStateChange($event)"
+(dataStateChange)="onBodyStateChange($event)"
 (edit)="editHandler($event)" (cancel)="cancelHandler($event)"
 (save)="saveHandler($event)" (remove)="removeHandler($event)"
 (add)="addHandler($event)"
@@ -68,7 +69,6 @@ class="processingForm"
       [valuePrimitive]="true"
       [formControl]="formGroup.get('bdID')"
       (valueChange)="onBodDiagnosticChange($event)"
-
     >
     </kendo-dropdownlist>
     <kendo-popup
@@ -102,7 +102,7 @@ class="processingForm"
 <!-- Ceramic Processing Body Sherd -->
 <kendo-grid
 class="processingForm"
-
+name='grid2'
 [data]="view"
 [height]="533"
 [pageSize]="gridState.take" [skip]="gridState.skip" [sort]="gridState.sort"
@@ -133,13 +133,12 @@ class="processingForm"
       textField="FabricType"
       valueField="FabricID"
       [valuePrimitive]="true"
-      [formControl]="formGroup.get('FabricID')"
-      (valueChange)="onFabricChange($event)"
+      (valueChange)="onBodyFabricChange($event)"
     >
     </kendo-dropdownlist>
     <kendo-popup
         [anchor]="ddl.element"
-        *ngIf="formGroup.get(column.field).invalid && !(isNew && formGroup.get(column.field).untouched)"
+        *ngIf="bodySherdFormGroup.get(column.field).invalid && !(isNew && bodySherdFormGroup.get(column.field).untouched)"
         popupClass="k-widget k-tooltip k-tooltip-validation k-invalid-msg"
        >
         <span class="k-icon k-i-warning"></span>
@@ -147,6 +146,7 @@ class="processingForm"
       </kendo-popup>
   </ng-template>
 </kendo-grid-column>
+
 <!-- <kendo-grid-column field="BodyOrDiagnostic" width="200" editor="string" title="Body Or Diagnostic"></kendo-grid-column> -->
 <kendo-grid-column field="SurfaceTreatment" title="Body Or Diagnostic" width="150">
   <ng-template kendoGridCellTemplate let-dataItem>
@@ -164,14 +164,13 @@ class="processingForm"
       textField="ST"
       valueField="stID"
       [valuePrimitive]="true"
-      [formControl]="formGroup.get('stID')"
-      (valueChange)="onBodDiagnosticChange($event)"
+      (valueChange)="onBodySurfaceChange($event)"
 
     >
     </kendo-dropdownlist>
     <kendo-popup
         [anchor]="ddl.element"
-        *ngIf="formGroup.get(column.field).invalid && !(isNew && formGroup.get(column.field).untouched)"
+        *ngIf="bodySherdFormGroup.get(column.field).invalid && !(isNew && bodySherdFormGroup.get(column.field).untouched)"
         popupClass="k-widget k-tooltip k-tooltip-validation k-invalid-msg"
        >
         <span class="k-icon k-i-warning"></span>

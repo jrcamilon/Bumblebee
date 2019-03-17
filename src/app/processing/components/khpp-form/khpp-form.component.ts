@@ -21,7 +21,7 @@ export class KhppFormComponent implements OnInit {
         skip: 0,
         take: 10
     };
-    /**Coarse Triage */
+    // Coarse Triage
     public view: any[];
     public formGroup: FormGroup;
     public chosenFabric: any = {
@@ -46,7 +46,6 @@ export class KhppFormComponent implements OnInit {
         {
             FabricID: 5, FabricType: 'Marl'
         }];
-
     public bodOrDiagnostic: any[] = [
         {
             bdID: 1, BD: 'Body'
@@ -54,9 +53,8 @@ export class KhppFormComponent implements OnInit {
         {
             bdID: 2, BD: 'Diagnostic'
         }];
-
     private editedRowIndex: number;
-    /**Body Sherds  */
+    // Body Sherds
     public bodySherd: any[];
     public bodySherdFormGroup: FormGroup;
     public chosenBodyFabric: any = {
@@ -85,9 +83,7 @@ export class KhppFormComponent implements OnInit {
         {
             FabricID: 7, FabricType: 'Other MArl'
         }];
-
     public stList: any[] = [];
-
     public bodyAllSurfaceTreatments: any[] = [
         {
             stID: 1, ST: 'Unslipped'
@@ -116,10 +112,10 @@ export class KhppFormComponent implements OnInit {
     public bodyFineSurfaceTreatments: any[] = [{
         stID: 1, ST: 'Untreated'
     }]
-
     private bodyEditedRowIndex: number;
-    /**TODO: Diagnostics */
+    // TODO: Diagnostics
     public diagnostics: any[];
+    bodyGridState: State;
 
     constructor(private editService: KhppFormService) {
 
@@ -174,6 +170,7 @@ export class KhppFormComponent implements OnInit {
     }
 
     public addBodyHandler({ sender }) {
+        console.log(sender);
         this.closeEditor(sender);
 
         this.bodySherdFormGroup = new FormGroup({
@@ -211,6 +208,7 @@ export class KhppFormComponent implements OnInit {
     }
 
     public cancelBodyHandler({ sender, rowIndex }) {
+        
         this.closeEditor(sender, rowIndex);
     }
 
@@ -257,6 +255,11 @@ export class KhppFormComponent implements OnInit {
         return this.bodOrDiagnostic.find(x => x.bdID === id);
 
     }
+    public onBodyStateChange(state: State) {
+        this.bodyGridState = state;
+
+        // this.editService.read();
+    }
     public onStateChange(state: State) {
         this.gridState = state;
 
@@ -264,6 +267,7 @@ export class KhppFormComponent implements OnInit {
     }
 
     public addHandler({ sender }) {
+        console.log(sender);
         this.closeEditor(sender);
 
         this.formGroup = new FormGroup({
