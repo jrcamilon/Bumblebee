@@ -101,7 +101,7 @@ export class KHPPForm {
               bodyOrDiagnostic: String) {
        this.dueDate = dueDate;
        this.processedBy = processedBy;
-       this.type = type;
+       // this.type = type;
        this.comments = comments;
        this.decoratorCount = decoratorCount;
        this.decoratorWeight = decoratorWeight;

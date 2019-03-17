@@ -9,6 +9,7 @@ import { State, process } from '@progress/kendo-data-query';
 import { KhppFormService } from 'services/Khpp-Form/Khpp-Form.service';
 import { PopupAnchorDirective } from './popupanchor.directive';
 import { map } from 'rxjs/operators';
+import { OfflineDBService } from 'services/OfflineDB/offline-db.service';
 @Component({
     selector: 'app-khpp-form',
     templateUrl: './khpp-form.component.html',
@@ -55,11 +56,13 @@ export class KhppFormComponent implements OnInit {
     // private editService: KhppFormService;
     private editedRowIndex: number;
 
-    constructor(private editService: KhppFormService) {
+    constructor(private editService: KhppFormService, public isOnline: OnlineServiceService, public offlineDB: OfflineDBService) {
 
      this.editService.data.subscribe(item => {
         this.view = item;
         });
+    
+     
     }
 
 
@@ -138,6 +141,9 @@ export class KhppFormComponent implements OnInit {
         formGroup.value.FabricType = this.chosenFabric.FabricType;
         formGroup.value.BodyOrDiagnostic = this.chosenBodyOrDiagnostic.BD;
         console.log('UPDATED', formGroup.value);
+
+        // Offline Save
+        this.offlineDB.add(formGroup.value);
 
         this.editService.save(formGroup.value, isNew);
 

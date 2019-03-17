@@ -14,15 +14,15 @@ export class AppComponent implements OnInit {
 
     constructor(public location: Location, public offlineDB: OfflineDBService) {
       // Add to offlineDB
-      const todo: Todo = {
-        title: 'hello',
-        done: false,
-      };
-      this.offlineDB
-        .add(todo)
-        .then((id) => {
-          this.todosList = [...this.todosList, Object.assign({}, todo, { id })];
-        });
+      // const todo: Todo = {
+      //   title: 'hello',
+      //   done: false,
+      // };
+      // this.offlineDB
+      //   .add(todo)
+      //   .then((id) => {
+      //     this.todosList = [...this.todosList, Object.assign({}, todo, { id })];
+      //   });
     }
 
 

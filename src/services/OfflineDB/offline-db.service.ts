@@ -5,8 +5,18 @@ import { OnlineServiceService } from 'services/OnlineServices/online-service.ser
 import Dexie from 'dexie';
 
 export interface Todo {
-  title: string;
-  done: boolean;
+  BaseCount: number,
+  BaseWeight: number,
+  BodyOrDiagnostic: string,
+  Comments: string,
+  DecoratorCount: number,
+  DecoratorWeight: number,
+  DueDate: Date,
+  FabricType: string,
+  ProcessedBy: string,
+  RimCount: number,
+  RimWeight: number,
+  TagNumber: string
 }
 
 export interface TodoWithID extends Todo {
@@ -32,6 +42,7 @@ export class OfflineDBService {
   }
 
   add(data) {
+    console.log(data);
     return this.table.add(data);
   }
 
@@ -39,8 +50,10 @@ export class OfflineDBService {
     return this.table.update(id, data);
   }
 
-  
+  postToOnlineDB() {
+    // post to service
 
+  }
 
   remove(id) {
     return this.table.delete(id);
