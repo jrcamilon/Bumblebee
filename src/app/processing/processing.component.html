@@ -33,7 +33,7 @@
 
 <div class="main-content">
 
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-md-12">
             <div style="text-align:center; padding-top: 20px;" *ngIf="!webcamImage" >
 
@@ -46,28 +46,24 @@
                             (initError)="handleInitError($event)"
                     ></webcam>
                     <br/>
-                    <!-- <button class="actionBtn" (click)="triggerSnapshot();">Take A Snapshot</button> -->
+
                     <button class="actionBtn" (click)="toggleWebcam();">Toggle Camera</button>
                     <br/>
-                    <!-- <button class="actionBtn" (click)="showNextWebcam(true);" [disabled]="!multipleWebcamsAvailable">Next Webcam</button>
-                    <input id="cameraSwitchCheckbox" type="checkbox" [(ngModel)]="allowCameraSwitch"><label for="cameraSwitchCheckbox">Allow Camera Switch</label>
-                    <br/> -->
-                    <!-- DeviceId: <input id="deviceId" type="text" [(ngModel)]="deviceId" style="width: 500px">
-                    <button (click)="showNextWebcam(deviceId);">Activate</button> -->
+
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
   
-    <div class="snapshot" *ngIf="webcamImage" style="text-align:center; padding-top: 20px;" (click)="onCapturedImageClick()">
-    <!-- <h2>Results</h2> -->
+    <!-- <div class="snapshot" *ngIf="webcamImage" style="text-align:center; padding-top: 20px;" (click)="onCapturedImageClick()">
+
     <img [src]="webcamImage.imageAsDataUrl" style="height: 500px;"/>
     </div>
 
     <h4 *ngIf="errors.length > 0">Messages:</h4>
     <ul *ngFor="let error of errors">
     <li>{{error | json}}</li>
-    </ul>
+    </ul> -->
 
     <div class="container-fluid">
         <app-ceramics-form *ngIf="selection === 'Elephantine'"></app-ceramics-form>

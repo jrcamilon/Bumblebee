@@ -20,29 +20,29 @@ export class ProcessingComponent implements OnInit {
 
   public data: any[];
   public selection: string;
-  public forms = ['Red Notebook', 'Elephantine'];
+  public forms = ['Elephantine'];
   public completedForms = [];
   public formValue: any;
 
-  // Camera
-    // toggle webcam on/off
-    public showWebcam = false;
-    public allowCameraSwitch = true;
-    public multipleWebcamsAvailable = false;
-    public deviceId: string;
-    public videoOptions: MediaTrackConstraints = {
-      // width: {ideal: 1024},
-      // height: {ideal: 576}
-    };
-    public errors: WebcamInitError[] = [];
+  // // Camera
+  //   // toggle webcam on/off
+  //   public showWebcam = false;
+  //   public allowCameraSwitch = true;
+  //   public multipleWebcamsAvailable = false;
+  //   public deviceId: string;
+  //   public videoOptions: MediaTrackConstraints = {
+  //     // width: {ideal: 1024},
+  //     // height: {ideal: 576}
+  //   };
+  //   public errors: WebcamInitError[] = [];
 
-    // latest snapshot
-    public webcamImage: WebcamImage = null;
+  //   // latest snapshot
+  //   public webcamImage: WebcamImage = null;
 
-    // webcam snapshot trigger
-    private trigger: Subject<void> = new Subject<void>();
-    // switch to next / previous / specific webcam; true/false: forward/backwards, string: deviceId
-    private nextWebcam: Subject<boolean|string> = new Subject<boolean|string>();
+  //   // webcam snapshot trigger
+  //   private trigger: Subject<void> = new Subject<void>();
+  //   // switch to next / previous / specific webcam; true/false: forward/backwards, string: deviceId
+  //   private nextWebcam: Subject<boolean|string> = new Subject<boolean|string>();
 
 
   onFormSelect(form: any) {
@@ -62,10 +62,10 @@ export class ProcessingComponent implements OnInit {
   ngOnInit() {
     this.selection = this.forms[1];
     this.onFormSelect(this.selection);
-    WebcamUtil.getAvailableVideoInputs()
-    .then((mediaDevices: MediaDeviceInfo[]) => {
-      this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
-    });
+    // WebcamUtil.getAvailableVideoInputs()
+    // .then((mediaDevices: MediaDeviceInfo[]) => {
+    //   this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
+    // });
   }
 
   save() {
@@ -78,6 +78,7 @@ export class ProcessingComponent implements OnInit {
         console.log('Saving Elephantine');
 
         const toInsert = this.completedForms.map(ele => {
+          console.log(ele);
           return new Object({
             locusNumber: ele.locusNumber + String(ele.locusNumPre).toUpperCase() + '/' + String(ele.locusNumSuf).toLowerCase(),
             application: ele.application === null ? 'null' : String(ele.application),
@@ -92,7 +93,7 @@ export class ProcessingComponent implements OnInit {
             objectGroupNum: String(ele.objectGroupNumber),
             objectNum: String(ele.objectNumber),
             paintedDecoration: ele.paintedDecoration === null ? 'null' : String(ele.paintedDecoration),
-            photo: null,
+            photo: ele.image,
             preservations : ele.preservation === null ? 'null' : String(ele.preservation),
             processedDate: String(ele.processDate),
             processedBy: ele.processedBy === null ? 'null' : String(ele.processedBy),
@@ -134,47 +135,47 @@ export class ProcessingComponent implements OnInit {
     });
   }
 
-  // CAMERA
-  public triggerSnapshot(): void {
-    this.trigger.next();
-  }
+  // // CAMERA
+  // public triggerSnapshot(): void {
+  //   this.trigger.next();
+  // }
 
-  public toggleWebcam(): void {
-    this.showWebcam = !this.showWebcam;
-  }
+  // public toggleWebcam(): void {
+  //   this.showWebcam = !this.showWebcam;
+  // }
 
-  public handleInitError(error: WebcamInitError): void {
-    this.errors.push(error);
-  }
+  // public handleInitError(error: WebcamInitError): void {
+  //   this.errors.push(error);
+  // }
 
-  public showNextWebcam(directionOrDeviceId: boolean|string): void {
-    // true => move forward through devices
-    // false => move backwards through devices
-    // string => move to device with given deviceId
-    this.nextWebcam.next(directionOrDeviceId);
-  }
+  // public showNextWebcam(directionOrDeviceId: boolean|string): void {
+  //   // true => move forward through devices
+  //   // false => move backwards through devices
+  //   // string => move to device with given deviceId
+  //   this.nextWebcam.next(directionOrDeviceId);
+  // }
 
-  public handleImage(webcamImage: WebcamImage): void {
-    console.info('received webcam image', webcamImage);
-    this.webcamImage = webcamImage;
-  }
+  // public handleImage(webcamImage: WebcamImage): void {
+  //   console.info('received webcam image', webcamImage);
+  //   this.webcamImage = webcamImage;
+  // }
 
-  public cameraWasSwitched(deviceId: string): void {
-    console.log('active device: ' + deviceId);
-    this.deviceId = deviceId;
-  }
+  // public cameraWasSwitched(deviceId: string): void {
+  //   console.log('active device: ' + deviceId);
+  //   this.deviceId = deviceId;
+  // }
 
-  public get triggerObservable(): Observable<void> {
-    return this.trigger.asObservable();
-  }
+  // public get triggerObservable(): Observable<void> {
+  //   return this.trigger.asObservable();
+  // }
 
-  public get nextWebcamObservable(): Observable<boolean|string> {
-    return this.nextWebcam.asObservable();
-  }
+  // public get nextWebcamObservable(): Observable<boolean|string> {
+  //   return this.nextWebcam.asObservable();
+  // }
 
-  public onCapturedImageClick(): void {
-    this.webcamImage = null;
-  }
+  // public onCapturedImageClick(): void {
+  //   this.webcamImage = null;
+  // }
 
 }
 
