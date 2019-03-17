@@ -135,8 +135,8 @@ export class KhppFormComponent implements OnInit {
         // const product: Product = formGroup.value;
 
         console.log('Saving', formGroup.value);
-        formGroup.value.FabricType = this.chosenFabric.FabricType;
-        formGroup.value.BodyOrDiagnostic = this.chosenBodyOrDiagnostic.BD;
+        formGroup.value.FabricType = this.chosenFabric;
+        formGroup.value.BodyOrDiagnostic = this.chosenBodyOrDiagnostic;
         console.log('UPDATED', formGroup.value);
 
         this.editService.save(formGroup.value, isNew);
@@ -161,7 +161,7 @@ export class KhppFormComponent implements OnInit {
 
     }
     public onBodDiagnosticChange(e) {
-       this.chosenBodyOrDiagnostic = this.bodOrDiagnostic.find(item =>  item.BD );
+       this.chosenBodyOrDiagnostic = e;
        console.log(this.chosenBodyOrDiagnostic);
 
         
