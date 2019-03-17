@@ -40,13 +40,16 @@ import { KhppFormComponent } from '../../processing/components/khpp-form/khpp-fo
 import { ChartsModule } from '@progress/kendo-angular-charts';
 import { GridModule, ExcelModule, PDFModule } from '@progress/kendo-angular-grid';
 import { LayoutModule } from '@progress/kendo-angular-layout';
+import { PopupModule } from '@progress/kendo-angular-popup';
+// import { DropDownListModule } from '@progress/kendo-angular-dropdowns';
 
 import { AgmCoreModule } from '@agm/core';
 import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
 
 import { WebcamModule } from 'ngx-webcam';
 
-
+//Directives
+import {PopupAnchorDirective } from '../../processing/components/khpp-form/popupanchor.directive';
 import 'hammerjs';
 import { TableGridComponent } from 'app/tables/components/table-grid/table-grid.component';
 import {
@@ -141,7 +144,8 @@ import { RednotebookFormComponent } from 'app/processing/components/rednotebook-
     ButtonsModule,
     LayoutModule,
     InputsModule,
-    DropDownsModule
+    DropDownsModule,
+    PopupModule
   ],
   entryComponents: [ProcessingComponent, SnackBarComponent],
   declarations: [
@@ -173,7 +177,8 @@ import { RednotebookFormComponent } from 'app/processing/components/rednotebook-
     SiteMapComponent,
     MainDashMenuComponent,
     HomeMapComponent,
-    KhppFormComponent
+    KhppFormComponent,
+    PopupAnchorDirective
 
 
   ],
