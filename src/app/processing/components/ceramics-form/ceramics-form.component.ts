@@ -1,9 +1,10 @@
 import { FormsService } from './../../services/forms.service';
 import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { DataService } from 'app/data.service';
 import { Subscription } from 'rxjs';
 import { ElephantModel } from '../models/elephant-model';
+import { OnlineServiceService } from 'services/OnlineServices/online-service.service';
 
 @Component({
   selector: 'app-ceramics-form',
@@ -20,8 +21,11 @@ export class CeramicsFormComponent implements OnInit {
   public mockData: Subscription;
   public buttonMode = 'Save';
   public formsSubmitted = [];
+  isOnline: any;
 
-  constructor(public fb: FormBuilder, public _dataService: DataService, public _formsService: FormsService) {
+  constructor(public fb: FormBuilder, public _dataService: DataService,
+    public _formsService: FormsService,
+    public _onlineService: OnlineServiceService) {
 
     this.ceramicsForm = fb.group({
       locusNumber: ['', Validators.compose([Validators.required])],
@@ -70,6 +74,10 @@ export class CeramicsFormComponent implements OnInit {
       rlNumber: null,
       sheetNumber: null
     });
+
+    this._onlineService.isOnline.subscribe(item=>{
+      this.isOnline = item;
+    })
   }
 
   ngOnInit() {
@@ -80,13 +88,19 @@ export class CeramicsFormComponent implements OnInit {
     console.log(formValue);
     this.formsSubmitted.push(formValue);
     this.ceramicsForm.reset();
+    if (this.isOnline) {
+      //Send Straight to DataServices to post to API
+    } else {
+      //Save to local DB to save when Online
+    }
     this._formsService.activeForm.next(this.formsSubmitted);
 
   }
 
   disable() {
     const state = this.isFormsDisabled;
-    if (state) { this.ceramicsForm.disable();
+    if (state) {
+      this.ceramicsForm.disable();
     } else { this.ceramicsForm.enable(); }
     this.isFormsDisabled = !state;
   }

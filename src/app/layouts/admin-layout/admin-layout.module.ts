@@ -36,7 +36,7 @@ import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { MainDashboardComponent } from '../../main-dashboard/main-dashboard.component'
 import { SiteMapComponent } from '../../main-dashboard/components/site-map/site-map.component'
 import { MainDashMenuComponent } from '../../main-dashboard/components/main-dash-menu/main-dash-menu.component'
-
+import { KhppFormComponent } from '../../processing/components/khpp-form/khpp-form.component';
 import { ChartsModule } from '@progress/kendo-angular-charts';
 import { GridModule, ExcelModule, PDFModule } from '@progress/kendo-angular-grid';
 import { LayoutModule } from '@progress/kendo-angular-layout';
@@ -172,7 +172,8 @@ import { RednotebookFormComponent } from 'app/processing/components/rednotebook-
     MainDashboardComponent,
     SiteMapComponent,
     MainDashMenuComponent,
-    HomeMapComponent
+    HomeMapComponent,
+    KhppFormComponent
 
 
   ],

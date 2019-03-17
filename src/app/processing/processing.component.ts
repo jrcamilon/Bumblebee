@@ -20,7 +20,7 @@ export class ProcessingComponent implements OnInit {
 
   public data: any[];
   public selection: string;
-  public forms = ['Red Notebook', 'Elephantine'];
+  public forms = ['Red Notebook', 'Elephantine', 'KHPP'];
   public completedForms = [];
   public formValue: any;
 
@@ -38,6 +38,8 @@ export class ProcessingComponent implements OnInit {
 
     // latest snapshot
     public webcamImage: WebcamImage = null;
+    public webcamImageArray: WebcamImage[] = [];
+
 
     // webcam snapshot trigger
     private trigger: Subject<void> = new Subject<void>();
@@ -57,6 +59,8 @@ export class ProcessingComponent implements OnInit {
         console.log(res);
         this.completedForms = res;
       })
+    console.log(this.webcamImageArray);
+
   }
 
   ngOnInit() {
@@ -69,6 +73,7 @@ export class ProcessingComponent implements OnInit {
   }
 
   save() {
+    let toInsert: any = " ";
     switch (this.selection) {
       case 'Red Notebook':
         console.log('Saving Red Notebook');
@@ -77,7 +82,7 @@ export class ProcessingComponent implements OnInit {
       case 'Elephantine':
         console.log('Saving Elephantine');
 
-        const toInsert = this.completedForms.map(ele => {
+        toInsert = this.completedForms.map(ele => {
           return new Object({
             locusNumber: ele.locusNumber + String(ele.locusNumPre).toUpperCase() + '/' + String(ele.locusNumSuf).toLowerCase(),
             application: ele.application === null ? 'null' : String(ele.application),
@@ -96,6 +101,56 @@ export class ProcessingComponent implements OnInit {
             preservations : ele.preservation === null ? 'null' : String(ele.preservation),
             processedDate: String(ele.processDate),
             processedBy: ele.processedBy === null ? 'null' : String(ele.processedBy),
+            rlNum: ele.rlNumber === null ? 'null' : String(ele.rlNumber),
+            sfCoating: ele.sfCoating === null ? 'null' : String(ele.sfCoating),
+            sfTreatment : ele.sfTreatment === null ? 'null' : String(ele.sfTreatment),
+            sheetNum: ele.sheetNumber === null ? 'null' : String(ele.sheetNumber),
+            lat: 0,
+            lng: 0,
+            typeDescription: ele.typeDescription === null ? 'null' : String(ele.typeDescription),
+            typeNum: ele.typeNumber === null ? 'null' : String(ele.typeNumber),
+            weight: ele.weight === null ? 'null' : String(ele.weight),
+            room: 'null',
+            phase: 'null'
+          })
+        });
+
+        for (let i = 0; i < toInsert.length; i++) {
+          console.log(toInsert[i]);
+          this._formsService.writeElephantineToDB(toInsert[i]).subscribe(res => {
+            if (res.status === 201) {
+              console.log(res);
+              this.openSnackBar();
+            }
+          });
+        }
+
+        // Clear the completed forms array and clear the service store.
+        // this.completedForms = [];
+        // this._formsService.activeForm.next(this.completedForms);
+
+        break;
+        case 'KHPP':
+        console.log('Saving KHPP');
+
+         toInsert = this.completedForms.map(ele => {
+          return new Object({
+            tagNumber: ele.locusNumber,
+            processedBy: ele.application === null ? 'null' : String(ele.processedBy),
+            dueDate: ele.blackened === null ? 'null' : new Date(ele.dueDate),
+            comments: ele.comments === null ? 'null' : String(ele.comments),
+            diameter: ele.diameter === null ? 'null' : String(ele.diameter),
+            enteredBy: ele.enteredBy === null ? 'null' : String(ele.enteredBy),
+            enteredDate: String(ele.enteredDate),
+            fabric: ele.fabric === null ? 'null' : String(ele.fabric),
+            incisedDecoration: String(ele.incisedDecoration),
+            numberOfObjects: String(ele.numberOfObjects),
+            objectGroupNum: String(ele.objectGroupNumber),
+            objectNum: String(ele.objectNumber),
+            paintedDecoration: ele.paintedDecoration === null ? 'null' : String(ele.paintedDecoration),
+            photo: null,
+            preservations : ele.preservation === null ? 'null' : String(ele.preservation),
+            processedDate: String(ele.processDate),
             rlNum: ele.rlNumber === null ? 'null' : String(ele.rlNumber),
             sfCoating: ele.sfCoating === null ? 'null' : String(ele.sfCoating),
             sfTreatment : ele.sfTreatment === null ? 'null' : String(ele.sfTreatment),
@@ -155,8 +210,9 @@ export class ProcessingComponent implements OnInit {
   }
 
   public handleImage(webcamImage: WebcamImage): void {
-    console.info('received webcam image', webcamImage);
+    console.info('received webcam image', webcamImage, this.webcamImageArray);
     this.webcamImage = webcamImage;
+    this.webcamImageArray.push(webcamImage);
   }
 
   public cameraWasSwitched(deviceId: string): void {
