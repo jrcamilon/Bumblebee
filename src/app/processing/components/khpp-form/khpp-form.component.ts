@@ -15,12 +15,14 @@ import { map } from 'rxjs/operators';
     styleUrls: ['./khpp-form.component.scss']
 })
 export class KhppFormComponent implements OnInit {
-    public view: any[];
+
     public gridState: State = {
         sort: [],
         skip: 0,
         take: 10
     };
+    /**Coarse Triage */
+    public view: any[];
     public formGroup: FormGroup;
     public chosenFabric: any = {
         FabricID: 1, FabricType: 'Coarse'
@@ -44,6 +46,7 @@ export class KhppFormComponent implements OnInit {
         {
             FabricID: 5, FabricType: 'Marl'
         }];
+
     public bodOrDiagnostic: any[] = [
         {
             bdID: 1, BD: 'Body'
@@ -52,14 +55,97 @@ export class KhppFormComponent implements OnInit {
             bdID: 2, BD: 'Diagnostic'
         }];
 
-    // private editService: KhppFormService;
     private editedRowIndex: number;
+    /**Body Sherds  */
+    public bodySherd: any[];
+    public bodySherdFormGroup: FormGroup;
+    public chosenBodyFabric: any = {
+        FabricID: 1, FabricType: 'Coarse'
+    };
+    fabricIsValid: Boolean = false;
+    public chosenSurfaceTreatment: any = {
+        stID: 1, ST: 'Unslipped'
+    };
+    public bodyFabrics: any[] = [
+        {
+            FabricID: 1, FabricType: 'Coarse'
+        },
+        {
+            FabricID: 2, FabricType: 'Medium'
+        },
+        {
+            FabricID: 3, FabricType: 'Fine'
+        },
+        {
+            FabricID: 5, FabricType: 'Marl-A'
+        },
+        {
+            FabricID: 6, FabricType: 'Marl-C'
+        },
+        {
+            FabricID: 7, FabricType: 'Other MArl'
+        }];
+
+    public stList: any[] = [];
+
+    public bodyAllSurfaceTreatments: any[] = [
+        {
+            stID: 1, ST: 'Unslipped'
+        },
+        {
+            stID: 2, ST: 'R Slip Out'
+        },
+        {
+            stID: 3, ST: 'R Slip In'
+        },
+        {
+            stID: 4, ST: 'R Slip Both'
+        },
+        {
+            stID: 5, ST: 'Cream Slip In'
+        },
+        {
+            stID: 6, ST: 'Cream Slip Out'
+        },
+        {
+            stID: 7, ST: 'Cream Slip Both'
+        }];
+    public bodyMarlSurfaceTreatments: any[] = [{
+        stID: 1, ST: 'See Comments'
+    }];
+    public bodyFineSurfaceTreatments: any[] = [{
+        stID: 1, ST: 'Untreated'
+    }]
+
+    private bodyEditedRowIndex: number;
+    /**TODO: Diagnostics */
+    public diagnostics: any[];
 
     constructor(private editService: KhppFormService) {
 
-     this.editService.data.subscribe(item => {
-        this.view = item;
+        
+        this.editService.data.subscribe(item => {
+            this.view = item;
         });
+        this.editService.bodySherdsData.subscribe(item=>{
+            this.bodySherd = item;
+        })
+        switch (this.chosenBodyFabric.FabricID) {
+            case 1:
+                this.stList = this.bodyAllSurfaceTreatments;
+                break;
+            case 2:
+                this.stList = this.bodyAllSurfaceTreatments;
+                break;
+
+            case 3:
+                this.stList = this.bodyFineSurfaceTreatments;
+                break;
+
+            default:
+                this.stList = this.bodyMarlSurfaceTreatments;
+                break;
+        }
     }
 
 
@@ -68,6 +154,102 @@ export class KhppFormComponent implements OnInit {
 
         // this.editService.read();
     }
+    /** Body Sherds Processing Functions */
+
+    public bodyFabric(id: number): any {
+        return this.bodyFabrics.find(x => x.FabricID === id);
+
+    }
+    public surfaceTreatment(id: number): any {
+        switch (this.chosenBodyFabric.FabricID) {
+            case 1:
+                return this.bodyAllSurfaceTreatments.find(x => x.stID === id);
+            case 2:
+                return this.bodyAllSurfaceTreatments.find(x => x.stID === id);
+            case 3:
+                return this.bodyFineSurfaceTreatments.find(x => x.stID === id);
+            default:
+                return this.bodyMarlSurfaceTreatments.find(x => x.stID === id);
+        }
+    }
+
+    public addBodyHandler({ sender }) {
+        this.closeEditor(sender);
+
+        this.bodySherdFormGroup = new FormGroup({
+            'FabricType': new FormControl('', Validators.required),
+            'SurfaceTreatment': new FormControl('', Validators.required),
+            'Normal': new FormControl('', Validators.required),
+            'FireIn': new FormControl('', Validators.required),
+            'FireOut': new FormControl('', Validators.required),
+            'FireBoth': new FormControl('', Validators.required),
+            'RimsTSTC': new FormControl('', Validators.required),
+            'Other': new FormControl('', Validators.required),
+        });
+
+        sender.addRow(this.bodySherdFormGroup);
+    }
+
+    public editBodyHandler({ sender, rowIndex, dataItem }) {
+        this.closeEditor(sender);
+
+
+        this.bodySherdFormGroup = new FormGroup({
+            'FabricType': new FormControl(dataItem.FabricType, Validators.required),
+            'SurfaceTreatment': new FormControl(dataItem.SurfaceTreatment, Validators.required),
+            'Normal': new FormControl(dataItem.Normal, Validators.required),
+            'FireIn': new FormControl(dataItem.FireIn, Validators.required),
+            'FireOut': new FormControl(dataItem.FireOut, Validators.required),
+            'FireBoth': new FormControl(dataItem.FireBoth, Validators.required),
+            'RimsTSTC': new FormControl(dataItem.RimsTSTC, Validators.required),
+            'Other': new FormControl(dataItem.Other, Validators.required),
+        });
+
+        this.bodyEditedRowIndex = rowIndex;
+
+        sender.editRow(rowIndex, this.bodySherdFormGroup);
+    }
+
+    public cancelBodyHandler({ sender, rowIndex }) {
+        this.closeEditor(sender, rowIndex);
+    }
+
+    public saveBodyHandler({ sender, rowIndex, bodySherdFormGroup, isNew }) {
+        // const product: Product = formGroup.value;
+
+        console.log('Saving', bodySherdFormGroup.value);
+        bodySherdFormGroup.value.FabricType = this.chosenBodyFabric;
+        bodySherdFormGroup.value.SurfaceTreatment = this.chosenSurfaceTreatment;
+        console.log('UPDATED', bodySherdFormGroup.value);
+
+        this.editService.saveBody(bodySherdFormGroup.value, isNew);
+
+        sender.closeRow(rowIndex);
+    }
+
+    public removeBodyHandler({ dataItem }) {
+        // this.editService.remove(dataItem);
+    }
+
+    private closeBodyEditor(grid, rowIndex = this.bodyEditedRowIndex) {
+        grid.closeRow(rowIndex);
+        this.bodyEditedRowIndex = undefined;
+        this.bodySherdFormGroup = undefined;
+    }
+
+    public onBodyFabricChange(e) {
+        console.log(e);
+        this.chosenBodyFabric = e;
+        console.log(this.chosenBodyFabric);
+
+    }
+    public onBodySurfaceChange(e) {
+        this.chosenSurfaceTreatment = e;
+        console.log(this.chosenSurfaceTreatment);
+
+
+    }
+    /**Coarse Triage Functions */
     public fabric(id: number): any {
         return this.fabrics.find(x => x.FabricID === id);
     }
@@ -85,9 +267,6 @@ export class KhppFormComponent implements OnInit {
         this.closeEditor(sender);
 
         this.formGroup = new FormGroup({
-            'TagNumber': new FormControl('', Validators.required),
-            'ProcessedBy': new FormControl('', Validators.required),
-            'DueDate': new FormControl('', Validators.required),
             'FabricType': new FormControl('', Validators.required),
             'BodyOrDiagnostic': new FormControl('', Validators.required),
             'RimCount': new FormControl('', Validators.required),
@@ -108,9 +287,7 @@ export class KhppFormComponent implements OnInit {
 
 
         this.formGroup = new FormGroup({
-            'TagNumber': new FormControl(dataItem.TagNumber, Validators.required),
-            'ProcessedBy': new FormControl(dataItem.ProcessedBy, Validators.required),
-            'DueDate': new FormControl(dataItem.DueDate, Validators.required),
+
             'FabricType': new FormControl(dataItem.FabricType, Validators.required),
             'BodyOrDiagnostic': new FormControl(dataItem.BodyOrDiagnostic, Validators.required),
             'RimCount': new FormControl(dataItem.RimCount, Validators.required),
@@ -154,16 +331,16 @@ export class KhppFormComponent implements OnInit {
         this.formGroup = undefined;
     }
 
-    public onFabricChange(e){
+    public onFabricChange(e) {
         console.log(e);
-       this.chosenFabric = e;
-       console.log(this.chosenFabric);
+        this.chosenFabric = e;
+        console.log(this.chosenFabric);
 
     }
     public onBodDiagnosticChange(e) {
-       this.chosenBodyOrDiagnostic = e;
-       console.log(this.chosenBodyOrDiagnostic);
+        this.chosenBodyOrDiagnostic = e;
+        console.log(this.chosenBodyOrDiagnostic);
 
-        
+
     }
 }
