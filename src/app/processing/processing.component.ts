@@ -9,6 +9,8 @@ import { FormsService } from './services/forms.service';
 import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
 import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
+import { KhppFormService } from 'services/Khpp-Form/Khpp-Form.service';
+import { OfflineDBService } from 'services/OfflineDB/offline-db.service';
 
 
 
@@ -25,6 +27,7 @@ export class ProcessingComponent implements OnInit {
   public completedForms = [];
   public formValue: any;
 
+
   // // Camera
     // toggle webcam on/off
     public showWebcam = false;
@@ -40,6 +43,7 @@ export class ProcessingComponent implements OnInit {
     // latest snapshot
     public webcamImage: WebcamImage = null;
     public webcamImageArray: WebcamImage[] = [];
+    public isOnline = true;
 
 
     // webcam snapshot trigger
@@ -55,16 +59,30 @@ export class ProcessingComponent implements OnInit {
   constructor(
     public snackBar: MatSnackBar,
     public _formsService: FormsService,
-    public _onlineService: OnlineServiceService
+    public _onlineService: OnlineServiceService,
+    public offlineDB: OfflineDBService,
+    public _khpp: KhppFormService
     ) {
       this._formsService.activeForm.subscribe(res => {
         console.log(res);
         this.completedForms = res;
       })
       this._onlineService.isOnline.subscribe(isOnline => {
-        console.log('ONLINE STATEUS', isOnline);
+        console.log('ONLINE STATUS', isOnline);
+        this.isOnline = isOnline;
       })
     console.log(this.webcamImageArray);
+
+      // // KHPP Forms
+      this._khpp.responseObject.subscribe(res => {
+        // console.log(res);
+        this.completedForms = res;
+      });
+
+      this.offlineDB.getAll().then( res => {
+        console.log('OFFLINE DB', res);
+        this.completedForms = res;
+      });
 
   }
 
@@ -137,52 +155,48 @@ export class ProcessingComponent implements OnInit {
         break;
         case 'KHPP':
         console.log('Saving KHPP');
+        console.log(this.completedForms);
 
          toInsert = this.completedForms.map(ele => {
           return new Object({
-            tagNumber: ele.locusNumber,
-            processedBy: ele.application === null ? 'null' : String(ele.processedBy),
-            dueDate: ele.blackened === null ? 'null' : new Date(ele.dueDate),
-            comments: ele.comments === null ? 'null' : String(ele.comments),
-            diameter: ele.diameter === null ? 'null' : String(ele.diameter),
-            enteredBy: ele.enteredBy === null ? 'null' : String(ele.enteredBy),
-            enteredDate: String(ele.enteredDate),
-            fabric: ele.fabric === null ? 'null' : String(ele.fabric),
-            incisedDecoration: String(ele.incisedDecoration),
-            numberOfObjects: String(ele.numberOfObjects),
-            objectGroupNum: String(ele.objectGroupNumber),
-            objectNum: String(ele.objectNumber),
-            paintedDecoration: ele.paintedDecoration === null ? 'null' : String(ele.paintedDecoration),
-            photo: null,
-            preservations : ele.preservation === null ? 'null' : String(ele.preservation),
-            processedDate: String(ele.processDate),
-            rlNum: ele.rlNumber === null ? 'null' : String(ele.rlNumber),
-            sfCoating: ele.sfCoating === null ? 'null' : String(ele.sfCoating),
-            sfTreatment : ele.sfTreatment === null ? 'null' : String(ele.sfTreatment),
-            sheetNum: ele.sheetNumber === null ? 'null' : String(ele.sheetNumber),
-            lat: 0,
-            lng: 0,
-            typeDescription: ele.typeDescription === null ? 'null' : String(ele.typeDescription),
-            typeNum: ele.typeNumber === null ? 'null' : String(ele.typeNumber),
-            weight: ele.weight === null ? 'null' : String(ele.weight),
-            room: 'null',
-            phase: 'null'
-          })
+            bodySherdData: ele.bodySherdData,
+            diagnosticData: ele.diagnosticData,
+            dueDate: ele.dueDate,
+            id: ele.id,
+            processedBy: ele.processedBy,
+            tagNumber: ele.tagNumber,
+            triageData: ele.triageData
+          });
         });
 
-        for (let i = 0; i < toInsert.length; i++) {
-          console.log(toInsert[i]);
-          this._formsService.writeElephantineToDB(toInsert[i]).subscribe(res => {
-            if (res.status === 201) {
+        // console.log(toInsert);
+        //  let insertFailed = false;
+
+        console.log(this.isOnline);
+        if (this.isOnline) {
+          for (let i = 0; i < toInsert.length; i++) {
+            console.log(toInsert[i]);
+            this._formsService.writeToKHPP(toInsert[i]).subscribe(res => {
               console.log(res);
-              this.openSnackBar();
-            }
-          });
+              if (res.status === 201) {
+                console.log(res);
+                this.openSnackBar();
+              } else {
+                // insertFailed = true;
+              }
+            });
+          }
+        } else {
+          console.log('cant post online;')
         }
 
-        // Clear the completed forms array and clear the service store.
-        // this.completedForms = [];
-        // this._formsService.activeForm.next(this.completedForms);
+       
+          // Clear the completed forms array and clear the service store.
+          this.completedForms = [];
+          // this._formsService.activeForm.next(this.completedForms);
+          this.offlineDB.clearAll();
+          this._khpp.responseObject.next([]);
+        
 
         break;
     }
@@ -190,7 +204,7 @@ export class ProcessingComponent implements OnInit {
 
   openSnackBar() {
     this.snackBar.openFromComponent(SnackBarComponent, {
-      duration: 5000,
+      duration: 6000,
     });
   }
 

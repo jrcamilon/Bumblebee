@@ -4,22 +4,18 @@ import { BehaviorSubject } from 'rxjs';
 import { OnlineServiceService } from 'services/OnlineServices/online-service.service';
 import Dexie from 'dexie';
 
-export interface Todo {
-  BaseCount: number,
-  BaseWeight: number,
-  BodyOrDiagnostic: string,
-  Comments: string,
-  DecoratorCount: number,
-  DecoratorWeight: number,
-  DueDate: Date,
-  FabricType: string,
-  ProcessedBy: string,
-  RimCount: number,
-  RimWeight: number,
-  TagNumber: string
+
+
+export interface KHPPForm {
+  bodySherdData: any[],
+  diagnosticData: any[],
+  dueDate: Date,
+  processedBy: string,
+  tagNumber: string,
+  triageData: any[]
 }
 
-export interface TodoWithID extends Todo {
+export interface TodoWithID extends KHPPForm {
   id: number;
 }
 
@@ -31,8 +27,6 @@ export class OfflineDBService {
 
   table: Dexie.Table<TodoWithID, number>;
 
-  // public test = new BehaviorSubject<any>('hello');
-
   constructor(private dexieService: DexieService) {
     this.table = this.dexieService.table('todos');
   }
@@ -42,7 +36,7 @@ export class OfflineDBService {
   }
 
   add(data) {
-    console.log(data);
+    // console.log(data);
     return this.table.add(data);
   }
 
@@ -57,6 +51,11 @@ export class OfflineDBService {
 
   remove(id) {
     return this.table.delete(id);
+  }
+
+  clearAll() {
+    console.log('CLEARING ALL OFFLINE DB RECORDS');
+    return this.table.clear();
   }
 
 

@@ -18,8 +18,29 @@ export class FormsService {
   public writeElephantineToDB (_form: any): Observable<any> {
     const body = {form: _form};
     console.log(body);
+
     const headers = new Headers({'Content-Type': 'application/json'});
-    return this._http.post('http://localhost:3090/write/elephantine', body, {headers: headers})
+    return this._http.post('http://70.176.243.97:3090/write/elephantine', body, {headers: headers})
+    .map((response: Response) => {
+      const tmpData = response.json();
+      return tmpData;
+    });
+  }
+
+  public writeToKHPP (_form: any): Observable<any> {
+    const body = {
+      form: {
+        id: _form.id,
+        processedBy: _form.processedBy,
+        tagNumber: _form.tagNumber
+      },
+      sherds: _form.bodySherdData,
+      triage: _form.triageData
+    }
+
+    console.log(body);
+    const headers = new Headers({'Content-Type': 'application/json'});
+    return this._http.post('http://70.176.243.97:3090/write/khpp', body, {headers: headers})
     .map((response: Response) => {
       const tmpData = response.json();
       return tmpData;

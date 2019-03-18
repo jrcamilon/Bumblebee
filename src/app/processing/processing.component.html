@@ -16,7 +16,7 @@
                     <span><button mat-icon-button (click)="save()"><mat-icon>save</mat-icon></button></span> -->
                     <span ><button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
                             <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="save()">
+                            <button mat-menu-item (click)="save()" [disabled]="!isOnline">
                                 <mat-icon>unarchive</mat-icon>
                                 <span >Save <b>{{completedForms.length}}</b> Records to DB</span>
                             </button>

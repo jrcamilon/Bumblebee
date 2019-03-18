@@ -1,3 +1,4 @@
+import { OfflineDBService } from 'services/OfflineDB/offline-db.service';
 import { Injectable } from '@angular/core';
 import { KHPPForm } from './KHPPForm';
 import { BehaviorSubject } from 'rxjs';
@@ -20,12 +21,12 @@ export class KhppFormService {
   count = 0;
 
 
-  constructor() {
+  constructor(public offlineDB: OfflineDBService) {
     // this.createAPIObject();
   }
 
   combineObjects(tagNumber, processedBy, dueDate) {
-    let obj = {
+    const obj = {
       tagNumber: tagNumber,
       processedBy: processedBy,
       dueDate: dueDate,
@@ -35,6 +36,7 @@ export class KhppFormService {
     };
 
     this.offLineArray.push(obj);
+    this.offlineDB.add(obj);
     this.responseObject.next(this.offLineArray);
 
     console.log(this.offLineArray);

@@ -243,8 +243,6 @@ export class KhppFormComponent implements OnInit {
     public onDueDateChange(e) {
         this.dueDate = e.target.value;
         console.log(e);
-
-
     }
     public saveBodyHandler({ sender, rowIndex, formGroup, isNew }) {
         // const product: Product = formGroup.value;
@@ -369,7 +367,7 @@ export class KhppFormComponent implements OnInit {
         console.log('UPDATED', formGroup.value);
 
         // Offline Save
-        this.offlineDB.add(formGroup.value);
+        // this.offlineDB.add(formGroup.value);
 
         this.editService.save(formGroup.value, isNew);
 
@@ -401,7 +399,7 @@ export class KhppFormComponent implements OnInit {
     public submitData(e) {
         console.log(this.tagNumber);
         this.editService.combineObjects(this.tagNumber, this.processedby, this.dueDate);
-        this.clearForm()
+        this.clearForm();
         this.bodySherdFormGroup = new FormGroup({
             'FabricType': new FormControl('', Validators.required),
             'SurfaceTreatment': new FormControl('', Validators.required),

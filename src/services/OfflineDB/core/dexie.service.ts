@@ -6,5 +6,9 @@ export class DexieService extends Dexie {
     this.version(1).stores({
       todos: '++id',
     });
+    // super('Ng2DexieSample');
+    // this.version(1).stores({
+    //   todos: '++id',
+    // });
   }
 }

@@ -1,4 +1,4 @@
-import { Todo, TodoWithID } from './../services/OfflineDB/offline-db.service';
+import { KHPPForm, TodoWithID } from './../services/OfflineDB/offline-db.service';
 import { DataService } from 'app/data.service';
 import { Component, OnInit } from '@angular/core';
 import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
@@ -27,9 +27,9 @@ export class AppComponent implements OnInit {
 
 
     ngOnInit() {
-      this.offlineDB.getAll().then( res => {
-        console.log(res);
-      })
+      // this.offlineDB.getAll().then( res => {
+      //   console.log(res);
+      // })
     }
 
     isMap (path) {
