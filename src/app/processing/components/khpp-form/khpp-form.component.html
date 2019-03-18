@@ -1,6 +1,6 @@
-<input type="text" placeholder="Tag Number">
-<input type="text" placeholder="Processed By">
-<input type="date" placeholder="Due Date">
+<input type="text" (keyup)="onTagChange($event)" required maxlength="13" placeholder="Tag Number D09.1-007-1.1">
+<input type="text"  (keyup)="onProcessedByChange($event)" required placeholder="Processed By">
+<input type="date" (change)="onDueDateChange($event)" required placeholder="Due Date">
 
 <h2>Coarse Triage Processing</h2>
 <!-- Coarse Triage -->
@@ -129,9 +129,9 @@ name='grid2'
     <kendo-dropdownlist
       #ddl="popupAnchor"
       popupAnchor
-      [data]="fabrics"
+      [data]="bodyFabrics"
       textField="FabricType"
-      valueField="FabricID"
+      valueField="FabricType"
       [valuePrimitive]="true"
       (valueChange)="onBodyFabricChange($event)"
     >
@@ -148,7 +148,7 @@ name='grid2'
 </kendo-grid-column>
 
 <!-- <kendo-grid-column field="BodyOrDiagnostic" width="200" editor="string" title="Body Or Diagnostic"></kendo-grid-column> -->
-<kendo-grid-column field="SurfaceTreatment" title="Body Or Diagnostic" width="150">
+<kendo-grid-column field="SurfaceTreatment" title="Surface Treatment" width="150">
   <ng-template kendoGridCellTemplate let-dataItem>
     {{surfaceTreatment(dataItem.SurfaceTreatment)?.ST}}
   </ng-template>
@@ -162,7 +162,7 @@ name='grid2'
       popupAnchor
       [data]="stList"
       textField="ST"
-      valueField="stID"
+      valueField="ST"
       [valuePrimitive]="true"
       (valueChange)="onBodySurfaceChange($event)"
 
@@ -174,7 +174,7 @@ name='grid2'
         popupClass="k-widget k-tooltip k-tooltip-validation k-invalid-msg"
        >
         <span class="k-icon k-i-warning"></span>
-        Category is required
+        Surface Treatment is required
       </kendo-popup>
   </ng-template>
 </kendo-grid-column>
@@ -183,7 +183,7 @@ name='grid2'
 <kendo-grid-column field="FireOut" width="200" editor="numeric" title="Fire Out"></kendo-grid-column>
 <kendo-grid-column field="FireBoth" width="200" editor="numeric" title="Fire Both"></kendo-grid-column>
 <kendo-grid-column field="RimsTSTC" width="200" editor="numeric" title="Rims TSTC"></kendo-grid-column>
-<kendo-grid-column field="Other" width="200" editor="numeric" title="Other"></kendo-grid-column>
+<kendo-grid-column field="Other" width="200" editor="text" title="Other"></kendo-grid-column>
 
 <kendo-grid-command-column title="command" width="220">
   <ng-template kendoGridCellTemplate let-formGroup="bodySherdFormGroup" let-isNew="isNew">
@@ -198,4 +198,4 @@ name='grid2'
 <h2>Body Sherds Processing</h2>
 <h4>Comming Soon!</h4>
 
-<input type="button" (click)="onSubmit()">
+<button class="button" (click)="submitData($event)" >Submit</button>

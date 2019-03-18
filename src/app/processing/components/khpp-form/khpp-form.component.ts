@@ -22,6 +22,9 @@ export class KhppFormComponent implements OnInit {
         skip: 0,
         take: 10
     };
+    public tagNumber: String;
+    public processedby: String;
+    public dueDate: Date;
     // Coarse Triage
     public view: any[];
     public formGroup: FormGroup;
@@ -84,7 +87,28 @@ export class KhppFormComponent implements OnInit {
         {
             FabricID: 7, FabricType: 'Other MArl'
         }];
-    public stList: any[] = [];
+    public stList: any[] = [
+        {
+            stID: 1, ST: 'Unslipped'
+        },
+        {
+            stID: 2, ST: 'R Slip Out'
+        },
+        {
+            stID: 3, ST: 'R Slip In'
+        },
+        {
+            stID: 4, ST: 'R Slip Both'
+        },
+        {
+            stID: 5, ST: 'Cream Slip In'
+        },
+        {
+            stID: 6, ST: 'Cream Slip Out'
+        },
+        {
+            stID: 7, ST: 'Cream Slip Both'
+        }];
     public bodyAllSurfaceTreatments: any[] = [
         {
             stID: 1, ST: 'Unslipped'
@@ -120,53 +144,41 @@ export class KhppFormComponent implements OnInit {
 
     constructor(private editService: KhppFormService, public isOnline: OnlineServiceService, public offlineDB: OfflineDBService) {
 
-        
         this.editService.data.subscribe(item => {
             this.view = item;
         });
         this.editService.bodySherdsData.subscribe(item=>{
             this.bodySherd = item;
         })
-        switch (this.chosenBodyFabric.FabricID) {
-            case 1:
-                this.stList = this.bodyAllSurfaceTreatments;
-                break;
-            case 2:
-                this.stList = this.bodyAllSurfaceTreatments;
-                break;
-
-            case 3:
-                this.stList = this.bodyFineSurfaceTreatments;
-                break;
-
-            default:
-                this.stList = this.bodyMarlSurfaceTreatments;
-                break;
-        }
+       
     }
 
 
     public ngOnInit(): void {
         // this.view = this.editService.pipe(map(data => process(data, this.gridState)));
-
+       
         // this.editService.read();
     }
     /** Body Sherds Processing Functions */
 
     public bodyFabric(id: number): any {
-        return this.bodyFabrics.find(x => x.FabricID === id);
+        return this.bodyFabrics.find(x => x.FabricType === id);
 
     }
     public surfaceTreatment(id: number): any {
-        switch (this.chosenBodyFabric.FabricID) {
-            case 1:
-                return this.bodyAllSurfaceTreatments.find(x => x.stID === id);
-            case 2:
-                return this.bodyAllSurfaceTreatments.find(x => x.stID === id);
-            case 3:
-                return this.bodyFineSurfaceTreatments.find(x => x.stID === id);
+        switch (this.chosenBodyFabric) {
+            case 'Coarse':
+                this.stList = this.bodyAllSurfaceTreatments;
+                break;
+            case 'Medium':
+                this.stList = this.bodyAllSurfaceTreatments;
+                break;
+            case 'Fine':
+                this.stList = this.bodyFineSurfaceTreatments;
+                break;
             default:
-                return this.bodyMarlSurfaceTreatments.find(x => x.stID === id);
+                this.stList = this.bodyMarlSurfaceTreatments;
+                break;
         }
     }
 
@@ -209,19 +221,36 @@ export class KhppFormComponent implements OnInit {
     }
 
     public cancelBodyHandler({ sender, rowIndex }) {
-        
         this.closeEditor(sender, rowIndex);
     }
 
-    public saveBodyHandler({ sender, rowIndex, bodySherdFormGroup, isNew }) {
+    public onTagChange(e){
+        console.log(e);
+      
+            this.tagNumber = e.target.value;
+
+
+    }
+    public onProcessedByChange(e) {
+      
+            this.processedby = e.target.value;
+        
+    }
+    public onDueDateChange(e){
+        this.dueDate = e.target.value;
+        console.log(e);
+
+        
+    }
+    public saveBodyHandler({ sender, rowIndex, formGroup, isNew }) {
         // const product: Product = formGroup.value;
 
-        console.log('Saving', bodySherdFormGroup.value);
-        bodySherdFormGroup.value.FabricType = this.chosenBodyFabric;
-        bodySherdFormGroup.value.SurfaceTreatment = this.chosenSurfaceTreatment;
-        console.log('UPDATED', bodySherdFormGroup.value);
+        console.log('Saving', formGroup.value);
+        formGroup.value.FabricType = this.chosenBodyFabric;
+        formGroup.value.SurfaceTreatment = this.chosenSurfaceTreatment;
+        console.log('UPDATED', formGroup.value);
 
-        this.editService.saveBody(bodySherdFormGroup.value, isNew);
+        this.editService.saveBody(formGroup.value, isNew);
 
         sender.closeRow(rowIndex);
     }
@@ -240,6 +269,20 @@ export class KhppFormComponent implements OnInit {
         console.log(e);
         this.chosenBodyFabric = e;
         console.log(this.chosenBodyFabric);
+        switch (this.chosenBodyFabric) {
+            case 'Coarse':
+                this.stList = this.bodyAllSurfaceTreatments;
+                break;
+            case 'Medium':
+                this.stList = this.bodyAllSurfaceTreatments;
+                break;
+            case 'Fine':
+                this.stList = this.bodyFineSurfaceTreatments;
+                break;
+            default:
+                this.stList = this.bodyMarlSurfaceTreatments;
+                break;
+        }
 
     }
     public onBodySurfaceChange(e) {
@@ -351,10 +394,10 @@ export class KhppFormComponent implements OnInit {
 
 
     }
+    public submitData(e) {
 
-    onSubmit() {
-        console.log('here');
-        console.log(this.view);
+        console.log(this.tagNumber);
+        this.editService.combineObjects(this.tagNumber, this.processedby, this.dueDate);
 
     }
 }
