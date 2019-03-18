@@ -34,9 +34,8 @@ class="processingForm"
       popupAnchor
       [data]="fabrics"
       textField="FabricType"
-      valueField="FabricID"
+      valueField="FabricType"
       [valuePrimitive]="true"
-      [formControl]="formGroup.get('FabricID')"
       (valueChange)="onFabricChange($event)"
     >
     </kendo-dropdownlist>
@@ -65,9 +64,8 @@ class="processingForm"
       popupAnchor
       [data]="bodOrDiagnostic"
       textField="BD"
-      valueField="bdID"
+      valueField="BD"
       [valuePrimitive]="true"
-      [formControl]="formGroup.get('bdID')"
       (valueChange)="onBodDiagnosticChange($event)"
     >
     </kendo-dropdownlist>
@@ -103,7 +101,7 @@ class="processingForm"
 <kendo-grid
 class="processingForm"
 name='grid2'
-[data]="view"
+[data]="bodySherd"
 [height]="533"
 [pageSize]="gridState.take" [skip]="gridState.skip" [sort]="gridState.sort"
 [pageable]="true" [sortable]="true"

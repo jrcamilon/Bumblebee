@@ -22,7 +22,7 @@ export class KhppFormComponent implements OnInit {
         take: 10
     };
     public tagNumber: String = "";
-    public processedby: String= "";
+    public processedby: String = "";
     public dueDate: Date = new Date();
     // Coarse Triage
     public view: any[];
@@ -181,6 +181,8 @@ export class KhppFormComponent implements OnInit {
                 this.stList = this.bodyMarlSurfaceTreatments;
                 break;
         }
+        return this.stList.find(x => x.ST === id);
+
     }
 
     public addBodyHandler({ sender }) {
@@ -294,10 +296,10 @@ export class KhppFormComponent implements OnInit {
     }
     /**Coarse Triage Functions */
     public fabric(id: number): any {
-        return this.fabrics.find(x => x.FabricID === id);
+        return this.fabrics.find(x => x.FabricType === id);
     }
     public bodyOrDiagnostic(id): any {
-        return this.bodOrDiagnostic.find(x => x.bdID === id);
+        return this.bodOrDiagnostic.find(x => x.BD === id);
 
     }
     public onBodyStateChange(state: State) {
