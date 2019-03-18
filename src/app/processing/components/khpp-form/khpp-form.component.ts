@@ -21,9 +21,9 @@ export class KhppFormComponent implements OnInit {
         skip: 0,
         take: 10
     };
-    public tagNumber: String;
-    public processedby: String;
-    public dueDate: Date;
+    public tagNumber: String = "";
+    public processedby: String= "";
+    public dueDate: Date = new Date();
     // Coarse Triage
     public view: any[];
     public formGroup: FormGroup;
@@ -146,16 +146,18 @@ export class KhppFormComponent implements OnInit {
         this.editService.data.subscribe(item => {
             this.view = item;
         });
-        this.editService.bodySherdsData.subscribe(item=>{
+        this.editService.bodySherdsData.subscribe(item => {
             this.bodySherd = item;
         })
-       
+        this.editService.responseObject.subscribe(item => {
+            console.log('Response Object', item);
+        })
     }
 
 
     public ngOnInit(): void {
         // this.view = this.editService.pipe(map(data => process(data, this.gridState)));
-       
+
         // this.editService.read();
     }
     /** Body Sherds Processing Functions */
@@ -223,23 +225,23 @@ export class KhppFormComponent implements OnInit {
         this.closeEditor(sender, rowIndex);
     }
 
-    public onTagChange(e){
+    public onTagChange(e) {
         console.log(e);
-      
-            this.tagNumber = e.target.value;
+
+        this.tagNumber = e.target.value;
 
 
     }
     public onProcessedByChange(e) {
-      
-            this.processedby = e.target.value;
-        
+
+        this.processedby = e.target.value;
+
     }
-    public onDueDateChange(e){
+    public onDueDateChange(e) {
         this.dueDate = e.target.value;
         console.log(e);
 
-        
+
     }
     public saveBodyHandler({ sender, rowIndex, formGroup, isNew }) {
         // const product: Product = formGroup.value;
@@ -391,9 +393,36 @@ export class KhppFormComponent implements OnInit {
 
     }
     public submitData(e) {
-
         console.log(this.tagNumber);
         this.editService.combineObjects(this.tagNumber, this.processedby, this.dueDate);
+        this.clearForm()
+        this.bodySherdFormGroup = new FormGroup({
+            'FabricType': new FormControl('', Validators.required),
+            'SurfaceTreatment': new FormControl('', Validators.required),
+            'Normal': new FormControl('', Validators.required),
+            'FireIn': new FormControl('', Validators.required),
+            'FireOut': new FormControl('', Validators.required),
+            'FireBoth': new FormControl('', Validators.required),
+            'RimsTSTC': new FormControl('', Validators.required),
+            'Other': new FormControl('', Validators.required),
+        });
+        this.formGroup = new FormGroup({
+            'FabricType': new FormControl('', Validators.required),
+            'BodyOrDiagnostic': new FormControl('', Validators.required),
+            'RimCount': new FormControl('', Validators.required),
+            'RimWeight': new FormControl('', Validators.required),
+            'BaseCount': new FormControl('', Validators.required),
+            'BaseWeight': new FormControl('', Validators.required),
+            'DecoratorCount': new FormControl('', Validators.required),
+            'DecoratorWeight': new FormControl('', Validators.required),
+            'Comments': new FormControl(''),
 
+        });
+    }
+
+    public clearForm() {
+        this.tagNumber = "";
+        this.processedby = "";
+        this.dueDate = new Date();
     }
 }
