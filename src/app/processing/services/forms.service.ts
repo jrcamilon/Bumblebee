@@ -32,7 +32,8 @@ export class FormsService {
       form: {
         id: _form.id,
         processedBy: _form.processedBy,
-        tagNumber: _form.tagNumber
+        tagNumber: _form.tagNumber,
+        dueDate: _form.dueDate
       },
       sherds: _form.bodySherdData,
       triage: _form.triageData
