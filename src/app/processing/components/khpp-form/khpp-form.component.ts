@@ -109,6 +109,34 @@ export class KhppFormComponent implements OnInit {
         {
             stID: 7, ST: 'Cream Slip Both'
         }];
+    public allBodySurfaceTreatments: any[] = [
+        {
+            stID: 1, ST: 'Unslipped'
+        },
+        {
+            stID: 2, ST: 'R Slip Out'
+        },
+        {
+            stID: 3, ST: 'R Slip In'
+        },
+        {
+            stID: 4, ST: 'R Slip Both'
+        },
+        {
+            stID: 5, ST: 'Cream Slip In'
+        },
+        {
+            stID: 6, ST: 'Cream Slip Out'
+        },
+        {
+            stID: 7, ST: 'Cream Slip Both'
+        },
+        {
+            stID: 1, ST: 'See Comments'
+        },
+        {
+            stID: 1, ST: 'Untreated'
+        }];
     public bodyAllSurfaceTreatments: any[] = [
         {
             stID: 1, ST: 'Unslipped'
@@ -130,7 +158,8 @@ export class KhppFormComponent implements OnInit {
         },
         {
             stID: 7, ST: 'Cream Slip Both'
-        }];
+        }
+    ];
     public bodyMarlSurfaceTreatments: any[] = [{
         stID: 1, ST: 'See Comments'
     }];
@@ -182,7 +211,7 @@ export class KhppFormComponent implements OnInit {
                 this.stList = this.bodyMarlSurfaceTreatments;
                 break;
         }
-        return this.stList.find(x => x.ST === id);
+        return this.allBodySurfaceTreatments.find(x => x.ST === id);
 
     }
 
