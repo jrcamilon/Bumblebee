@@ -36,7 +36,6 @@ class="processingForm"
       textField="FabricType"
       valueField="FabricType"
       [valuePrimitive]="true"
-      [formControl]="formGroup.get('FabricType')"
       (valueChange)="onFabricChange($event)"
     >
     </kendo-dropdownlist>
@@ -67,7 +66,6 @@ class="processingForm"
       textField="BD"
       valueField="BD"
       [valuePrimitive]="true"
-      [formControl]="formGroup.get('BD')"
       (valueChange)="onBodDiagnosticChange($event)"
     >
     </kendo-dropdownlist>
@@ -103,7 +101,7 @@ class="processingForm"
 <kendo-grid
 class="processingForm"
 name='grid2'
-[data]="view"
+[data]="bodySherd"
 [height]="533"
 [pageSize]="gridState.take" [skip]="gridState.skip" [sort]="gridState.sort"
 [pageable]="true" [sortable]="true"

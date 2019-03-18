@@ -23,7 +23,7 @@ export class KhppFormComponent implements OnInit {
         take: 10
     };
     public tagNumber: String = "";
-    public processedby: String= "";
+    public processedby: String = "";
     public dueDate: Date = new Date();
     // Coarse Triage
     public view: any[];
@@ -182,6 +182,8 @@ export class KhppFormComponent implements OnInit {
                 this.stList = this.bodyMarlSurfaceTreatments;
                 break;
         }
+        return this.stList.find(x => x.ST === id);
+
     }
 
     public addBodyHandler({ sender }) {

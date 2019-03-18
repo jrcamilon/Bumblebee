@@ -17,7 +17,7 @@ export class KhppFormService {
   processedBy: any;
   dueDate: any;
   tagNumber: any;
-
+  count = 0;
 
 
   constructor() {
@@ -37,12 +37,12 @@ export class KhppFormService {
     this.offLineArray.push(obj);
     this.responseObject.next(this.offLineArray);
 
-    console.log(this.offLineArray, console.log(this.responseObject.subscribe(item => {
-      return item;
-    })));
+    console.log(this.offLineArray);
 
     this.data.next([]);
+    this.khppData=[];
     this.bodySherdsData.next([]);
+    this.bodyData = [];
   }
   setProcessedBy(processedBy) {
     this.processedBy = processedBy;
@@ -55,18 +55,30 @@ export class KhppFormService {
   }
   save(item, isNew) {
     if (isNew) {
+      item.id = this.count;
+      this.count++;
       this.khppData.push(item);
+      this.data.next(this.khppData);
 
+    } else {
+      const currentRecord = this.khppData.findIndex(record => record.id === item.id);
+      this.khppData[currentRecord] = item;
+      this.data.next(this.khppData);
     }
 
-    this.data.next(this.khppData);
   }
   saveBody(item, isNew) {
     if (isNew) {
+      item.id = this.count;
+      this.count++;
       this.bodyData.push(item);
-    }
+      this.bodySherdsData.next(this.bodyData);
 
-    this.data.next(this.bodyData);
+    } else {
+      const currentRecord = this.bodyData.findIndex(record => record.id === item.id);
+      this.bodyData[currentRecord] = item;
+      this.bodySherdsData.next(this.bodyData);
+    }
   }
   removeBody(item) {
     let newArr: any[] = [];
@@ -84,9 +96,7 @@ export class KhppFormService {
     this.bodyData = newArr;
   }
 
-  createAPIObject(): any {
-    throw new Error("Method not implemented.");
-  }
+
   remove(item) {
     let newArr: any[] = [];
     for (let i = 0; i < this.khppData.length; i++) {
