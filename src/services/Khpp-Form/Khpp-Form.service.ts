@@ -6,12 +6,18 @@ import { GridDataResult } from '@progress/kendo-angular-grid';
   providedIn: 'root'
 })
 export class KhppFormService {
-  
+
   data = new BehaviorSubject<any>(null);
   bodySherdsData = new BehaviorSubject<any>(null);
-
+  responseObject = new BehaviorSubject<any[]>([]);
+  
   private khppData: any[] = [];
   private bodyData: any[] = [];
+  private offLineArray: any[] = [];
+  processedBy: any;
+  dueDate: any;
+  tagNumber: any;
+  
 
 
   constructor() {
@@ -19,6 +25,33 @@ export class KhppFormService {
    }
 
  
+  combineObjects(tagNumber, processedBy,dueDate){
+    let obj = {
+      tagNumber: tagNumber,
+      processedBy: processedBy,
+      dueDate: dueDate,
+      triageData: this.khppData,
+      bodySherdData: this.bodyData,
+      diagnosticData: []
+    };
+
+    this.offLineArray.push(obj);
+    this.responseObject.next(this.offLineArray);
+
+    console.log(this.offLineArray, console.log(this.responseObject));
+
+    this.data.next([]);
+    this.bodySherdsData.next([]);
+  }
+  setProcessedBy(processedBy) {
+    this.processedBy = processedBy;
+  }
+  setDueDate(dueDate) {
+    this.dueDate = dueDate;
+  }
+  setTagNumber(tagNumber) {
+    this.tagNumber = tagNumber;
+  }
   save(item, isNew) {
     if (isNew) {
       this.khppData.push(item);
@@ -30,7 +63,6 @@ export class KhppFormService {
   saveBody(item,isNew) {
     if (isNew) {
       this.bodyData.push(item);
-
     }
 
     this.data.next(this.bodyData);
