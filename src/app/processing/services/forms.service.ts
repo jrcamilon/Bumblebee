@@ -20,7 +20,7 @@ export class FormsService {
     console.log(body);
 
     const headers = new Headers({'Content-Type': 'application/json'});
-    return this._http.post('http://70.176.243.97:3090/write/elephantine', body, {headers: headers})
+    return this._http.post('http://localhost:3090/write/elephantine', body, {headers: headers})
     .map((response: Response) => {
       const tmpData = response.json();
       return tmpData;
@@ -40,7 +40,7 @@ export class FormsService {
 
     console.log(body);
     const headers = new Headers({'Content-Type': 'application/json'});
-    return this._http.post('http://70.176.243.97:3090/write/khpp', body, {headers: headers})
+    return this._http.post('http://localhost:3090/write/khpp', body, {headers: headers})
     .map((response: Response) => {
       const tmpData = response.json();
       return tmpData;

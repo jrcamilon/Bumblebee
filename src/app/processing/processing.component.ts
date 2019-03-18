@@ -75,7 +75,7 @@ export class ProcessingComponent implements OnInit {
 
       // // KHPP Forms
       this._khpp.responseObject.subscribe(res => {
-        // console.log(res);
+        console.log(res);
         this.completedForms = res;
       });
 

@@ -41,8 +41,9 @@ export class KhppFormService {
 
     console.log(this.offLineArray);
 
+    this.offLineArray = [];
     this.data.next([]);
-    this.khppData=[];
+    this.khppData = [];
     this.bodySherdsData.next([]);
     this.bodyData = [];
   }

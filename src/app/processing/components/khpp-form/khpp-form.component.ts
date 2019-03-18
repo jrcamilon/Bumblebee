@@ -136,7 +136,7 @@ export class KhppFormComponent implements OnInit {
     }];
     public bodyFineSurfaceTreatments: any[] = [{
         stID: 1, ST: 'Untreated'
-    }]
+    }];
     private bodyEditedRowIndex: number;
     // TODO: Diagnostics
     public diagnostics: any[];
