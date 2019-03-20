@@ -286,9 +286,7 @@ export class KhppFormComponent implements OnInit {
         sender.closeRow(rowIndex);
     }
 
-    public removeBodyHandler({ dataItem }) {
-        // this.editService.remove(dataItem);
-    }
+
 
     private closeBodyEditor(grid, rowIndex = this.bodyEditedRowIndex) {
         grid.closeRow(rowIndex);
@@ -404,10 +402,16 @@ export class KhppFormComponent implements OnInit {
     }
 
     public removeHandler({ dataItem }) {
-        // this.editService.remove(dataItem);
+        this.editService.remove(dataItem);
     }
 
+    public removeBodyHandler({ dataItem }) {
+        this.editService.removeBody(dataItem);
+    }
+
+
     private closeEditor(grid, rowIndex = this.editedRowIndex) {
+        console.log('closing editor');
         grid.closeRow(rowIndex);
         this.editedRowIndex = undefined;
         this.formGroup = undefined;

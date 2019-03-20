@@ -37,7 +37,13 @@ export class KhppFormService {
 
     this.offLineArray.push(obj);
     this.offlineDB.add(obj);
-    this.responseObject.next(this.offLineArray);
+
+    this.offlineDB.getAll().then( res => {
+      console.log('OFFLINE DB', res);
+      this.responseObject.next(res);
+    });
+
+    // this.responseObject.next(this.offLineArray);
 
     console.log(this.offLineArray);
 
