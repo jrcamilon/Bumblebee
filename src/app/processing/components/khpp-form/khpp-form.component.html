@@ -1,41 +1,63 @@
-<div class="row container-fluid">
-  <!-- TAG NUMBER -->
-  <input 
-    style="border: 1px solid black; border-radius: 2px;"
-    class='col-sm-12 col-xs-12' 
-    type="text" 
-    [value]="tagNumber" 
-    (keyup)="onTagChange($event)" 
-    [disabled]="isFieldsLocked"
-    required maxlength="13"
-    placeholder="Tag Number D09.1-007-1.1">
-  <!-- DUE DATE -->
-  <input 
-    style="border: 1px solid black; margin-top: 8px; border-radius: 2px"
-    class='col-sm-12 col-xs-12' 
-    type="date" 
-    [value]="dueDate" 
-    (change)="onDueDateChange($event)" 
-    [disabled]="isFieldsLocked"
-    required placeholder="Due Date">
+<div class="row container-fluid ">
 
-  <!-- PROCESSED BY -->
-  <input 
-    style="border: 1px solid black; margin-top: 8px; border-radius: 2px"
-    class='col-sm-12 col-xs-12' 
+  <div class="form-group">
+    <label for="tag" style="font-size: 10px !important">Tag Number</label>
+    <input 
+      id="tag"
+      class='col-sm-12 col-xs-12 form-control' 
+      type="text" 
+      [value]="tagNumber" 
+      (keyup)="onTagChange($event)" 
+      [disabled]="isFieldsLocked"
+      required maxlength="13"
+      placeholder="Tag Number D09.1-007-1.1">
+  </div>
+
+  <div class="form-group" style="padding-top: 25px;">
+    <label for="date" style="font-size: 10px !important">Date</label>
+    <input 
+      id="date"
+      class='col-sm-12 col-xs-12 form-control' 
+      type="date" 
+      [value]="dueDate" 
+      (change)="onDueDateChange($event)" 
+      [disabled]="isFieldsLocked"
+      required placeholder="Due Date">
+  </div>
+
+  <div class="form-group" style="padding-top: 25px;">
+    <label for="procby" style="font-size: 10px !important">Procesed By</label>
+    <input 
+    id="procby"
+    class='col-sm-12 col-xs-12 form-control' 
     type="text" 
     [value]="processedby" 
     (keyup)="onProcessedByChange($event)" 
     [disabled]="isFieldsLocked"
     required placeholder="Processed By">
+  </div>
+
+  <div class="form-group" style="padding-top: 25px;">
+    <label for="sel1" style="font-size: 10px !important">Processing Type</label>
+    <select class="form-control" id="sel1" (change)="onProcessingTypeChange($event.target.value)">
+      <option value="basic-processing">Basic Processing</option>
+      <option value="detailed-processing">Detailed Processing</option>
+    </select>
+  </div>
+    
+
 </div>
+<!-- END -->
+
+
+
 
 <!-- FORM BODY -->
 <div class="row" *ngIf="isFormBodyVisible">
 
   <!-- <app-body-processing></app-body-processing> -->
 
-  <div class="row container-fluid">
+  <div class="row container-fluid" *ngIf="isBasicVisible">
 
       <h4>Basic Processing</h4>
       <small><i>* Each record entered would be linked to Tag Number: {{this.tagNumber}}</i></small>
@@ -179,7 +201,7 @@
   </div>
 
 
-  <div class="row container-fluid">
+  <div class="row container-fluid" *ngIf="isDetailedVisible">
 
       <h4>Detailed Processing</h4>
       <small><i>* Each record entered would be linked to Tag Number: {{this.tagNumber}}</i></small>
@@ -197,7 +219,7 @@
       [navigable]="true"
       >
       <ng-template kendoGridToolbarTemplate>
-      <button kendoGridAddCommand>Add new</button>
+          <button kendoGridAddCommand class="btn btn-primary btn-lg btn-block" style="border: 1px solid blue;">Add new</button>
       </ng-template>
     
       <kendo-grid-column field="FabricType" title="Fabric Type" width="150">
@@ -316,7 +338,7 @@
       </kendo-grid>
   </div>
 
-  <div class="row container-fluid" style="padding-top: 10px;">
+  <div class="row container-fluid" style="padding-top: 40px;">
       <button type="button" class="btn btn-primary btn-lg btn-block" (click)="submitData($event)" >Submit</button>
   </div>
 

@@ -19,7 +19,11 @@ export class NavbarComponent implements OnInit{
 
     constructor(location: Location,  private element: ElementRef, public layoutService: AdminLayoutService) {
       this.location = location;
-          this.sidebarVisible = false;
+      this.sidebarVisible = false;
+      this.layoutService.isNavbarOpen.subscribe(ele => {
+        //   console.log(ele);
+          this.isNavbarOpen = ele;
+      })
     }
 
     ngOnInit(){
