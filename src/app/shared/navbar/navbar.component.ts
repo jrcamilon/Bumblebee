@@ -1,3 +1,4 @@
+import { AdminLayoutService } from './../../layouts/admin-layout/admin-layout.service';
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { ROUTES } from '../../sidebar/sidebar.component';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
@@ -13,8 +14,10 @@ export class NavbarComponent implements OnInit{
     location: Location;
     private toggleButton: any;
     private sidebarVisible: boolean;
+    public isNavbarOpen = false;
 
-    constructor(location: Location,  private element: ElementRef) {
+
+    constructor(location: Location,  private element: ElementRef, public layoutService: AdminLayoutService) {
       this.location = location;
           this.sidebarVisible = false;
     }
@@ -49,6 +52,11 @@ export class NavbarComponent implements OnInit{
             this.sidebarClose();
         }
     };
+
+    onTitleClick() {
+        this.isNavbarOpen = !this.isNavbarOpen;
+        this.layoutService.isNavbarOpen.next(this.isNavbarOpen);
+    }
 
     getTitle(){
       var titlee = this.location.prepareExternalUrl(this.location.path());

@@ -122,4 +122,9 @@ export class KhppFormService {
     this.khppData = [];
     this.khppData = newArr;
   }
+
+  tagNumberFiledValid(tagNumber: string) {
+    return (tagNumber.length >= 13)
+  }
+
 }

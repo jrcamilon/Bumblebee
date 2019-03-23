@@ -1,3 +1,4 @@
+import { BodyProcessingComponent } from './../../processing/components/body-processing/body-processing.component';
 import { HomeMapComponent } from './../../home-map/home-map.component';
 import { LoadingComponent } from './../../shared/loading/loading.component';
 import { DataGridComponent } from './../../shared/grid/grid.component';
@@ -8,7 +9,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { LbdModule } from '../../lbd/lbd.module';
 import { NguiMapModule } from '@ngui/map';
-
 import { AdminLayoutRoutes } from './admin-layout.routing';
 
 import { HomeComponent } from '../../home/home.component';
@@ -178,7 +178,8 @@ import { RednotebookFormComponent } from 'app/processing/components/rednotebook-
     MainDashMenuComponent,
     HomeMapComponent,
     KhppFormComponent,
-    PopupAnchorDirective
+    PopupAnchorDirective,
+    BodyProcessingComponent
 
 
   ],

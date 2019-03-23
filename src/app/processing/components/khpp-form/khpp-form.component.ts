@@ -22,18 +22,24 @@ export class KhppFormComponent implements OnInit {
         skip: 0,
         take: 10
     };
-    public tagNumber: String = "";
-    public processedby: String = "";
-    public dueDate: Date = new Date();
+
+    public isKGs = false;
+
+    public tagNumber = '';
+    public processedby = '';
+    public dueDate = '';
+
+    public isFormBodyVisible = false;
+    public isFieldsLocked = false;
+
     // Coarse Triage
     public view: any[];
     public formGroup: FormGroup;
     public chosenFabric: any = {
         FabricID: 1, FabricType: 'Coarse'
     };
-    public chosenBodyOrDiagnostic: any = {
-        bdID: 1, BD: 'Body'
-    };
+    public chosenBodyOrDiagnostic: any = { bdID: 1, BD: 'Body'};
+    public chosenOption: any = { optID: 1, type: 'Body' };
     public fabrics: any[] = [
         {
             FabricID: 1, FabricType: 'Coarse'
@@ -51,23 +57,33 @@ export class KhppFormComponent implements OnInit {
             FabricID: 5, FabricType: 'Marl'
         }];
     public bodOrDiagnostic: any[] = [
-        {
-            bdID: 1, BD: 'Body'
-        },
-        {
-            bdID: 2, BD: 'Diagnostic'
-        }];
+        { bdID: 1, BD: 'Body'},
+        { bdID: 2, BD: 'Diagnostic'}];
+
+
+    public optionsList: any[] = [
+        { optID: 1, type: 'Body'},
+        { optID: 1, type: 'Rim'},
+        { optID: 1, type: 'Base'},
+        { optID: 1, type: 'Decorated'},
+    ];
+
     private editedRowIndex: number;
+
     // Body Sherds
     public bodySherd: any[];
     public bodySherdFormGroup: FormGroup;
+
     public chosenBodyFabric: any = {
         FabricID: 1, FabricType: 'Coarse'
     };
+
     fabricIsValid: Boolean = false;
+
     public chosenSurfaceTreatment: any = {
         stID: 1, ST: 'Unslipped'
     };
+
     public bodyFabrics: any[] = [
         {
             FabricID: 1, FabricType: 'Coarse'
@@ -167,7 +183,7 @@ export class KhppFormComponent implements OnInit {
         stID: 1, ST: 'Untreated'
     }];
     private bodyEditedRowIndex: number;
-    // TODO: Diagnostics
+
     public diagnostics: any[];
     bodyGridState: State;
 
@@ -182,13 +198,17 @@ export class KhppFormComponent implements OnInit {
         this.editService.responseObject.subscribe(item => {
             console.log('Response Object', item);
         })
+
+
     }
 
 
     public ngOnInit(): void {
         // this.view = this.editService.pipe(map(data => process(data, this.gridState)));
-
         // this.editService.read();
+        this.tagNumber = 'D1234567891234';
+        this.dueDate = '07-11-1987';
+        this.processedby = ' JR';
     }
     /** Body Sherds Processing Functions */
 
@@ -215,6 +235,10 @@ export class KhppFormComponent implements OnInit {
 
     }
 
+    public onCheckBoxChange() {
+        this.isKGs = !this.isKGs;
+    }
+
     public addBodyHandler({ sender }) {
         console.log(sender);
         this.closeEditor(sender);
@@ -222,14 +246,17 @@ export class KhppFormComponent implements OnInit {
         this.bodySherdFormGroup = new FormGroup({
             'FabricType': new FormControl('', Validators.required),
             'SurfaceTreatment': new FormControl('', Validators.required),
-            'Normal': new FormControl('', Validators.required),
-            'FireIn': new FormControl('', Validators.required),
-            'FireOut': new FormControl('', Validators.required),
-            'FireBoth': new FormControl('', Validators.required),
+            'NormalWeight': new FormControl('', Validators.required),
+            'NormalCount': new FormControl('', Validators.required),
+            'FireInWeight': new FormControl('', Validators.required),
+            'FireInCount': new FormControl('', Validators.required),
+            'FireOutWeight': new FormControl('', Validators.required),
+            'FireOutCount': new FormControl('', Validators.required),
+            'FireBothWeight': new FormControl('', Validators.required),
+            'FireBothCount': new FormControl('', Validators.required),
             'RimsTSTC': new FormControl('', Validators.required),
             'Other': new FormControl('', Validators.required),
         });
-
         sender.addRow(this.bodySherdFormGroup);
     }
 
@@ -238,16 +265,19 @@ export class KhppFormComponent implements OnInit {
 
 
         this.bodySherdFormGroup = new FormGroup({
-            'FabricType': new FormControl(dataItem.FabricType, Validators.required),
-            'SurfaceTreatment': new FormControl(dataItem.SurfaceTreatment, Validators.required),
-            'Normal': new FormControl(dataItem.Normal, Validators.required),
-            'FireIn': new FormControl(dataItem.FireIn, Validators.required),
-            'FireOut': new FormControl(dataItem.FireOut, Validators.required),
-            'FireBoth': new FormControl(dataItem.FireBoth, Validators.required),
-            'RimsTSTC': new FormControl(dataItem.RimsTSTC, Validators.required),
-            'Other': new FormControl(dataItem.Other, Validators.required),
+            'FabricType': new FormControl('', Validators.required),
+            'SurfaceTreatment': new FormControl('', Validators.required),
+            'NormalWeight': new FormControl('', Validators.required),
+            'NormalCount': new FormControl('', Validators.required),
+            'FireInWeight': new FormControl('', Validators.required),
+            'FireInCount': new FormControl('', Validators.required),
+            'FireOutWeight': new FormControl('', Validators.required),
+            'FireOutCount': new FormControl('', Validators.required),
+            'FireBothWeight': new FormControl('', Validators.required),
+            'FireBothCount': new FormControl('', Validators.required),
+            'RimsTSTC': new FormControl('', Validators.required),
+            'Other': new FormControl('', Validators.required),
         });
-
         this.bodyEditedRowIndex = rowIndex;
 
         sender.editRow(rowIndex, this.bodySherdFormGroup);
@@ -257,32 +287,39 @@ export class KhppFormComponent implements OnInit {
         this.closeEditor(sender, rowIndex);
     }
 
-    public onTagChange(e) {
-        console.log(e);
 
+    public onTagChange(e: any) {
         this.tagNumber = e.target.value;
-
-
+        this.showBody();
     }
-    public onProcessedByChange(e) {
-
+    public onProcessedByChange(e: any) {
         this.processedby = e.target.value;
-
+        this.showBody();
     }
-    public onDueDateChange(e) {
-        this.dueDate = e.target.value;
+    public onDueDateChange(e: any) {
         console.log(e);
+        this.dueDate = e.target.value;
+        this.showBody();
     }
-    public saveBodyHandler({ sender, rowIndex, formGroup, isNew }) {
-        // const product: Product = formGroup.value;
 
+    /** Custom function to check weather the to show the body based on three fields */
+    private showBody() {
+        if (this.editService.tagNumberFiledValid(this.tagNumber) && this.processedby !== '' && this.dueDate !== '') {
+            this.isFormBodyVisible = true;
+            // this.isFieldsLocked = true;
+        } else {
+            this.isFormBodyVisible = false;
+            // this.isFieldsLocked  = false
+        }
+    }
+
+
+    public saveBodyHandler({ sender, rowIndex, formGroup, isNew }) {
         console.log('Saving', formGroup.value);
         formGroup.value.FabricType = this.chosenBodyFabric;
         formGroup.value.SurfaceTreatment = this.chosenSurfaceTreatment;
         console.log('UPDATED', formGroup.value);
-
         this.editService.saveBody(formGroup.value, isNew);
-
         sender.closeRow(rowIndex);
     }
 
@@ -326,8 +363,14 @@ export class KhppFormComponent implements OnInit {
     }
     public bodyOrDiagnostic(id): any {
         return this.bodOrDiagnostic.find(x => x.BD === id);
-
     }
+
+    public options(id): any {
+        return this.optionsList.find(x => x.type === id);
+    }
+
+
+
     public onBodyStateChange(state: State) {
         this.bodyGridState = state;
 
@@ -340,44 +383,41 @@ export class KhppFormComponent implements OnInit {
     }
 
     public addHandler({ sender }) {
+        this.isKGs = false;
         console.log(sender);
         this.closeEditor(sender);
 
         this.formGroup = new FormGroup({
             'FabricType': new FormControl('', Validators.required),
             'BodyOrDiagnostic': new FormControl('', Validators.required),
-            'RimCount': new FormControl('', Validators.required),
-            'RimWeight': new FormControl('', Validators.required),
-            'BaseCount': new FormControl('', Validators.required),
-            'BaseWeight': new FormControl('', Validators.required),
-            'DecoratorCount': new FormControl('', Validators.required),
-            'DecoratorWeight': new FormControl('', Validators.required),
+            'Options': new FormControl('', Validators.required),
+            'KGs': new FormControl('', Validators.required),
+            'Count': new FormControl('', Validators.required),
+            'Weight': new FormControl('', Validators.required),
             'Comments': new FormControl(''),
-
+            'Notes': new FormControl('')
         });
 
         sender.addRow(this.formGroup);
     }
 
-    public editHandler({ sender, rowIndex, dataItem }) {
+    public editHandler({ sender, rowIndex, dataItem, formGroup}) {
         this.closeEditor(sender);
-
-
+        console.log('SENDER', sender);
+        console.log('FORMGROUP', formGroup);
+        console.log('DATA ITEM', dataItem);
         this.formGroup = new FormGroup({
-
             'FabricType': new FormControl(dataItem.FabricType, Validators.required),
             'BodyOrDiagnostic': new FormControl(dataItem.BodyOrDiagnostic, Validators.required),
-            'RimCount': new FormControl(dataItem.RimCount, Validators.required),
-            'RimWeight': new FormControl(dataItem.RimWeight, Validators.required),
-            'BaseCount': new FormControl(dataItem.BaseCount, Validators.required),
-            'BaseWeight': new FormControl(dataItem.BaseWeight, Validators.required),
-            'DecoratorCount': new FormControl(dataItem.DecoratorCount, Validators.required),
-            'DecoratorWeight': new FormControl(dataItem.DecoratorWeight, Validators.required),
+            'Options': new FormControl(dataItem.Options, Validators.required),
+            'KGs': new FormControl(dataItem.KGs, Validators.required),
+            'Count': new FormControl(dataItem.Count, Validators.required),
+            'Weight': new FormControl(dataItem.Weight, Validators.required),
             'Comments': new FormControl(dataItem.Comments),
+            'Notes': new FormControl(dataItem.Notes)
         });
 
         this.editedRowIndex = rowIndex;
-
         sender.editRow(rowIndex, this.formGroup);
     }
 
@@ -386,12 +426,12 @@ export class KhppFormComponent implements OnInit {
     }
 
     public saveHandler({ sender, rowIndex, formGroup, isNew }) {
-        // const product: Product = formGroup.value;
-
-        console.log('Saving', formGroup.value);
+        formGroup.value.KGs = this.isKGs ? 'kg' : 'g';
         formGroup.value.FabricType = this.chosenFabric;
+        formGroup.value.Options = this.chosenOption;
         formGroup.value.BodyOrDiagnostic = this.chosenBodyOrDiagnostic;
-        console.log('UPDATED', formGroup.value);
+        formGroup.value.Notes = formGroup.value.FabricType + ' Notes - ' + formGroup.value.Notes;
+        // console.log('UPDATED', formGroup.value);
 
         // Offline Save
         // this.offlineDB.add(formGroup.value);
@@ -426,40 +466,49 @@ export class KhppFormComponent implements OnInit {
     public onBodDiagnosticChange(e) {
         this.chosenBodyOrDiagnostic = e;
         console.log(this.chosenBodyOrDiagnostic);
-
-
     }
+
+    public onOptionsChange(e) {
+        this.chosenOption = e;
+        console.log(this.chosenOption);
+    }
+
     public submitData(e) {
         console.log(this.tagNumber);
         this.editService.combineObjects(this.tagNumber, this.processedby, this.dueDate);
         this.clearForm();
+
         this.bodySherdFormGroup = new FormGroup({
             'FabricType': new FormControl('', Validators.required),
             'SurfaceTreatment': new FormControl('', Validators.required),
-            'Normal': new FormControl('', Validators.required),
-            'FireIn': new FormControl('', Validators.required),
-            'FireOut': new FormControl('', Validators.required),
-            'FireBoth': new FormControl('', Validators.required),
+            'NormalWeight': new FormControl('', Validators.required),
+            'NormalCount': new FormControl('', Validators.required),
+            'FireInWeight': new FormControl('', Validators.required),
+            'FireInCount': new FormControl('', Validators.required),
+            'FireOutWeight': new FormControl('', Validators.required),
+            'FireOutCount': new FormControl('', Validators.required),
+            'FireBothWeight': new FormControl('', Validators.required),
+            'FireBothCount': new FormControl('', Validators.required),
             'RimsTSTC': new FormControl('', Validators.required),
             'Other': new FormControl('', Validators.required),
         });
+
         this.formGroup = new FormGroup({
             'FabricType': new FormControl('', Validators.required),
             'BodyOrDiagnostic': new FormControl('', Validators.required),
-            'RimCount': new FormControl('', Validators.required),
-            'RimWeight': new FormControl('', Validators.required),
-            'BaseCount': new FormControl('', Validators.required),
-            'BaseWeight': new FormControl('', Validators.required),
-            'DecoratorCount': new FormControl('', Validators.required),
-            'DecoratorWeight': new FormControl('', Validators.required),
+            'Options': new FormControl('', Validators.required),
+            'KGs': new FormControl('', Validators.required),
+            'Count': new FormControl('', Validators.required),
+            'Weight': new FormControl('', Validators.required),
             'Comments': new FormControl(''),
-
+            'Notes': new FormControl('')
         });
     }
 
     public clearForm() {
+        this.isKGs = false;
         this.tagNumber = "";
         this.processedby = "";
-        this.dueDate = new Date();
+        this.dueDate = '';
     }
 }

@@ -7,6 +7,7 @@ import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import PerfectScrollbar from 'perfect-scrollbar';
 import { Observable } from 'rxjs';
+import { AdminLayoutService } from './admin-layout.service';
 
 @Component({
   selector: 'app-admin-layout',
@@ -18,10 +19,25 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
   private lastPoppedUrl: string;
   private yScrollStack: number[] = [];
   public data: any;
+  public appSidebarVisible: true;
 
+    mainPanelStyle = {
+        'width': ''
+    }
 
-  constructor( public location: Location, private router: Router, private _ds: DataService) {
+  constructor( public location: Location, private router: Router, public layoutService: AdminLayoutService) {
+    this.layoutService.isNavbarOpen.subscribe(isNavbarOpen => {
+        this.appSidebarVisible = isNavbarOpen;
+        this.setMainPanelStyle();
+    })
+  }
 
+  setMainPanelStyle() {
+    if (this.appSidebarVisible) {
+        this.mainPanelStyle['width'] = '';
+    } else {
+        this.mainPanelStyle['width'] = '100%';
+    }
   }
 
   ngOnDestroy() {

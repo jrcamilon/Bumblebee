@@ -3,7 +3,6 @@ export class KHPPForm {
        private _dueDate: Date;
        private _processedBy: String;
        private _fabricType: String;
-     
        private _comments: String;
        private _decoratorWeight: Number;
        private _decoratorCount: Number;
@@ -40,7 +39,6 @@ export class KHPPForm {
        public get baseWeight(): Number {
               return this._baseWeight;
        }
-       
        public set baseWeight(value: Number) {
               this._baseWeight = value;
        }
@@ -86,18 +84,18 @@ export class KHPPForm {
        public set tagNumber(value: String) {
               this._tagNumber = value;
        }
-       
+
        constructor(tagNumber: String,
               dueDate: Date,
               processedBy: String,
               type: String,
               comments: String,
-              decoratorWeight: Number, 
-              decoratorCount: Number, 
-              baseWeight: Number, 
-              baseCount: Number, 
-              rimCount: Number, 
-              rimWeight: Number, 
+              decoratorWeight: Number,
+              decoratorCount: Number,
+              baseWeight: Number,
+              baseCount: Number,
+              rimCount: Number,
+              rimWeight: Number,
               bodyOrDiagnostic: String) {
        this.dueDate = dueDate;
        this.processedBy = processedBy;

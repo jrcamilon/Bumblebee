@@ -1,199 +1,291 @@
-<input class='col-sm-12 col-md-4 col-lg-4' type="text" [value]="tagNumber" (keyup)="onTagChange($event)" required maxlength="13" placeholder="Tag Number D09.1-007-1.1">
-<input class='col-sm-12 col-md-4 col-lg-4' type="text" [value]="processedby" (keyup)="onProcessedByChange($event)" required placeholder="Processed By">
-<input class='col-sm-12 col-md-4 col-lg-4' type="date" [value]="dueDate" (change)="onDueDateChange($event)" required placeholder="Due Date">
+<div class="row container-fluid">
+  <!-- TAG NUMBER -->
+  <input 
+    style="border: 1px solid black; border-radius: 2px;"
+    class='col-sm-12 col-xs-12' 
+    type="text" 
+    [value]="tagNumber" 
+    (keyup)="onTagChange($event)" 
+    [disabled]="isFieldsLocked"
+    required maxlength="13"
+    placeholder="Tag Number D09.1-007-1.1">
+  <!-- DUE DATE -->
+  <input 
+    style="border: 1px solid black; margin-top: 8px; border-radius: 2px"
+    class='col-sm-12 col-xs-12' 
+    type="date" 
+    [value]="dueDate" 
+    (change)="onDueDateChange($event)" 
+    [disabled]="isFieldsLocked"
+    required placeholder="Due Date">
 
-<h2>Coarse Triage Processing</h2>
-<!-- Coarse Triage -->
-<kendo-grid
-name='grid1'
-class="processingForm"
-[data]="view"
-[height]="533"
-[pageSize]="gridState.take" [skip]="gridState.skip" [sort]="gridState.sort"
-[pageable]="true" [sortable]="true"
-(dataStateChange)="onBodyStateChange($event)"
-(edit)="editHandler($event)" (cancel)="cancelHandler($event)"
-(save)="saveHandler($event)" (remove)="removeHandler($event)"
-(add)="addHandler($event)"
-[navigable]="true"
->
-<ng-template kendoGridToolbarTemplate>
-  <button kendoGridAddCommand>Add new</button>
-</ng-template>
-<kendo-grid-column field="FabricType" title="Fabric Type" width="150">
-  <ng-template kendoGridCellTemplate let-dataItem>
-    {{fabric(dataItem.FabricType)?.FabricType}}
-  </ng-template>
-  <ng-template kendoGridEditTemplate
-    let-dataItem="dataItem"
-    let-column="column"
-    let-formGroup="formGroup"
-    >
-    <kendo-dropdownlist
-      #ddl="popupAnchor"
-      popupAnchor
-      [data]="fabrics"
-      textField="FabricType"
-      valueField="FabricType"
-      [valuePrimitive]="true"
-      (valueChange)="onFabricChange($event)"
-    >
-    </kendo-dropdownlist>
-    <kendo-popup
-        [anchor]="ddl.element"
-        *ngIf="formGroup.get(column.field).invalid && !(isNew && formGroup.get(column.field).untouched)"
-        popupClass="k-widget k-tooltip k-tooltip-validation k-invalid-msg"
-       >
-        <span class="k-icon k-i-warning"></span>
-        Fabric Type is required
-      </kendo-popup>
-  </ng-template>
-</kendo-grid-column>
-<!-- <kendo-grid-column field="BodyOrDiagnostic" width="200" editor="string" title="Body Or Diagnostic"></kendo-grid-column> -->
-<kendo-grid-column field="BodyOrDiagnostic" title="Body Or Diagnostic" width="150">
-  <ng-template kendoGridCellTemplate let-dataItem>
-    {{bodyOrDiagnostic(dataItem.BodyOrDiagnostic)?.BD}}
-  </ng-template>
-  <ng-template kendoGridEditTemplate
-    let-dataItem="dataItem"
-    let-column="column"
-    let-formGroup="formGroup"
-   >
-    <kendo-dropdownlist
-      #ddl="popupAnchor"
-      popupAnchor
-      [data]="bodOrDiagnostic"
-      textField="BD"
-      valueField="BD"
-      [valuePrimitive]="true"
-      (valueChange)="onBodDiagnosticChange($event)"
-    >
-    </kendo-dropdownlist>
-    <kendo-popup
-        [anchor]="ddl.element"
-        *ngIf="formGroup.get(column.field).invalid && !(isNew && formGroup.get(column.field).untouched)"
-        popupClass="k-widget k-tooltip k-tooltip-validation k-invalid-msg"
-       >
-        <span class="k-icon k-i-warning"></span>
-        Diagnostic Or Body is required
-      </kendo-popup>
-  </ng-template>
-</kendo-grid-column>
-<kendo-grid-column field="RimCount" width="200" editor="numeric" title="Rim Count"></kendo-grid-column>
-<kendo-grid-column field="RimWeight" width="200" editor="numeric" title="Rim Weight"></kendo-grid-column>
-<kendo-grid-column field="BaseCount" width="200" editor="numeric" title="Base Count"></kendo-grid-column>
-<kendo-grid-column field="BaseWeight" width="200" editor="numeric" title="Base Weight"></kendo-grid-column>
-<kendo-grid-column field="DecoratorCount" width="200" editor="numeric" title="Decorator Count"></kendo-grid-column>
-<kendo-grid-column field="DecoratorWeight" width="200" editor="numeric" title="Decorator Weight"></kendo-grid-column>
-<kendo-grid-column field="Comments" width="400" editor="string" title="Comments"></kendo-grid-column>
+  <!-- PROCESSED BY -->
+  <input 
+    style="border: 1px solid black; margin-top: 8px; border-radius: 2px"
+    class='col-sm-12 col-xs-12' 
+    type="text" 
+    [value]="processedby" 
+    (keyup)="onProcessedByChange($event)" 
+    [disabled]="isFieldsLocked"
+    required placeholder="Processed By">
+</div>
 
-<kendo-grid-command-column title="command" width="220">
-  <ng-template kendoGridCellTemplate let-formGroup="formGroup" let-isNew="isNew">
-      <button kendoGridEditCommand [primary]="true">Edit</button>
-      <button kendoGridRemoveCommand>Remove</button>
-      <button kendoGridSaveCommand [disabled]="formGroup?.invalid">{{ isNew ? 'Add' : 'Update' }}</button>
-      <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
-  </ng-template>
-</kendo-grid-command-column>
-</kendo-grid>
-<h2>Body Sherds Processing</h2>
-<!-- Ceramic Processing Body Sherd -->
-<kendo-grid
-class="processingForm"
-name='grid2'
-[data]="bodySherd"
-[height]="533"
-[pageSize]="gridState.take" [skip]="gridState.skip" [sort]="gridState.sort"
-[pageable]="true" [sortable]="true"
-(dataStateChange)="onStateChange($event)"
-(edit)="editBodyHandler($event)" (cancel)="cancelBodyHandler($event)"
-(save)="saveBodyHandler($event)" (remove)="removeBodyHandler($event)"
-(add)="addBodyHandler($event)"
-[navigable]="true"
->
-<ng-template kendoGridToolbarTemplate>
-  <button kendoGridAddCommand>Add new</button>
-</ng-template>
+<!-- FORM BODY -->
+<div class="row" *ngIf="true">
 
-<kendo-grid-column field="FabricType" title="Fabric Type" width="150">
-  <ng-template kendoGridCellTemplate let-dataItem>
-    {{bodyFabric(dataItem.FabricType)?.FabricType}}
-  </ng-template>
-  <ng-template kendoGridEditTemplate
-    let-dataItem="dataItem"
-    let-column="column"
-    let-formGroup="bodySherdFormGroup"
-    >
-    <kendo-dropdownlist
-      #ddl="popupAnchor"
-      popupAnchor
-      [data]="bodyFabrics"
-      textField="FabricType"
-      valueField="FabricType"
-      [valuePrimitive]="true"
-      (valueChange)="onBodyFabricChange($event)"
-    >
-    </kendo-dropdownlist>
-    <kendo-popup
-        [anchor]="ddl.element"
-        *ngIf="bodySherdFormGroup.get(column.field).invalid && !(isNew && bodySherdFormGroup.get(column.field).untouched)"
-        popupClass="k-widget k-tooltip k-tooltip-validation k-invalid-msg"
-       >
-        <span class="k-icon k-i-warning"></span>
-        Fabric is required
-      </kendo-popup>
-  </ng-template>
-</kendo-grid-column>
+  <!-- <app-body-processing></app-body-processing> -->
 
-<!-- <kendo-grid-column field="BodyOrDiagnostic" width="200" editor="string" title="Body Or Diagnostic"></kendo-grid-column> -->
-<kendo-grid-column field="SurfaceTreatment" title="Surface Treatment" width="150">
-  <ng-template kendoGridCellTemplate let-dataItem>
-    {{surfaceTreatment(dataItem.SurfaceTreatment)?.ST}}
-  </ng-template>
-  <ng-template kendoGridEditTemplate
-    let-dataItem="dataItem"
-    let-column="column"
-    let-formGroup="bodySherdFormGroup"
-   >
-    <kendo-dropdownlist
-      #ddl="popupAnchor"
-      popupAnchor
-      [data]="stList"
-      textField="ST"
-      valueField="ST"
-      [valuePrimitive]="true"
-      (valueChange)="onBodySurfaceChange($event)"
+  <div class="row container-fluid">
 
-    >
-    </kendo-dropdownlist>
-    <kendo-popup
-        [anchor]="ddl.element"
-        *ngIf="bodySherdFormGroup.get(column.field).invalid && !(isNew && bodySherdFormGroup.get(column.field).untouched)"
-        popupClass="k-widget k-tooltip k-tooltip-validation k-invalid-msg"
-       >
-        <span class="k-icon k-i-warning"></span>
-        Surface Treatment is required
-      </kendo-popup>
-  </ng-template>
-</kendo-grid-column>
-<kendo-grid-column field="Normal" width="200" editor="numeric" title="Normal"></kendo-grid-column>
-<kendo-grid-column field="FireIn" width="200" editor="numeric" title="Fire In"></kendo-grid-column>
-<kendo-grid-column field="FireOut" width="200" editor="numeric" title="Fire Out"></kendo-grid-column>
-<kendo-grid-column field="FireBoth" width="200" editor="numeric" title="Fire Both"></kendo-grid-column>
-<kendo-grid-column field="RimsTSTC" width="200" editor="numeric" title="Rims TSTC"></kendo-grid-column>
-<kendo-grid-column field="Other" width="200" editor="text" title="Other"></kendo-grid-column>
+      <h4>Basic Processing</h4>
+      <small><i>* Each record entered would be linked to Tag Number: {{this.tagNumber}}</i></small>
+      <kendo-grid
+        name='grid1'
+        class="processingForm"
+        [data]="view"
+        [height]="533"
+        [pageSize]="gridState.take" [skip]="gridState.skip" [sort]="gridState.sort"
+        [pageable]="true" [sortable]="true"
+        (dataStateChange)="onBodyStateChange($event)"
+        (edit)="editHandler($event)" (cancel)="cancelHandler($event)"
+        (save)="saveHandler($event)" (remove)="removeHandler($event)"
+        (add)="addHandler($event)"
+        [navigable]="true"
+        >
+        <ng-template kendoGridToolbarTemplate>
+          <button kendoGridAddCommand class="btn btn-primary btn-lg btn-block" style="border: 1px solid blue;">Add new</button>
+        </ng-template>
 
-<kendo-grid-command-column title="command" width="220">
-  <ng-template kendoGridCellTemplate let-formGroup="bodySherdFormGroup" let-isNew="isNew">
-      <button kendoGridEditCommand [primary]="true">Edit</button>
-      <button kendoGridRemoveCommand>Remove</button>
-      <button kendoGridSaveCommand [disabled]="formGroup?.invalid">{{ isNew ? 'Add' : 'Update' }}</button>
-      <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
-  </ng-template>
-</kendo-grid-command-column>
-</kendo-grid>
-<!-- Ceramic Processing Diagnostics -->
-<h2>Body Sherds Processing</h2>
-<h4>Comming Soon!</h4>
+        <kendo-grid-column field="FabricType" title="Fabric Type" width="125">
+            <ng-template kendoGridCellTemplate let-dataItem>
+                {{fabric(dataItem.FabricType)?.FabricType}}
+            </ng-template>
+            <ng-template kendoGridEditTemplate
+                let-dataItem="dataItem"
+                let-column="column"
+                let-formGroup="formGroup">
 
-<button class="button" (click)="submitData($event)" >Submit</button>
+                <kendo-dropdownlist
+                #ddl="popupAnchor"
+                popupAnchor
+                [data]="fabrics"
+                textField="FabricType"
+                valueField="FabricType"
+                [valuePrimitive]="true"
+                (valueChange)="onFabricChange($event)">
+                </kendo-dropdownlist>
+
+                <kendo-popup
+                  [anchor]="ddl.element"
+                  *ngIf="formGroup.get(column.field).invalid && !(isNew && formGroup.get(column.field).untouched)"
+                  popupClass="k-widget k-tooltip k-tooltip-validation k-invalid-msg">
+                  <span class="k-icon k-i-warning"></span>
+                  Fabric Type is required
+                </kendo-popup>
+
+            </ng-template>
+
+        </kendo-grid-column>
+
+        <kendo-grid-column field="BodyOrDiagnostic" title="Body Or Diagnostic" width="150">
+
+            <ng-template kendoGridCellTemplate let-dataItem>
+                {{bodyOrDiagnostic(dataItem.BodyOrDiagnostic)?.BD}}
+            </ng-template>
+
+            <ng-template kendoGridEditTemplate
+                let-dataItem="dataItem"
+                let-column="column"
+                let-formGroup="formGroup">
+
+            <kendo-dropdownlist
+                #ddl="popupAnchor"
+                popupAnchor
+                [data]="bodOrDiagnostic"
+                textField="BD"
+                valueField="BD"
+                [valuePrimitive]="true"
+                (valueChange)="onBodDiagnosticChange($event)">
+            </kendo-dropdownlist>
+
+            <kendo-popup
+                [anchor]="ddl.element"
+                *ngIf="formGroup.get(column.field).invalid && !(isNew && formGroup.get(column.field).untouched)"
+                popupClass="k-widget k-tooltip k-tooltip-validation k-invalid-msg">
+              <span class="k-icon k-i-warning"></span>
+              Diagnostic Or Body is required
+            </kendo-popup>
+
+            </ng-template>
+
+        </kendo-grid-column>
+
+        <kendo-grid-column field="Options" title="Options" width="130">
+
+            <ng-template kendoGridCellTemplate let-dataItem>
+                {{options(dataItem.Options)?.type}}
+            </ng-template>
+
+            <ng-template kendoGridEditTemplate
+                let-dataItem="dataItem"
+                let-column="column"
+                let-formGroup="formGroup">
+
+            <kendo-dropdownlist
+                #ddl="popupAnchor"
+                popupAnchor
+                [data]="optionsList"
+                textField="type"
+                valueField="type"
+                [valuePrimitive]="true"
+                (valueChange)="onOptionsChange($event)">
+            </kendo-dropdownlist>
+
+            <kendo-popup
+                [anchor]="ddl.element"
+                *ngIf="formGroup.get(column.field).invalid && !(isNew && formGroup.get(column.field).untouched)"
+                popupClass="k-widget k-tooltip k-tooltip-validation k-invalid-msg">
+              <span class="k-icon k-i-warning"></span>
+              Options is required
+            </kendo-popup>
+
+            </ng-template>
+
+        </kendo-grid-column>
+
+
+
+        <kendo-grid-column field="Count" width="120" editor="numeric" title="Count"></kendo-grid-column>
+        <kendo-grid-column field="Weight" width="120" editor="numeric" title="Weight"></kendo-grid-column>
+        <kendo-grid-column field="KGs" editor="boolean" title="kg ?" width="100">
+          <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-formGroup="formGroup">
+              <input  kendoGridFocusable [checked]="isKGs" width="80" (change)="onCheckBoxChange()" name="KGs" type="checkbox"/>
+          </ng-template>
+      </kendo-grid-column>
+
+        <kendo-grid-column field="Comments" width="200" editor="string" title="Comments"></kendo-grid-column>
+        <kendo-grid-column field="Notes" width="200" editor="string" title="Notes"></kendo-grid-column>
+
+        <kendo-grid-command-column title="command" width="220">
+        <ng-template kendoGridCellTemplate let-formGroup="formGroup" let-isNew="isNew">
+            <button kendoGridEditCommand [primary]="true">Edit</button>
+            <button kendoGridRemoveCommand>Remove</button>
+            <button kendoGridSaveCommand [disabled]="formGroup?.invalid">{{ isNew ? 'Add' : 'Update' }}</button>
+            <button kendoGridCancelCommand>{{ isNew ? 'Discard' : 'Cancel' }}</button>
+        </ng-template>
+        </kendo-grid-command-column>
+         
+      </kendo-grid>
+
+  </div>
+
+
+  <div class="row container-fluid">
+
+      <h4>Detailed Processing</h4>
+      <small><i>* Each record entered would be linked to Tag Number: {{this.tagNumber}}</i></small>
+      <kendo-grid
+      class="processingForm"
+      name='grid2'
+      [data]="bodySherd"
+      [height]="533"
+      [pageSize]="gridState.take" [skip]="gridState.skip" [sort]="gridState.sort"
+      [pageable]="true" [sortable]="true"
+      (dataStateChange)="onStateChange($event)"
+      (edit)="editBodyHandler($event)" (cancel)="cancelBodyHandler($event)"
+      (save)="saveBodyHandler($event)" (remove)="removeBodyHandler($event)"
+      (add)="addBodyHandler($event)"
+      [navigable]="true"
+      >
+      <ng-template kendoGridToolbarTemplate>
+      <button kendoGridAddCommand>Add new</button>
+      </ng-template>
+    
+      <kendo-grid-column field="FabricType" title="Fabric Type" width="150">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        {{bodyFabric(dataItem.FabricType)?.FabricType}}
+      </ng-template>
+      <ng-template kendoGridEditTemplate
+        let-dataItem="dataItem"
+        let-column="column"
+        let-formGroup="bodySherdFormGroup"
+        >
+        <kendo-dropdownlist
+          #ddl="popupAnchor"
+          popupAnchor
+          [data]="bodyFabrics"
+          textField="FabricType"
+          valueField="FabricType"
+          [valuePrimitive]="true"
+          (valueChange)="onBodyFabricChange($event)"
+        >
+        </kendo-dropdownlist>
+        <kendo-popup
+            [anchor]="ddl.element"
+            *ngIf="bodySherdFormGroup.get(column.field).invalid && !(isNew && bodySherdFormGroup.get(column.field).untouched)"
+            popupClass="k-widget k-tooltip k-tooltip-validation k-invalid-msg"
+          >
+            <span class="k-icon k-i-warning"></span>
+            Fabric is required
+          </kendo-popup>
+      </ng-template>
+      </kendo-grid-column>
+    
+   
+      <kendo-grid-column field="SurfaceTreatment" title="Surface Treatment" width="200">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        {{surfaceTreatment(dataItem.SurfaceTreatment)?.ST}}
+      </ng-template>
+      <ng-template kendoGridEditTemplate
+        let-dataItem="dataItem"
+        let-column="column"
+        let-formGroup="bodySherdFormGroup"
+      >
+        <kendo-dropdownlist
+          #ddl="popupAnchor"
+          popupAnchor
+          [data]="stList"
+          textField="ST"
+          valueField="ST"
+          [valuePrimitive]="true"
+          (valueChange)="onBodySurfaceChange($event)"
+    
+        >
+        </kendo-dropdownlist>
+        <kendo-popup
+            [anchor]="ddl.element"
+            *ngIf="bodySherdFormGroup.get(column.field).invalid && !(isNew && bodySherdFormGroup.get(column.field).untouched)"
+            popupClass="k-widget k-tooltip k-tooltip-validation k-invalid-msg"
+          >
+            <span class="k-icon k-i-warning"></span>
+            Surface Treatment is required
+          </kendo-popup>
+      </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column field="NormalWeight" width="200" editor="numeric" title="Norm Weight"></kendo-grid-column>
+      <kendo-grid-column field="NormalCount" width="200" editor="numeric" title="Norm Count"></kendo-grid-column>
+      <kendo-grid-column field="FireInWeight" width="200" editor="numeric" title="Fire-In Weight"></kendo-grid-column>
+      <kendo-grid-column field="FireInCount" width="200" editor="numeric" title="Fire-In Count"></kendo-grid-column>
+      <kendo-grid-column field="FireOutWeight" width="200" editor="numeric" title="Fire-Out Weight"></kendo-grid-column>
+      <kendo-grid-column field="FireOutCount" width="200" editor="numeric" title="Fire-Out"></kendo-grid-column>
+      <kendo-grid-column field="FireBothWeight" width="200" editor="numeric" title="Fire-Both Weight"></kendo-grid-column>
+      <kendo-grid-column field="FireBothCount" width="200" editor="numeric" title="Fire-Both Count"></kendo-grid-column>
+      <kendo-grid-column field="RimsTSTC" width="200" editor="numeric" title="Rims TSTC"></kendo-grid-column>
+      <kendo-grid-column field="Other" width="200" editor="text" title="Other"></kendo-grid-column>
+    
+      <kendo-grid-command-column title="command" width="220">
+      <ng-template kendoGridCellTemplate let-formGroup="bodySherdFormGroup" let-isNew="isNew">
+          <button kendoGridEditCommand [primary]="true">Edit</button>
+          <button kendoGridRemoveCommand>Remove</button>
+          <button kendoGridSaveCommand [disabled]="formGroup?.invalid">{{ isNew ? 'Add' : 'Update' }}</button>
+          <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
+      </ng-template>
+      </kendo-grid-command-column>
+      </kendo-grid>
+  </div>
+
+  <div class="row container-fluid" style="padding-top: 10px;">
+      <button type="button" class="btn btn-primary btn-lg btn-block" (click)="submitData($event)" >Submit</button>
+  </div>
+
+</div>
