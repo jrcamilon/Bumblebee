@@ -204,11 +204,7 @@ export class KhppFormComponent implements OnInit {
 
 
     public ngOnInit(): void {
-        // this.view = this.editService.pipe(map(data => process(data, this.gridState)));
-        // this.editService.read();
-        this.tagNumber = 'D1234567891234';
-        this.dueDate = '07-11-1987';
-        this.processedby = ' JR';
+
     }
     /** Body Sherds Processing Functions */
 
@@ -507,8 +503,9 @@ export class KhppFormComponent implements OnInit {
 
     public clearForm() {
         this.isKGs = false;
-        this.tagNumber = "";
-        this.processedby = "";
+        this.isFormBodyVisible = false;
+        this.tagNumber = '';
+        this.processedby = '';
         this.dueDate = '';
     }
 }
