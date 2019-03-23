@@ -174,7 +174,6 @@
             <button kendoGridCancelCommand>{{ isNew ? 'Discard' : 'Cancel' }}</button>
         </ng-template>
         </kendo-grid-command-column>
-         
       </kendo-grid>
 
   </div>
@@ -262,15 +261,48 @@
           </kendo-popup>
       </ng-template>
       </kendo-grid-column>
-      <kendo-grid-column field="NormalWeight" width="200" editor="numeric" title="Norm Weight"></kendo-grid-column>
-      <kendo-grid-column field="NormalCount" width="200" editor="numeric" title="Norm Count"></kendo-grid-column>
-      <kendo-grid-column field="FireInWeight" width="200" editor="numeric" title="Fire-In Weight"></kendo-grid-column>
-      <kendo-grid-column field="FireInCount" width="200" editor="numeric" title="Fire-In Count"></kendo-grid-column>
-      <kendo-grid-column field="FireOutWeight" width="200" editor="numeric" title="Fire-Out Weight"></kendo-grid-column>
-      <kendo-grid-column field="FireOutCount" width="200" editor="numeric" title="Fire-Out"></kendo-grid-column>
-      <kendo-grid-column field="FireBothWeight" width="200" editor="numeric" title="Fire-Both Weight"></kendo-grid-column>
-      <kendo-grid-column field="FireBothCount" width="200" editor="numeric" title="Fire-Both Count"></kendo-grid-column>
-      <kendo-grid-column field="RimsTSTC" width="200" editor="numeric" title="Rims TSTC"></kendo-grid-column>
+
+      <!-- Option -->
+      <kendo-grid-column field="Options" title="Options" width="200">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{bodyOptions(dataItem.Options)?.type}}
+        </ng-template>
+        <ng-template kendoGridEditTemplate
+          let-dataItem="dataItem"
+          let-column="column"
+          let-formGroup="bodySherdFormGroup"
+        >
+          <kendo-dropdownlist
+            #ddl="popupAnchor"
+            popupAnchor
+            [data]="detailBodyProcessingOptions"
+            textField="type"
+            valueField="type"
+            [valuePrimitive]="true"
+            (valueChange)="onBodyDetailChange($event)"
+      
+          >
+          </kendo-dropdownlist>
+          <kendo-popup
+              [anchor]="ddl.element"
+              *ngIf="bodySherdFormGroup.get(column.field).invalid && !(isNew && bodySherdFormGroup.get(column.field).untouched)"
+              popupClass="k-widget k-tooltip k-tooltip-validation k-invalid-msg"
+            >
+              <span class="k-icon k-i-warning"></span>
+              Option is required
+            </kendo-popup>
+        </ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column field="Count" width="120" editor="numeric" title="Count"></kendo-grid-column>
+        <kendo-grid-column field="Weight" width="120" editor="numeric" title="Weight"></kendo-grid-column>
+        <kendo-grid-column field="KGs" editor="boolean" title="kg ?" width="100">
+          <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-formGroup="formGroup">
+              <input  kendoGridFocusable [checked]="isKGs" width="80" (change)="onDetailCheckBoxChange()" name="KGs" type="checkbox"/>
+          </ng-template>
+      </kendo-grid-column>
+
+      
       <kendo-grid-column field="Other" width="200" editor="text" title="Other"></kendo-grid-column>
     
       <kendo-grid-command-column title="command" width="220">

@@ -63,9 +63,25 @@ export class KhppFormComponent implements OnInit {
 
     public optionsList: any[] = [
         { optID: 1, type: 'Body'},
-        { optID: 1, type: 'Rim'},
-        { optID: 1, type: 'Base'},
-        { optID: 1, type: 'Decorated'},
+        { optID: 2, type: 'Rim'},
+        { optID: 3, type: 'Base'},
+        { optID: 4, type: 'Decorated'},
+    ];
+    public detailBodyProcessingOptions: any[] = [
+        { optID: 1, type: 'Normal'},
+        { optID: 2, type: 'Fire In'},
+        { optID: 3, type: 'Fire Out'},
+        { optID: 4, type: 'Fire Both'},
+        { optID: 4, type: 'Cream Slip In'},
+        { optID: 4, type: 'Cream Slip Out'},
+        { optID: 4, type: 'Cream Slip Both'},
+        { optID: 4, type: 'Burnished R Slip In'},
+        { optID: 4, type: 'Burnished R Slip Out'},
+        { optID: 4, type: 'Burnished R Slip Both'},
+        { optID: 4, type: 'Burnished R Slip Other'},
+
+
+
     ];
 
     private editedRowIndex: number;
@@ -73,7 +89,7 @@ export class KhppFormComponent implements OnInit {
     // Body Sherds
     public bodySherd: any[];
     public bodySherdFormGroup: FormGroup;
-
+    public chosenBodyDetailOption: { optID: 1, type: 'Normal'};
     public chosenBodyFabric: any = {
         FabricID: 1, FabricType: 'Coarse'
     };
@@ -242,15 +258,10 @@ export class KhppFormComponent implements OnInit {
         this.bodySherdFormGroup = new FormGroup({
             'FabricType': new FormControl('', Validators.required),
             'SurfaceTreatment': new FormControl('', Validators.required),
-            'NormalWeight': new FormControl('', Validators.required),
-            'NormalCount': new FormControl('', Validators.required),
-            'FireInWeight': new FormControl('', Validators.required),
-            'FireInCount': new FormControl('', Validators.required),
-            'FireOutWeight': new FormControl('', Validators.required),
-            'FireOutCount': new FormControl('', Validators.required),
-            'FireBothWeight': new FormControl('', Validators.required),
-            'FireBothCount': new FormControl('', Validators.required),
-            'RimsTSTC': new FormControl('', Validators.required),
+            'Options': new FormControl('', Validators.required),
+            'KGs': new FormControl('', Validators.required),
+            'Count': new FormControl('', Validators.required),
+            'Weight': new FormControl('', Validators.required),
             'Other': new FormControl('', Validators.required),
         });
         sender.addRow(this.bodySherdFormGroup);
@@ -263,15 +274,10 @@ export class KhppFormComponent implements OnInit {
         this.bodySherdFormGroup = new FormGroup({
             'FabricType': new FormControl('', Validators.required),
             'SurfaceTreatment': new FormControl('', Validators.required),
-            'NormalWeight': new FormControl('', Validators.required),
-            'NormalCount': new FormControl('', Validators.required),
-            'FireInWeight': new FormControl('', Validators.required),
-            'FireInCount': new FormControl('', Validators.required),
-            'FireOutWeight': new FormControl('', Validators.required),
-            'FireOutCount': new FormControl('', Validators.required),
-            'FireBothWeight': new FormControl('', Validators.required),
-            'FireBothCount': new FormControl('', Validators.required),
-            'RimsTSTC': new FormControl('', Validators.required),
+            'Options': new FormControl('', Validators.required),
+            'KGs': new FormControl('', Validators.required),
+            'Count': new FormControl('', Validators.required),
+            'Weight': new FormControl('', Validators.required),
             'Other': new FormControl('', Validators.required),
         });
         this.bodyEditedRowIndex = rowIndex;
@@ -312,8 +318,11 @@ export class KhppFormComponent implements OnInit {
 
     public saveBodyHandler({ sender, rowIndex, formGroup, isNew }) {
         console.log('Saving', formGroup.value);
+        formGroup.value.KGs = this.isKGs ? 'kg' : 'g';
         formGroup.value.FabricType = this.chosenBodyFabric;
         formGroup.value.SurfaceTreatment = this.chosenSurfaceTreatment;
+        formGroup.value.Options = this.chosenBodyDetailOption;
+
         console.log('UPDATED', formGroup.value);
         this.editService.saveBody(formGroup.value, isNew);
         sender.closeRow(rowIndex);
@@ -347,6 +356,9 @@ export class KhppFormComponent implements OnInit {
         }
 
     }
+    public onBodyDetailChange(e){
+        this.chosenBodyDetailOption = e;
+    }
     public onBodySurfaceChange(e) {
         this.chosenSurfaceTreatment = e;
         console.log(this.chosenSurfaceTreatment);
@@ -366,6 +378,9 @@ export class KhppFormComponent implements OnInit {
     }
 
 
+    public onDetailCheckBoxChange(e){
+        this.isKGs = !this.isKGs;
+    }
 
     public onBodyStateChange(state: State) {
         this.bodyGridState = state;
@@ -444,7 +459,9 @@ export class KhppFormComponent implements OnInit {
     public removeBodyHandler({ dataItem }) {
         this.editService.removeBody(dataItem);
     }
-
+    public bodyOptions(id): any {
+        return this.detailBodyProcessingOptions.find(x => x.type === id);
+    }
 
     private closeEditor(grid, rowIndex = this.editedRowIndex) {
         console.log('closing editor');
@@ -477,15 +494,10 @@ export class KhppFormComponent implements OnInit {
         this.bodySherdFormGroup = new FormGroup({
             'FabricType': new FormControl('', Validators.required),
             'SurfaceTreatment': new FormControl('', Validators.required),
-            'NormalWeight': new FormControl('', Validators.required),
-            'NormalCount': new FormControl('', Validators.required),
-            'FireInWeight': new FormControl('', Validators.required),
-            'FireInCount': new FormControl('', Validators.required),
-            'FireOutWeight': new FormControl('', Validators.required),
-            'FireOutCount': new FormControl('', Validators.required),
-            'FireBothWeight': new FormControl('', Validators.required),
-            'FireBothCount': new FormControl('', Validators.required),
-            'RimsTSTC': new FormControl('', Validators.required),
+            'Options': new FormControl('', Validators.required),
+            'KGs': new FormControl('', Validators.required),
+            'Count': new FormControl('', Validators.required),
+            'Weight': new FormControl('', Validators.required),
             'Other': new FormControl('', Validators.required),
         });
 
