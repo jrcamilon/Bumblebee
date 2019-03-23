@@ -32,6 +32,10 @@ export class KhppFormComponent implements OnInit {
     public isFormBodyVisible = false;
     public isFieldsLocked = false;
 
+    public isBasicVisible = true;
+    public isDetailedVisible = false;
+
+
     // Coarse Triage
     public view: any[];
     public formGroup: FormGroup;
@@ -293,7 +297,7 @@ export class KhppFormComponent implements OnInit {
         this.showBody();
     }
     public onDueDateChange(e: any) {
-        console.log(e);
+        // console.log(e);
         this.dueDate = e.target.value;
         this.showBody();
     }
@@ -507,5 +511,20 @@ export class KhppFormComponent implements OnInit {
         this.tagNumber = '';
         this.processedby = '';
         this.dueDate = '';
+    }
+
+    public onProcessingTypeChange(value: any) {
+        switch (value) {
+            case 'basic-processing':
+                this.isBasicVisible = true;
+                this.isDetailedVisible = false;
+                break;
+            case 'detailed-processing':
+                this.isDetailedVisible = true;
+                this.isBasicVisible = true;
+                break;
+            default:
+                break;
+        }
     }
 }
