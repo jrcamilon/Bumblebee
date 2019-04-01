@@ -20,9 +20,9 @@
                                 <mat-icon>unarchive</mat-icon>
                                 <span >Save <b>{{completedForms.length}}</b> Records to DB</span>
                             </button>
-                            <button mat-menu-item disabled>
+                            <button mat-menu-item (click)="deleteOfflineDB()">
                                 <mat-icon>delete_forever</mat-icon>
-                                <span>Delete Record from DB</span>
+                                <span>Clear Offline DB</span>
                             </button>
                         </mat-menu>
                     </span>

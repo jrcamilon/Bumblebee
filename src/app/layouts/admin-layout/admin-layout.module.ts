@@ -1,3 +1,4 @@
+import { DetailedProcessingComponent } from './../../processing/components/detailed-processing/detailed-processing.component';
 import { BodyProcessingComponent } from './../../processing/components/body-processing/body-processing.component';
 import { HomeMapComponent } from './../../home-map/home-map.component';
 import { LoadingComponent } from './../../shared/loading/loading.component';
@@ -179,7 +180,8 @@ import { RednotebookFormComponent } from 'app/processing/components/rednotebook-
     HomeMapComponent,
     KhppFormComponent,
     PopupAnchorDirective,
-    BodyProcessingComponent
+    BodyProcessingComponent,
+    DetailedProcessingComponent
 
 
   ],

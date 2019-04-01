@@ -11,7 +11,7 @@
       <li class="list-group-item d-flex justify-content-between align-items-center" >
           <div class="row">
             <div class="col-md-2 col-sm-2 col-xs-2 list-headers">Fabric</div>
-            <div class="col-md-3 col-sm-3 col-xs-3 list-headers">Body/Diagnostic</div>
+            <div class="col-md-3 col-sm-3 col-xs-3 list-headers">Surface Treatment</div>
             <div class="col-md-2 col-sm-2 col-xs-2 list-headers">Sherd-Type</div>
             <div class="col-md-1 col-sm-1 col-xs-1 list-headers">Count</div>
             <div class="col-md-1 col-sm-2 col-xs-1 list-headers">Weight</div>
@@ -19,17 +19,17 @@
         </li>
 
       <div>
-          <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let item of triageFormArray; let i = index" (click)="onCollapseList()">
+          <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let item of detailedFormArray; let i = index" (click)="onCollapseList()">
               <div class="row">
                 <div class="col-md-2 col-sm-2 col-xs-2">{{item.fabricType}}</div>
-                <div class="col-md-3 col-sm-3 col-xs-3">{{item.bodyOrDiagnostic}}</div>
+                <div class="col-md-3 col-sm-3 col-xs-3">{{item.surfaceTreatment}}</div>
                 <div class="col-md-2 col-sm-2 col-xs-2">{{item.sherdType}}</div>
                 <div class="col-md-1 col-sm-1 col-xs-1" style="white-space: nowrap">{{item.count}}</div>
                 <div class="col-md-1 col-sm-1 col-xs-1" style="white-space: nowrap">{{item.weight}} {{item.weightType ? 'kg' : 'g'}}</div>
                 <div class="col-md-3 col-sm-3 col-xs-3">
                   <div class="btn-group" style="float: right">
-                    <button type="button" class="btn btn-info btn-sm" style="width: 70px !important" (click)="onFormEdit(i)">EDIT</button>
-                    <button type="button" class="btn btn-danger btn-sm" (click)="onFormRemove(i)">REMOVE</button>
+                    <button type="button" class="btn btn-info btn-sm" (click)="onFormEdit(i)" style="background-color: #1dc7ea; color: white; border: none; width: 70px !important">EDIT</button>
+                    <button type="button" class="btn btn-danger btn-sm" (click)="onFormRemove(i)" style="background-color: #ff1b1b; color: white; border: none;">REMOVE</button>
                   </div>
                 </div>  
               </div>
@@ -50,32 +50,24 @@
 
   <div *ngIf="isFormActive" style="border: 2px solid rgb(173, 173, 173); border-radius: 5px; margin-top: 10px;">
     <div style="margin: 7px; ">
-        <form style="margin-top: 10px;" [formGroup]="activeTriageForm">
+        <form style="margin-top: 10px;" [formGroup]="activeDetailedForm">
             <div class="row" style="margin-top: 7px;">
               <div class="col-md-3 col-sm-3">
                   <label>Fabric Type</label>
-                  <select class="form-control"placeholder="#####" formControlName="fabricType">
-                      <option [value]="'Coarse'">Coarse</option>
-                      <option [value]="'Medium'">Medium</option>
-                      <option [value]="'Fine'">Fine</option>
-                      <option [value]="'MK BM'">MK BM</option>
-                      <option [value]="'Marl>'">Marl</option>
+                  <select class="form-control" placeholder="#####" formControlName="fabricType" (change)="onFabricTypeChange($event.target.value)" >
+                      <option [value]="option.value" *ngFor="let option of fabricTypeOptions" >{{option.name}}</option>
                   </select>
               </div>
               <div class="col-md-3 col-sm-3">
-                  <label>Body or Diagnostic</label>
-                  <select class="form-control"placeholder="#####" formControlName="bodyOrDiagnostic">
-                      <option [value]="'Body'">Body</option>
-                      <option [value]="'Diagnostic'">Diagnostic</option>
+                  <label>Surface Treatment</label>
+                  <select class="form-control"placeholder="#####" formControlName="surfaceTreatment">
+                      <option [value]="option.value" *ngFor="let option of surfaceTreatmentOptions">{{option.name}}</option>
                   </select>
               </div>
               <div class="col-md-3 col-sm-3">
                   <label>Sherd Type</label>
                   <select class="form-control"placeholder="#####" formControlName="sherdType">
-                      <option [value]="'Body'">Body</option>
-                      <option [value]="'Rim'">Rim</option>
-                      <option [value]="'Base'">Base</option>
-                      <option [value]="'Decorated'">Decorated</option>
+                      <option [value]="option.value" *ngFor="let option of sherdTypeOptions">{{option.name}}</option>
                   </select>
               </div>
               <div class="col-md-3 col-sm-3">
@@ -110,8 +102,8 @@
     
           <div class="row container-fluid" style="padding-top: 20px;">
               <div class="btn-group btn-group-justified" style="padding-bottom: 10px;">
-                  <input style="width: 50%" type="submit" class="btn btn-primary" (click)="onFormSave(activeTriageForm.value)" [disabled]="!activeTriageForm.valid" value="SAVE" *ngIf="!isEditMode">
-                  <input style="width: 50%" type="submit" class="btn btn-primary" (click)="onFormEditSave(activeTriageForm.value)" [disabled]="!activeTriageForm.valid" value="SAVE EDITS" *ngIf="isEditMode">
+                  <input style="width: 50%" type="submit" class="btn btn-primary" (click)="onFormSave(activeDetailedForm.value)" [disabled]="!activeDetailedForm.valid" value="SAVE" *ngIf="!isEditMode">
+                  <input style="width: 50%" type="submit" class="btn btn-primary" (click)="onFormEditSave(activeDetailedForm.value)" [disabled]="!activeDetailedForm.valid" value="SAVE EDITS" *ngIf="isEditMode">
                   <input style="width: 50%" type="button" class="btn btn-primary" (click)="onFormCancel()" value="CANCEL">
               </div>
           </div>

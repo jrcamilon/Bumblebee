@@ -1,26 +1,40 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormsService } from 'app/processing/services/forms.service';
+import { KhppFormService } from 'services/Khpp-Form/Khpp-Form.service';
 
 @Component({
-  selector: 'app-body-processing',
-  templateUrl: './body-processing.component.html',
-  styleUrls: ['./body-processing.component.scss']
+  selector: 'app-detailed-processing',
+  templateUrl: './detailed-processing.component.html',
+  styleUrls: ['./detailed-processing.component.scss']
 })
-export class BodyProcessingComponent implements OnInit, OnDestroy {
+export class DetailedProcessingComponent implements OnInit, OnDestroy {
 
   isFormActive = false;
-  activeTriageForm: any;
-  triageFormArray = [];
+  activeDetailedForm: any;
+  detailedFormArray = [];
   isCollapsed = true;
   isEditMode = false;
   indexEditing: number;
 
+  // Fabric Type Options
+  fabricTypeOptions: any[];
+  surfaceTreatmentOptions: any[];
+  sherdTypeOptions: any[];
+
   weightString: string;
   weightSum: any;
 
-  constructor(public fb: FormBuilder, public formService: FormsService) {
-    this.formService.triageFormArray.subscribe(triageArray => { this.triageFormArray = triageArray; });
+  constructor(
+    public fb: FormBuilder,
+    public formService: FormsService,
+    public khppFormSerivce: KhppFormService) {
+    this.formService.detailedFormArray.subscribe( detailedArray => {this.detailedFormArray = detailedArray; });
+    // Set Defaults for Drop Down Options
+    this.fabricTypeOptions = this.khppFormSerivce.getFabricTypeOptions();
+    this.surfaceTreatmentOptions = this.khppFormSerivce.getSurfaceTreatmentOptions();
+    this.sherdTypeOptions = this.khppFormSerivce.getSherdTypeOptions();
+
   }
 
   ngOnInit(): void {
@@ -46,8 +60,8 @@ export class BodyProcessingComponent implements OnInit, OnDestroy {
     formValues.notes = formValues.fabricType + ' Notes -' + (formValues.notes === null ? '' : formValues.notes);
     formValues.weight = this.weightSum;
 
-    this.triageFormArray.push(formValues);
-    this.formService.triageFormArray.next(this.triageFormArray);
+    this.detailedFormArray.push(formValues);
+    this.formService.detailedFormArray.next(this.detailedFormArray);
 
     this.weightString = '';
     this.weightSum = '';
@@ -56,18 +70,18 @@ export class BodyProcessingComponent implements OnInit, OnDestroy {
   }
 
   onFormEditSave(formValues: any) {
-    this.triageFormArray.splice(this.indexEditing, 1);
+    this.detailedFormArray.splice(this.indexEditing, 1);
     formValues.weight = this.weightSum;
 
-    this.triageFormArray.push(formValues);
-    this.formService.triageFormArray.next(this.triageFormArray);
+    this.detailedFormArray.push(formValues);
+    this.formService.detailedFormArray.next(this.detailedFormArray);
 
     this.weightString = '';
     this.weightSum = '';
     this.isEditMode = false;
     this.isFormActive = false;
     this.indexEditing = undefined;
-    console.log(this.triageFormArray);
+    console.log(this.detailedFormArray);
     this.createNewTriageForm();
   }
 
@@ -78,20 +92,20 @@ export class BodyProcessingComponent implements OnInit, OnDestroy {
   }
 
   onFormRemove(index: number): void {
-    this.triageFormArray.splice(index, 1);
-    this.formService.triageFormArray.next(this.triageFormArray);
+    this.detailedFormArray.splice(index, 1);
+    this.formService.detailedFormArray.next(this.detailedFormArray);
   }
 
   onFormEdit(index: number): void {
     this.isFormActive = true;
     this.isEditMode = true;
     this.indexEditing = index;
-    const item = this.triageFormArray[index];
+    const item = this.detailedFormArray[index];
     this.weightSum = item.weight;
     console.log(item);
-    this.activeTriageForm = this.fb.group({
+    this.activeDetailedForm = this.fb.group({
       fabricType: [item.fabricType, Validators.compose([Validators.required])],
-      bodyOrDiagnostic: [item.bodyOrDiagnostic, Validators.compose([Validators.required])],
+      surfaceTreatment: [item.surfaceTreatment, Validators.compose([Validators.required])],
       sherdType: [item.sherdType, Validators.compose([Validators.required])],
       count: [item.count, Validators.compose([Validators.required, Validators.minLength(1)])],
       weight: [item.weight, Validators.compose([Validators.required, Validators.minLength(1)])],
@@ -102,9 +116,9 @@ export class BodyProcessingComponent implements OnInit, OnDestroy {
   }
 
   createNewTriageForm() {
-    this.activeTriageForm = this.fb.group({
+    this.activeDetailedForm = this.fb.group({
       fabricType: ['', Validators.compose([Validators.required])],
-      bodyOrDiagnostic: ['', Validators.compose([Validators.required])],
+      surfaceTreatment: ['', Validators.compose([Validators.required])],
       sherdType: ['', Validators.compose([Validators.required])],
       count: ['', Validators.compose([Validators.required, Validators.minLength(1)])],
       weight: ['', Validators.compose([Validators.required, Validators.minLength(1)])],
@@ -135,6 +149,11 @@ export class BodyProcessingComponent implements OnInit, OnDestroy {
     // console.log(parseFloat(total.reduce(reducer)));
     this.weightSum = parseFloat(total.reduce(reducer))
     this.weightString = '(' + e.target.value + ')'
+  }
+
+  // Change the Surface Treatment Options depending on the Fabric Type Selected
+  onFabricTypeChange(fabricType: any) {
+    this.surfaceTreatmentOptions = this.khppFormSerivce.getSurfaceTreatmentOptions(fabricType);
   }
 
   /** Custom function to restrict a field to only allow specific characters */

@@ -1,7 +1,7 @@
 import { DexieService } from './core/dexie.service';
 import { Injectable, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { OnlineServiceService } from 'services/OnlineServices/online-service.service';
+import { Subject } from 'rxjs/Subject';
+
 import Dexie from 'dexie';
 
 
@@ -26,6 +26,7 @@ export interface TodoWithID extends KHPPForm {
 export class OfflineDBService {
 
   table: Dexie.Table<TodoWithID, number>;
+  tableSubject = new Subject<any>();
 
   constructor(private dexieService: DexieService) {
     this.table = this.dexieService.table('todos');
@@ -35,8 +36,7 @@ export class OfflineDBService {
     return this.table.toArray();
   }
 
-  add(data) {
-    // console.log(data);
+  add(data: any) {
     return this.table.add(data);
   }
 
@@ -44,10 +44,6 @@ export class OfflineDBService {
     return this.table.update(id, data);
   }
 
-  postToOnlineDB() {
-    // post to service
-
-  }
 
   remove(id) {
     return this.table.delete(id);

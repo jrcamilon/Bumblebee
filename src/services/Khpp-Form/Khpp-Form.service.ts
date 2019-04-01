@@ -10,7 +10,47 @@ export class KhppFormService {
 
   data = new BehaviorSubject<any>(null);
   bodySherdsData = new BehaviorSubject<any>(null);
-  responseObject = new BehaviorSubject<any[]>([]);
+  responseObject = new BehaviorSubject<any>([]);
+
+  // Detailed Fabric Type Options
+  fabricTypeOptions = [
+    {value: 'Coarse', name: 'Coarse'},
+    {value: 'Medium', name: 'Medium'},
+    {value: 'Fine', name: 'Fine'},
+    {value: 'Marl-A', name: 'Marl-A'},
+    {value: 'Marl-C', name: 'Marl-C'},
+    {value: 'Other Marl', name: 'Other Marl'},
+  ];
+
+  // Detailed Surface Treatment Options
+  surfaceTreatmentOptions = [
+    {value: 'Unslipped', name: 'Unslipped'},
+    {value: 'R Slip Out', name: 'R Slip Out'},
+    {value: 'R Slip In', name: 'R Slip In'},
+    {value: 'R Slip Both', name: 'R Slip Both'},
+    {value: 'Cream Slip In', name: 'Cream Slip In'},
+    {value: 'Cream Slip Out', name: 'Cream Slip Out'},
+  ];
+
+  // Detailed Surface Treatment Options for anything other than Coarse, Medium, Fine Fabric Type
+  surfaceTreatmentOptions_other = [
+    {value: 'See Comments', name: 'See Comments'}
+  ];
+
+  // Detailed sherd Type Options
+  sherdTypeOptions = [
+    {value: 'Normal', name: 'Normal'},
+    {value: 'Fire In', name: 'Fire In'},
+    {value: 'Fire Out', name: 'Fire Out'},
+    {value: 'Fire Both', name: 'Fire Both'},
+    {value: 'Cream Slip In', name: 'Cream Slip In'},
+    {value: 'Cream Slip Out', name: 'Cream Slip Out'},
+    {value: 'Cream Slip Both', name: 'Cream Slip Out'},
+    {value: 'Burnished R Slip In', name: 'Burnished R Slip In'},
+    {value: 'Burnished R Slip Out', name: 'Burnished R Slip Out'},
+    {value: 'Burnished R Slip Both', name: 'Burnished R Slip Out'},
+    {value: 'Burnished R Slip Other', name: 'Burnished R Sli Other'},
+  ]
 
   private khppData: any[] = [];
   private bodyData: any[] = [];
@@ -25,18 +65,27 @@ export class KhppFormService {
     // this.createAPIObject();
   }
 
-  combineObjects(tagNumber, processedBy, dueDate) {
-    const obj = {
-      tagNumber: tagNumber,
-      processedBy: processedBy,
-      dueDate: dueDate,
-      triageData: this.khppData,
-      bodySherdData: this.bodyData,
-      diagnosticData: []
-    };
+  getFabricTypeOptions(): any[] {
+    return this.fabricTypeOptions;
+  }
 
-    this.offLineArray.push(obj);
-    this.offlineDB.add(obj);
+  getSurfaceTreatmentOptions(fabricType?: string): any[] {
+    if (fabricType === 'Coarse' || fabricType === 'Medium' || fabricType === 'Fine') {
+      return this.surfaceTreatmentOptions;
+    } else {
+      return this.surfaceTreatmentOptions_other;
+    }
+  }
+
+  getSherdTypeOptions() {
+    return this.sherdTypeOptions;
+  }
+
+  combineObjects(form: any) {
+    console.log(form);
+
+    // this.offLineArray.push(form);
+    this.offlineDB.add(form);
 
     this.offlineDB.getAll().then( res => {
       console.log('OFFLINE DB', res);
