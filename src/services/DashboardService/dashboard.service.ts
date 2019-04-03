@@ -87,4 +87,13 @@ export class DashboardService {
       })
 
   }
+  // Get KHPP Ele Comparing Fabric Data
+  public getKHPPEleFabricProportions(): Observable<any> {
+    return this._http.get(`${this.http}${this.domain}${this.port}/dash/compare/fabric`)
+      .map((response: Response) => {
+        const tmpData = response.json();
+        return tmpData;
+      })
+
+  }
 }
