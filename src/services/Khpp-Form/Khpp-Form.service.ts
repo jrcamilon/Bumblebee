@@ -2,6 +2,7 @@ import { OfflineDBService } from 'services/OfflineDB/offline-db.service';
 import { Injectable } from '@angular/core';
 import { KHPPForm } from './KHPPForm';
 import { BehaviorSubject } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 import { GridDataResult } from '@progress/kendo-angular-grid';
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,8 @@ export class KhppFormService {
   data = new BehaviorSubject<any>(null);
   bodySherdsData = new BehaviorSubject<any>(null);
   responseObject = new BehaviorSubject<any>([]);
+
+  offlineDBrecordToEdit = new Subject<any>();
 
   // Detailed Fabric Type Options
   fabricTypeOptions = [
@@ -68,6 +71,7 @@ export class KhppFormService {
   getFabricTypeOptions(): any[] {
     return this.fabricTypeOptions;
   }
+
 
   getSurfaceTreatmentOptions(fabricType?: string): any[] {
     if (fabricType === 'Coarse' || fabricType === 'Medium' || fabricType === 'Fine') {

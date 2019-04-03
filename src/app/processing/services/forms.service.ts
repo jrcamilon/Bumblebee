@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { Http, Response, Headers } from '@angular/http';
 import 'rxjs/Rx';
 
@@ -10,6 +10,8 @@ export class FormsService {
 
   public activeForm = new BehaviorSubject<any>([]);
 
+  public recordToEdit = new BehaviorSubject<any>([]);
+
   // KHPP
   public triageFormArray = new BehaviorSubject<any>([]);
   public detailedFormArray = new BehaviorSubject<any>([]);
@@ -18,7 +20,7 @@ export class FormsService {
 
   public writeElephantineToDB (_form: any): Observable<any> {
     const body = {form: _form};
-    console.log(body);
+    // console.log(body);
 
     const headers = new Headers({'Content-Type': 'application/json'});
     return this._http.post('http://localhost:3090/write/elephantine', body, {headers: headers})

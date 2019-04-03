@@ -25,11 +25,17 @@ export class DetailedProcessingComponent implements OnInit, OnDestroy {
   weightString: string;
   weightSum: any;
 
+  recordToEdit: any;
+
   constructor(
     public fb: FormBuilder,
     public formService: FormsService,
     public khppFormSerivce: KhppFormService) {
     this.formService.detailedFormArray.subscribe( detailedArray => {this.detailedFormArray = detailedArray; });
+    this.formService.recordToEdit.subscribe( recordToEdit => {
+      this.recordToEdit = recordToEdit;
+    });
+
     // Set Defaults for Drop Down Options
     this.fabricTypeOptions = this.khppFormSerivce.getFabricTypeOptions();
     this.surfaceTreatmentOptions = this.khppFormSerivce.getSurfaceTreatmentOptions();
@@ -38,7 +44,11 @@ export class DetailedProcessingComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
+    // console.log('ngOnInit detailed');
+    // console.log(this.recordToEdit);
+    if (this.recordToEdit.length !== 0) {
+      this.detailedFormArray = this.recordToEdit;
+    }
   }
 
   ngOnDestroy(): void {
@@ -59,6 +69,8 @@ export class DetailedProcessingComponent implements OnInit, OnDestroy {
     this.isFormActive = false;
     formValues.notes = formValues.fabricType + ' Notes -' + (formValues.notes === null ? '' : formValues.notes);
     formValues.weight = this.weightSum;
+    // console.log(formValues)
+    formValues.weightType = formValues.weightType === true ? 'kg' : 'g';
 
     this.detailedFormArray.push(formValues);
     this.formService.detailedFormArray.next(this.detailedFormArray);
@@ -72,6 +84,7 @@ export class DetailedProcessingComponent implements OnInit, OnDestroy {
   onFormEditSave(formValues: any) {
     this.detailedFormArray.splice(this.indexEditing, 1);
     formValues.weight = this.weightSum;
+    formValues.weightType = formValues.weightType === true ? 'kg' : 'g';
 
     this.detailedFormArray.push(formValues);
     this.formService.detailedFormArray.next(this.detailedFormArray);
@@ -109,7 +122,7 @@ export class DetailedProcessingComponent implements OnInit, OnDestroy {
       sherdType: [item.sherdType, Validators.compose([Validators.required])],
       count: [item.count, Validators.compose([Validators.required, Validators.minLength(1)])],
       weight: [item.weight, Validators.compose([Validators.required, Validators.minLength(1)])],
-      weightType: [item.weightType, null],
+      weightType: [(item.weightType === 'kg' ? true : false), null],
       comments: [item.comments, null],
       notes: [item.notes, null]
     });
