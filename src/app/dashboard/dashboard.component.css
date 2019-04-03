@@ -1,0 +1,38 @@
+.blank{
+       margin-bottom: 20px ;
+
+}
+.container-fluid{
+       height: 100% !important;
+}
+.main-content{
+       height: 100%
+}
+
+.primary{
+       height: 75% !important;
+       
+}
+.secondaryDashboardRow{
+       height: 40% !important;
+}
+.details{
+       height: 100%;
+}
+.panel1, .card1{
+       height: 95%;
+}
+.panel2, .card2{
+       height: 100%;
+}
+.header{
+       height: 15% !important;
+}
+
+.content{
+       height: 70% ;
+}
+/* .map {
+       height: 95% !important;
+       width:100%;
+} */

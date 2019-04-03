@@ -1,7 +1,7 @@
-<mat-card>
+<mat-card class='card'>
     <mat-card-header>
 
-        <div *ngIf="isPanel3 || isPanel7; then content; else other_content"></div>
+        <div *ngIf="isPanel3 || isPanel10 || isPanel7; then content; else other_content"></div>
         <ng-template #content>
             <mat-card-title (click)="changePanel()">{{DynamicTitle}}</mat-card-title>
         </ng-template>
@@ -13,12 +13,12 @@
         <!-- <mat-card-subtitle>subtitle</mat-card-subtitle> -->
     </mat-card-header>
     <mat-card-content>
-        <div class='map'  *ngIf="isPanel1">
+        <div class='map' *ngIf="isPanel1">
             <app-maindashmap></app-maindashmap>
 
         </div>
         <div *ngIf="isPanel2">
-           <app-detailspanel></app-detailspanel>
+            <app-detailspanel></app-detailspanel>
 
         </div>
 
@@ -31,12 +31,20 @@
         <div *ngIf="isPanel5">
         </div>
         <div *ngIf="isPanel6">
-            
+
         </div>
-        <div *ngIf="isPanel7" >
+        <div *ngIf="isPanel7">
             <app-quadseriesstackedbar></app-quadseriesstackedbar>
         </div>
         <div *ngIf="isPanel8">
+            <app-fabric-comparison-chart></app-fabric-comparison-chart>
+        </div>
+        <div *ngIf="isPanel9">
+            <app-khpp-fabric-radar></app-khpp-fabric-radar>
+
+        </div>
+        <div *ngIf="isPanel10">
+            <app-khpp-blackened-chart></app-khpp-blackened-chart>
 
         </div>
     </mat-card-content>

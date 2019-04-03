@@ -2,6 +2,7 @@ import { MaterialcardService } from 'services/MaterialCardService/materialcard.s
 import { Component, OnInit, Input, Output } from '@angular/core';
 import { DataService } from 'app/data.service';
 import { FiltersService } from 'services/FilterService/Filters.service';
+import { DashboardService } from 'services/DashboardService/dashboard.service';
 
 @Component({
   selector: 'app-funnel',
@@ -9,6 +10,7 @@ import { FiltersService } from 'services/FilterService/Filters.service';
   styleUrls: ['./funnel.component.css']
 })
 export class FunnelComponent implements OnInit {
+
   public model = [{
     stat: 'Body Sherds ',
     count: 434823,
@@ -33,14 +35,42 @@ export class FunnelComponent implements OnInit {
   constructor(
     private _ds: DataService,
     public _materialCardService: MaterialcardService,
-    private _fs: FiltersService) {
-    this.runQueries();
-
+    private _fs: FiltersService,
+    private dashService: DashboardService) {
+    // this.runQueries();
+    this.runDashQueries();
   }
   ngOnInit() {
-    this.runQueries();
-  }
+    // this.runQueries();
+    this.runDashQueries();
 
+  }
+  runDashQueries(): any {
+    this._materialCardService.panel3IsCount.subscribe(res => {
+      if (res === true) {
+        this.dashService.getElephantineCountTypeProportions().subscribe(data => {
+          this.model = data.map(item => {
+            return {
+              stat: item.stat,
+              count: item.count / 100,
+              color: item.color
+            }
+          })
+        });
+      } else {
+        this.dashService.getElephantineWeightTypeProportions().subscribe(data => {
+          this.model = data.map(item => {
+            return {
+              stat: item.stat,
+              count: item.count / 100,
+              color: item.color
+            }
+          })
+        });
+
+      }
+    });
+  }
 
   runQueries(): void {
     this._materialCardService.panel3IsCount.subscribe(res => {
@@ -78,8 +108,8 @@ export class FunnelComponent implements OnInit {
           });
         });
 
-        }
-   
+      }
+
     })
 
   }
@@ -109,8 +139,8 @@ export class FunnelComponent implements OnInit {
           });
         });
 
-        }
-   
+      }
+
     })
   }
 }

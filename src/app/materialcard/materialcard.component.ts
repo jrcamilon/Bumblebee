@@ -24,14 +24,15 @@ export class MaterialcardComponent implements OnInit {
   isPanel6: any = false;
   isPanel7: any = false;
   isPanel8: any = false;
-
+  isPanel9: any = false;
+  isPanel10: any = false;
 
   constructor(
     private _ds: DataService,
     public _materialCardService: MaterialcardService) {
 
   }
-  
+
   ngOnInit() {
     this.isPanel1 = (this.Content === 'panel1');
     this.isPanel2 = (this.Content === 'panel2');
@@ -41,11 +42,17 @@ export class MaterialcardComponent implements OnInit {
     this.isPanel6 = (this.Content === 'panel6');
     this.isPanel7 = (this.Content === 'panel7');
     this.isPanel8 = (this.Content === 'panel8');
+    this.isPanel9 = (this.Content === 'panel9');
+    this.isPanel10 = (this.Content === 'panel10');
+
     if (this.isPanel7) {
       this.DynamicTitle = 'Count Proportion of Fabrics Blackened';
     }
     if (this.isPanel3) {
       this.DynamicTitle = 'Count Proportion of Types'
+    }
+    if (this.isPanel10) {
+      this.DynamicTitle = 'Count Proportion Of Fabrics Blackened KHPP'
     }
   }
 
@@ -54,9 +61,9 @@ export class MaterialcardComponent implements OnInit {
   public labelContent(e: any): string {
     return `${e.dataItem.time.substring(0, 2)}h`;
   }
-  
 
- 
+
+
   changePanel(): void {
     let isCount;
 
@@ -64,8 +71,7 @@ export class MaterialcardComponent implements OnInit {
       isCount = (this.DynamicTitle === 'Count Proportion of Fabrics Blackened');
       if (isCount) {
         this.DynamicTitle = 'Weight Proportion of Fabrics Blackened'
-      }
-      else {
+      } else {
         this.DynamicTitle = 'Count Proportion of Fabrics Blackened'
       }
       this._materialCardService.isCount.next(!isCount);
@@ -74,11 +80,19 @@ export class MaterialcardComponent implements OnInit {
       isCount = (this.DynamicTitle === 'Count Proportion of Types');
       if (isCount) {
         this.DynamicTitle = 'Weight Proportion of Types'
-      }
-      else {
+      } else {
         this.DynamicTitle = 'Count Proportion of Types'
       }
       this._materialCardService.panel3IsCount.next(!isCount);
+    } else if (this.isPanel10) {
+      isCount = (this.DynamicTitle === 'Count Proportion Of Fabrics Blackened KHPP');
+      if (isCount) {
+        this.DynamicTitle = 'Weight Proportion Of Fabrics Blackened KHPP'
+      } else {
+        this.DynamicTitle = 'Count Proportion Of Fabrics Blackened KHPP'
+      }
+      this._materialCardService.panel10IsCount.next(!isCount);
+
     }
   }
 }

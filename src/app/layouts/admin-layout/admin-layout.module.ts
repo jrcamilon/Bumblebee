@@ -13,6 +13,8 @@ import { NguiMapModule } from '@ngui/map';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 
 import { HomeComponent } from '../../home/home.component';
+import { DashboardComponent } from '../../dashboard/dashboard.component';
+
 import { UserComponent } from '../../user/user.component';
 import { TablesComponent } from '../../tables/tables.component';
 import { TypographyComponent } from '../../typography/typography.component';
@@ -42,15 +44,14 @@ import { ChartsModule } from '@progress/kendo-angular-charts';
 import { GridModule, ExcelModule, PDFModule } from '@progress/kendo-angular-grid';
 import { LayoutModule } from '@progress/kendo-angular-layout';
 import { PopupModule } from '@progress/kendo-angular-popup';
-// import { DropDownListModule } from '@progress/kendo-angular-dropdowns';
-
+import { KhppFabricRadarComponent } from '../../dashboard/visualizations/KhppFabricRadar/khpp-fabric-radar/khpp-fabric-radar.component';
 import { AgmCoreModule } from '@agm/core';
 import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
 
 import { WebcamModule } from 'ngx-webcam';
 
 //Directives
-import {PopupAnchorDirective } from '../../processing/components/khpp-form/popupanchor.directive';
+import { PopupAnchorDirective } from '../../processing/components/khpp-form/popupanchor.directive';
 import 'hammerjs';
 import { TableGridComponent } from 'app/tables/components/table-grid/table-grid.component';
 import {
@@ -91,6 +92,9 @@ import {
 } from '@angular/material';
 import { SplitterPaneRowComponent } from 'app/maps/components/splitter-pane-row/splitter-pane-row.component';
 import { RednotebookFormComponent } from 'app/processing/components/rednotebook-form/rednotebook-form.component';
+import { KhppBlackenedChartComponent } from 'app/dashboard/visualizations/KhppBlackenedChart/khpp-blackened-chart/khpp-blackened-chart.component';
+import { FabricComparisonChartComponent } from 'app/dashboard/visualizations/FabricComparison/fabric-comparison-chart/fabric-comparison-chart.component';
+// import { KhppFabricRadarComponent } from 'app/dashboard/visualizations/KhppFabricRadar/khpp-fabric-radar/khpp-fabric-radar.component';
 
 @NgModule({
   imports: [
@@ -181,7 +185,12 @@ import { RednotebookFormComponent } from 'app/processing/components/rednotebook-
     KhppFormComponent,
     PopupAnchorDirective,
     BodyProcessingComponent,
-    DetailedProcessingComponent
+    DetailedProcessingComponent,
+    DashboardComponent,
+    KhppFabricRadarComponent,
+    KhppBlackenedChartComponent,
+    FabricComparisonChartComponent,
+
 
 
   ],

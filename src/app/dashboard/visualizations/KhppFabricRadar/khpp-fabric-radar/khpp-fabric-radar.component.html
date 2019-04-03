@@ -1,0 +1,22 @@
+<div>
+  <kendo-chart>
+    <kendo-chart-series>
+      <kendo-chart-series-item type="radarLine" name="Weight" [data]="chartdata" field="kgWeight"
+        categoryField="fabricType">
+      </kendo-chart-series-item>
+      <kendo-chart-series-item type="radarLine" name="Count" [data]="chartdata" field="Count"
+        categoryField="fabricType">
+      </kendo-chart-series-item>
+    </kendo-chart-series>
+    <kendo-chart-tooltip>
+      <ng-template kendoChartSeriesTooltipTemplate let-category="category" format="P0" let-value="value">
+        {{ value | percent }}
+      </ng-template>
+    </kendo-chart-tooltip>
+    <kendo-chart-value-axis>
+      <kendo-chart-value-axis-item [labels]="{ format: 'P0' }">
+      </kendo-chart-value-axis-item>
+    </kendo-chart-value-axis>
+    <kendo-chart-legend position="bottom"></kendo-chart-legend>
+  </kendo-chart>
+</div>

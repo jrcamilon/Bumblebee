@@ -1,7 +1,8 @@
 import { MaterialcardService } from 'services/MaterialCardService/materialcard.service';
 import { Component, OnInit, Input, Output } from '@angular/core';
 import { DataService } from 'app/data.service';
-import {FiltersService} from 'services/FilterService/Filters.service'
+import { FiltersService } from 'services/FilterService/Filters.service'
+import { DashboardService } from 'services/DashboardService/dashboard.service';
 @Component({
   selector: 'app-quadseriesstackedbar',
   templateUrl: './quadseriesstackedbar.component.html',
@@ -36,14 +37,42 @@ export class QuadseriesstackedbarComponent implements OnInit {
   constructor(
     private _ds: DataService,
     public _materialCardService: MaterialcardService,
-    public _fs: FiltersService) {
-    this.runQueries();
-
+    public _fs: FiltersService,
+    public dashService: DashboardService) {
+    // this.runQueries();
+    this.runDashQueries();
   }
   ngOnInit() {
-    this.runQueries();
+    // this.runQueries();
+    this.runDashQueries();
+
   }
 
+  runDashQueries() {
+    this._materialCardService.isCount.subscribe(res => {
+      if (res === true) {
+        this.getDashTotalPercentType();
+      } else {
+        this.getDashWeightPercentType();
+      }
+    });
+  }
+  getDashWeightPercentType(): any {
+    this.dashService.getElephantineWeightBlackenedProportions().subscribe(data => {
+      this.panel2exterior = data.exterior;
+      this.panel2interior = data.interior;
+      this.panel2both = data.both;
+      this.panel2null = data.empty;
+    })
+  }
+  getDashTotalPercentType(): any {
+    this.dashService.getElephantineCountBlackenedProportions().subscribe(data => {
+      this.panel2exterior = data.exterior;
+      this.panel2interior = data.interior;
+      this.panel2both = data.both;
+      this.panel2null = data.empty;
+    })
+  }
   runQueries(): void {
     this._materialCardService.isCount.subscribe(res => {
       if (res === true) {
@@ -54,8 +83,8 @@ export class QuadseriesstackedbarComponent implements OnInit {
     });
   }
   getWeightPercentType(): void {
-    this._fs.LocationFilterValues.subscribe(item=>{
-      if(item.length> 0){
+    this._fs.LocationFilterValues.subscribe(item => {
+      if (item.length > 0) {
         this._ds.getWeightPercentBlackened(item).subscribe(data => {
 
           this.panel2exterior = data.exterior;
@@ -64,7 +93,7 @@ export class QuadseriesstackedbarComponent implements OnInit {
           this.panel2null = data.empty;
         });
       } else {
-        this._fs.DefaultFilterArray.subscribe(item=>{
+        this._fs.DefaultFilterArray.subscribe(item => {
           this._ds.getWeightPercentBlackened(item).subscribe(data => {
 
             this.panel2exterior = data.exterior;
@@ -74,13 +103,13 @@ export class QuadseriesstackedbarComponent implements OnInit {
           });
         })
       }
-    
+
     })
-    
+
   }
   getTotalPercentType(): void {
-    this._fs.LocationFilterValues.subscribe(item=>{
-      if(item.lenth> 0){
+    this._fs.LocationFilterValues.subscribe(item => {
+      if (item.lenth > 0) {
         this._ds.getTotalPercentBlackened(item).subscribe(data => {
 
           this.panel2exterior = data.exterior;
@@ -89,7 +118,7 @@ export class QuadseriesstackedbarComponent implements OnInit {
           this.panel2null = data.empty;
         });
       } else {
-        this._fs.DefaultFilterArray.subscribe(item=>{
+        this._fs.DefaultFilterArray.subscribe(item => {
           this._ds.getTotalPercentBlackened(item).subscribe(data => {
 
             this.panel2exterior = data.exterior;
@@ -99,7 +128,7 @@ export class QuadseriesstackedbarComponent implements OnInit {
           });
         })
       }
-    
+
     })
 
   }
