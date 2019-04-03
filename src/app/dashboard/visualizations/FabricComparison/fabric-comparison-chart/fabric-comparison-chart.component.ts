@@ -8,9 +8,31 @@ import { DashboardService } from 'services/DashboardService/dashboard.service';
 })
 export class FabricComparisonChartComponent implements OnInit {
 
-  constructor(private dashService: DashboardService) { }
+  public rSlipIn;
+  public rSlipOut;
+  public rSlipBoth;
+  public creamSlipIn;
+  public creamSlipOut;
+  public untreated;
+  constructor(private dashService: DashboardService) {
+    this.runDashQueries();
+
+   }
 
   ngOnInit() {
+    this.runDashQueries();
+  }
+  runDashQueries(): any {
+    this.dashService.getKHPPEleFabricProportions().subscribe(data => {
+      console.log('Comparison Data',data);
+
+      this.rSlipIn = data.rSlipIn;
+      this.rSlipOut = data.rSlipOut;
+      this.rSlipBoth = data.rSlipBoth;
+      this.creamSlipIn = data.creamSlipIn;
+      this.creamSlipOut = data.creamSlipOut;
+      this.untreated  = data.untreated;
+    });
   }
 
 }

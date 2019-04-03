@@ -1,17 +1,25 @@
 <kendo-chart>
-      <kendo-chart-title text="Units sold"></kendo-chart-title>
       <kendo-chart-category-axis>
-          <kendo-chart-category-axis-item [categories]="['Q1', 'Q2', 'Q3', 'Q4']">
+          <kendo-chart-category-axis-item [categories]="['Elephantine', 'KHPP']">
           </kendo-chart-category-axis-item>
       </kendo-chart-category-axis>
       <kendo-chart-series>
-        <kendo-chart-series-item type="bar" [gap]="2" [spacing]=".25" [data]="[100, 123, 234, 343]">
+        <kendo-chart-series-item type="bar" name="R Slip In" [gap]="2" [spacing]=".25" [data]="rSlipIn">
         </kendo-chart-series-item>
-        <kendo-chart-series-item type="bar" [data]="[120, 67, 231, 196]">
+        <kendo-chart-series-item type="bar" name="R Slip Out" [data]="rSlipOut">
         </kendo-chart-series-item>
-        <kendo-chart-series-item type="bar" [data]="[45, 124, 189, 143]">
+        <kendo-chart-series-item type="bar" name="R Slip Both" [data]="rSlipBoth">
         </kendo-chart-series-item>
-        <kendo-chart-series-item type="bar" [data]="[87, 154, 210, 215]">
+        <kendo-chart-series-item type="bar" name="Cream Slip In" [data]="creamSlipIn">
+        </kendo-chart-series-item>
+        <kendo-chart-series-item type="bar" name="Cream Slip Out" [data]="creamSlipOut">
+        </kendo-chart-series-item>
+        <kendo-chart-series-item type="bar" name="Untreated" [data]="untreated">
         </kendo-chart-series-item>
       </kendo-chart-series>
+      <kendo-chart-tooltip>
+        <ng-template kendoChartSeriesTooltipTemplate let-category="category" format="0" let-value="value">
+          {{ value  }}
+        </ng-template>
+      </kendo-chart-tooltip>
     </kendo-chart>
