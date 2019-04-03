@@ -23,14 +23,21 @@ export class BodyProcessingComponent implements OnInit, OnDestroy {
 
   constructor(public editserivce: KhppFormService, public fb: FormBuilder, public formService: FormsService) {
     this.formService.triageFormArray.subscribe(triageArray => { this.triageFormArray = triageArray; });
+    this.formService.recordToEdit.subscribe( recordToEdit => {
+      this.recordToEdit = recordToEdit;
+    });
+
     this.editserivce.offlineDBrecordToEdit.subscribe(recordToEdit => {
       console.log(recordToEdit);
       this.recordToEdit = recordToEdit;
-    })
+    });
   }
 
   ngOnInit(): void {
     console.log(this.recordToEdit);
+    if (this.recordToEdit.length !== 0) {
+      this.triageFormArray = this.recordToEdit;
+    }
   }
 
   ngOnDestroy(): void {
