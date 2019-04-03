@@ -83,6 +83,9 @@
 
     <!-- ON FORM SUBMIT BUTTON -->
     <input type="submit" form="mainForm"  [disabled]="!isKhppFormValid" class="btn btn-info btn-fill btn-block" (click)="onFormSubmit()" [value]="buttonValue">
+
+      <!-- ON FORM CANCEL BUTTON -->
+      <input *ngIf="isEditing" type="submit" form="mainForm"  class="btn btn-secondary btn-fill btn-block" (click)="onCancelEdit()" value="CANCEL">
 </div>
 
 <!-- OFFLINE DB RECORDS VIEW -->
