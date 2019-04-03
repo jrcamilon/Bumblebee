@@ -24,14 +24,15 @@ export class MaterialcardComponent implements OnInit {
   isPanel6: any = false;
   isPanel7: any = false;
   isPanel8: any = false;
-
+  isPanel9: any = false;
+  isPanel10: any = false;
 
   constructor(
     private _ds: DataService,
     public _materialCardService: MaterialcardService) {
 
   }
-  
+
   ngOnInit() {
     this.isPanel1 = (this.Content === 'panel1');
     this.isPanel2 = (this.Content === 'panel2');
@@ -41,6 +42,9 @@ export class MaterialcardComponent implements OnInit {
     this.isPanel6 = (this.Content === 'panel6');
     this.isPanel7 = (this.Content === 'panel7');
     this.isPanel8 = (this.Content === 'panel8');
+    this.isPanel9 = (this.Content === 'panel9');
+    this.isPanel10 = (this.Content === 'panel10');
+
     if (this.isPanel7) {
       this.DynamicTitle = 'Count Proportion of Fabrics Blackened';
     }
@@ -54,9 +58,9 @@ export class MaterialcardComponent implements OnInit {
   public labelContent(e: any): string {
     return `${e.dataItem.time.substring(0, 2)}h`;
   }
-  
 
- 
+
+
   changePanel(): void {
     let isCount;
 
