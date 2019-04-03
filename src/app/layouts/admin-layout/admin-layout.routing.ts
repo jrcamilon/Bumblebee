@@ -14,12 +14,12 @@ import { MainDashboardComponent } from '../../main-dashboard/main-dashboard.comp
 export const AdminLayoutRoutes: Routes = [
     // { path: 'dashboard', component: MainDashboardComponent },
     { path: 'dashboard', component: DashboardComponent },
-    { path: 'user', component: UserComponent },
-    { path: 'table', component: TablesComponent },
-    { path: 'maps', component: MapsComponent },
-    { path: 'notifications', component: NotificationsComponent },
+    // { path: 'user', component: UserComponent },
+    // { path: 'table', component: TablesComponent },
+    // { path: 'maps', component: MapsComponent },
+    // { path: 'notifications', component: NotificationsComponent },
     { path: 'processing', component: ProcessingComponent },
-    { path: 'homemap', component: HomeMapComponent }
+    // { path: 'homemap', component: HomeMapComponent }å
 
 
 ];
