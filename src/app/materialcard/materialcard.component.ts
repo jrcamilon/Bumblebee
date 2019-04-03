@@ -51,6 +51,9 @@ export class MaterialcardComponent implements OnInit {
     if (this.isPanel3) {
       this.DynamicTitle = 'Count Proportion of Types'
     }
+    if (this.isPanel10) {
+      this.DynamicTitle = 'Count Proportion Of Fabrics Blackened KHPP'
+    }
   }
 
 
@@ -68,8 +71,7 @@ export class MaterialcardComponent implements OnInit {
       isCount = (this.DynamicTitle === 'Count Proportion of Fabrics Blackened');
       if (isCount) {
         this.DynamicTitle = 'Weight Proportion of Fabrics Blackened'
-      }
-      else {
+      } else {
         this.DynamicTitle = 'Count Proportion of Fabrics Blackened'
       }
       this._materialCardService.isCount.next(!isCount);
@@ -78,11 +80,19 @@ export class MaterialcardComponent implements OnInit {
       isCount = (this.DynamicTitle === 'Count Proportion of Types');
       if (isCount) {
         this.DynamicTitle = 'Weight Proportion of Types'
-      }
-      else {
+      } else {
         this.DynamicTitle = 'Count Proportion of Types'
       }
       this._materialCardService.panel3IsCount.next(!isCount);
+    } else if (this.isPanel10) {
+      isCount = (this.DynamicTitle === 'Count Proportion Of Fabrics Blackened KHPP');
+      if (isCount) {
+        this.DynamicTitle = 'Weight Proportion Of Fabrics Blackened KHPP'
+      } else {
+        this.DynamicTitle = 'Count Proportion Of Fabrics Blackened KHPP'
+      }
+      this._materialCardService.panel10IsCount.next(!isCount);
+
     }
   }
 }

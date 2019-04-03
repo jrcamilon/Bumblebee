@@ -70,8 +70,17 @@ export class DashboardService {
 
   }
   // Get KHPP Weight Fabric Data
-  public getKHPPBlackenedProportions(): Observable<any> {
-    return this._http.get(`${this.http}${this.domain}${this.port}/dash/khpp/blackened`)
+  public getKHPPWeightBlackenedProportions(): Observable<any> {
+    return this._http.get(`${this.http}${this.domain}${this.port}/dash/khpp/weight/blackened`)
+      .map((response: Response) => {
+        const tmpData = response.json();
+        return tmpData;
+      })
+
+  }
+  // Get KHPP Weight Fabric Data
+  public getKHPPCountBlackenedProportions(): Observable<any> {
+    return this._http.get(`${this.http}${this.domain}${this.port}/dash/khpp/count/blackened`)
       .map((response: Response) => {
         const tmpData = response.json();
         return tmpData;

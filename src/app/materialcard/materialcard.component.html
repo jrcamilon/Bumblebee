@@ -1,7 +1,7 @@
 <mat-card class='card'>
     <mat-card-header>
 
-        <div *ngIf="isPanel3 || isPanel7; then content; else other_content"></div>
+        <div *ngIf="isPanel3 || isPanel10 || isPanel7; then content; else other_content"></div>
         <ng-template #content>
             <mat-card-title (click)="changePanel()">{{DynamicTitle}}</mat-card-title>
         </ng-template>
