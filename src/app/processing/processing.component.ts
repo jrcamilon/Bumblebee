@@ -156,46 +156,46 @@ export class ProcessingComponent implements OnInit {
         console.log('Saving KHPP');
         console.log(this.completedForms);
 
-        //  toInsert = this.completedForms.map(ele => {
-        //   return new Object({
-        //     bodySherdData: ele.bodySherdData,
-        //     diagnosticData: ele.diagnosticData,
-        //     dueDate: ele.dueDate,
-        //     id: ele.id,
-        //     processedBy: ele.processedBy,
-        //     tagNumber: ele.tagNumber,
-        //     triageData: ele.triageData
-        //   });
-        // });
+         toInsert = this.completedForms.map(ele => {
+          return new Object({
+            triageData: ele.basicRecords === undefined ? [] : ele.basicRecords,
+            diagnosticData: [],
+            dueDate: ele.dueDate,
+            id: ele.id,
+            processedBy: ele.processedBy,
+            tagNumber: ele.tagNumber,
+            bodySherdData: ele.detailedRecords === undefined ? [] : ele.detailedRecords
+          });
+        });
 
-        // console.log(toInsert);
+        console.log(toInsert);
         //  let insertFailed = false;
 
-        // console.log(this.isOnline);
-        // if (this.isOnline) {
-        //   for (let i = 0; i < toInsert.length; i++) {
-        //     console.log(toInsert[i]);
-        //     this._formsService.writeToKHPP(toInsert[i]).subscribe(res => {
-        //       console.log(res);
-        //       if (res.status === 201) {
-        //         console.log(res);
-        //         this.openSnackBar();
-        //       } else {
-        //         // insertFailed = true;
-        //       }
-        //     });
-        //   }
-        // } else {
-        //   console.log('cant post online;')
-        // }
+        console.log(this.isOnline);
+        if (this.isOnline) {
+          for (let i = 0; i < toInsert.length; i++) {
+            console.log(toInsert[i]);
+            this._formsService.writeToKHPP(toInsert[i]).subscribe(res => {
+              console.log(res);
+              if (res.status === 201) {
+                console.log(res);
+                this.openSnackBar();
+              } else {
+
+              }
+            });
+          }
+        } else {
+          console.log('cant post online;')
+        }
 
 
           // Clear the completed forms array and clear the service store.
           this.deleteOfflineDB();
-          // this.completedForms = [];
+          this.completedForms = [];
           // this._formsService.activeForm.next(this.completedForms);
-          // this.offlineDB.clearAll();
-          // this._khpp.responseObject.next([]);
+          this.offlineDB.clearAll();
+          this._khpp.responseObject.next([]);
 
 
         break;

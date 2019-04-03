@@ -56,7 +56,7 @@
         
           <div class="form-group" style="padding-top: 25px;">
             <label for="sel1" style="font-size: 10px !important">Processing Type</label>
-            <select class="form-control" id="sel1" (change)="onProcessingTypeChange($event.target.value)">
+            <select class="form-control" id="sel1"  [value]="isBasicVisible ? 'basic' : 'detailed'" (change)="onProcessingTypeChange($event.target.value)">
               <option value="basic">Basic Processing</option>
               <option value="detailed">Detailed Processing</option>
             </select>
@@ -82,7 +82,7 @@
       </form>
 
     <!-- ON FORM SUBMIT BUTTON -->
-    <input type="submit" form="mainForm" class="btn btn-info btn-fill btn-block" (click)="onFormSubmit()">
+    <input type="submit" form="mainForm"  [disabled]="!isKhppFormValid" class="btn btn-info btn-fill btn-block" (click)="onFormSubmit()" [value]="buttonValue">
 </div>
 
 <!-- OFFLINE DB RECORDS VIEW -->
@@ -107,7 +107,7 @@
         <td>{{record.detailedRecords ? record.detailedRecords.length : 0 }}</td>
         <td>
           <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-info" style="background-color: #1dc7ea; color: white; border: none; width: 70px !important">EDIT</button>
+            <button type="button" class="btn btn-info" (click)="onDBedit(record)" style="background-color: #1dc7ea; color: white; border: none; width: 70px !important">EDIT</button>
             <button type="button" class="btn btn-danger" (click)="onDBdelete(record)"  style="background-color: #ff1b1b; color: white; border: none;">DELETE</button>
           </div>
         </td>

@@ -1,3 +1,4 @@
+import { KhppFormService } from 'services/Khpp-Form/Khpp-Form.service';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormsService } from 'app/processing/services/forms.service';
@@ -18,13 +19,25 @@ export class BodyProcessingComponent implements OnInit, OnDestroy {
 
   weightString: string;
   weightSum: any;
+  recordToEdit: any;
 
-  constructor(public fb: FormBuilder, public formService: FormsService) {
+  constructor(public editserivce: KhppFormService, public fb: FormBuilder, public formService: FormsService) {
     this.formService.triageFormArray.subscribe(triageArray => { this.triageFormArray = triageArray; });
+    this.formService.recordToEdit.subscribe( recordToEdit => {
+      this.recordToEdit = recordToEdit;
+    });
+
+    this.editserivce.offlineDBrecordToEdit.subscribe(recordToEdit => {
+      console.log(recordToEdit);
+      this.recordToEdit = recordToEdit;
+    });
   }
 
   ngOnInit(): void {
-
+    console.log(this.recordToEdit);
+    if (this.recordToEdit.length !== 0) {
+      this.triageFormArray = this.recordToEdit;
+    }
   }
 
   ngOnDestroy(): void {
@@ -45,7 +58,7 @@ export class BodyProcessingComponent implements OnInit, OnDestroy {
     this.isFormActive = false;
     formValues.notes = formValues.fabricType + ' Notes -' + (formValues.notes === null ? '' : formValues.notes);
     formValues.weight = this.weightSum;
-
+    formValues.weightType = formValues.weightType === true ? 'kg' : 'g';
     this.triageFormArray.push(formValues);
     this.formService.triageFormArray.next(this.triageFormArray);
 
@@ -58,7 +71,7 @@ export class BodyProcessingComponent implements OnInit, OnDestroy {
   onFormEditSave(formValues: any) {
     this.triageFormArray.splice(this.indexEditing, 1);
     formValues.weight = this.weightSum;
-
+    formValues.weightType = formValues.weightType === true ? 'kg' : 'g';
     this.triageFormArray.push(formValues);
     this.formService.triageFormArray.next(this.triageFormArray);
 
@@ -95,7 +108,7 @@ export class BodyProcessingComponent implements OnInit, OnDestroy {
       sherdType: [item.sherdType, Validators.compose([Validators.required])],
       count: [item.count, Validators.compose([Validators.required, Validators.minLength(1)])],
       weight: [item.weight, Validators.compose([Validators.required, Validators.minLength(1)])],
-      weightType: [item.weightType, null],
+      weightType: [(item.weightType === 'kg' ? true : false), null],
       comments: [item.comments, null],
       notes: [item.notes, null]
     });
