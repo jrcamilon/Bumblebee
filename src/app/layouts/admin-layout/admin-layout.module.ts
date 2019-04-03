@@ -13,6 +13,8 @@ import { NguiMapModule } from '@ngui/map';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 
 import { HomeComponent } from '../../home/home.component';
+import { DashboardComponent } from '../../dashboard/dashboard.component';
+
 import { UserComponent } from '../../user/user.component';
 import { TablesComponent } from '../../tables/tables.component';
 import { TypographyComponent } from '../../typography/typography.component';
@@ -181,7 +183,8 @@ import { RednotebookFormComponent } from 'app/processing/components/rednotebook-
     KhppFormComponent,
     PopupAnchorDirective,
     BodyProcessingComponent,
-    DetailedProcessingComponent
+    DetailedProcessingComponent,
+    DashboardComponent,
 
 
   ],

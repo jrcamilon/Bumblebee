@@ -2,6 +2,7 @@ import { HomeMapComponent } from './../../home-map/home-map.component';
 import { Routes } from '@angular/router';
 
 import { HomeComponent } from '../../home/home.component';
+import { DashboardComponent } from '../../dashboard/dashboard.component';
 import { UserComponent } from '../../user/user.component';
 import { TablesComponent } from '../../tables/tables.component';
 import { MapsComponent } from '../../maps/maps.component';
@@ -12,7 +13,7 @@ import { MainDashboardComponent } from '../../main-dashboard/main-dashboard.comp
 
 export const AdminLayoutRoutes: Routes = [
     // { path: 'dashboard', component: MainDashboardComponent },
-    { path: 'dashboard', component: HomeComponent },
+    { path: 'dashboard', component: DashboardComponent },
     { path: 'user', component: UserComponent },
     { path: 'table', component: TablesComponent },
     { path: 'maps', component: MapsComponent },
