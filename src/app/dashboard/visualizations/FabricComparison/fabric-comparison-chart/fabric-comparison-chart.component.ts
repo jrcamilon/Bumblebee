@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DashboardService } from 'services/DashboardService/dashboard.service';
 
 @Component({
   selector: 'app-fabric-comparison-chart',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FabricComparisonChartComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dashService: DashboardService) { }
 
   ngOnInit() {
   }
