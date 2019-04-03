@@ -235,7 +235,7 @@ export class ProcessingComponent implements OnInit {
   }
 
   public handleImage(webcamImage: WebcamImage): void {
-    console.info('received webcam image', webcamImage, this.webcamImageArray);
+    // console.info('received webcam image', webcamImage, this.webcamImageArray);
     this.webcamImage = webcamImage;
     this.webcamImageArray.push(webcamImage);
   }

@@ -139,6 +139,20 @@ export class KhppFormComponent implements OnInit, OnDestroy {
         this.clearSubFormsArray();
     }
 
+    public onCancelEdit() {
+        this.isEditing = false;
+        this.visibleTab = 'offlineDB';
+        this.editFormID = undefined;
+        this.formSerivce.recordToEdit.next([]);
+        this.offlineDB.getAll().then(res => {
+            this.offlineDBRecords = res;
+            this.editService.responseObject.next(res);
+        });
+        this.buttonValue = 'SUBMIT';
+        this.clearForm();
+        this.clearSubFormsArray();
+    }
+
     public checkFormValidity() {
         this.isKhppFormValid = this.isFormBodyVisible && this.detailedRecords.length !== 0 || this.basicRecords.length !== 0;
     }
