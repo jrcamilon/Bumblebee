@@ -78,14 +78,16 @@
           </div>
         
         </div>
+
+              <!-- ON FORM SUBMIT BUTTON -->
+      <input type="submit" form="mainForm"  [disabled]="!isKhppFormValid" class="btn btn-info btn-fill btn-block" (click)="onFormSubmit()" [value]="buttonValue">
+
+      <!-- ON FORM CANCEL BUTTON -->
+      <input *ngIf="isEditing" type="button" form="mainForm"  class="btn btn-secondary btn-fill btn-block" (click)="onCancelEdit()" value="CANCEL">
       
       </form>
 
-    <!-- ON FORM SUBMIT BUTTON -->
-    <input type="submit" form="mainForm"  [disabled]="!isKhppFormValid" class="btn btn-info btn-fill btn-block" (click)="onFormSubmit()" [value]="buttonValue">
 
-      <!-- ON FORM CANCEL BUTTON -->
-      <input *ngIf="isEditing" type="submit" form="mainForm"  class="btn btn-secondary btn-fill btn-block" (click)="onCancelEdit()" value="CANCEL">
 </div>
 
 <!-- OFFLINE DB RECORDS VIEW -->
@@ -133,16 +135,16 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let record of offlineDBRecords">
+      <tr *ngFor="let record of onlineDBRecords">
         <th scope="row">{{record.tagNumber}}</th>
         <td>{{record.dueDate}}</td>
         <td>{{record.processedBy}}</td>
-        <td>{{record.basicRecords ? record.basicRecords.length : 0 }}</td>
-        <td>{{record.detailedRecords ? record.detailedRecords.length : 0 }}</td>
+        <td>{{record.basicCount }}</td>
+        <td>{{record.detailedCount }}</td>
         <td>
           <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-info">EDIT</button>
-            <button type="button" class="btn btn-danger" (click)="onDBdelete(record)">DELETE</button>
+            <button type="button" class="btn btn-info" disabled="true">EDIT</button>
+            <button type="button" class="btn btn-danger"  disabled="true">DELETE</button>
           </div>
         </td>
       </tr>

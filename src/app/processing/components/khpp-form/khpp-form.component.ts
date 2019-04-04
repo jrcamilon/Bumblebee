@@ -33,6 +33,7 @@ export class KhppFormComponent implements OnInit, OnDestroy {
     detailedRecords = [];
 
     offlineDBRecords = [];
+    onlineDBRecords = [];
 
 
     constructor(
@@ -41,11 +42,17 @@ export class KhppFormComponent implements OnInit, OnDestroy {
         public offlineDB: OfflineDBService,
         public formSerivce: FormsService) {
         // Subscriptions
-        this.onlinService.isOnline.subscribe(status => { this.isOnline = status; console.log(status) });
+        this.onlinService.isOnline.subscribe(status => { this.isOnline = status; console.log('online-status', status) });
         this.formSerivce.triageFormArray.subscribe(triageArray => { this.basicRecords = triageArray; this.checkFormValidity()});
         this.formSerivce.detailedFormArray.subscribe(detailedArray => { this.detailedRecords = detailedArray; this.checkFormValidity() });
         this.editService.responseObject.subscribe(res => { this.offlineDBRecords = res; });
         this.offlineDB.getAll().then( res => { this.offlineDBRecords = res; });
+        if (this.isOnline) {
+            this.formSerivce.readFromKHPP().subscribe(res => {
+                console.log(res);
+                this.onlineDBRecords = res;
+            });
+        }
     }
 
 

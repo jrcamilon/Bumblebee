@@ -50,4 +50,14 @@ export class FormsService {
       return tmpData;
     });
   }
+
+  public readFromKHPP (): Observable<any> {
+    const headers = new Headers({'Content-Type': 'application/json'});
+    return this._http.get('http://localhost:3090/read/khpp', {headers: headers})
+    .map((response: Response) => {
+      const tmpData = response.json();
+      return tmpData;
+    });
+  }
+
 }
