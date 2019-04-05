@@ -58,20 +58,65 @@ export class QuadseriesstackedbarComponent implements OnInit {
     });
   }
   getDashWeightPercentType(): any {
-    this.dashService.getElephantineWeightBlackenedProportions().subscribe(data => {
-      this.panel2exterior = data.exterior;
-      this.panel2interior = data.interior;
-      this.panel2both = data.both;
-      this.panel2null = data.empty;
-    })
+    this._fs.EleFilterValues.subscribe(item => {
+      //console.loge.log('filters being submitted', item);
+      if (item.length > 0) {
+        this.dashService.getElephantineWeightBlackenedProportions(item).subscribe(data => {
+          this.panel2exterior = data.exterior;
+          this.panel2interior = data.interior;
+          this.panel2both = data.both;
+          this.panel2null = data.empty;
+          //console.loge.log('Chart Data', data);
+        });
+      } else {
+
+        this._fs.DefaultEleLocusNumbers.subscribe(item => {
+          // //console.loge.log('filters being submitted', item);
+          this.dashService.getElephantineWeightBlackenedProportions(item).subscribe(data => {
+            this.panel2exterior = data.exterior;
+            this.panel2interior = data.interior;
+            this.panel2both = data.both;
+            this.panel2null = data.empty;
+            //console.loge.log('Chart Data', data);
+
+          });
+        });
+
+      }
+      // this.dashService.getKHPPFabricTypeProportions().subscribe(data => {
+      //   //console.loge.log('KHPP Fabrics', data);
+      //   this.chartdata = data;
+      // })
+    });
   }
   getDashTotalPercentType(): any {
-    this.dashService.getElephantineCountBlackenedProportions().subscribe(data => {
-      this.panel2exterior = data.exterior;
-      this.panel2interior = data.interior;
-      this.panel2both = data.both;
-      this.panel2null = data.empty;
-    })
+    this._fs.EleFilterValues.subscribe(item => {
+      // //console.loge.log('filters being submitted', item);
+      if (item.length > 0) {
+        this.dashService.getElephantineCountBlackenedProportions(item).subscribe(data => {
+          this.panel2exterior = data.exterior;
+          this.panel2interior = data.interior;
+          this.panel2both = data.both;
+          this.panel2null = data.empty;
+          //console.loge.log('Chart Data', data);
+        });
+      } else {
+
+        this._fs.DefaultEleLocusNumbers.subscribe(item => {
+          //console.loge.log('filters being submitted', item);
+          this.dashService.getElephantineCountBlackenedProportions(item).subscribe(data => {
+            this.panel2exterior = data.exterior;
+            this.panel2interior = data.interior;
+            this.panel2both = data.both;
+            this.panel2null = data.empty;
+            //console.loge.log('Chart Data', data);
+
+          });
+        });
+
+      }
+     
+    });
   }
   runQueries(): void {
     this._materialCardService.isCount.subscribe(res => {

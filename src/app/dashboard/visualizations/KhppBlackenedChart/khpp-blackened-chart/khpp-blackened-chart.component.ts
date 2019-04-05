@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from 'services/DashboardService/dashboard.service';
 import { MaterialcardService } from 'services/MaterialCardService/materialcard.service';
+import { FiltersService } from 'services/FilterService/Filters.service';
 
 @Component({
   selector: 'app-khpp-blackened-chart',
@@ -35,19 +36,22 @@ export class KhppBlackenedChartComponent implements OnInit {
   }];
   constructor(
     public _materialCardService: MaterialcardService,
-    public dashService: DashboardService) {
+    public dashService: DashboardService,
+    public _fs: FiltersService) {
     // this.runQueries();
     this.runDashQueries();
+
   }
   ngOnInit() {
     // this.runQueries();
-    this.runDashQueries();
+    // this.runDashQueries();
+
 
   }
 
   runDashQueries() {
     this._materialCardService.panel10IsCount.subscribe(res => {
-      console.log('Is Count Changed', res);
+      //console.loge.log('Is Count Changed', res);
       if (res === true) {
         this.getDashTotalPercentType();
       } else {
@@ -56,21 +60,62 @@ export class KhppBlackenedChartComponent implements OnInit {
     });
   }
   getDashWeightPercentType(): any {
-    this.dashService.getKHPPWeightBlackenedProportions().subscribe(data => {
-      console.log('KHPP Blackened', data);
-      this.panel2exterior = data.exterior;
+    this._fs.KhppFilterValues.subscribe(item => {
+      //console.loge.log('filters being submitted',item);
+      if (item.length > 0) {
+        this.dashService.getKHPPWeightBlackenedProportions(item).subscribe(data => {
+          this.panel2exterior = data.exterior;
       this.panel2interior = data.interior;
       this.panel2both = data.both;
       this.panel2null = data.empty;
-    })
+          //console.loge.log('Chart Data',data);
+        });
+      } else {
+
+        this._fs.DefaultKhppTagNumbers.subscribe(item => {
+      //console.loge.log('filters being submitted',item);
+          this.dashService.getKHPPWeightBlackenedProportions(item).subscribe(data => {
+            this.panel2exterior = data.exterior;
+            this.panel2interior = data.interior;
+            this.panel2both = data.both;
+            this.panel2null = data.empty;
+            //console.loge.log('Chart Data',data);
+
+          });
+        });
+
+      }
+
+  });
   }
   getDashTotalPercentType(): any {
-    this.dashService.getKHPPCountBlackenedProportions().subscribe(data => {
-      this.panel2exterior = data.exterior;
+    this._fs.KhppFilterValues.subscribe(item => {
+      //console.loge.log('filters being submitted',item);
+      if (item.length > 0) {
+        this.dashService.getKHPPCountBlackenedProportions(item).subscribe(data => {
+          this.panel2exterior = data.exterior;
       this.panel2interior = data.interior;
       this.panel2both = data.both;
       this.panel2null = data.empty;
-    })
+          console.log('Chart Data',data);
+        });
+      } else {
+
+        this._fs.DefaultKhppTagNumbers.subscribe(res => {
+      //console.loge.log('filters being submitted',item);
+          this.dashService.getKHPPCountBlackenedProportions(res).subscribe(data => {
+            this.panel2exterior = data.exterior;
+            this.panel2interior = data.interior;
+            this.panel2both = data.both;
+            this.panel2null = data.empty;
+            console.log('Chart Data',data);
+
+          });
+        });
+
+      }
+
+  });
   }
 
 

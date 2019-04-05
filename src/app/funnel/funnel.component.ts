@@ -11,11 +11,7 @@ import { DashboardService } from 'services/DashboardService/dashboard.service';
 })
 export class FunnelComponent implements OnInit {
 
-  public model = [{
-    stat: 'Body Sherds ',
-    count: 434823,
-    color: '#0e5a7e'
-  }, {
+  public model = [ {
     stat: 'Rim Tstc',
     count: 356854,
     color: '#166f99'
@@ -37,40 +33,40 @@ export class FunnelComponent implements OnInit {
     public _materialCardService: MaterialcardService,
     private _fs: FiltersService,
     private dashService: DashboardService) {
-    // this.runQueries();
-    this.runDashQueries();
+    this.runQueries();
+    // this.runDashQueries();
   }
   ngOnInit() {
-    // this.runQueries();
-    this.runDashQueries();
+    this.runQueries();
+    // this.runDashQueries();
 
   }
-  runDashQueries(): any {
-    this._materialCardService.panel3IsCount.subscribe(res => {
-      if (res === true) {
-        this.dashService.getElephantineCountTypeProportions().subscribe(data => {
-          this.model = data.map(item => {
-            return {
-              stat: item.stat,
-              count: item.count / 100,
-              color: item.color
-            }
-          })
-        });
-      } else {
-        this.dashService.getElephantineWeightTypeProportions().subscribe(data => {
-          this.model = data.map(item => {
-            return {
-              stat: item.stat,
-              count: item.count / 100,
-              color: item.color
-            }
-          })
-        });
+  // runDashQueries(): any {
+  //   this._materialCardService.panel3IsCount.subscribe(res => {
+  //     if (res === true) {
+  //       this.dashService.getElephantineCountTypeProportions().subscribe(data => {
+  //         this.model = data.map(item => {
+  //           return {
+  //             stat: item.stat,
+  //             count: item.count / 100,
+  //             color: item.color
+  //           }
+  //         })
+  //       });
+  //     } else {
+  //       this.dashService.getElephantineWeightTypeProportions().subscribe(data => {
+  //         this.model = data.map(item => {
+  //           return {
+  //             stat: item.stat,
+  //             count: item.count / 100,
+  //             color: item.color
+  //           }
+  //         })
+  //       });
 
-      }
-    });
-  }
+  //     }
+  //   });
+  // }
 
   runQueries(): void {
     this._materialCardService.panel3IsCount.subscribe(res => {
@@ -80,12 +76,12 @@ export class FunnelComponent implements OnInit {
         this.getWeightPercentType();
       }
     });
-    console.log(this.model);
   }
   getTotalPercentType(): void {
-    this._fs.LocationFilterValues.subscribe(item => {
+    this._fs.EleFilterValues.subscribe(item => {
+      // console.log('filters being submitted',item);
       if (item.length > 0) {
-        this._ds.getTotalPercentType(item).subscribe(data => {
+        this.dashService.getElephantineCountTypeProportions(item).subscribe(data => {
           this.model = data.map(item => {
             return {
               stat: item.stat,
@@ -93,11 +89,14 @@ export class FunnelComponent implements OnInit {
               color: item.color
             }
           })
+          // console.log('ELE Type Count: ', this.model);
+          
         });
       } else {
-        this._fs.DefaultFilterArray.subscribe(item => {
 
-          this._ds.getTotalPercentType(item).subscribe(data => {
+        this._fs.DefaultEleLocusNumbers.subscribe(item => {
+      // console.log('filters being submitted',item);
+          this.dashService.getElephantineCountTypeProportions(item).subscribe(data => {
             this.model = data.map(item => {
               return {
                 stat: item.stat,
@@ -105,18 +104,24 @@ export class FunnelComponent implements OnInit {
                 color: item.color
               }
             })
+            // console.log('ELE Type Count: ', this.model);
+
           });
         });
 
       }
-
-    })
+    // this.dashService.getKHPPFabricTypeProportions().subscribe(data => {
+    //   console.log('KHPP Fabrics', data);
+    //   this.chartdata = data;
+    // })
+  });
 
   }
   getWeightPercentType(): void {
-    this._fs.LocationFilterValues.subscribe(item => {
+    this._fs.EleFilterValues.subscribe(item => {
+      // console.log('filters being submitted',item);
       if (item.length > 0) {
-        this._ds.getWeightPercentType(item).subscribe(data => {
+        this.dashService.getElephantineWeightTypeProportions(item).subscribe(data => {
           this.model = data.map(item => {
             return {
               stat: item.stat,
@@ -124,11 +129,13 @@ export class FunnelComponent implements OnInit {
               color: item.color
             }
           })
+          // console.log('ELE Type Weight: ', this.model);
         });
       } else {
-        this._fs.DefaultFilterArray.subscribe(item => {
 
-          this._ds.getWeightPercentType(item).subscribe(data => {
+        this._fs.DefaultEleLocusNumbers.subscribe(item => {
+      // console.log('filters being submitted',item);
+          this.dashService.getElephantineWeightTypeProportions(item).subscribe(data => {
             this.model = data.map(item => {
               return {
                 stat: item.stat,
@@ -136,11 +143,17 @@ export class FunnelComponent implements OnInit {
                 color: item.color
               }
             })
+            // console.log('ELE Type Weight: ', this.model);
+
           });
         });
 
       }
+    // this.dashService.getKHPPFabricTypeProportions().subscribe(data => {
+    //   console.log('KHPP Fabrics', data);
+    //   this.chartdata = data;
+    // })
+  });
 
-    })
   }
 }

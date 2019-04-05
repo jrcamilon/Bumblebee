@@ -3,6 +3,8 @@ import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 import { LegendItem, ChartType } from '../lbd/lbd-chart/lbd-chart.component';
 import * as Chartist from 'chartist';
 import { DashboardService } from 'services/DashboardService/dashboard.service';
+import { FiltersService } from 'services/FilterService/Filters.service';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -11,11 +13,14 @@ import { DashboardService } from 'services/DashboardService/dashboard.service';
 })
 export class DashboardComponent implements OnInit {
 
+
+
   public panel1Data: any[] = [];
   public data: any[];
   constructor(
+    private filterService: FiltersService
   ) {
-
+    
 
   }
 

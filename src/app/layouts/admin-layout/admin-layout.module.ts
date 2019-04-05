@@ -94,6 +94,8 @@ import { SplitterPaneRowComponent } from 'app/maps/components/splitter-pane-row/
 import { RednotebookFormComponent } from 'app/processing/components/rednotebook-form/rednotebook-form.component';
 import { KhppBlackenedChartComponent } from 'app/dashboard/visualizations/KhppBlackenedChart/khpp-blackened-chart/khpp-blackened-chart.component';
 import { FabricComparisonChartComponent } from 'app/dashboard/visualizations/FabricComparison/fabric-comparison-chart/fabric-comparison-chart.component';
+
+import { DashFilterBarComponent } from 'app/dashboard/filterbar/filterbar.component';
 // import { KhppFabricRadarComponent } from 'app/dashboard/visualizations/KhppFabricRadar/khpp-fabric-radar/khpp-fabric-radar.component';
 
 @NgModule({
@@ -190,7 +192,7 @@ import { FabricComparisonChartComponent } from 'app/dashboard/visualizations/Fab
     KhppFabricRadarComponent,
     KhppBlackenedChartComponent,
     FabricComparisonChartComponent,
-
+    DashFilterBarComponent
 
 
   ],

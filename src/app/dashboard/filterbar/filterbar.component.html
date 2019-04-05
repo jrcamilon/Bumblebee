@@ -1,0 +1,14 @@
+<div class="filterBarContainer">
+  <!-- <kendo-multiselect
+class="kmulti"
+        [data]="listItems"
+        [(ngModel)]="value"
+        [textField]="'text'"
+        [valueField]="'value'"
+        (valueChange)="sayHello($event)"
+      ></kendo-multiselect>   -->
+  <kendo-multiselect class="kmulti" [data]="defaultLocus" [(ngModel)]="eleLocusVals"   [valueField]="'locusnum'"  [textField]="'locusnum'" (valueChange)="changeLocus($event)">
+  </kendo-multiselect>
+  <kendo-multiselect class="kmulti" [data]="defaultTags" [(ngModel)]="khppTagVals" [textField]="'tagNumber'"
+    [valueField]="'tagNumber'" (valueChange)="changeTags($event)"></kendo-multiselect>
+</div>

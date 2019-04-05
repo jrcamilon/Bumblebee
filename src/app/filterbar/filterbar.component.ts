@@ -72,7 +72,7 @@ export class FilterbarComponent {
     });
   }
   public sayHello(value: any): void {
-    console.log(value);
+    // console.log(value);
     this.fs.LocationFilterValues.next(value);
     // this.fs.DefaultFilterArray.subscribe(item=>{
     //   this.fs.LocationFilterValues.next(item);

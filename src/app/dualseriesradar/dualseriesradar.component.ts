@@ -12,32 +12,72 @@ export class DualseriesradarComponent implements OnInit {
   public chartdata = [];
 
   constructor(private _ds: DataService, private _fs: FiltersService, private dashService: DashboardService) {
+    this.getTotalsForFabric();
+
+
+
 
   }
   ngOnInit() {
     // this.getCountWeightPerFabric();
-    this.getTotalsForFabric();
+
   }
   getTotalsForFabric(): any {
-    this.dashService.getElephantineFabricProportions().subscribe(data => {
-      this.chartdata = data;
-    })
-  }
-  getCountWeightPerFabric(): void {
-    this._fs.LocationFilterValues.subscribe(item => {
+    this._fs.EleFilterValues.subscribe(item => {
+      //console.loge.log('filters being submitted',item);
       if (item.length > 0) {
-        this._ds.getTotalWeightCountPerFabric(item).subscribe(data => {
+        console.log('Submitting value filters to api')
+        this.dashService.getElephantineFabricProportions(item).subscribe(data => {
           this.chartdata = data;
+          //console.loge.log('Chart Data',data);
         });
       } else {
-        this._fs.DefaultFilterArray.subscribe(item => {
-          this._ds.getTotalWeightCountPerFabric(item).subscribe(data => {
-            this.chartdata = data;
+
+        this._fs.DefaultEleLocusNumbers.subscribe(res => {
+
+          if(res.length>0){
+            this.dashService.getElephantineFabricProportions(res).subscribe(data => {
+              this.chartdata = data;
+              console.log('Chart Data', data);
+
+            });
+          }
+           
           });
-        });
+
 
       }
+      // this.dashService.getKHPPFabricTypeProportions().subscribe(data => {
+      //   //consolelog('KHPP Fabrics', data);
+      //   this.chartdata = data;
+      // })
     });
-
   }
+  // getCountWeightPerFabric(): void {
+  //   this._fs.EleFilterValues.subscribe(item => {
+  //     //console.loge.log('filters being submitted',item);
+  //     if (item.length > 0) {
+  //       this.dashService.getElephantineWeightTypeProportions(item).subscribe(data => {
+  //         this.chartdata = data;
+  //         //console.loge.log('Chart Data',data);
+  //       });
+  //     } else {
+
+  //       this._fs.DefaultEleLocusNumbers.subscribe(item => {
+  //     //console.loge.log('filters being submitted',item);
+  //         this.dashService.getElephantineWeightTypeProportions(item).subscribe(data => {
+  //           this.chartdata = data;
+  //           //console.loge.log('Chart Data',data);
+
+  //         });
+  //       });
+
+  //     }
+  //   // this.dashService.getKHPPFabricTypeProportions().subscribe(data => {
+  //   //   //console.loge.log('KHPP Fabrics', data);
+  //   //   this.chartdata = data;
+  //   // })
+  // });
+
+  // }
 }

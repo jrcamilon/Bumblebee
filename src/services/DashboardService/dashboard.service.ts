@@ -15,8 +15,8 @@ export class DashboardService {
   constructor(private _http: Http) { }
 
   // Get Elephantine Count Blackened Data
-  public getElephantineCountBlackenedProportions(): Observable<any> {
-    return this._http.get(`${this.http}${this.domain}${this.port}/dash/ele/count/blackened`)
+  public getElephantineCountBlackenedProportions(_body): Observable<any> {
+    return this._http.post(`${this.http}${this.domain}${this.port}/dash/ele/count/blackened`, _body, { headers: this.headers })
       .map((response: Response) => {
         const tmpData = response.json();
         return tmpData;
@@ -24,8 +24,8 @@ export class DashboardService {
 
   }
   // Get Elephantine Weight Blackened Data
-  public getElephantineWeightBlackenedProportions(): Observable<any> {
-    return this._http.get(`${this.http}${this.domain}${this.port}/dash/ele/weight/blackened`)
+  public getElephantineWeightBlackenedProportions(_body): Observable<any> {
+    return this._http.post(`${this.http}${this.domain}${this.port}/dash/ele/weight/blackened`, _body, { headers: this.headers })
       .map((response: Response) => {
         const tmpData = response.json();
         return tmpData;
@@ -33,8 +33,8 @@ export class DashboardService {
 
   }
   // Get Elephantine  Fabric Data
-  public getElephantineFabricProportions(): Observable<any> {
-    return this._http.get(`${this.http}${this.domain}${this.port}/dash/ele/fabric`)
+  public getElephantineFabricProportions(_body): Observable<any> {
+    return this._http.post(`${this.http}${this.domain}${this.port}/dash/ele/fabric`, _body, { headers: this.headers })
       .map((response: Response) => {
         const tmpData = response.json();
         return tmpData;
@@ -42,8 +42,8 @@ export class DashboardService {
 
   }
   // Get Elephantine Count Fabric Data
-  public getElephantineCountTypeProportions(): Observable<any> {
-    return this._http.get(`${this.http}${this.domain}${this.port}/dash/ele/count/type`)
+  public getElephantineCountTypeProportions(_body): Observable<any> {
+    return this._http.post(`${this.http}${this.domain}${this.port}/dash/ele/count/type`, _body, { headers: this.headers })
       .map((response: Response) => {
         const tmpData = response.json();
         return tmpData;
@@ -51,8 +51,8 @@ export class DashboardService {
 
   }
   // Get Elephantine Weight Fabric Data
-  public getElephantineWeightTypeProportions(): Observable<any> {
-    return this._http.get(`${this.http}${this.domain}${this.port}/dash/ele/weight/type`)
+  public getElephantineWeightTypeProportions(_body): Observable<any> {
+    return this._http.post(`${this.http}${this.domain}${this.port}/dash/ele/weight/type`, _body, { headers: this.headers })
       .map((response: Response) => {
         const tmpData = response.json();
         return tmpData;
@@ -61,8 +61,18 @@ export class DashboardService {
   }
 
   // Get KHPP Weight Fabric Data
-  public getKHPPFabricTypeProportions(): Observable<any> {
-    return this._http.get(`${this.http}${this.domain}${this.port}/dash/khpp/fabric`)
+  public getKHPPFabricTypeProportions(_body): Observable<any> {
+    return this._http.post(`${this.http}${this.domain}${this.port}/dash/khpp/fabric`, _body, { headers: this.headers })
+      .map((response: Response) => {
+        const tmpData = response.json();
+        return tmpData;
+      })
+
+  }
+ 
+  // Get KHPP Weight Fabric Data
+  public getKHPPWeightBlackenedProportions(_body): Observable<any> {
+    return this._http.post(`${this.http}${this.domain}${this.port}/dash/khpp/weight/blackened`, _body, { headers: this.headers })
       .map((response: Response) => {
         const tmpData = response.json();
         return tmpData;
@@ -70,17 +80,8 @@ export class DashboardService {
 
   }
   // Get KHPP Weight Fabric Data
-  public getKHPPWeightBlackenedProportions(): Observable<any> {
-    return this._http.get(`${this.http}${this.domain}${this.port}/dash/khpp/weight/blackened`)
-      .map((response: Response) => {
-        const tmpData = response.json();
-        return tmpData;
-      })
-
-  }
-  // Get KHPP Weight Fabric Data
-  public getKHPPCountBlackenedProportions(): Observable<any> {
-    return this._http.get(`${this.http}${this.domain}${this.port}/dash/khpp/count/blackened`)
+  public getKHPPCountBlackenedProportions(_body): Observable<any> {
+    return this._http.post(`${this.http}${this.domain}${this.port}/dash/khpp/count/blackened`, _body, { headers: this.headers })
       .map((response: Response) => {
         const tmpData = response.json();
         return tmpData;
@@ -88,8 +89,19 @@ export class DashboardService {
 
   }
   // Get KHPP Ele Comparing Fabric Data
-  public getKHPPEleFabricProportions(): Observable<any> {
-    return this._http.get(`${this.http}${this.domain}${this.port}/dash/compare/fabric`)
+  public getKHPPEleFabricProportions(_body): Observable<any> {
+    return this._http.post(`${this.http}${this.domain}${this.port}/dash/compare/fabric`, _body, { headers: this.headers })
+      .map((response: Response) => {
+        const tmpData = response.json();
+        return tmpData;
+      })
+
+  }
+
+  //Filters Locus and Tag
+  // Get KHPP Ele Comparing Fabric Data
+  public getDashboardFilters(): Observable<any> {
+    return this._http.get(`${this.http}${this.domain}${this.port}/locusnumbers`)
       .map((response: Response) => {
         const tmpData = response.json();
         return tmpData;

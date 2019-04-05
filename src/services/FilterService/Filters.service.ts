@@ -1,5 +1,7 @@
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { DashboardComponent } from 'app/dashboard/dashboard.component';
+import { DashboardService } from 'services/DashboardService/dashboard.service';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +34,23 @@ export class FiltersService {
   ])
   SiteFilterValue = new BehaviorSubject<any>([])
 
-  constructor() { }
+
+  DefaultEleLocusNumbers = new BehaviorSubject<any>([]);
+  EleLocusNumberArray = new BehaviorSubject<any>([]);
+  EleFilterValues = new BehaviorSubject<any>([])
+  KhppFilterValues = new BehaviorSubject<any>([])
+  DefaultKhppTagNumbers = new BehaviorSubject<any>([]);
+  constructor(private dashService: DashboardService) {
+        this.dashService.getDashboardFilters().subscribe(item => {
+          this.DefaultEleLocusNumbers.next(item.ele);
+          this.DefaultKhppTagNumbers.next(item.khpp);
+          this.EleLocusNumberArray.next(item.ele);
+          
+    
+        })
+    
+
+  }
 
 
 }
