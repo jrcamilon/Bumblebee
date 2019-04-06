@@ -18,9 +18,17 @@ export class DashboardComponent implements OnInit {
   public panel1Data: any[] = [];
   public data: any[];
   constructor(
-    private filterService: FiltersService
+    private filterService: FiltersService,
+    private dashService: DashboardService
   ) {
-    
+    this.dashService.getDashboardFilters().subscribe(item => {
+      this.filterService.DefaultEleLocusNumbers.next(item.ele);
+      this.filterService.DefaultKhppTagNumbers.next(item.khpp);
+      this.filterService.EleLocusNumberArray.next(item.ele);
+  
+      
+
+    })
 
   }
 

@@ -36,15 +36,15 @@ export class KhppBlackenedChartComponent implements OnInit {
   }];
   constructor(
     public _materialCardService: MaterialcardService,
-    public dashService: DashboardService,
-    public _fs: FiltersService) {
+    private dashService: DashboardService,
+    private _fs: FiltersService) {
     // this.runQueries();
-    this.runDashQueries();
+    // this.runDashQueries();
 
   }
   ngOnInit() {
     // this.runQueries();
-    // this.runDashQueries();
+    this.runDashQueries();
 
 
   }
@@ -61,61 +61,66 @@ export class KhppBlackenedChartComponent implements OnInit {
   }
   getDashWeightPercentType(): any {
     this._fs.KhppFilterValues.subscribe(item => {
-      //console.loge.log('filters being submitted',item);
       if (item.length > 0) {
+      console.log('filters being submitted', item);
         this.dashService.getKHPPWeightBlackenedProportions(item).subscribe(data => {
           this.panel2exterior = data.exterior;
-      this.panel2interior = data.interior;
-      this.panel2both = data.both;
-      this.panel2null = data.empty;
-          //console.loge.log('Chart Data',data);
-        });
-      } else {
-
-        this._fs.DefaultKhppTagNumbers.subscribe(item => {
-      //console.loge.log('filters being submitted',item);
-          this.dashService.getKHPPWeightBlackenedProportions(item).subscribe(data => {
-            this.panel2exterior = data.exterior;
-            this.panel2interior = data.interior;
-            this.panel2both = data.both;
-            this.panel2null = data.empty;
-            //console.loge.log('Chart Data',data);
-
-          });
-        });
-
-      }
-
-  });
-  }
-  getDashTotalPercentType(): any {
-    this._fs.KhppFilterValues.subscribe(item => {
-      //console.loge.log('filters being submitted',item);
-      if (item.length > 0) {
-        this.dashService.getKHPPCountBlackenedProportions(item).subscribe(data => {
-          this.panel2exterior = data.exterior;
-      this.panel2interior = data.interior;
-      this.panel2both = data.both;
-      this.panel2null = data.empty;
-          console.log('Chart Data',data);
+          this.panel2interior = data.interior;
+          this.panel2both = data.both;
+          this.panel2null = data.empty;
+          console.log('Chart Data', data);
         });
       } else {
 
         this._fs.DefaultKhppTagNumbers.subscribe(res => {
-      //console.loge.log('filters being submitted',item);
-          this.dashService.getKHPPCountBlackenedProportions(res).subscribe(data => {
-            this.panel2exterior = data.exterior;
-            this.panel2interior = data.interior;
-            this.panel2both = data.both;
-            this.panel2null = data.empty;
-            console.log('Chart Data',data);
+          if (res.length > 0) {
+          console.log('filters being submitted', res);
+            this.dashService.getKHPPWeightBlackenedProportions(res).subscribe(data => {
+              this.panel2exterior = data.exterior;
+              this.panel2interior = data.interior;
+              this.panel2both = data.both;
+              this.panel2null = data.empty;
 
-          });
+            });
+          }
+
         });
 
       }
 
-  });
+    });
+  }
+  getDashTotalPercentType(): any {
+    this._fs.KhppFilterValues.subscribe(item => {
+      if (item.length > 0) {
+        console.log('filters being submitted', item);
+        this.dashService.getKHPPCountBlackenedProportions(item).subscribe(data => {
+          this.panel2exterior = data.exterior;
+          this.panel2interior = data.interior;
+          this.panel2both = data.both;
+          this.panel2null = data.empty;
+          console.log('Chart Data', data);
+        });
+      } else {
+
+        this._fs.DefaultKhppTagNumbers.subscribe(res => {
+          if (res.length > 0) {
+            console.log('filters being submitted', res);
+            this.dashService.getKHPPCountBlackenedProportions(res).subscribe(data => {
+              this.panel2exterior = data.exterior;
+              this.panel2interior = data.interior;
+              this.panel2both = data.both;
+              this.panel2null = data.empty;
+              console.log('Chart Data', data);
+
+            });
+          }
+
+        });
+
+      }
+
+    });
   }
 
 

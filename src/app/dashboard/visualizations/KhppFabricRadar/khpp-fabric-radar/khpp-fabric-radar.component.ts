@@ -13,6 +13,7 @@ export class KhppFabricRadarComponent implements OnInit {
   public chartdata = [];
 
   constructor(private dashService: DashboardService, private filterService: FiltersService) {
+    // this.getTotalsForFabric();
 
   }
   ngOnInit() {
@@ -21,21 +22,26 @@ export class KhppFabricRadarComponent implements OnInit {
   }
   getTotalsForFabric(): any {
     this.filterService.KhppFilterValues.subscribe(item => {
-      //console.loge.log('filters being submitted',item);
       if (item.length > 0) {
+      console.log('filters being submitted',item);
         this.dashService.getKHPPFabricTypeProportions(item).subscribe(data => {
+
           this.chartdata = data;
-          //console.loge.log('Chart Data',data);
+          console.log('Chart Data',data);
         });
       } else {
 
-        this.filterService.DefaultKhppTagNumbers.subscribe(item => {
-      //console.loge.log('filters being submitted',item);
-          this.dashService.getKHPPFabricTypeProportions(item).subscribe(data => {
-            this.chartdata = data;
-            //console.loge.log('Chart Data',data);
+        this.filterService.DefaultKhppTagNumbers.subscribe(res => {
+      if(res.length>0){
+      console.log('filters being submitted',item);
 
-          });
+        this.dashService.getKHPPFabricTypeProportions(res).subscribe(data => {
+          this.chartdata = data;
+          console.log('Chart Data',data);
+
+        });
+      }
+          
         });
 
       }

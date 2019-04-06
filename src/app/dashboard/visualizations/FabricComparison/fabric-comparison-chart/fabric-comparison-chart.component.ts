@@ -16,14 +16,14 @@ export class FabricComparisonChartComponent implements OnInit {
   public creamSlipOut;
   public untreated;
   constructor(private dashService: DashboardService, private filterService: FiltersService) {
-    this.runDashQueries();
+    // this.runDashQueries();
 
   }
 
   ngOnInit() {
     // this.runDashQueries();
     this.runDashQueries();
-    
+
   }
   runDashQueries(): any {
     this.filterService.EleFilterValues.subscribe(eleFilters => {
@@ -31,49 +31,21 @@ export class FabricComparisonChartComponent implements OnInit {
         this.filterService.KhppFilterValues.subscribe(khppFilters => {
           if (khppFilters.length > 0) {
             let filters = [...eleFilters, ...khppFilters];
+            console.log('Submitting chosen values for both khpp and ele', filters);
             this.dashService.getKHPPEleFabricProportions(filters).subscribe(data => {
               console.log('Response for comparison sending submitted filters', data);
-                this.rSlipIn = data.rSlipIn;
-                  this.rSlipOut = data.rSlipOut;
-                  this.rSlipBoth = data.rSlipBoth;
-                  this.creamSlipIn = data.creamSlipIn;
-                  this.creamSlipOut = data.creamSlipOut;
-                  this.untreated = data.untreated;
+              this.rSlipIn = data.rSlipIn;
+              this.rSlipOut = data.rSlipOut;
+              this.rSlipBoth = data.rSlipBoth;
+              this.creamSlipIn = data.creamSlipIn;
+              this.creamSlipOut = data.creamSlipOut;
+              this.untreated = data.untreated;
             })
           } else {
             this.filterService.DefaultKhppTagNumbers.subscribe(tags => {
-              let filters = [...tags, ...eleFilters];
-              this.dashService.getKHPPEleFabricProportions(filters).subscribe(data => {
-                console.log('Response for cpmaison sending all tags', data);
-                this.rSlipIn = data.rSlipIn;
-                  this.rSlipOut = data.rSlipOut;
-                  this.rSlipBoth = data.rSlipBoth;
-                  this.creamSlipIn = data.creamSlipIn;
-                  this.creamSlipOut = data.creamSlipOut;
-                  this.untreated = data.untreated;
-              })
-            })
-          }
-        })
-      } else {
-        //Submit with all ele filters
-        this.filterService.DefaultEleLocusNumbers.subscribe(locus => {
-          this.filterService.KhppFilterValues.subscribe(khpp => {
-            if (khpp.length > 0) {
-              let filters = [...locus, ...khpp];
-              console.log('submitting filters to comparison',filters);
-              this.dashService.getKHPPEleFabricProportions(filters).subscribe(data => {
-                console.log('Response for cpmaison sending all tags', data);
-                this.rSlipIn = data.rSlipIn;
-                  this.rSlipOut = data.rSlipOut;
-                  this.rSlipBoth = data.rSlipBoth;
-                  this.creamSlipIn = data.creamSlipIn;
-                  this.creamSlipOut = data.creamSlipOut;
-                  this.untreated = data.untreated;
-              })
-            } else {
-              this.filterService.DefaultKhppTagNumbers.subscribe(tags => {
-                let filters = [...locus, ...tags];
+              if (tags.length > 0) {
+                let filters = [...tags, ...eleFilters];
+                console.log('Submitting chosen values for ele and default khpp', filters);
                 this.dashService.getKHPPEleFabricProportions(filters).subscribe(data => {
                   console.log('Response for cpmaison sending all tags', data);
                   this.rSlipIn = data.rSlipIn;
@@ -83,6 +55,44 @@ export class FabricComparisonChartComponent implements OnInit {
                   this.creamSlipOut = data.creamSlipOut;
                   this.untreated = data.untreated;
                 })
+              }
+
+            })
+          }
+        })
+      } else {
+        //Submit with all ele filters
+        this.filterService.DefaultEleLocusNumbers.subscribe(locus => {
+          this.filterService.KhppFilterValues.subscribe(khpp => {
+            if (khpp.length > 0) {
+              let filters = [...locus, ...khpp];
+              console.log('submitting filters for default ele and value khpp', filters);
+              this.dashService.getKHPPEleFabricProportions(filters).subscribe(data => {
+                console.log('Response for cpmaison sending all tags', data);
+                this.rSlipIn = data.rSlipIn;
+                this.rSlipOut = data.rSlipOut;
+                this.rSlipBoth = data.rSlipBoth;
+                this.creamSlipIn = data.creamSlipIn;
+                this.creamSlipOut = data.creamSlipOut;
+                this.untreated = data.untreated;
+              })
+            } else {
+              this.filterService.DefaultKhppTagNumbers.subscribe(tags => {
+                if (tags.length > 0) {
+                  let filters = [...locus, ...tags];
+                  console.log('submitting filters for default ele and khpp', filters);
+
+                  this.dashService.getKHPPEleFabricProportions(filters).subscribe(data => {
+                    console.log('Response for cpmaison sending all tags', data);
+                    this.rSlipIn = data.rSlipIn;
+                    this.rSlipOut = data.rSlipOut;
+                    this.rSlipBoth = data.rSlipBoth;
+                    this.creamSlipIn = data.creamSlipIn;
+                    this.creamSlipOut = data.creamSlipOut;
+                    this.untreated = data.untreated;
+                  })
+                }
+
               })
             }
           })

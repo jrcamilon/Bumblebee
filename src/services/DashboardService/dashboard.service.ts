@@ -64,6 +64,7 @@ export class DashboardService {
   public getKHPPFabricTypeProportions(_body): Observable<any> {
     return this._http.post(`${this.http}${this.domain}${this.port}/dash/khpp/fabric`, _body, { headers: this.headers })
       .map((response: Response) => {
+        console.log(response);
         const tmpData = response.json();
         return tmpData;
       })

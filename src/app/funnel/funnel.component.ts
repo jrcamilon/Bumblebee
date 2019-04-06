@@ -11,7 +11,7 @@ import { DashboardService } from 'services/DashboardService/dashboard.service';
 })
 export class FunnelComponent implements OnInit {
 
-  public model = [ {
+  public model = [{
     stat: 'Rim Tstc',
     count: 356854,
     color: '#166f99'
@@ -33,12 +33,13 @@ export class FunnelComponent implements OnInit {
     public _materialCardService: MaterialcardService,
     private _fs: FiltersService,
     private dashService: DashboardService) {
-    this.runQueries();
     // this.runDashQueries();
   }
   ngOnInit() {
-    this.runQueries();
+    // this.runQueries();
     // this.runDashQueries();
+    this.runQueries();
+
 
   }
   // runDashQueries(): any {
@@ -79,8 +80,9 @@ export class FunnelComponent implements OnInit {
   }
   getTotalPercentType(): void {
     this._fs.EleFilterValues.subscribe(item => {
-      // console.log('filters being submitted',item);
       if (item.length > 0) {
+        console.log('filters being submitted', item);
+
         this.dashService.getElephantineCountTypeProportions(item).subscribe(data => {
           this.model = data.map(item => {
             return {
@@ -90,37 +92,41 @@ export class FunnelComponent implements OnInit {
             }
           })
           // console.log('ELE Type Count: ', this.model);
-          
+
         });
       } else {
 
-        this._fs.DefaultEleLocusNumbers.subscribe(item => {
-      // console.log('filters being submitted',item);
-          this.dashService.getElephantineCountTypeProportions(item).subscribe(data => {
-            this.model = data.map(item => {
-              return {
-                stat: item.stat,
-                count: item.count / 100,
-                color: item.color
-              }
-            })
-            // console.log('ELE Type Count: ', this.model);
+        this._fs.DefaultEleLocusNumbers.subscribe(res => {
+          if (res.length > 0) {
+            console.log('filters being submitted', res);
 
-          });
+            this.dashService.getElephantineCountTypeProportions(res).subscribe(data => {
+              this.model = data.map(eles => {
+                return {
+                  stat: eles.stat,
+                  count: eles.count / 100,
+                  color: eles.color
+                }
+              })
+              // console.log('ELE Type Count: ', this.model);
+
+            });
+          }
+
         });
 
       }
-    // this.dashService.getKHPPFabricTypeProportions().subscribe(data => {
-    //   console.log('KHPP Fabrics', data);
-    //   this.chartdata = data;
-    // })
-  });
+      // this.dashService.getKHPPFabricTypeProportions().subscribe(data => {
+      //   console.log('KHPP Fabrics', data);
+      //   this.chartdata = data;
+      // })
+    });
 
   }
   getWeightPercentType(): void {
     this._fs.EleFilterValues.subscribe(item => {
-      // console.log('filters being submitted',item);
       if (item.length > 0) {
+        console.log('filters being submitted', item);
         this.dashService.getElephantineWeightTypeProportions(item).subscribe(data => {
           this.model = data.map(item => {
             return {
@@ -133,27 +139,30 @@ export class FunnelComponent implements OnInit {
         });
       } else {
 
-        this._fs.DefaultEleLocusNumbers.subscribe(item => {
-      // console.log('filters being submitted',item);
-          this.dashService.getElephantineWeightTypeProportions(item).subscribe(data => {
-            this.model = data.map(item => {
-              return {
-                stat: item.stat,
-                count: item.count / 100,
-                color: item.color
-              }
-            })
-            // console.log('ELE Type Weight: ', this.model);
+        this._fs.DefaultEleLocusNumbers.subscribe(res => {
+          // console.log('filters being submitted',item);
+          if (res.length > 0) {
+            this.dashService.getElephantineWeightTypeProportions(res).subscribe(data => {
+              this.model = data.map(eles => {
+                return {
+                  stat: eles.stat,
+                  count: eles.count / 100,
+                  color: eles.color
+                }
+              })
+              // console.log('ELE Type Weight: ', this.model);
 
-          });
+            });
+          }
+
         });
 
       }
-    // this.dashService.getKHPPFabricTypeProportions().subscribe(data => {
-    //   console.log('KHPP Fabrics', data);
-    //   this.chartdata = data;
-    // })
-  });
+      // this.dashService.getKHPPFabricTypeProportions().subscribe(data => {
+      //   console.log('KHPP Fabrics', data);
+      //   this.chartdata = data;
+      // })
+    });
 
   }
 }

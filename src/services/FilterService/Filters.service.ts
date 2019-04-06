@@ -41,13 +41,7 @@ export class FiltersService {
   KhppFilterValues = new BehaviorSubject<any>([])
   DefaultKhppTagNumbers = new BehaviorSubject<any>([]);
   constructor(private dashService: DashboardService) {
-        this.dashService.getDashboardFilters().subscribe(item => {
-          this.DefaultEleLocusNumbers.next(item.ele);
-          this.DefaultKhppTagNumbers.next(item.khpp);
-          this.EleLocusNumberArray.next(item.ele);
-          
-    
-        })
+        
     
 
   }

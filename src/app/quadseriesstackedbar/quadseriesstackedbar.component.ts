@@ -40,7 +40,7 @@ export class QuadseriesstackedbarComponent implements OnInit {
     public _fs: FiltersService,
     public dashService: DashboardService) {
     // this.runQueries();
-    this.runDashQueries();
+    // this.runDashQueries();
   }
   ngOnInit() {
     // this.runQueries();
@@ -59,27 +59,28 @@ export class QuadseriesstackedbarComponent implements OnInit {
   }
   getDashWeightPercentType(): any {
     this._fs.EleFilterValues.subscribe(item => {
-      //console.loge.log('filters being submitted', item);
       if (item.length > 0) {
+      console.log('filters being submitted', item);
         this.dashService.getElephantineWeightBlackenedProportions(item).subscribe(data => {
           this.panel2exterior = data.exterior;
           this.panel2interior = data.interior;
           this.panel2both = data.both;
           this.panel2null = data.empty;
-          //console.loge.log('Chart Data', data);
+          console.log('Chart Data', data);
         });
       } else {
 
-        this._fs.DefaultEleLocusNumbers.subscribe(item => {
+        this._fs.DefaultEleLocusNumbers.subscribe(res => {
           // //console.loge.log('filters being submitted', item);
-          this.dashService.getElephantineWeightBlackenedProportions(item).subscribe(data => {
-            this.panel2exterior = data.exterior;
-            this.panel2interior = data.interior;
-            this.panel2both = data.both;
-            this.panel2null = data.empty;
-            //console.loge.log('Chart Data', data);
-
-          });
+          if(res.length>0){
+            this.dashService.getElephantineWeightBlackenedProportions(res).subscribe(data => {
+              this.panel2exterior = data.exterior;
+              this.panel2interior = data.interior;
+              this.panel2both = data.both;
+              this.panel2null = data.empty;
+              //console.loge.log('Chart Data', data);
+            });
+          }
         });
 
       }
@@ -102,9 +103,9 @@ export class QuadseriesstackedbarComponent implements OnInit {
         });
       } else {
 
-        this._fs.DefaultEleLocusNumbers.subscribe(item => {
+        this._fs.DefaultEleLocusNumbers.subscribe(res => {
           //console.loge.log('filters being submitted', item);
-          this.dashService.getElephantineCountBlackenedProportions(item).subscribe(data => {
+          this.dashService.getElephantineCountBlackenedProportions(res).subscribe(data => {
             this.panel2exterior = data.exterior;
             this.panel2interior = data.interior;
             this.panel2both = data.both;
