@@ -34,6 +34,10 @@ export class QuadseriesstackedbarComponent implements OnInit {
     count: 120392,
     color: '#3eaee2'
   }];
+
+  percentage = '20%'
+
+
   constructor(
     private _ds: DataService,
     public _materialCardService: MaterialcardService,
@@ -72,7 +76,7 @@ export class QuadseriesstackedbarComponent implements OnInit {
 
         this._fs.DefaultEleLocusNumbers.subscribe(res => {
           // //console.loge.log('filters being submitted', item);
-          if(res.length>0){
+          if(res.length > 0){
             this.dashService.getElephantineWeightBlackenedProportions(res).subscribe(data => {
               this.panel2exterior = data.exterior;
               this.panel2interior = data.interior;
@@ -132,7 +136,7 @@ export class QuadseriesstackedbarComponent implements OnInit {
     this._fs.LocationFilterValues.subscribe(item => {
       if (item.length > 0) {
         this._ds.getWeightPercentBlackened(item).subscribe(data => {
-
+  
           this.panel2exterior = data.exterior;
           this.panel2interior = data.interior;
           this.panel2both = data.both;
@@ -153,6 +157,11 @@ export class QuadseriesstackedbarComponent implements OnInit {
     })
 
   }
+
+  onSeriesOver(e: any) {
+    console.log(e);
+  }
+
   getTotalPercentType(): void {
     this._fs.LocationFilterValues.subscribe(item => {
       if (item.lenth > 0) {

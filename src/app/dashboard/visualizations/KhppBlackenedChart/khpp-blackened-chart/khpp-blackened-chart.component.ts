@@ -34,6 +34,7 @@ export class KhppBlackenedChartComponent implements OnInit {
     count: 120392,
     color: '#3eaee2'
   }];
+  percentage = '';
   constructor(
     public _materialCardService: MaterialcardService,
     private dashService: DashboardService,
@@ -123,6 +124,9 @@ export class KhppBlackenedChartComponent implements OnInit {
     });
   }
 
+  onSeriesOver(e: any) {
+    console.log(e);
+  }
 
 
 }

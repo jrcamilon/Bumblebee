@@ -1,4 +1,4 @@
-<kendo-chart>
+<kendo-chart (seriesHover)="onSeriesOver($event)">
   <kendo-chart-category-axis>
     <kendo-chart-category-axis-item [categories]="['Coarse','Medium', 'Fine']">
     </kendo-chart-category-axis-item>
@@ -15,7 +15,7 @@
   </kendo-chart-series>
   <kendo-chart-tooltip>
     <ng-template kendoChartSeriesTooltipTemplate let-category="category" format="0" let-value="value">
-      {{ value  }}
+     <h5> {{ value  }} - {{percentage}}</h5>
     </ng-template>
   </kendo-chart-tooltip>
 </kendo-chart>

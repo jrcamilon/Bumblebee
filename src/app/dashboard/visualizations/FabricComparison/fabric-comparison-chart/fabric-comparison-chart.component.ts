@@ -15,6 +15,7 @@ export class FabricComparisonChartComponent implements OnInit {
   public creamSlipIn;
   public creamSlipOut;
   public untreated;
+  percent = '';
   constructor(private dashService: DashboardService, private filterService: FiltersService) {
     // this.runDashQueries();
 
@@ -100,6 +101,8 @@ export class FabricComparisonChartComponent implements OnInit {
       }
     })
 
+
+
     // this.dashService.getKHPPEleFabricProportions().subscribe(data => {
     //   console.log('Comparison Data', data);
 
@@ -110,6 +113,10 @@ export class FabricComparisonChartComponent implements OnInit {
     //   this.creamSlipOut = data.creamSlipOut;
     //   this.untreated = data.untreated;
     // });
+  }
+
+  onSeriesOver(e: any) {
+    console.log(e);
   }
 
 }

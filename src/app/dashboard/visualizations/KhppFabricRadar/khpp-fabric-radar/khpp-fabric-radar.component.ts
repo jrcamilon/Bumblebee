@@ -11,6 +11,7 @@ import { FiltersService } from 'services/FilterService/Filters.service';
 export class KhppFabricRadarComponent implements OnInit {
 
   public chartdata = [];
+  percent = '';
 
   constructor(private dashService: DashboardService, private filterService: FiltersService) {
     // this.getTotalsForFabric();
@@ -50,6 +51,10 @@ export class KhppFabricRadarComponent implements OnInit {
     //   this.chartdata = data;
     // })
   });
+}
+
+onSeriesOver(e: any): void {
+  console.log(e);
 }
 
 
