@@ -1,14 +1,14 @@
 <kendo-chart>
   <kendo-chart-series>
       <kendo-chart-series-item type="funnel" [data]="model" field="count" categoryField="stat" colorField="color">
-          <kendo-chart-series-item-labels background="none" color="white" format="P0">
+          <kendo-chart-series-item-labels background="none" color="white" format="0">
           </kendo-chart-series-item-labels>
       </kendo-chart-series-item>
   </kendo-chart-series>
   <kendo-chart-tooltip>
-      <ng-template kendoChartSeriesTooltipTemplate let-category="category" format="P0" let-value="value">
+      <!-- <ng-template kendoChartSeriesTooltipTemplate let-category="category" format="P0" let-value="value">
           {{ value | percent }}
-      </ng-template>
+      </ng-template> -->
   </kendo-chart-tooltip>
   <kendo-chart-legend [visible]="true"></kendo-chart-legend>
 </kendo-chart>

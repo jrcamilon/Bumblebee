@@ -87,7 +87,7 @@ export class FunnelComponent implements OnInit {
           this.model = data.map(item => {
             return {
               stat: item.stat,
-              count: item.count / 100,
+              count: item.count ,
               color: item.color
             }
           })
@@ -104,7 +104,7 @@ export class FunnelComponent implements OnInit {
               this.model = data.map(eles => {
                 return {
                   stat: eles.stat,
-                  count: eles.count / 100,
+                  count: eles.count,
                   color: eles.color
                 }
               })
