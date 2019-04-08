@@ -10,6 +10,7 @@ import { DashboardService } from 'services/DashboardService/dashboard.service';
 })
 export class DualseriesradarComponent implements OnInit {
   public chartdata = [];
+  public percentage = '';
 
   constructor(private _ds: DataService, private _fs: FiltersService, private dashService: DashboardService) {
     // this.getTotalsForFabric();
@@ -82,4 +83,11 @@ export class DualseriesradarComponent implements OnInit {
   // });
 
   // }
+
+  onSeriesOver(e: any): void {
+    console.log(e);
+    const obj = this.chartdata.filter(item => {return item.type === e.category})
+
+    this.percentage = (e.field === 'weight') ?  String(Number(obj[0].weightPercent*100)) : String(obj[0].countPercent*100);
+  }
 }

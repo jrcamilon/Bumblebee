@@ -40,6 +40,7 @@ export class KhppBlackenedChartComponent implements OnInit {
     count: 120392,
     color: '#3eaee2'
   }];
+  percentage ;
   constructor(
     public _materialCardService: MaterialcardService,
     private dashService: DashboardService,
@@ -133,6 +134,45 @@ export class KhppBlackenedChartComponent implements OnInit {
     });
   }
 
+  setBlackenedToolTip(e, catIndex){
+    switch(e.series.index){
+      case 0:
+      this.percentage = this.panel2interiorTips[catIndex] *100;
+      break;
+      case 1: 
+      this.percentage = this.panel2exteriorTips[catIndex]*100;
+      break;
+      case 2: 
+      this.percentage = this.panel2nullTips[catIndex]*100;
+      break;
+  
+    }
+  }
+  onSeriesOver(e: any) {
+    console.log(e);
+    let catIndex;
+    let fireIndex;
+    switch(e.category){
+      case 'Coarse':
+      // array index = 1
+      catIndex = 0;
+      this.setBlackenedToolTip(e,catIndex);
+      break;
+      case 'Medium':
+      // array index = 2
+      catIndex = 1;
+      this.setBlackenedToolTip(e,catIndex);
+      break;
+      case 'Fine':
+      // array index = 3
+      catIndex = 2;
+      this.setBlackenedToolTip(e,catIndex);
 
+     
+    }
+
+   
+ 
+  }
 
 }

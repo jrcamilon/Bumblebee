@@ -3,7 +3,7 @@ import { Component, OnInit, Input, Output } from '@angular/core';
 import { DataService } from 'app/data.service';
 import { FiltersService } from 'services/FilterService/Filters.service';
 import { DashboardService } from 'services/DashboardService/dashboard.service';
-
+// import {_} from 'lodash';
 @Component({
   selector: 'app-funnel',
   templateUrl: './funnel.component.html',
@@ -14,20 +14,28 @@ export class FunnelComponent implements OnInit {
   public model = [{
     stat: 'Rim Tstc',
     count: 356854,
+    countPercent: 20,
     color: '#166f99'
   }, {
     stat: 'Hem Cups ',
     count: 280022,
+    countPercent: 20,
+
     color: '#2185b4'
   }, {
     stat: 'Flattened Base',
     count: 190374,
+    countPercent: 20,
+
     color: '#319fd2'
   }, {
     stat: 'Other',
     count: 120392,
+    countPercent: 20,
+
     color: '#3eaee2'
   }];
+  percent = '';
   constructor(
     private _ds: DataService,
     public _materialCardService: MaterialcardService,
@@ -87,7 +95,8 @@ export class FunnelComponent implements OnInit {
           this.model = data.map(item => {
             return {
               stat: item.stat,
-              count: item.count ,
+              count: item.count,
+              countPercent: item.countPercent * 100,
               color: item.color
             }
           })
@@ -103,10 +112,12 @@ export class FunnelComponent implements OnInit {
             this.dashService.getElephantineCountTypeProportions(res).subscribe(data => {
               console.log(data);
               this.model = data.map(eles => {
-                
+
                 return {
                   stat: eles.stat,
                   count: eles.count,
+                  countPercent: eles.countPercent * 100,
+
                   color: eles.color
                 }
               })
@@ -134,6 +145,8 @@ export class FunnelComponent implements OnInit {
             return {
               stat: item.stat,
               count: item.count / 100,
+              countPercent: item.countPercent * 100,
+
               color: item.color
             }
           })
@@ -149,6 +162,8 @@ export class FunnelComponent implements OnInit {
                 return {
                   stat: eles.stat,
                   count: eles.count / 100,
+                  countPercent: eles.countPercent * 100,
+
                   color: eles.color
                 }
               })
@@ -166,5 +181,12 @@ export class FunnelComponent implements OnInit {
       // })
     });
 
+  }
+
+  onSeriesOver(e: any): void {
+    //percent count
+    const obj = this.model.filter(item => {return item.stat === e.category})
+    this.percent = String(obj[0].countPercent) ;
+      
   }
 }

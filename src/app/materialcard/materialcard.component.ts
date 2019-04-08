@@ -15,6 +15,7 @@ export class MaterialcardComponent implements OnInit {
   @Input() Content: String;
   @Input() Data: any[];
   @Output() DynamicTitle: String = 'Count Proportion of Fabrics Blackened';
+  @Input() color: string;
 
   isPanel1: any = false;
   isPanel2: any = false;
@@ -27,6 +28,10 @@ export class MaterialcardComponent implements OnInit {
   isPanel9: any = false;
   isPanel10: any = false;
 
+  bgColor = {
+    'background-color': ''
+  };
+
   constructor(
     private _ds: DataService,
     public _materialCardService: MaterialcardService) {
@@ -34,6 +39,7 @@ export class MaterialcardComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.setBgColor();
     this.isPanel1 = (this.Content === 'panel1');
     this.isPanel2 = (this.Content === 'panel2');
     this.isPanel3 = (this.Content === 'panel3');
@@ -46,17 +52,20 @@ export class MaterialcardComponent implements OnInit {
     this.isPanel10 = (this.Content === 'panel10');
 
     if (this.isPanel7) {
-      this.DynamicTitle = 'Count Proportion of Fabrics Blackened';
+      this.DynamicTitle = 'Count Proportion of Fabrics Blackened Ele';
     }
     if (this.isPanel3) {
-      this.DynamicTitle = 'Count Proportion of Types'
+      this.DynamicTitle = 'Count Proportion of Types Ele'
     }
     if (this.isPanel10) {
       this.DynamicTitle = 'Count Proportion Of Fabrics Blackened KHPP'
     }
   }
 
+  public setBgColor(): void {
 
+    this.bgColor['background-color'] = this.color;
+  }
 
   public labelContent(e: any): string {
     return `${e.dataItem.time.substring(0, 2)}h`;
@@ -68,11 +77,11 @@ export class MaterialcardComponent implements OnInit {
     let isCount;
 
     if (this.isPanel7) {
-      isCount = (this.DynamicTitle === 'Count Proportion of Fabrics Blackened');
+      isCount = (this.DynamicTitle === 'Count Proportion of Fabrics Blackened Ele');
       if (isCount) {
-        this.DynamicTitle = 'Weight Proportion of Fabrics Blackened'
+        this.DynamicTitle = 'Weight Proportion of Fabrics Blackened Ele'
       } else {
-        this.DynamicTitle = 'Count Proportion of Fabrics Blackened'
+        this.DynamicTitle = 'Count Proportion of Fabrics Blackened Ele'
       }
       this._materialCardService.isCount.next(!isCount);
 

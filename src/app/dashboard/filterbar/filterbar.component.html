@@ -1,14 +1,16 @@
 <div class="filterBarContainer">
-  <!-- <kendo-multiselect
-class="kmulti"
-        [data]="listItems"
-        [(ngModel)]="value"
-        [textField]="'text'"
-        [valueField]="'value'"
-        (valueChange)="sayHello($event)"
-      ></kendo-multiselect>   -->
-  <kendo-multiselect class="kmulti" [data]="defaultLocus" [(ngModel)]="eleLocusVals"   [valueField]="'locusnum'"  [textField]="'locusnum'" (valueChange)="changeLocus($event)">
-  </kendo-multiselect>
-  <kendo-multiselect class="kmulti" [data]="defaultTags" [(ngModel)]="khppTagVals" [textField]="'tagNumber'"
-    [valueField]="'tagNumber'" (valueChange)="changeTags($event)"></kendo-multiselect>
+  <div class="row">
+    <div class="col-md-6 col-sm-6">
+      <h3 style="margin-left: -15px; color: #9b59b6; font-weight: 600">Elephantine</h3>
+    </div>
+    <div class="col-md-6 col-sm-6">
+      <h3 style="margin-left: -15px; color: #d35400; font-weight: 600"> Kom el-Hisn</h3>
+    </div>
+  </div>
+  <div class="row">
+    <kendo-multiselect class="kmulti" [placeholder]="'Select Elephantine...'" [autoClose]="false" [data]="defaultLocus" [(ngModel)]="eleLocusVals"   [valueField]="'locusnum'"  [textField]="'locusnum'" (valueChange)="changeLocus($event)">
+    </kendo-multiselect>
+    <kendo-multiselect class="kmulti" [placeholder]="'Select KHPP...'"  [autoClose]="false" [data]="defaultTags" [(ngModel)]="khppTagVals" [textField]="'tagNumber'"
+      [valueField]="'tagNumber'" (valueChange)="changeTags($event)"></kendo-multiselect>
+  </div>
 </div>

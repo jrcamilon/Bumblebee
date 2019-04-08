@@ -41,6 +41,10 @@ export class QuadseriesstackedbarComponent implements OnInit {
     count: 120392,
     color: '#3eaee2'
   }];
+
+  percentage;
+
+
   constructor(
     private _ds: DataService,
     public _materialCardService: MaterialcardService,
@@ -89,7 +93,7 @@ export class QuadseriesstackedbarComponent implements OnInit {
 
         this._fs.DefaultEleLocusNumbers.subscribe(res => {
           // //console.loge.log('filters being submitted', item);
-          if(res.length>0){
+          if(res.length > 0){
             this.dashService.getElephantineWeightBlackenedProportions(res).subscribe(data => {
               console.log('Chart Data', data);
               this.assignData(data);
@@ -142,7 +146,7 @@ export class QuadseriesstackedbarComponent implements OnInit {
     this._fs.LocationFilterValues.subscribe(item => {
       if (item.length > 0) {
         this._ds.getWeightPercentBlackened(item).subscribe(data => {
-
+  
           this.panel2exterior = data.exterior;
           this.panel2interior = data.interior;
           this.panel2both = data.both;
@@ -163,6 +167,69 @@ export class QuadseriesstackedbarComponent implements OnInit {
     })
 
   }
+
+  setBlackenedToolTip(e, catIndex){
+    switch(e.series.index){
+      case 0:
+      this.percentage = this.panel2interiorTips[catIndex] *100;
+      break;
+      case 1: 
+      this.percentage = this.panel2exteriorTips[catIndex]*100;
+      break;
+      case 2: 
+      this.percentage = this.panel2nullTips[catIndex]*100;
+      break;
+      case 3: 
+      this.percentage = this.panel2bothTips[catIndex]*100;
+      break;
+    }
+  }
+  onSeriesOver(e: any) {
+    console.log(e);
+    let catIndex;
+    let fireIndex;
+    switch(e.category){
+      case 'NS1':
+      // array index = 1
+      catIndex = 1;
+      this.setBlackenedToolTip(e,catIndex);
+      break;
+      case 'NSII':
+      // array index = 2
+      catIndex = 2;
+      this.setBlackenedToolTip(e,catIndex);
+
+      break;
+      case 'NSIII':
+      // array index = 3
+      catIndex = 3;
+      this.setBlackenedToolTip(e,catIndex);
+
+      break;
+      case 'NS V':
+      // array index = 4
+      catIndex = 4;
+      this.setBlackenedToolTip(e,catIndex);
+
+      break;
+      case 'MARL':
+      // array index = 0
+      catIndex = 0;
+      this.setBlackenedToolTip(e,catIndex);
+
+      break;
+      case 'EMPTY':
+      // array index = 5
+      catIndex = 5;
+      this.setBlackenedToolTip(e,catIndex);
+
+      break;
+    }
+
+   
+ 
+  }
+
   getTotalPercentType(): void {
     this._fs.LocationFilterValues.subscribe(item => {
       if (item.lenth > 0) {
