@@ -1,5 +1,5 @@
 <div> 
-    <kendo-chart>
+    <kendo-chart (seriesHover)="onSeriesOver($event)">
   <kendo-chart-series>
       <kendo-chart-series-item type="radarLine" name="Weight" [data]="chartdata" field="weight"
           categoryField="type">
@@ -10,7 +10,7 @@
   </kendo-chart-series>
   <kendo-chart-tooltip>
         <ng-template kendoChartSeriesTooltipTemplate let-category="category" format="P0" let-value="value">
-            {{ value | percent }}
+           {{category}} - {{ value | percent }} {{value}}
         </ng-template>
     </kendo-chart-tooltip>
   <kendo-chart-value-axis>

@@ -165,4 +165,8 @@ export class FunnelComponent implements OnInit {
     });
 
   }
+
+  onSeriesOver(e: any): void {
+    console.log(e);
+  }
 }
