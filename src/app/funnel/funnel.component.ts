@@ -101,7 +101,9 @@ export class FunnelComponent implements OnInit {
             console.log('filters being submitted', res);
 
             this.dashService.getElephantineCountTypeProportions(res).subscribe(data => {
+              console.log(data);
               this.model = data.map(eles => {
+                
                 return {
                   stat: eles.stat,
                   count: eles.count,

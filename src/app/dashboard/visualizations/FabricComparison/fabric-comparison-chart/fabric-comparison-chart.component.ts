@@ -15,6 +15,15 @@ export class FabricComparisonChartComponent implements OnInit {
   public creamSlipIn;
   public creamSlipOut;
   public untreated;
+
+
+
+  public rSlipInTips;
+  public rSlipOutTips;
+  public rSlipBothTips;
+  public creamSlipInTips;
+  public creamSlipOutTips;
+  public untreatedTips;
   constructor(private dashService: DashboardService, private filterService: FiltersService) {
     // this.runDashQueries();
 
@@ -25,6 +34,23 @@ export class FabricComparisonChartComponent implements OnInit {
     this.runDashQueries();
 
   }
+
+  assignData(data) {
+    this.rSlipIn = data[0].rSlipIn;
+    this.rSlipOut = data[0].rSlipOut;
+    this.rSlipBoth = data[0].rSlipBoth;
+    this.creamSlipIn = data[0].creamSlipIn;
+    this.creamSlipOut = data[0].creamSlipOut;
+    this.untreated = data[0].untreated;
+  }
+  assignTips(data) {
+    this.rSlipInTips = data[0].rSlipIn;
+    this.rSlipOutTips = data[0].rSlipOut;
+    this.rSlipBothTips = data[0].rSlipBoth;
+    this.creamSlipInTips = data[0].creamSlipIn;
+    this.creamSlipOutTips = data[0].creamSlipOut;
+    this.untreatedTips = data[0].untreated;
+  }
   runDashQueries(): any {
     this.filterService.EleFilterValues.subscribe(eleFilters => {
       if (eleFilters.length > 0) {
@@ -34,12 +60,8 @@ export class FabricComparisonChartComponent implements OnInit {
             console.log('Submitting chosen values for both khpp and ele', filters);
             this.dashService.getKHPPEleFabricProportions(filters).subscribe(data => {
               console.log('Response for comparison sending submitted filters', data);
-              this.rSlipIn = data.rSlipIn;
-              this.rSlipOut = data.rSlipOut;
-              this.rSlipBoth = data.rSlipBoth;
-              this.creamSlipIn = data.creamSlipIn;
-              this.creamSlipOut = data.creamSlipOut;
-              this.untreated = data.untreated;
+              this.assignData(data);
+              this.assignTips(data);
             })
           } else {
             this.filterService.DefaultKhppTagNumbers.subscribe(tags => {
@@ -48,12 +70,8 @@ export class FabricComparisonChartComponent implements OnInit {
                 console.log('Submitting chosen values for ele and default khpp', filters);
                 this.dashService.getKHPPEleFabricProportions(filters).subscribe(data => {
                   console.log('Response for cpmaison sending all tags', data);
-                  this.rSlipIn = data.rSlipIn;
-                  this.rSlipOut = data.rSlipOut;
-                  this.rSlipBoth = data.rSlipBoth;
-                  this.creamSlipIn = data.creamSlipIn;
-                  this.creamSlipOut = data.creamSlipOut;
-                  this.untreated = data.untreated;
+                  this.assignData(data);
+                  this.assignTips(data);
                 })
               }
 
@@ -69,12 +87,8 @@ export class FabricComparisonChartComponent implements OnInit {
               console.log('submitting filters for default ele and value khpp', filters);
               this.dashService.getKHPPEleFabricProportions(filters).subscribe(data => {
                 console.log('Response for cpmaison sending all tags', data);
-                this.rSlipIn = data.rSlipIn;
-                this.rSlipOut = data.rSlipOut;
-                this.rSlipBoth = data.rSlipBoth;
-                this.creamSlipIn = data.creamSlipIn;
-                this.creamSlipOut = data.creamSlipOut;
-                this.untreated = data.untreated;
+                this.assignData(data);
+                  this.assignTips(data);
               })
             } else {
               this.filterService.DefaultKhppTagNumbers.subscribe(tags => {
@@ -84,12 +98,8 @@ export class FabricComparisonChartComponent implements OnInit {
 
                   this.dashService.getKHPPEleFabricProportions(filters).subscribe(data => {
                     console.log('Response for cpmaison sending all tags', data);
-                    this.rSlipIn = data.rSlipIn;
-                    this.rSlipOut = data.rSlipOut;
-                    this.rSlipBoth = data.rSlipBoth;
-                    this.creamSlipIn = data.creamSlipIn;
-                    this.creamSlipOut = data.creamSlipOut;
-                    this.untreated = data.untreated;
+                    this.assignData(data);
+                  this.assignTips(data);
                   })
                 }
 

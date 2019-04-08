@@ -9,10 +9,17 @@ import { DashboardService } from 'services/DashboardService/dashboard.service';
   styleUrls: ['./quadseriesstackedbar.component.scss']
 })
 export class QuadseriesstackedbarComponent implements OnInit {
+  //Values
   public panel2interior = [];
   public panel2exterior = [];
   public panel2both = [];
   public panel2null = [];
+
+  //Tool Tips
+  public panel2interiorTips= [];
+  public panel2exteriorTips = [];
+  public panel2bothTips = [];
+  public panel2nullTips = [];
   public model = [{
     stat: 'Body Sherds ',
     count: 434823,
@@ -57,16 +64,26 @@ export class QuadseriesstackedbarComponent implements OnInit {
       }
     });
   }
+  assignData(data){
+          this.panel2exterior = data[0].exterior;
+          this.panel2interior = data[0].interior;
+          this.panel2both = data[0].both;
+          this.panel2null = data[0].empty;
+  }
+  assignToolTips(data){
+    this.panel2exteriorTips = data[1].exterior;
+    this.panel2interiorTips= data[1].interior;
+    this.panel2bothTips = data[1].both;
+    this.panel2nullTips = data[1].empty;
+}
   getDashWeightPercentType(): any {
     this._fs.EleFilterValues.subscribe(item => {
       if (item.length > 0) {
       console.log('filters being submitted', item);
         this.dashService.getElephantineWeightBlackenedProportions(item).subscribe(data => {
-          this.panel2exterior = data.exterior;
-          this.panel2interior = data.interior;
-          this.panel2both = data.both;
-          this.panel2null = data.empty;
           console.log('Chart Data', data);
+          this.assignData(data);
+          this.assignToolTips(data);
         });
       } else {
 
@@ -74,11 +91,9 @@ export class QuadseriesstackedbarComponent implements OnInit {
           // //console.loge.log('filters being submitted', item);
           if(res.length>0){
             this.dashService.getElephantineWeightBlackenedProportions(res).subscribe(data => {
-              this.panel2exterior = data.exterior;
-              this.panel2interior = data.interior;
-              this.panel2both = data.both;
-              this.panel2null = data.empty;
-              //console.loge.log('Chart Data', data);
+              console.log('Chart Data', data);
+              this.assignData(data);
+              this.assignToolTips(data);
             });
           }
         });
@@ -95,23 +110,18 @@ export class QuadseriesstackedbarComponent implements OnInit {
       // //console.loge.log('filters being submitted', item);
       if (item.length > 0) {
         this.dashService.getElephantineCountBlackenedProportions(item).subscribe(data => {
-          this.panel2exterior = data.exterior;
-          this.panel2interior = data.interior;
-          this.panel2both = data.both;
-          this.panel2null = data.empty;
-          //console.loge.log('Chart Data', data);
+          console.log('Chart Data', data);
+          this.assignData(data);
+          this.assignToolTips(data);
         });
       } else {
 
         this._fs.DefaultEleLocusNumbers.subscribe(res => {
           //console.loge.log('filters being submitted', item);
           this.dashService.getElephantineCountBlackenedProportions(res).subscribe(data => {
-            this.panel2exterior = data.exterior;
-            this.panel2interior = data.interior;
-            this.panel2both = data.both;
-            this.panel2null = data.empty;
-            //console.loge.log('Chart Data', data);
-
+          console.log('Chart Data', data);
+          this.assignData(data);
+          this.assignToolTips(data);
           });
         });
 

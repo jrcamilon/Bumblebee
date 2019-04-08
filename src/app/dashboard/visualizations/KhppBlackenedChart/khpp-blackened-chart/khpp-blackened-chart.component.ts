@@ -13,6 +13,12 @@ export class KhppBlackenedChartComponent implements OnInit {
   public panel2exterior = [];
   public panel2both = [];
   public panel2null = [];
+
+  //Tool Tips
+  public panel2interiorTips = [];
+  public panel2exteriorTips = [];
+  public panel2bothTips = [];
+  public panel2nullTips = [];
   public model = [{
     stat: 'Body Sherds ',
     count: 434823,
@@ -49,6 +55,18 @@ export class KhppBlackenedChartComponent implements OnInit {
 
   }
 
+  assignData(data) {
+    this.panel2exterior = data[0].exterior;
+    this.panel2interior = data[0].interior;
+    this.panel2both = data[0].both;
+    this.panel2null = data[0].empty;
+  }
+  assignToolTips(data) {
+    this.panel2exteriorTips = data[1].exterior;
+    this.panel2interiorTips = data[1].interior;
+    this.panel2bothTips = data[1].both;
+    this.panel2nullTips = data[1].empty;
+  }
   runDashQueries() {
     this._materialCardService.panel10IsCount.subscribe(res => {
       //console.loge.log('Is Count Changed', res);
@@ -62,24 +80,20 @@ export class KhppBlackenedChartComponent implements OnInit {
   getDashWeightPercentType(): any {
     this._fs.KhppFilterValues.subscribe(item => {
       if (item.length > 0) {
-      console.log('filters being submitted', item);
+        console.log('filters being submitted', item);
         this.dashService.getKHPPWeightBlackenedProportions(item).subscribe(data => {
-          this.panel2exterior = data.exterior;
-          this.panel2interior = data.interior;
-          this.panel2both = data.both;
-          this.panel2null = data.empty;
+          this.assignData(data);
+          this.assignToolTips(data);
           console.log('Chart Data', data);
         });
       } else {
 
         this._fs.DefaultKhppTagNumbers.subscribe(res => {
           if (res.length > 0) {
-          console.log('filters being submitted', res);
+            console.log('filters being submitted', res);
             this.dashService.getKHPPWeightBlackenedProportions(res).subscribe(data => {
-              this.panel2exterior = data.exterior;
-              this.panel2interior = data.interior;
-              this.panel2both = data.both;
-              this.panel2null = data.empty;
+              this.assignData(data);
+              this.assignToolTips(data);
 
             });
           }
@@ -95,10 +109,8 @@ export class KhppBlackenedChartComponent implements OnInit {
       if (item.length > 0) {
         console.log('filters being submitted', item);
         this.dashService.getKHPPCountBlackenedProportions(item).subscribe(data => {
-          this.panel2exterior = data.exterior;
-          this.panel2interior = data.interior;
-          this.panel2both = data.both;
-          this.panel2null = data.empty;
+          this.assignData(data);
+          this.assignToolTips(data);
           console.log('Chart Data', data);
         });
       } else {
@@ -107,10 +119,8 @@ export class KhppBlackenedChartComponent implements OnInit {
           if (res.length > 0) {
             console.log('filters being submitted', res);
             this.dashService.getKHPPCountBlackenedProportions(res).subscribe(data => {
-              this.panel2exterior = data.exterior;
-              this.panel2interior = data.interior;
-              this.panel2both = data.both;
-              this.panel2null = data.empty;
+              this.assignData(data);
+              this.assignToolTips(data);
               console.log('Chart Data', data);
 
             });
