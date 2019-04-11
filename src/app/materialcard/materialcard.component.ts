@@ -52,13 +52,13 @@ export class MaterialcardComponent implements OnInit {
     this.isPanel10 = (this.Content === 'panel10');
 
     if (this.isPanel7) {
-      this.DynamicTitle = 'Count Proportion of Fabrics Blackened Ele';
+      this.DynamicTitle = 'Ele: Blackening by Fabric Type (Count)';
     }
     if (this.isPanel3) {
-      this.DynamicTitle = 'Count Proportion of Types Ele'
+      this.DynamicTitle = 'Ele: Proportion of Types (Count)'
     }
     if (this.isPanel10) {
-      this.DynamicTitle = 'Count Proportion Of Fabrics Blackened KHPP'
+      this.DynamicTitle = 'KHPP: Blackening by Fabric Type (Count)'
     }
   }
 
@@ -77,28 +77,28 @@ export class MaterialcardComponent implements OnInit {
     let isCount;
 
     if (this.isPanel7) {
-      isCount = (this.DynamicTitle === 'Count Proportion of Fabrics Blackened Ele');
+      isCount = (this.DynamicTitle === 'Ele: Blackening by Fabric Type (Count)');
       if (isCount) {
-        this.DynamicTitle = 'Weight Proportion of Fabrics Blackened Ele'
+        this.DynamicTitle = 'Ele: Blackening by Fabric Type (Weight)'
       } else {
-        this.DynamicTitle = 'Count Proportion of Fabrics Blackened Ele'
+        this.DynamicTitle = 'Ele: Blackening by Fabric Type (Count)'
       }
       this._materialCardService.isCount.next(!isCount);
 
     } else if (this.isPanel3) {
-      isCount = (this.DynamicTitle === 'Count Proportion of Types');
+      isCount = (this.DynamicTitle === 'Ele: Proportion of Types (Count)');
       if (isCount) {
-        this.DynamicTitle = 'Weight Proportion of Types'
+        this.DynamicTitle = 'Ele: Proportion of Types (Weight)'
       } else {
-        this.DynamicTitle = 'Count Proportion of Types'
+        this.DynamicTitle = 'Ele: Proportion of Types (Count)'
       }
       this._materialCardService.panel3IsCount.next(!isCount);
     } else if (this.isPanel10) {
-      isCount = (this.DynamicTitle === 'Count Proportion Of Fabrics Blackened KHPP');
+      isCount = (this.DynamicTitle === 'KHPP: Blackening by Fabric Type (Count)');
       if (isCount) {
-        this.DynamicTitle = 'Weight Proportion Of Fabrics Blackened KHPP'
+        this.DynamicTitle = 'KHPP: Blackening by Fabric Type (Weight)'
       } else {
-        this.DynamicTitle = 'Count Proportion Of Fabrics Blackened KHPP'
+        this.DynamicTitle = 'KHPP: Blackening by Fabric Type (Count)'
       }
       this._materialCardService.panel10IsCount.next(!isCount);
 
