@@ -100,7 +100,7 @@ export class FunnelComponent implements OnInit {
               color: item.color
             }
           })
-          // console.log('ELE Type Count: ', this.model);
+          console.log('ELE Type Count: ', this.model);
 
         });
       } else {
@@ -186,6 +186,7 @@ export class FunnelComponent implements OnInit {
   onSeriesOver(e: any): void {
     //percent count
     const obj = this.model.filter(item => {return item.stat === e.category})
+    console.log(obj);
     this.percent = String(obj[0].countPercent) ;
       
   }

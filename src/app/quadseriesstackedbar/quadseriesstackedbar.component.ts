@@ -183,6 +183,8 @@ export class QuadseriesstackedbarComponent implements OnInit {
       this.percentage = this.panel2bothTips[catIndex]*100;
       break;
     }
+
+    console.log()
   }
   onSeriesOver(e: any) {
     console.log(e);
@@ -194,21 +196,9 @@ export class QuadseriesstackedbarComponent implements OnInit {
       catIndex = 1;
       this.setBlackenedToolTip(e,catIndex);
       break;
-      case 'NSII':
+      case 'NSII+':
       // array index = 2
       catIndex = 2;
-      this.setBlackenedToolTip(e,catIndex);
-
-      break;
-      case 'NSIII':
-      // array index = 3
-      catIndex = 3;
-      this.setBlackenedToolTip(e,catIndex);
-
-      break;
-      case 'NS V':
-      // array index = 4
-      catIndex = 4;
       this.setBlackenedToolTip(e,catIndex);
 
       break;
@@ -220,7 +210,7 @@ export class QuadseriesstackedbarComponent implements OnInit {
       break;
       case 'EMPTY':
       // array index = 5
-      catIndex = 5;
+      catIndex = 3;
       this.setBlackenedToolTip(e,catIndex);
 
       break;

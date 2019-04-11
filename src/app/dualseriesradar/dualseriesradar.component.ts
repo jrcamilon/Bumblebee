@@ -88,6 +88,6 @@ export class DualseriesradarComponent implements OnInit {
     console.log(e);
     const obj = this.chartdata.filter(item => {return item.type === e.category})
 
-    this.percentage = (e.field === 'weight') ?  String(Number(obj[0].weightPercent*100)) : String(obj[0].countPercent*100);
+    this.percentage = (e.field === 'weight') ?  String(Number(obj[0].weight)) : String(obj[0].count);
   }
 }
