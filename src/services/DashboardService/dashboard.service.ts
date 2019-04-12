@@ -9,8 +9,8 @@ import { Http, Response, Headers } from '@angular/http';
 export class DashboardService {
   public headers = new Headers({ 'Content-Type': 'application/json' });
   private http: String = 'http://';
-  private port: String = ':3090';
-  private domain: String = 'localhost';
+  private port: String = ':3092';
+  private domain: String = 'vm1.infosol.com';
 
   constructor(private _http: Http) { }
 

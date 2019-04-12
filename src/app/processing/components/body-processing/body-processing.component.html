@@ -86,7 +86,8 @@
             <div class="row" style="margin-top: 7px;">
                 <div class="col-md-6 col-sm-6">
                     <label>Weight <i style="font-size: 14px;"> {{weightString}} = {{weightSum}}</i></label>
-                    <input type="tel" class="form-control" placeholder="0.00" formControlName="weight" id="weight" (change)="onWeightFieldChange($event)" (keypress)="restrictNumeric($event)">
+                    <input type="tel" class="form-control" placeholder="0.00" formControlName="weight" id="weight" 
+                    (change)="onWeightFieldChange($event)" (keypress)="restrictNumeric($event)">
                 </div>
                 <div class="col-md-6 col-sm-6">
                     <label>Weight Type</label>
