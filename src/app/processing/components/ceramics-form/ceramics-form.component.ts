@@ -5,7 +5,7 @@ import { DataService } from 'app/data.service';
 import { Subscription } from 'rxjs';
 import { ElephantModel } from '../models/elephant-model';
 import { OnlineServiceService } from 'services/OnlineServices/online-service.service';
-
+import { TypesService} from 'services/TypeService/types.service';
 import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
 import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
@@ -26,7 +26,7 @@ export class CeramicsFormComponent implements OnInit {
   public buttonMode = 'Save';
   public formsSubmitted = [];
   isOnline: any;
-
+  public webCamImages = [];
   // CAMERA
 
     // Camera
@@ -50,8 +50,21 @@ export class CeramicsFormComponent implements OnInit {
     private nextWebcam: Subject<boolean|string> = new Subject<boolean|string>();
 
 
-  constructor(public _onlineService: OnlineServiceService, public fb: FormBuilder, public _dataService: DataService, public _formsService: FormsService) {
+  constructor(public _onlineService: OnlineServiceService,
+       public fb: FormBuilder,
+        public _dataService: DataService, 
+        public _formsService: FormsService,
+        public _typeService: TypesService) {
 
+          // this._typeService.Types.subscribe(item=>{
+          //   console.log('Available Types: ',item);
+          // })
+          // this._typeService.Variants.subscribe(item=>{
+          //   console.log('Available Variants: ',item);
+          // })
+          this._typeService.getTypeVariantsLocations().subscribe(item=>{
+            console.log(item);
+          })
     this.ceramicsForm = fb.group({
       locusNumber: ['', Validators.compose([Validators.required])],
       locusNumPre: ['', Validators.compose([
@@ -158,9 +171,10 @@ export class CeramicsFormComponent implements OnInit {
 
   public handleImage(webcamImage: WebcamImage): void {
     console.log('received webcam image', webcamImage);
-    // console.log(webcamImage.imageAsBase64);
-    // console.log(webcamImage.imageData);
+    console.log(webcamImage.imageAsBase64);
+    console.log(webcamImage.imageData);
     this.webcamImage = webcamImage;
+    this.webCamImages.push(webcamImage);
   }
 
   public cameraWasSwitched(deviceId: string): void {
