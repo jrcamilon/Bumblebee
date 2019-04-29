@@ -10,7 +10,7 @@
                 </mat-form-field>
         </div>
         <div class="col-md-6">
-            <div style="float: right">
+            <div style="float: right" *ngIf="this.selection === 'KHPP'">
                     <!-- <span><button mat-icon-button><mat-icon>edit</mat-icon></button></span>
                     <span><button mat-icon-button><mat-icon>undo</mat-icon></button></span>
                     <span><button mat-icon-button (click)="save()"><mat-icon>save</mat-icon></button></span> -->
@@ -21,6 +21,23 @@
                                 <span >Save <b>{{completedForms.length}}</b> Records to DB</span>
                             </button>
                             <button mat-menu-item (click)="deleteOfflineDB()">
+                                <mat-icon>delete_forever</mat-icon>
+                                <span>Clear Offline DB</span>
+                            </button>
+                        </mat-menu>
+                    </span>
+            </div>
+            <div style="float: right" *ngIf="this.selection === 'Elephantine'">
+                    <!-- <span><button mat-icon-button><mat-icon>edit</mat-icon></button></span>
+                    <span><button mat-icon-button><mat-icon>undo</mat-icon></button></span>
+                    <span><button mat-icon-button (click)="save()"><mat-icon>save</mat-icon></button></span> -->
+                    <span ><button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
+                            <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="save()" [disabled]="!isOnline">
+                                <mat-icon>unarchive</mat-icon>
+                                <span >Save <b>{{completedCeramics.length}}</b> Records to DB</span>
+                            </button>
+                            <button mat-menu-item (click)="deleteOfflineDB()" disabled="true">
                                 <mat-icon>delete_forever</mat-icon>
                                 <span>Clear Offline DB</span>
                             </button>

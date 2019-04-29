@@ -25,6 +25,7 @@ export class ProcessingComponent implements OnInit {
   public selection: string;
   public forms = ['Red Notebook', 'Elephantine', 'KHPP'];
   public completedForms = [];
+  public completedCeramics = [];
   public formValue: any;
 
 
@@ -63,14 +64,11 @@ export class ProcessingComponent implements OnInit {
     public offlineDB: OfflineDBService,
     public _khpp: KhppFormService
     ) {
-      // this._formsService.activeForm.subscribe(res => {
-      //   console.log(res);
-      //   this.completedForms = res;
-      // })
-      // this._onlineService.isOnline.subscribe(isOnline => {
-      //   console.log('ONLINE STATUS', isOnline);
-      //   this.isOnline = isOnline;
-      // })
+      this._formsService.activeForm.subscribe(res => {
+        console.log('CERAMICS', res);
+        this.completedCeramics = res;
+      })
+
 
       // KHPP Forms
       this._khpp.responseObject.subscribe(res => {
@@ -104,7 +102,8 @@ export class ProcessingComponent implements OnInit {
       case 'Elephantine':
         console.log('Saving Elephantine');
 
-        toInsert = this.completedForms.map(ele => {
+        toInsert = this.completedCeramics.map(ele => {
+          // console.log(ele);
           return new Object({
             locusNumber: ele.locusNumber + String(ele.locusNumPre).toUpperCase() + '/' + String(ele.locusNumSuf).toLowerCase(),
             application: ele.application === null ? 'null' : String(ele.application),
@@ -130,22 +129,24 @@ export class ProcessingComponent implements OnInit {
             lat: 0,
             lng: 0,
             typeDescription: ele.typeDescription === null ? 'null' : String(ele.typeDescription),
-            typeNum: ele.typeNumber === null ? 'null' : String(ele.typeNumber),
+            typeNum: ele.typeNumber === null ? 'null' : String(ele.typeNumber) + '.' + String(ele.typeVariant),
             weight: ele.weight === null ? 'null' : String(ele.weight),
             room: 'null',
             phase: 'null'
           })
         });
 
-        for (let i = 0; i < toInsert.length; i++) {
-          console.log(toInsert[i]);
-          this._formsService.writeElephantineToDB(toInsert[i]).subscribe(res => {
-            if (res.status === 201) {
-              console.log(res);
-              this.openSnackBar();
-            }
-          });
-        }
+        console.log(toInsert);
+
+        // for (let i = 0; i < toInsert.length; i++) {
+        //   console.log(toInsert[i]);
+        //   this._formsService.writeElephantineToDB(toInsert[i]).subscribe(res => {
+        //     if (res.status === 201) {
+        //       console.log(res);
+        //       this.openSnackBar();
+        //     }
+        //   });
+        // }
 
         // Clear the completed forms array and clear the service store.
         // this.completedForms = [];

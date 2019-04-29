@@ -9,6 +9,15 @@ import { TypesService} from 'services/TypeService/types.service';
 import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
 import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
+import { ceramicTypes } from './ceramic-types';
+
+interface CeramicTypes {
+  image: string,
+  objectNums: string[],
+  typeDesc: string,
+  family: string,
+  familyDesc: string,
+}
 
 @Component({
   selector: 'app-ceramics-form',
@@ -25,8 +34,19 @@ export class CeramicsFormComponent implements OnInit {
   public mockData: Subscription;
   public buttonMode = 'Save';
   public formsSubmitted = [];
-  isOnline: any;
+
+  visibleTab = 'input';
+
+  public typeNums: Array<string> = [];
+  public typeVariants: Array<string> = [];
+  public data: Array<string> = [];
+  selecteType: any = undefined;
+  found = false;
+
+  public isOnline: any;
+  public imageObjectData: any;
   public webCamImages = [];
+
   // CAMERA
 
     // Camera
@@ -56,15 +76,12 @@ export class CeramicsFormComponent implements OnInit {
         public _formsService: FormsService,
         public _typeService: TypesService) {
 
-          // this._typeService.Types.subscribe(item=>{
-          //   console.log('Available Types: ',item);
-          // })
-          // this._typeService.Variants.subscribe(item=>{
-          //   console.log('Available Variants: ',item);
-          // })
-          this._typeService.getTypeVariantsLocations().subscribe(item=>{
-            console.log(item);
-          })
+          this._typeService.getTypeVariantsLocations().subscribe(item => {
+            this.typeNums = item.typeNum.map(ele => { return ele.typenum });
+            this.data = this.typeNums.slice();
+            this.typeVariants = item.variants.map(ele => { return ele.typeVariant }).filter((ele) => { return ele !== null});
+          });
+
     this.ceramicsForm = fb.group({
       locusNumber: ['', Validators.compose([Validators.required])],
       locusNumPre: ['', Validators.compose([
@@ -93,6 +110,7 @@ export class CeramicsFormComponent implements OnInit {
         Validators.pattern('[0-9]*')])],
       typeDescription: ['', Validators.compose([Validators.required, Validators.minLength(5)])],
       typeNumber: null,
+      typeVariant: null,
       weight: null,
       fabric: null,
       diameter: null,
@@ -131,7 +149,7 @@ export class CeramicsFormComponent implements OnInit {
       console.log(this.webcamImage.imageData);
       formValue.image = this.webcamImage.imageAsBase64;
     }
-    console.log(formValue);
+    // console.log(formValue);
     this.formsSubmitted.push(formValue);
     this.ceramicsForm.reset();
     if (this.isOnline) {
@@ -194,9 +212,45 @@ export class CeramicsFormComponent implements OnInit {
     this.webcamImage = null;
   }
 
+  public handleFilter(value: any) {
+    this.data = this.typeNums.filter((s) => s.toLowerCase().indexOf(value.toLowerCase()) !== -1);
+  }
+
+  public toggleScreens(value: string): void {
+    this.visibleTab = value;
+}
+
+  public getTypeImage() {
+    let found = false;
+    let foundImage = '/assets/ceramics/BSD.png'
+    for (let i = 0; i < ceramicTypes.length; i++) {
+      if (ceramicTypes[i].image === this.ceramicsForm.value.typeNumber) {
+        found = true;
+      }
+    }
+
+    if (found === true) {
+      const selected = this.ceramicsForm.value.typeNumber ? this.ceramicsForm.value.typeNumber : 'NO_IMAGE'
+      // console.log('selected', selected);
+      const imageObjectData = ceramicTypes.map(ele => {
+        if (ele.image === selected) { return ele; } else { return undefined }})
+        .filter(( ele ) => { return ele !== undefined; });
+
+      this.imageObjectData = imageObjectData[0] === undefined ? {
+        image: 'O.A1.2',
+        objectNums: ['47501C/b-1-17 (Ø13, NS III)', '47501L/b-1-10 (Ø11, NS III.b)'],
+        typeDesc: 'fine dish with direct rim',
+        family: 'O.A1',
+        familyDesc: 'Dishes with direct rim'
+      } : imageObjectData[0];
 
 
+      foundImage =  '/assets/ceramics/' + selected + '.png';
+    }
 
+    return foundImage;
+
+  }
 
 
 }
