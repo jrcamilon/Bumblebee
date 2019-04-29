@@ -1,314 +1,361 @@
 <!-- <div class="main-content" > -->
-    <div class="container-fluid">
+<div class="container-fluid">
 
-            <div class="row">
-                    <div class="col-md-12">
-                        <div style="text-align:center; padding-top: 20px;" *ngIf="!webcamImage" >
-            
-                            <div (click)="triggerSnapshot();">
-                                <webcam [height]="500" [width]="500" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
-                                        [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
-                                        [videoOptions]="videoOptions"
-                                        [imageQuality]="1"
-                                        (cameraSwitched)="cameraWasSwitched($event)"
-                                        (initError)="handleInitError($event)"
-                                ></webcam>
-                                <br/>
-            
-                                <button class="actionBtn" (click)="toggleWebcam();">Toggle Camera</button>
-                                <br/>
-            
-                            </div>
-                        </div>
-                    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div style="text-align:center; padding-top: 20px;" *ngIf="!webcamImage">
+
+                <div (click)="triggerSnapshot();">
+                    <webcam [height]="500" [width]="500" [trigger]="triggerObservable"
+                        (imageCapture)="handleImage($event)" *ngIf="showWebcam" [allowCameraSwitch]="allowCameraSwitch"
+                        [switchCamera]="nextWebcamObservable" [videoOptions]="videoOptions" [imageQuality]="1"
+                        (cameraSwitched)="cameraWasSwitched($event)" (initError)="handleInitError($event)"></webcam>
+                    <br />
+
+                    <button class="actionBtn" (click)="toggleWebcam();">Toggle Camera</button>
+                    <br />
+
                 </div>
-                <div class="snapshot" *ngIf="webcamImage" style="text-align:center; padding-top: 20px;" (click)="onCapturedImageClick()">
+            </div>
+        </div>
+    </div>
+    <div class="snapshot" *ngIf="webcamImage" style="text-align:center; padding-top: 20px;"
+        (click)="onCapturedImageClick()">
 
-                        <img [src]="webcamImage.imageAsDataUrl" style="height: 500px;"/>
-                        </div>
-                    
-                        <h4 *ngIf="errors.length > 0">Messages:</h4>
-                        <ul *ngFor="let error of errors">
-                        <li>{{error | json}}</li>
-                        </ul>
+        <img [src]="webcamImage.imageAsDataUrl" style="height: 500px;" />
+    </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="header">
-                        <h4 class="title">Elephantine Processing Details</h4>
-                    </div>
-                    <div class="content">
-                        <form [formGroup]="ceramicsForm" (ngSubmit)="submitForm(ceramicsForm.value)">
-                            <div class="row">
-                                <!-- LOCUS NUMBER -->
-                                <div class="col-md-3">
-                                    <div class="form-group" [ngClass]="{'has-error' : !ceramicsForm.controls['locusNumber'].valid && ceramicsForm.controls['locusNumber'].touched}">
-                                        <label>Locus Number</label>
-                                        <select class="form-control" formControlName="locusNumber" placeholder="#####">
-                                                <option [value]="46501">46501</option>
-                                                <option [value]="44501">44501</option>
-                                                <option [value]="43501">43501</option>
-                                                <option [value]="45502">45502</option>
-                                                <option [value]="45501">45501</option>
-                                                <option [value]="54502">54502</option>
-                                        </select>
-                                        <span class="help-block" *ngIf="!ceramicsForm.controls['locusNumber'].valid && ceramicsForm.controls['locusNumber'].touched">
-                                            Uh-oh! This is required. Select One.
-                                        </span>
-                                    </div>
+    <h4 *ngIf="errors.length > 0">Messages:</h4>
+    <ul *ngFor="let error of errors">
+        <li>{{error | json}}</li>
+    </ul>
+
+    <div *ngFor="let image of webCamImages" >
+        <img [src]="image.imageAsDataUrl"  style="height: 100px;"/>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">Elephantine Processing Details</h4>
+                </div>
+                <div class="content">
+                    <form [formGroup]="ceramicsForm" (ngSubmit)="submitForm(ceramicsForm.value)">
+                        <div class="row">
+                            <!-- LOCUS NUMBER -->
+                            <div class="col-md-3">
+                                <div class="form-group"
+                                    [ngClass]="{'has-error' : !ceramicsForm.controls['locusNumber'].valid && ceramicsForm.controls['locusNumber'].touched}">
+                                    <label>Locus Number</label>
+                                    <select class="form-control" formControlName="locusNumber" placeholder="#####">
+                                        <option [value]="46501">46501</option>
+                                        <option [value]="44501">44501</option>
+                                        <option [value]="43501">43501</option>
+                                        <option [value]="45502">45502</option>
+                                        <option [value]="45501">45501</option>
+                                        <option [value]="54502">54502</option>
+                                    </select>
+                                    <span class="help-block"
+                                        *ngIf="!ceramicsForm.controls['locusNumber'].valid && ceramicsForm.controls['locusNumber'].touched">
+                                        Uh-oh! This is required. Select One.
+                                    </span>
                                 </div>
-                                <!-- LOCUS NUM PRE -->
-                                <div class="col-md-2">
-                                    <div class="form-group" [ngClass]="{'has-error' : !ceramicsForm.controls['locusNumPre'].valid && ceramicsForm.controls['locusNumPre'].touched}">
-                                        <label>Locus Num Pre</label>
-                                        <input type="text" class="form-control" maxlength="1" placeholder="A" formControlName="locusNumPre">
-                                        <span class="help-block" *ngIf="!ceramicsForm.controls['locusNumPre'].valid && ceramicsForm.controls['locusNumPre'].touched">
-                                                Uh-oh! This is required
-                                        </span>
-                                    </div>
-                                </div>
-
-
-                                <div class="col-md-2">
-                                    <div class="form-group" [ngClass]="{'has-error' : !ceramicsForm.controls['locusNumSuf'].valid && ceramicsForm.controls['locusNumSuf'].touched}">
-                                        <label>Locus Num Suf</label>
-                                        <input type="text" class="form-control" maxlength="1"  placeholder="a" formControlName="locusNumSuf">
-                                        <span class="help-block" *ngIf="!ceramicsForm.controls['locusNumSuf'].valid && ceramicsForm.controls['locusNumSuf'].touched">
-                                                Uh-oh! This is required
-                                        </span>
-                                    </div>
-                                </div>
-                            
-                                <div class="col-md-3">
-                                    <div class="form-group" [ngClass]="{'has-error' : !ceramicsForm.controls['objectGroupNumber'].valid && ceramicsForm.controls['objectGroupNumber'].touched}">
-                                        <label>Object Group Number</label>
-                                        <input type="text" class="form-control" placeholder="1" formControlName="objectGroupNumber">
-                                        <span class="help-block" *ngIf="!ceramicsForm.controls['objectGroupNumber'].valid && ceramicsForm.controls['objectGroupNumber'].touched">
-                                                Uh-oh! Enter One number only.
-                                        </span>
-                                    </div>
-                                </div>
-
-
-
-                                <div class="col-md-2">
-                                    <div class="form-group" [ngClass]="{'has-error' : !ceramicsForm.controls['objectNumber'].valid && ceramicsForm.controls['objectNumber'].touched}">
-                                        <label for="exampleInputEmail1">Object Number</label>
-                                        <input type="text" class="form-control" maxlength="2" placeholder="1" formControlName="objectNumber">
-                                        <span class="help-block" *ngIf="!ceramicsForm.controls['objectNumber'].valid && ceramicsForm.controls['objectNumber'].touched">
-                                                Uh-oh! Numbers only!
-                                        </span>
-                                    </div>
+                            </div>
+                            <!-- LOCUS NUM PRE -->
+                            <div class="col-md-2">
+                                <div class="form-group"
+                                    [ngClass]="{'has-error' : !ceramicsForm.controls['locusNumPre'].valid && ceramicsForm.controls['locusNumPre'].touched}">
+                                    <label>Locus Num Pre</label>
+                                    <input type="text" class="form-control" maxlength="1" placeholder="A"
+                                        formControlName="locusNumPre">
+                                    <span class="help-block"
+                                        *ngIf="!ceramicsForm.controls['locusNumPre'].valid && ceramicsForm.controls['locusNumPre'].touched">
+                                        Uh-oh! This is required
+                                    </span>
                                 </div>
                             </div>
 
-                            <!-- Validation for above fields -->
-                            <div class="row" *ngIf="!ceramicsForm.controls['locusNumber'].valid && ceramicsForm.controls['locusNumber'].touched
+
+                            <div class="col-md-2">
+                                <div class="form-group"
+                                    [ngClass]="{'has-error' : !ceramicsForm.controls['locusNumSuf'].valid && ceramicsForm.controls['locusNumSuf'].touched}">
+                                    <label>Locus Num Suf</label>
+                                    <input type="text" class="form-control" maxlength="1" placeholder="a"
+                                        formControlName="locusNumSuf">
+                                    <span class="help-block"
+                                        *ngIf="!ceramicsForm.controls['locusNumSuf'].valid && ceramicsForm.controls['locusNumSuf'].touched">
+                                        Uh-oh! This is required
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group"
+                                    [ngClass]="{'has-error' : !ceramicsForm.controls['objectGroupNumber'].valid && ceramicsForm.controls['objectGroupNumber'].touched}">
+                                    <label>Object Group Number</label>
+                                    <input type="text" class="form-control" placeholder="1"
+                                        formControlName="objectGroupNumber">
+                                    <span class="help-block"
+                                        *ngIf="!ceramicsForm.controls['objectGroupNumber'].valid && ceramicsForm.controls['objectGroupNumber'].touched">
+                                        Uh-oh! Enter One number only.
+                                    </span>
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-md-2">
+                                <div class="form-group"
+                                    [ngClass]="{'has-error' : !ceramicsForm.controls['objectNumber'].valid && ceramicsForm.controls['objectNumber'].touched}">
+                                    <label for="exampleInputEmail1">Object Number</label>
+                                    <input type="text" class="form-control" maxlength="2" placeholder="1"
+                                        formControlName="objectNumber">
+                                    <span class="help-block"
+                                        *ngIf="!ceramicsForm.controls['objectNumber'].valid && ceramicsForm.controls['objectNumber'].touched">
+                                        Uh-oh! Numbers only!
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Validation for above fields -->
+                        <div class="row"
+                            *ngIf="!ceramicsForm.controls['locusNumber'].valid && ceramicsForm.controls['locusNumber'].touched
                             || !ceramicsForm.controls['locusNumPre'].valid && ceramicsForm.controls['locusNumPre'].touched
                             || !ceramicsForm.controls['locusNumSuf'].valid && ceramicsForm.controls['locusNumSuf'].touched
                             || !ceramicsForm.controls['objectGroupNumber'].valid && ceramicsForm.controls['objectGroupNumber'].touched
-                            || !ceramicsForm.controls['objectNumber'].valid && ceramicsForm.controls['objectNumber'].touched"
-                            >
-                                    <div class="col-md-12 alert">
-                                        <div class="alert alert-danger" role="alert">
-                                            <p *ngIf="!ceramicsForm.controls['locusNumber'].valid && ceramicsForm.controls['locusNumber'].touched">
-                                                <b>Locus Number</b> is a Required Field. Select a Locus Number from the drop down list.</p>
-                                            <p *ngIf="!ceramicsForm.controls['locusNumPre'].valid && ceramicsForm.controls['locusNumPre'].touched">
-                                                <b>Locus Number Prefix</b>is a Required Field with a minimum of ONE character. e.g. A, B, C</p>
-                                            <p *ngIf="!ceramicsForm.controls['locusNumSuf'].valid && ceramicsForm.controls['locusNumSuf'].touched">
-                                                <b>Locus Number Suffix</b> is a Required Field with a minimum of ONE character. e.g. a, b, c</p>
-                                            <p *ngIf="!ceramicsForm.controls['objectGroupNumber'].valid && ceramicsForm.controls['objectGroupNumber'].touched">
-                                                <b>Object Group Number</b> is a Required Field with a minimum of ONE character. e.g. 1, 2, 3</p>
-                                            <p *ngIf="!ceramicsForm.controls['objectNumber'].valid && ceramicsForm.controls['objectNumber'].touched">
-                                                <b>Object Number</b> is a NOT required but can only be TWO NUMERIC characters. e.g. 1, 22, 13</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            <div class="row">
-                                <div class="col-md-6" [ngClass]="{'has-error' : !ceramicsForm.controls['numberOfObjects'].valid && ceramicsForm.controls['numberOfObjects'].touched}">
-                                    <div class="form-group">
-                                        <label>Number of Objects</label>
-                                        <input type="text" maxlength="4" class="form-control" placeholder="1" formControlName="numberOfObjects">
-                                        <span class="help-block" *ngIf="!ceramicsForm.controls['numberOfObjects'].valid && ceramicsForm.controls['numberOfObjects'].touched">
-                                                Uh-oh! Required Field
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Type Number</label>
-                                        <input type="number" class="form-control" placeholder="1" formControlName="typeNumber">
-                                    </div>
+                            || !ceramicsForm.controls['objectNumber'].valid && ceramicsForm.controls['objectNumber'].touched">
+                            <div class="col-md-12 alert">
+                                <div class="alert alert-danger" role="alert">
+                                    <p
+                                        *ngIf="!ceramicsForm.controls['locusNumber'].valid && ceramicsForm.controls['locusNumber'].touched">
+                                        <b>Locus Number</b> is a Required Field. Select a Locus Number from the drop
+                                        down list.</p>
+                                    <p
+                                        *ngIf="!ceramicsForm.controls['locusNumPre'].valid && ceramicsForm.controls['locusNumPre'].touched">
+                                        <b>Locus Number Prefix</b>is a Required Field with a minimum of ONE character.
+                                        e.g. A, B, C</p>
+                                    <p
+                                        *ngIf="!ceramicsForm.controls['locusNumSuf'].valid && ceramicsForm.controls['locusNumSuf'].touched">
+                                        <b>Locus Number Suffix</b> is a Required Field with a minimum of ONE character.
+                                        e.g. a, b, c</p>
+                                    <p
+                                        *ngIf="!ceramicsForm.controls['objectGroupNumber'].valid && ceramicsForm.controls['objectGroupNumber'].touched">
+                                        <b>Object Group Number</b> is a Required Field with a minimum of ONE character.
+                                        e.g. 1, 2, 3</p>
+                                    <p
+                                        *ngIf="!ceramicsForm.controls['objectNumber'].valid && ceramicsForm.controls['objectNumber'].touched">
+                                        <b>Object Number</b> is a NOT required but can only be TWO NUMERIC characters.
+                                        e.g. 1, 22, 13</p>
                                 </div>
                             </div>
+                        </div>
 
-                            <!-- Validation for above fields -->
-                            <div class="row" *ngIf="!ceramicsForm.controls['numberOfObjects'].valid && ceramicsForm.controls['numberOfObjects'].touched"
-                            >
-                                    <div class="col-md-12 alert">
-                                        <div class="alert alert-danger" role="alert">
-                                            <p *ngIf="!ceramicsForm.controls['numberOfObjects'].valid && ceramicsForm.controls['numberOfObjects'].touched">
-                                                <b>Number of Objects</b> is a Required Field. maximum of THREE characters.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            
-
-                            <!-- Type Description -->
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label>Type Description</label>
-                                        <textarea rows="3" class="form-control" placeholder="Here can be your description" formControlName="typeDescription"></textarea>
-                                    </div>
+                        <div class="row">
+                            <div class="col-md-6"
+                                [ngClass]="{'has-error' : !ceramicsForm.controls['numberOfObjects'].valid && ceramicsForm.controls['numberOfObjects'].touched}">
+                                <div class="form-group">
+                                    <label>Number of Objects</label>
+                                    <input type="text" maxlength="4" class="form-control" placeholder="1"
+                                        formControlName="numberOfObjects">
+                                    <span class="help-block"
+                                        *ngIf="!ceramicsForm.controls['numberOfObjects'].valid && ceramicsForm.controls['numberOfObjects'].touched">
+                                        Uh-oh! Required Field
+                                    </span>
                                 </div>
                             </div>
-                            <!-- Validation for Type Description -->
-                            <div class="row" *ngIf="!ceramicsForm.controls['typeDescription'].valid && ceramicsForm.controls['typeDescription'].touched ">
-                                <div class="col-md-12 alert">
-                                    <div class="alert alert-danger" role="alert">
-                                        Type Description is a Required Field with a minimum of FIVE characters
-                                    </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Type Number</label>
+                                    <input type="number" class="form-control" placeholder="1"
+                                        formControlName="typeNumber">
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Weight</label>
-                                        <input type="number" class="form-control" placeholder="Kgs" formControlName="weight">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Fabric</label>
-                                        <input type="text" class="form-control" placeholder="NSI" formControlName="fabric">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Diameter</label>
-                                        <input type="number" class="form-control" placeholder="" formControlName="diameter">
-                                    </div>
+                        <!-- Validation for above fields -->
+                        <div class="row"
+                            *ngIf="!ceramicsForm.controls['numberOfObjects'].valid && ceramicsForm.controls['numberOfObjects'].touched">
+                            <div class="col-md-12 alert">
+                                <div class="alert alert-danger" role="alert">
+                                    <p
+                                        *ngIf="!ceramicsForm.controls['numberOfObjects'].valid && ceramicsForm.controls['numberOfObjects'].touched">
+                                        <b>Number of Objects</b> is a Required Field. maximum of THREE characters.</p>
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Preservation</label>
-                                        <input type="number" class="form-control" placeholder="1" formControlName="preservation">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>SF Coating</label>
-                                        <input type="text" class="form-control" placeholder="uncoated" formControlName="sfCoating">
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>SF Treatment</label>
-                                        <input type="number" class="form-control" placeholder="" formControlName="sfTreatment">
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Backend</label>
-                                        <input type="text" class="form-control" placeholder="int" formControlName="blackened">
-                                    </div>
+                        <!-- Type Description -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Type Description</label>
+                                    <textarea rows="3" class="form-control" placeholder="Here can be your description"
+                                        formControlName="typeDescription"></textarea>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Incised Decoration</label>
-                                        <input type="text" class="form-control" placeholder="" formControlName="incisedDecoration">
-                                    </div>
+                            </div>
+                        </div>
+                        <!-- Validation for Type Description -->
+                        <div class="row"
+                            *ngIf="!ceramicsForm.controls['typeDescription'].valid && ceramicsForm.controls['typeDescription'].touched ">
+                            <div class="col-md-12 alert">
+                                <div class="alert alert-danger" role="alert">
+                                    Type Description is a Required Field with a minimum of FIVE characters
                                 </div>
-                                <div class="col-md-5">
-                                    <div class="form-group">
-                                        <label>Application</label>
-                                        <input type="text" class="form-control" placeholder="" formControlName="application">
-                                    </div>
-                                </div>
-                            </div>      
+                            </div>
+                        </div>
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label>Painted Decoration</label>
-                                        <textarea rows="3" class="form-control" placeholder="Here can be your description" formControlName="paintedDecoration"></textarea>
-                                    </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Weight</label>
+                                    <input type="number" class="form-control" placeholder="Kgs"
+                                        formControlName="weight">
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Fabric</label>
+                                    <input type="text" class="form-control" placeholder="NSI" formControlName="fabric">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Diameter</label>
+                                    <input type="number" class="form-control" placeholder="" formControlName="diameter">
+                                </div>
+                            </div>
+                        </div>
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label>Comments</label>
-                                        <textarea rows="5" class="form-control" placeholder="Here can be your description" formControlName="comments"></textarea>
-                                    </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Preservation</label>
+                                    <input type="number" class="form-control" placeholder="1"
+                                        formControlName="preservation">
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>SF Coating</label>
+                                    <input type="text" class="form-control" placeholder="uncoated"
+                                        formControlName="sfCoating">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>SF Treatment</label>
+                                    <input type="number" class="form-control" placeholder=""
+                                        formControlName="sfTreatment">
+                                </div>
+                            </div>
+                        </div>
 
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Processed By</label>
-                                        <input type="text" class="form-control" placeholder="int" formControlName="processedBy">
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Process Date</label>
-                                        <input type="date" class="form-control" placeholder="" formControlName="processDate">
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Entered By</label>
-                                        <input type="text" class="form-control" placeholder="" formControlName="enteredBy">
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Entered Date</label>
-                                        <input type="date" class="form-control" placeholder="" formControlName="enteredDate">
-                                    </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Backend</label>
+                                    <input type="text" class="form-control" placeholder="int"
+                                        formControlName="blackened">
                                 </div>
                             </div>
-                                
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>RL Number</label>
-                                        <input type="number" class="form-control" placeholder="int" formControlName="rlNumber">
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Sheet Number</label>
-                                        <input type="number" class="form-control" placeholder="int" formControlName="sheetNumber">
-                                    </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Incised Decoration</label>
+                                    <input type="text" class="form-control" placeholder=""
+                                        formControlName="incisedDecoration">
                                 </div>
                             </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label>Application</label>
+                                    <input type="text" class="form-control" placeholder=""
+                                        formControlName="application">
+                                </div>
+                            </div>
+                        </div>
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <input [disabled]="!ceramicsForm.valid" type="submit" class="btn btn-info btn-fill btn-block" value="SAVE">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Painted Decoration</label>
+                                    <textarea rows="3" class="form-control" placeholder="Here can be your description"
+                                        formControlName="paintedDecoration"></textarea>
                                 </div>
                             </div>
-    
-                            <div class="clearfix"></div>
-                        </form>
-                    </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Comments</label>
+                                    <textarea rows="5" class="form-control" placeholder="Here can be your description"
+                                        formControlName="comments"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Processed By</label>
+                                    <input type="text" class="form-control" placeholder="int"
+                                        formControlName="processedBy">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Process Date</label>
+                                    <input type="date" class="form-control" placeholder=""
+                                        formControlName="processDate">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Entered By</label>
+                                    <input type="text" class="form-control" placeholder="" formControlName="enteredBy">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Entered Date</label>
+                                    <input type="date" class="form-control" placeholder=""
+                                        formControlName="enteredDate">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>RL Number</label>
+                                    <input type="number" class="form-control" placeholder="int"
+                                        formControlName="rlNumber">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Sheet Number</label>
+                                    <input type="number" class="form-control" placeholder="int"
+                                        formControlName="sheetNumber">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input [disabled]="!ceramicsForm.valid" type="submit"
+                                    class="btn btn-info btn-fill btn-block" value="SAVE">
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+                    </form>
                 </div>
             </div>
-
         </div>
+
     </div>
+</div>
 <!-- </div> -->

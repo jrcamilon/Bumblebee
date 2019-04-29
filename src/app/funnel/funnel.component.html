@@ -14,7 +14,8 @@
 </kendo-chart> -->
 
 
-<kendo-chart (seriesHover)="onSeriesOver($event)">
+<kendo-chart (seriesHover)="onSeriesOver($event)"
+[pannable]="{ lock: 'y' }" [zoomable]="{ mousewheel: { lock: 'y' }, selection: { lock: 'y' } }">
     <kendo-chart-series>
       <kendo-chart-series-item
           type="column" [data]="model"
