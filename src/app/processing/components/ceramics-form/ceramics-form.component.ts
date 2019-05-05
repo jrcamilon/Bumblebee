@@ -49,6 +49,7 @@ export class CeramicsFormComponent implements OnInit {
 
   // CAMERA
 
+    public todaysDate = new Date();
     // Camera
     // toggle webcam on/off
     public showWebcam = false;
@@ -84,16 +85,16 @@ export class CeramicsFormComponent implements OnInit {
 
     this.ceramicsForm = fb.group({
       locusNumber: ['', Validators.compose([Validators.required])],
-      locusNumPre: ['', Validators.compose([
-        Validators.required,
-        Validators.minLength(1),
-        Validators.pattern('[a-zA-z]*'),
-        Validators.maxLength(1)])],
-      locusNumSuf: ['', Validators.compose([
-        Validators.required,
-        Validators.pattern('[a-zA-z]*'),
-        Validators.minLength(1),
-        Validators.maxLength(1)])],
+      // locusNumPre: ['', Validators.compose([
+      //   Validators.required,
+      //   Validators.minLength(1),
+      //   Validators.pattern('[a-zA-z]*'),
+      //   Validators.maxLength(1)])],
+      // locusNumSuf: ['', Validators.compose([
+      //   Validators.required,
+      //   Validators.pattern('[a-zA-z]*'),
+      //   Validators.minLength(1),
+      //   Validators.maxLength(1)])],
       objectGroupNumber: ['', Validators.compose([
         Validators.required,
         Validators.minLength(1),
@@ -113,6 +114,8 @@ export class CeramicsFormComponent implements OnInit {
       typeVariant: null,
       weight: null,
       fabric: null,
+      ware: null, 
+      fabricVariant:null,
       diameter: null,
       preservation: null,
       sfCoating: null,
@@ -123,7 +126,7 @@ export class CeramicsFormComponent implements OnInit {
       paintedDecoration: null,
       comments: null,
       photo: null,
-      processedBy: null,
+      processedBy: ['', Validators.compose([Validators.required])],
       processDate: null,
       enteredBy: null,
       enteredDate: null,
