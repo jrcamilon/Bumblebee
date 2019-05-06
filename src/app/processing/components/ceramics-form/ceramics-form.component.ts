@@ -54,6 +54,7 @@ export class CeramicsFormComponent implements OnInit {
 
   // CAMERA
 
+    public todaysDate = new Date();
     // Camera
     // toggle webcam on/off
     public showWebcam = false;
@@ -91,16 +92,16 @@ export class CeramicsFormComponent implements OnInit {
 
     this.ceramicsForm = fb.group({
       locusNumber: ['', Validators.compose([Validators.required])],
-      locusNumPre: ['', Validators.compose([
-        Validators.required,
-        Validators.minLength(1),
-        Validators.pattern('[a-zA-z]*'),
-        Validators.maxLength(1)])],
-      locusNumSuf: ['', Validators.compose([
-        Validators.required,
-        Validators.pattern('[a-zA-z]*'),
-        Validators.minLength(1),
-        Validators.maxLength(1)])],
+      // locusNumPre: ['', Validators.compose([
+      //   Validators.required,
+      //   Validators.minLength(1),
+      //   Validators.pattern('[a-zA-z]*'),
+      //   Validators.maxLength(1)])],
+      // locusNumSuf: ['', Validators.compose([
+      //   Validators.required,
+      //   Validators.pattern('[a-zA-z]*'),
+      //   Validators.minLength(1),
+      //   Validators.maxLength(1)])],
       objectGroupNumber: ['', Validators.compose([
         Validators.required,
         Validators.minLength(1),
@@ -115,11 +116,14 @@ export class CeramicsFormComponent implements OnInit {
         Validators.minLength(1),
         Validators.maxLength(4),
         Validators.pattern('[0-9]*')])],
-      typeDescription: ['', Validators.compose([Validators.required, Validators.minLength(5)])],
-      typeFamily: null,
+      typeDescription: null,
+      typeFamily: ['', Validators.compose([Validators.required])],
+      typeNumber: null,
       typeVariant: null,
       weight: null,
       fabric: null,
+      ware: null,
+      fabricVariant: null,
       diameter: null,
       preservation: null,
       sfCoating: null,
@@ -130,7 +134,7 @@ export class CeramicsFormComponent implements OnInit {
       paintedDecoration: null,
       comments: null,
       photo: null,
-      processedBy: null,
+      processedBy: ['', Validators.compose([Validators.required])],
       processDate: null,
       enteredBy: null,
       enteredDate: null,
@@ -162,14 +166,16 @@ export class CeramicsFormComponent implements OnInit {
       console.log(this.webcamImage.imageData);
       formValue.image = this.webcamImage.imageAsBase64;
     }
-    // console.log(formValue);
+
+    formValue.typeNumber = this.selectedValue;
+    formValue.typeDescription = this.typeDescription;
     this.formsSubmitted.push(formValue);
     this.ceramicsForm.reset();
-    if (this.isOnline) {
-      //Send Straight to DataServices to post to API
-    } else {
-      //Save to local DB to save when Online
-    }
+    // if (this.isOnline) {
+    //   //Send Straight to DataServices to post to API
+    // } else {
+    //   //Save to local DB to save when Online
+    // }
     this._formsService.activeForm.next(this.formsSubmitted);
 
   }
@@ -225,9 +231,9 @@ export class CeramicsFormComponent implements OnInit {
     this.webcamImage = null;
   }
 
-  // public handleFilter(value: any) {
-  //   this.data = this.typeNums.filter((s) => s.toLowerCase().indexOf(value.toLowerCase()) !== -1);
-  // }
+  public handleFilter(value: any) {
+    this.data = this.typeNums.filter((s) => s.toLowerCase().indexOf(value.toLowerCase()) !== -1);
+  }
 
   public toggleScreens(value: string): void {
     this.visibleTab = value;
@@ -238,7 +244,8 @@ export class CeramicsFormComponent implements OnInit {
       return e.family === value;
     });
 
-    console.log(matchingFamily);
+    this.selectedValue = matchingFamily[0].image;
+    this.typeDescription = matchingFamily[0].typeDesc;
     this.familyImages = matchingFamily;
   }
 
@@ -249,8 +256,11 @@ export class CeramicsFormComponent implements OnInit {
 
   public onSelectImage(item: any) {
 
-    let words = item.image.split('.');
-    this.selectedValue = words[2];
+    const words = item.image.split('.');
+    console.log(item);
+    this.selectedValue = item.image;
+    this.ceramicsForm.value.typeNumber = item.image;
+    console.log(words);
     this.typeDescription = item.typeDesc;
   }
 

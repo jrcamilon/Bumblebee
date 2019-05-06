@@ -105,7 +105,7 @@ export class ProcessingComponent implements OnInit {
         toInsert = this.completedCeramics.map(ele => {
           // console.log(ele);
           return new Object({
-            locusNumber: ele.locusNumber + String(ele.locusNumPre).toUpperCase() + '/' + String(ele.locusNumSuf).toLowerCase(),
+            locusNumber: ele.locusNumber ,
             application: ele.application === null ? 'null' : String(ele.application),
             blackened: ele.blackened === null ? 'null' : String(ele.blackened),
             comments: ele.comments === null ? 'null' : String(ele.comments),
@@ -113,6 +113,9 @@ export class ProcessingComponent implements OnInit {
             enteredBy: ele.enteredBy === null ? 'null' : String(ele.enteredBy),
             enteredDate: String(ele.enteredDate),
             fabric: ele.fabric === null ? 'null' : String(ele.fabric),
+            ware: ele.ware === null ? 'null' : String(ele.ware),
+            fabricVariant: ele.fabricVariant === null ? 'null' : String(ele.fabricVariant),
+            typeVariant: ele.typeVariant === null ? 'null' : String(ele.typeVariant),
             incisedDecoration: String(ele.incisedDecoration),
             numberOfObjects: String(ele.numberOfObjects),
             objectGroupNum: String(ele.objectGroupNumber),
@@ -126,18 +129,20 @@ export class ProcessingComponent implements OnInit {
             sfCoating: ele.sfCoating === null ? 'null' : String(ele.sfCoating),
             sfTreatment : ele.sfTreatment === null ? 'null' : String(ele.sfTreatment),
             sheetNum: ele.sheetNumber === null ? 'null' : String(ele.sheetNumber),
-            lat: 0,
-            lng: 0,
             typeDescription: ele.typeDescription === null ? 'null' : String(ele.typeDescription),
             typeNum: ele.typeNumber === null ? 'null' : String(ele.typeNumber) + '.' + String(ele.typeVariant),
             weight: ele.weight === null ? 'null' : String(ele.weight),
-            room: 'null',
-            phase: 'null'
+         
           })
         });
 
         console.log(toInsert);
-
+        this._formsService.writeElephantineToDB(toInsert[0]).subscribe(res => {
+              if (res.status === 201) {
+                console.log(res);
+                this.openSnackBar();
+              }
+            });
         // for (let i = 0; i < toInsert.length; i++) {
         //   console.log(toInsert[i]);
         //   this._formsService.writeElephantineToDB(toInsert[i]).subscribe(res => {

@@ -2,11 +2,17 @@
 <div class="container-fluid">
 
     <div>
-    <div class="btn-group btn-group-justified" style="padding-bottom: 10px;">
-        <a class="btn btn-primary" (click)="toggleScreens('input')" [ngClass]="{'active-btn': visibleTab === 'input'}" style="border: 1px solid white; background-color: #4b4b4b; color: white;">INPUT</a>
-        <a class="btn btn-primary" (click)="toggleScreens('offlineDB')" [ngClass]="{'active-btn': visibleTab === 'offlineDB'}" style="border: 1px solid white; background-color: #4b4b4b; color: white;">OFFLINE DB RECORDS</a>
-        <a class="btn btn-primary" (click)="toggleScreens('onlineDB')" [ngClass]="{'active-btn': visibleTab === 'onlineDB'}" style="border: 1px solid white; background-color: #4b4b4b; color: white;">ONLINE DB RECORDS</a>
-    </div>
+        <div class="btn-group btn-group-justified" style="padding-bottom: 10px;">
+            <a class="btn btn-primary" (click)="toggleScreens('input')"
+                [ngClass]="{'active-btn': visibleTab === 'input'}"
+                style="border: 1px solid white; background-color: #4b4b4b; color: white;">INPUT</a>
+            <a class="btn btn-primary" (click)="toggleScreens('offlineDB')"
+                [ngClass]="{'active-btn': visibleTab === 'offlineDB'}"
+                style="border: 1px solid white; background-color: #4b4b4b; color: white;">OFFLINE DB RECORDS</a>
+            <a class="btn btn-primary" (click)="toggleScreens('onlineDB')"
+                [ngClass]="{'active-btn': visibleTab === 'onlineDB'}"
+                style="border: 1px solid white; background-color: #4b4b4b; color: white;">ONLINE DB RECORDS</a>
+        </div>
     </div>
 
     <!-- <div class="row">
@@ -57,21 +63,28 @@
                                 <div class="form-group"
                                     [ngClass]="{'has-error' : !ceramicsForm.controls['locusNumber'].valid && ceramicsForm.controls['locusNumber'].touched}">
                                     <label>Locus Number</label>
-                                    <select class="form-control" formControlName="locusNumber" placeholder="#####">
-                                        <option [value]="46501">46501</option>
-                                        <option [value]="44501">44501</option>
-                                        <option [value]="43501">43501</option>
-                                        <option [value]="45502">45502</option>
-                                        <option [value]="45501">45501</option>
-                                        <option [value]="54502">54502</option>
-                                    </select>
+                                    <input class="form-control" formControlName="locusNumber" placeholder="#####" />
+
                                     <span class="help-block"
                                         *ngIf="!ceramicsForm.controls['locusNumber'].valid && ceramicsForm.controls['locusNumber'].touched">
                                         Uh-oh! This is required. Select One.
                                     </span>
                                 </div>
                             </div>
-                            <!-- LOCUS NUM PRE -->
+
+                            <div class="col-md-4"
+                            [ngClass]="{'has-error' : !ceramicsForm.controls['numberOfObjects'].valid && ceramicsForm.controls['numberOfObjects'].touched}">
+                            <div class="form-group">
+                                <label>Number of Objects</label>
+                                <input type="text" maxlength="4" class="form-control" placeholder="1"
+                                    formControlName="numberOfObjects">
+                                <span class="help-block" 
+                                    *ngIf="!ceramicsForm.controls['numberOfObjects'].valid && ceramicsForm.controls['numberOfObjects'].touched">
+                                    Uh-oh! Required Field
+                                </span>
+                            </div>
+                        </div>
+                            <!-- LOCUS NUM PRE
                             <div class="col-md-2">
                                 <div class="form-group"
                                     [ngClass]="{'has-error' : !ceramicsForm.controls['locusNumPre'].valid && ceramicsForm.controls['locusNumPre'].touched}">
@@ -83,7 +96,7 @@
                                         Uh-oh! This is required
                                     </span>
                                 </div>
-                            </div>
+                            </div> 
 
 
                             <div class="col-md-2">
@@ -97,7 +110,7 @@
                                         Uh-oh! This is required
                                     </span>
                                 </div>
-                            </div>
+                            </div>-->
 
                             <div class="col-md-3">
                                 <div class="form-group"
@@ -131,8 +144,7 @@
                         <!-- Validation for above fields -->
                         <div class="row"
                             *ngIf="!ceramicsForm.controls['locusNumber'].valid && ceramicsForm.controls['locusNumber'].touched
-                            || !ceramicsForm.controls['locusNumPre'].valid && ceramicsForm.controls['locusNumPre'].touched
-                            || !ceramicsForm.controls['locusNumSuf'].valid && ceramicsForm.controls['locusNumSuf'].touched
+                           
                             || !ceramicsForm.controls['objectGroupNumber'].valid && ceramicsForm.controls['objectGroupNumber'].touched
                             || !ceramicsForm.controls['objectNumber'].valid && ceramicsForm.controls['objectNumber'].touched">
                             <div class="col-md-12 alert">
@@ -141,15 +153,15 @@
                                         *ngIf="!ceramicsForm.controls['locusNumber'].valid && ceramicsForm.controls['locusNumber'].touched">
                                         <b>Locus Number</b> is a Required Field. Select a Locus Number from the drop
                                         down list.</p>
-                                    <p
+                                    <!-- <p
                                         *ngIf="!ceramicsForm.controls['locusNumPre'].valid && ceramicsForm.controls['locusNumPre'].touched">
                                         <b>Locus Number Prefix</b>is a Required Field with a minimum of ONE character.
                                         e.g. A, B, C</p>
                                     <p
                                         *ngIf="!ceramicsForm.controls['locusNumSuf'].valid && ceramicsForm.controls['locusNumSuf'].touched">
                                         <b>Locus Number Suffix</b> is a Required Field with a minimum of ONE character.
-                                        e.g. a, b, c</p>
-                                    <p
+                                        e.g. a, b, c</p>-->
+                                    <p 
                                         *ngIf="!ceramicsForm.controls['objectGroupNumber'].valid && ceramicsForm.controls['objectGroupNumber'].touched">
                                         <b>Object Group Number</b> is a Required Field with a minimum of ONE character.
                                         e.g. 1, 2, 3</p>
@@ -162,19 +174,8 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6"
-                                [ngClass]="{'has-error' : !ceramicsForm.controls['numberOfObjects'].valid && ceramicsForm.controls['numberOfObjects'].touched}">
-                                <div class="form-group">
-                                    <label>Number of Objects</label>
-                                    <input type="text" maxlength="4" class="form-control" placeholder="1"
-                                        formControlName="numberOfObjects">
-                                    <span class="help-block" 
-                                        *ngIf="!ceramicsForm.controls['numberOfObjects'].valid && ceramicsForm.controls['numberOfObjects'].touched">
-                                        Uh-oh! Required Field
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
+
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <label>Type Family</label>
                                     <select class="form-control" placeholder="O.A1" (change)="onFamilySelect($event.target.value)" formControlName="typeFamily">
@@ -183,18 +184,38 @@
 
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                    <div class="form-group">
+                            <div class="col-md-2">
+                                    <!-- <div class="form-group">
                                         <label>Ordinal Number</label>
                                         <div class="example-wrapper">
                                                 <input type="text" class="form-control" maxlength="2" [value]="selectedValue" formControlName="typeVariant" >
-                                          </div>
+                                          </div> -->
+                                    <label>Type Number</label>
+                                    <div class="example-wrapper">
+                                        <input type="text" class="form-control" disabled [value]="selectedValue" formControlName="typeNumber">
+        
+                                        <!-- <kendo-autocomplete [data]="data" class="form-control" [filterable]="true"
+                                            (filterChange)="handleFilter($event)" formControlName="typeNumber"
+                                            [placeholder]="'e.g. O.A1.1'">
+                                        </kendo-autocomplete> -->
                                     </div>
                                 </div>
+                                <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Variants</label>
+                                            <div class="example-wrapper">
+                                                <input type="text" class="form-control" maxlength="2" placeholder="1"
+                                                    formControlName="typeVariant">
+                                            </div>
+                                        </div>
+                                    </div>
                         </div>
 
+                        <!-- </div> -->
 
-                        <div class="row">
+
+                        <div class="row" *ngIf="ceramicsForm.value.typeFamily">
+                                <small style="margin-left: 15px;">Please Select one of the following images...</small>
                             <div id="container">
                                 <img style="border: 2px solid black; width: 400px;" *ngFor="let item of familyImages" [src]="getImage(item)" (click)="onSelectImage(item)" />
                               </div>
@@ -206,9 +227,11 @@
                             </div>
                             <div class="col-md-8">
                                 <p style="font-size: 12px; color: #9A9A9A;">OBJECT NUMS RELATED: </p>
-                                <p style="font-size: 12px; color: #9A9A9A;">TYPE DESCRIPTION: {{imageObjectData.typeDesc}}</p>
+                                <p style="font-size: 12px; color: #9A9A9A;">TYPE DESCRIPTION:
+                                    {{imageObjectData.typeDesc}}</p>
                                 <p style="font-size: 12px; color: #9A9A9A;">FAMILY: {{imageObjectData.family}} </p>
-                                <p style="font-size: 12px; color: #9A9A9A;">FAMILY DESC: {{imageObjectData.familyDesc}}</p>
+                                <p style="font-size: 12px; color: #9A9A9A;">FAMILY DESC: {{imageObjectData.familyDesc}}
+                                </p>
                             </div>
                         </div>
 
@@ -248,15 +271,46 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Weight</label>
-                                    <input type="number" class="form-control" placeholder="Kgs"
+                                    <label>Weight (g)</label>
+                                    <input type="number" class="form-control" placeholder="1.5"
                                         formControlName="weight">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Fabric</label>
-                                    <input type="text" class="form-control" placeholder="NSI" formControlName="fabric">
+                                    <select type="text" class="form-control" placeholder="NSI" formControlName="fabric">
+                                        <option>NSI</option>
+                                        <option>NSII</option>
+                                        <option>NSII+</option>
+                                        <option>NSIII</option>
+                                        <option>NSV</option>
+                                        <option>MI</option>
+                                        <option>MII</option>
+                                        <option>MIII</option>
+                                        <option>Other Marl</option>
+                                        <option>Other</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Ware</label>
+                                    <select type="text" class="form-control" placeholder="NSI" formControlName="ware">
+                                        <option>Coarse</option>
+                                        <option>Medium</option>
+                                        <option>Fine</option>
+                                        <option>Marl</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Fabric Variant</label>
+                                    <input type="text" class="form-control" placeholder="s"
+                                        formControlName="fabricVariant" />
+
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -278,15 +332,33 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>SF Coating</label>
-                                    <input type="text" class="form-control" placeholder="uncoated"
+                                    <select type="text" class="form-control" placeholder="uncoated"
                                         formControlName="sfCoating">
+                                        <option>Uncoated</option>
+                                        <option>Red Slip In</option>
+                                        <option>Red Slip Out</option>
+                                        <option>Red Slip Both</option>
+                                        <option>Cream Slip In</option>
+                                        <option>Cream Slip Out</option>
+                                        <option>Cream Slip Both</option>
+                                        <option>Black Slip In</option>
+                                        <option>Black Slip Out</option>
+                                        <option>Black Slip Both</option>
+
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>SF Treatment</label>
-                                    <input type="number" class="form-control" placeholder=""
+                                    <select type="number" class="form-control" placeholder=""
                                         formControlName="sfTreatment">
+                                        <option>None</option>
+                                        <option>Polished</option>
+                                        <option>Burnished</option>
+
+                                    </select>
+
                                 </div>
                             </div>
                         </div>
@@ -294,23 +366,42 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Backend</label>
-                                    <input type="text" class="form-control" placeholder="int"
+                                    <label>Blackened</label>
+                                    <select type="text" class="form-control" placeholder="int"
                                         formControlName="blackened">
+                                        <option>None</option>
+                                        <option>Interior</option>
+                                        <option>Exterior</option>
+                                        <option>Both</option>
+                                    </select>
+
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Incised Decoration</label>
-                                    <input type="text" class="form-control" placeholder=""
+                                    <select type="text" class="form-control" placeholder=""
                                         formControlName="incisedDecoration">
+                                        <option>None</option>
+                                        <option>Lines</option>
+                                        <option>Wavy</option>
+                                        <option>Other</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-5">
                                 <div class="form-group">
                                     <label>Application</label>
-                                    <input type="text" class="form-control" placeholder=""
+                                    <select type="text" class="form-control" placeholder=""
                                         formControlName="application">
+                                        <option>None</option>
+                                        <option>Kernos</option>
+                                        <option>Spout</option>
+                                        <option>Knob</option>
+                                        <option>Tubular</option>
+                                        <option>Handle</option>
+                                        <option>Other</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -319,8 +410,14 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Painted Decoration</label>
-                                    <textarea rows="3" class="form-control" placeholder="Here can be your description"
-                                        formControlName="paintedDecoration"></textarea>
+                                    <select class="form-control" placeholder="Here can be your description"
+                                        formControlName="paintedDecoration">
+                                        <option>None</option>
+                                        <option>Red Rim Band</option>
+                                        <option>Black Rim Band</option>
+                                        <option>White Rim Band</option>
+                                        <option>Other</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -346,7 +443,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Process Date</label>
-                                    <input type="date" class="form-control" placeholder=""
+                                    <input type="date" class="form-control" (value)="todaysDate"  placeholder=""
                                         formControlName="processDate">
                                 </div>
                             </div>
@@ -384,7 +481,8 @@
 
                         <div class="row">
                             <div class="col-md-12">
-                                <input [disabled]="!ceramicsForm.valid" type="submit" class="btn btn-info btn-fill btn-block" value="SAVE">
+                                <input [disabled]="!ceramicsForm.valid" type="submit"
+                                    class="btn btn-info btn-fill btn-block" value="SAVE">
                                 <!-- <input type="submit" form="mainForm"  [disabled]="!isKhppFormValid" class="btn btn-info btn-fill btn-block" (click)="onFormSubmit()" [value]="buttonValue"> -->
                             </div>
                         </div>
