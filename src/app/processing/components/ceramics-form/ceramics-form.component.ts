@@ -10,6 +10,7 @@ import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
 import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
 import { ceramicTypes } from './ceramic-types';
+import * as _ from 'lodash';  
 
 interface CeramicTypes {
   image: string,
@@ -34,6 +35,10 @@ export class CeramicsFormComponent implements OnInit {
   public mockData: Subscription;
   public buttonMode = 'Save';
   public formsSubmitted = [];
+  public ceramicFamilyTypes;
+  selectedValue = '';
+  typeDescription = '';
+  public familyImages;
 
   visibleTab = 'input';
 
@@ -72,7 +77,7 @@ export class CeramicsFormComponent implements OnInit {
 
   constructor(public _onlineService: OnlineServiceService,
        public fb: FormBuilder,
-        public _dataService: DataService, 
+        public _dataService: DataService,
         public _formsService: FormsService,
         public _typeService: TypesService) {
 
@@ -81,6 +86,8 @@ export class CeramicsFormComponent implements OnInit {
             this.data = this.typeNums.slice();
             this.typeVariants = item.variants.map(ele => { return ele.typeVariant }).filter((ele) => { return ele !== null});
           });
+
+    this.createFamilyTypes();
 
     this.ceramicsForm = fb.group({
       locusNumber: ['', Validators.compose([Validators.required])],
@@ -109,7 +116,7 @@ export class CeramicsFormComponent implements OnInit {
         Validators.maxLength(4),
         Validators.pattern('[0-9]*')])],
       typeDescription: ['', Validators.compose([Validators.required, Validators.minLength(5)])],
-      typeNumber: null,
+      typeFamily: null,
       typeVariant: null,
       weight: null,
       fabric: null,
@@ -140,6 +147,12 @@ export class CeramicsFormComponent implements OnInit {
     WebcamUtil.getAvailableVideoInputs()
     .then((mediaDevices: MediaDeviceInfo[]) => {
       this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
+    });
+  }
+
+  createFamilyTypes() {
+    this.ceramicFamilyTypes = _.uniqBy(ceramicTypes, (e) => {
+      return e.family;
     });
   }
 
@@ -212,13 +225,34 @@ export class CeramicsFormComponent implements OnInit {
     this.webcamImage = null;
   }
 
-  public handleFilter(value: any) {
-    this.data = this.typeNums.filter((s) => s.toLowerCase().indexOf(value.toLowerCase()) !== -1);
-  }
+  // public handleFilter(value: any) {
+  //   this.data = this.typeNums.filter((s) => s.toLowerCase().indexOf(value.toLowerCase()) !== -1);
+  // }
 
   public toggleScreens(value: string): void {
     this.visibleTab = value;
-}
+  }
+
+  public onFamilySelect(value: any) {
+    const matchingFamily = ceramicTypes.filter(e => {
+      return e.family === value;
+    });
+
+    console.log(matchingFamily);
+    this.familyImages = matchingFamily;
+  }
+
+  public getImage(item: any) {
+    const image =  '/assets/ceramics/' + item.image + '.png';
+    return image;
+  }
+
+  public onSelectImage(item: any) {
+
+    let words = item.image.split('.');
+    this.selectedValue = words[2];
+    this.typeDescription = item.typeDesc;
+  }
 
   public getTypeImage() {
     let found = false;

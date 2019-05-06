@@ -50,6 +50,7 @@ import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
 
 import { WebcamModule } from 'ngx-webcam';
 
+
 //Directives
 import { PopupAnchorDirective } from '../../processing/components/khpp-form/popupanchor.directive';
 import 'hammerjs';
@@ -96,6 +97,7 @@ import { KhppBlackenedChartComponent } from 'app/dashboard/visualizations/KhppBl
 import { FabricComparisonChartComponent } from 'app/dashboard/visualizations/FabricComparison/fabric-comparison-chart/fabric-comparison-chart.component';
 
 import { DashFilterBarComponent } from 'app/dashboard/filterbar/filterbar.component';
+import { FilterPipe } from 'app/processing/components/ceramics-form/filter.pipe';
 // import { KhppFabricRadarComponent } from 'app/dashboard/visualizations/KhppFabricRadar/khpp-fabric-radar/khpp-fabric-radar.component';
 
 @NgModule({
@@ -192,7 +194,8 @@ import { DashFilterBarComponent } from 'app/dashboard/filterbar/filterbar.compon
     KhppFabricRadarComponent,
     KhppBlackenedChartComponent,
     FabricComparisonChartComponent,
-    DashFilterBarComponent
+    DashFilterBarComponent,
+    FilterPipe
 
 
   ],

@@ -406,7 +406,7 @@ export const ceramicTypes = [
         familyDesc: 'Platters with modelled rim'
     },
     {
-        image: 'O.D6.1 ',
+        image: 'O.D6.1',
         objectNums: ['46501P/k-2-7 (Ø and fabric not marked on drawing!!!)'],
         typeDesc: 'Medium-coarse platter with everted rim',
         family: 'O.D6',

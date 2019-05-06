@@ -2,3 +2,18 @@
     background-color: #000000 !important;
     color: white !important;
 }
+
+
+#container {
+    width: 100%; /* Equal to browser width */
+    height: 300px; /* Equal to browser height */
+    overflow-x: scroll; /* Allow scroll on x-axis */
+    overflow-y: hidden; /* Disable scroll on y-axis */
+    white-space: nowrap; /* Display images in single row */
+  }
+  
+  #container img {
+    width: auto; /* Set image width automatically */
+    height: 100%; /* Image height equal to #container */
+    margin-left: -4px; /* Remove white space between images */
+  }

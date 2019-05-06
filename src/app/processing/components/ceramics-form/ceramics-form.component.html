@@ -168,7 +168,7 @@
                                     <label>Number of Objects</label>
                                     <input type="text" maxlength="4" class="form-control" placeholder="1"
                                         formControlName="numberOfObjects">
-                                    <span class="help-block"
+                                    <span class="help-block" 
                                         *ngIf="!ceramicsForm.controls['numberOfObjects'].valid && ceramicsForm.controls['numberOfObjects'].touched">
                                         Uh-oh! Required Field
                                     </span>
@@ -176,32 +176,31 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Type Number</label>
-                                    <div class="example-wrapper">
-                                        <kendo-autocomplete 
-                                        [data]="data" 
-                                        class="form-control" 
-                                        [filterable]="true"
-                                        (filterChange)="handleFilter($event)"
-                                        formControlName="typeNumber" 
-                                        [placeholder]="'e.g. O.A1.1'">
-                                    </kendo-autocomplete>
-                                      </div>
+                                    <label>Type Family</label>
+                                    <select class="form-control" placeholder="O.A1" (change)="onFamilySelect($event.target.value)" formControlName="typeFamily">
+                                        <option [value]="type.family" *ngFor="let type of ceramicFamilyTypes" >{{type.family}}</option>
+                                    </select>
+
                                 </div>
                             </div>
                             <div class="col-md-3">
                                     <div class="form-group">
-                                        <label>Variants</label>
+                                        <label>Ordinal Number</label>
                                         <div class="example-wrapper">
-                                                <input type="text" class="form-control" maxlength="2" placeholder="1"
-                                                formControlName="typeVariant">
+                                                <input type="text" class="form-control" maxlength="2" [value]="selectedValue" formControlName="typeVariant" >
                                           </div>
                                     </div>
                                 </div>
                         </div>
 
 
-                        <div class="row" *ngIf="ceramicsForm.value.typeNumber">
+                        <div class="row">
+                            <div id="container">
+                                <img style="border: 2px solid black; width: 400px;" *ngFor="let item of familyImages" [src]="getImage(item)" (click)="onSelectImage(item)" />
+                              </div>
+                        </div>
+
+                        <!-- <div class="row" *ngIf="ceramicsForm.value.typeNumber">
                             <div class="col-md-4">
                                 <img [src]="getTypeImage()" alt="NO IMAGE" style="width: 200px; height: 200px;">
                             </div>
@@ -213,7 +212,7 @@
                             </div>
                         </div>
 
-                        <!-- Validation for above fields -->
+
                         <div class="row"
                             *ngIf="!ceramicsForm.controls['numberOfObjects'].valid && ceramicsForm.controls['numberOfObjects'].touched">
                             <div class="col-md-12 alert">
@@ -223,7 +222,7 @@
                                         <b>Number of Objects</b> is a Required Field. maximum of THREE characters.</p>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
 
                         <!-- Type Description -->
@@ -231,7 +230,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Type Description</label>
-                                    <textarea rows="3" class="form-control" placeholder="Here can be your description"
+                                    <textarea rows="3" class="form-control" placeholder="Here can be your description" [value]="typeDescription"
                                         formControlName="typeDescription"></textarea>
                                 </div>
                             </div>
