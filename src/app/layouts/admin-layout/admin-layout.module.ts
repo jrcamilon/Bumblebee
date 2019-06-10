@@ -98,6 +98,7 @@ import { FabricComparisonChartComponent } from 'app/dashboard/visualizations/Fab
 
 import { DashFilterBarComponent } from 'app/dashboard/filterbar/filterbar.component';
 import { FilterPipe } from 'app/processing/components/ceramics-form/filter.pipe';
+import { DashboardTwoComponent } from 'app/dashboard-two/dashboard-two.component';
 // import { KhppFabricRadarComponent } from 'app/dashboard/visualizations/KhppFabricRadar/khpp-fabric-radar/khpp-fabric-radar.component';
 
 @NgModule({
@@ -191,6 +192,7 @@ import { FilterPipe } from 'app/processing/components/ceramics-form/filter.pipe'
     BodyProcessingComponent,
     DetailedProcessingComponent,
     DashboardComponent,
+    DashboardTwoComponent,
     KhppFabricRadarComponent,
     KhppBlackenedChartComponent,
     FabricComparisonChartComponent,

@@ -34,7 +34,7 @@ import { InputsModule } from '@progress/kendo-angular-inputs';
    ],
    declarations: [
       AppComponent,
-      AdminLayoutComponent,
+      AdminLayoutComponent
    ],
    providers: [],
    bootstrap: [

@@ -250,7 +250,7 @@ export class CeramicsFormComponent implements OnInit {
   }
 
   public getImage(item: any) {
-    const image =  '/assets/ceramics/' + item.image + '.png';
+    const image =  'assets/ceramics/' + item.image + '.png';
     return image;
   }
 
