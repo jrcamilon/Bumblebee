@@ -81,6 +81,10 @@ export class KhppFormService {
     }
   }
 
+  getSurfaceTreatmentOption(): any[] {
+    return this.surfaceTreatmentOptions_other;
+  }
+
   getSherdTypeOptions() {
     return this.sherdTypeOptions;
   }
@@ -177,7 +181,7 @@ export class KhppFormService {
   }
 
   tagNumberFiledValid(tagNumber: string) {
-    return (tagNumber.length >= 13)
+    return (tagNumber.length >= 12)
   }
 
 }

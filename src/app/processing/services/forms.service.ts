@@ -23,7 +23,7 @@ export class FormsService {
     // console.log(body);
 
     const headers = new Headers({'Content-Type': 'application/json'});
-    return this._http.post('http://vm1.infosol.com:3092/write/elephant', body, {headers: headers})
+    return this._http.post('http://localhost:3092/write/elephant', body, {headers: headers})
     .map((response: Response) => {
       const tmpData = response.json();
       return tmpData;
@@ -44,7 +44,7 @@ export class FormsService {
 
     console.log(body);
     const headers = new Headers({'Content-Type': 'application/json'});
-    return this._http.post('http://vm1.infosol.com:3092/write/khpp', body, {headers: headers})
+    return this._http.post('http://localhost:3092/write/khpp', body, {headers: headers})
     .map((response: Response) => {
       const tmpData = response.json();
       return tmpData;
@@ -53,7 +53,19 @@ export class FormsService {
 
   public readFromKHPP (): Observable<any> {
     const headers = new Headers({'Content-Type': 'application/json'});
-    return this._http.get('http://vm1.infosol.com:3092/read/khpp', {headers: headers})
+    return this._http.get('http://localhost:3092/read/khpp', {headers: headers})
+    .map((response: Response) => {
+      const tmpData = response.json();
+      return tmpData;
+    });
+  }
+
+  public deleteFromKHPP (formId: number): Observable<any> {
+    const body = {
+      formId: formId
+    }
+    const headers = new Headers({'Content-Type': 'application/json'});
+    return this._http.post('http://localhost:3092/delete/khpp', body, {headers: headers})
     .map((response: Response) => {
       const tmpData = response.json();
       return tmpData;

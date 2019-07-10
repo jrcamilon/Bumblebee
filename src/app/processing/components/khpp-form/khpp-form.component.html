@@ -14,28 +14,33 @@
         <!-- TAGNUMBER, DATE, ENTERED BY, PROCESSING TYPE FIELDS -->
         <div class="row container-fluid">
       
-          <div class="form-group">
+          <div class="form-group" [ngClass]="{'has-error': tagHasError}">
             <label for="tagNumber" style="font-size: 10px !important">Tag Number</label>
             <input 
               name="tagNumber"
-              autocomplete="on"
+              
               id="tagNumber"
               class='col-sm-12 col-xs-12 form-control' 
               type="text" 
               [value]="tagNumber" 
+              (keypress)="restrictTagChars($event)"
               (keyup)="onTagChange($event)"
-              required maxlength="13"
-              placeholder="Tag Number D09.1-007-1.1">
+              required 
+              maxlength="15"
+              placeholder="D09.1-007-12.12">
+              <span class="help-block" *ngIf="tagHasError">Please correct the error</span>
           </div>
         
           <div class="form-group" style="padding-top: 25px;">
             <label for="date" style="font-size: 10px !important">Date</label>
             <input 
               id="date"
+              autocomplete="on"
               name="date"
-              class='col-sm-12 col-xs-12 form-control' 
+              class='col-sm-10 col-xs-10 form-control' 
               type="date" 
               [value]="dueDate" 
+              [ngModel]="dueDate | date:'yyyy-MM-dd'"
               (change)="onDueDateChange($event)"
               required 
               placeholder="Due Date">
@@ -143,11 +148,25 @@
         <td>{{record.detailedCount }}</td>
         <td>
           <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-info" disabled="true">EDIT</button>
-            <button type="button" class="btn btn-danger"  disabled="true">DELETE</button>
+            <!-- <button type="button" class="btn btn-info" disabled="true">EDIT</button> -->
+            <button type="button" class="btn btn-danger" (click)="onDelete(record)">DELETE</button>
           </div>
         </td>
       </tr>
     </tbody>
   </table>
+</div>
+
+<!-- Kendo Dialog for Deleting -->
+<div class="example-wrapper">
+  <kendo-dialog title="Please confirm" *ngIf="opened" (close)="close('cancel')" [minWidth]="250" [width]="450">
+      <p style="margin: 30px; text-align: center;">Are you sure you want to delete this record?</p>
+
+      <p style="margin: 30px; text-align: center;">Tag Number: {{recordToDelete.tagNumber}}</p>
+
+      <kendo-dialog-actions>
+          <button kendoButton (click)="close('no')">No</button>
+          <button kendoButton (click)="close('yes')" primary="true">Yes</button>
+      </kendo-dialog-actions>
+  </kendo-dialog>
 </div>

@@ -23,7 +23,7 @@ export class ProcessingComponent implements OnInit {
 
   public data: any[];
   public selection: string;
-  public forms = ['Red Notebook', 'Elephantine', 'KHPP'];
+  public forms = ['Elephantine', 'KHPP'];
   public completedForms = [];
   public completedCeramics = [];
   public formValue: any;
@@ -53,9 +53,9 @@ export class ProcessingComponent implements OnInit {
     private nextWebcam: Subject<boolean|string> = new Subject<boolean|string>();
 
 
-  onFormSelect(form: any) {
-    this.selection = form;
-  }
+  // onFormSelect(form: any) {
+  //   this.selection = form;
+  // }
 
   constructor(
     public snackBar: MatSnackBar,
@@ -67,7 +67,9 @@ export class ProcessingComponent implements OnInit {
       this._formsService.activeForm.subscribe(res => {
         console.log('CERAMICS', res);
         this.completedCeramics = res;
-      })
+      });
+
+  
 
 
       // KHPP Forms
@@ -85,7 +87,7 @@ export class ProcessingComponent implements OnInit {
 
   ngOnInit() {
     this.selection = this.forms[1];
-    this.onFormSelect(this.selection);
+    // this.onFormSelect(this.selection);
     WebcamUtil.getAvailableVideoInputs()
     .then((mediaDevices: MediaDeviceInfo[]) => {
       this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
@@ -197,11 +199,11 @@ export class ProcessingComponent implements OnInit {
 
 
           // Clear the completed forms array and clear the service store.
-          this.deleteOfflineDB();
-          this.completedForms = [];
-          // this._formsService.activeForm.next(this.completedForms);
-          this.offlineDB.clearAll();
-          this._khpp.responseObject.next([]);
+          // this.deleteOfflineDB();
+          // this.completedForms = [];
+          // // this._formsService.activeForm.next(this.completedForms);
+          // this.offlineDB.clearAll();
+          // this._khpp.responseObject.next([]);
 
 
         break;
