@@ -2,6 +2,8 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormsService } from 'app/processing/services/forms.service';
 import { KhppFormService } from 'services/Khpp-Form/Khpp-Form.service';
+import { ceramicTypes } from '../ceramics-form/ceramic-types';
+import * as _ from 'lodash'; 
 
 @Component({
   selector: 'app-detailed-processing',
@@ -27,6 +29,17 @@ export class DetailedProcessingComponent implements OnInit, OnDestroy {
 
   recordToEdit: any;
 
+  // Dropdown Options
+  wareOptions: any[];
+  decorationOptions: any[];
+  blackeningOptions: any[];
+
+  ceramicTypes: any[];
+  ceramicFamilyTypes;
+  selectedValue = '';
+  familyImages;
+  typeDescription;
+
   constructor(
     public fb: FormBuilder,
     public formService: FormsService,
@@ -36,10 +49,20 @@ export class DetailedProcessingComponent implements OnInit, OnDestroy {
       this.recordToEdit = recordToEdit;
     });
 
+    // Create Family Types
+    this.createFamilyTypes();
+
     // Set Defaults for Drop Down Options
+    this.wareOptions = this.khppFormSerivce.getWareOptions();
     this.fabricTypeOptions = this.khppFormSerivce.getFabricTypeOptions();
+    this.decorationOptions = this.khppFormSerivce.getDecorationOptions();
+
     this.surfaceTreatmentOptions = this.khppFormSerivce.getSurfaceTreatmentOptions();
     this.sherdTypeOptions = this.khppFormSerivce.getSherdTypeOptions();
+    this.blackeningOptions = this.khppFormSerivce.getBlackeningOptions();
+
+
+
 
   }
 
@@ -67,13 +90,32 @@ export class DetailedProcessingComponent implements OnInit, OnDestroy {
 
   onFormSave(formValues: any): void {
     this.isFormActive = false;
-    formValues.notes = formValues.fabricType + ' Notes -' + (formValues.notes === null ? '' : formValues.notes);
+    formValues.notes = formValues.fabricType + ' Notes - ' + (formValues.notes === null ? '' : formValues.notes);
     formValues.weight = this.weightSum;
-    // console.log(formValues)
+
     formValues.weightType = formValues.weightType === true ? 'kg' : 'g';
+    formValues.isDrawn = formValues.isDrawn === true ? 1: 0;
+    formValues.rimsTstc = formValues.rimsTstc === true ? 1: 0;
+
+    formValues.typeNumber = this.selectedValue;
+    formValues.typeDescription = this.typeDescription;
+
+    formValues.diameter = formValues.diameter == null ? 0 : formValues.diameter;
+    formValues.fabricType = formValues.fabricType == null ? '' : formValues.fabricType;
+    formValues.percentage = formValues.percentage == null ? 0 : formValues.percentage;
+    formValues.sheetNumber = formValues.sheetNumber == null ? '' : formValues.sheetNumber;
+    formValues.typeDescription = formValues.typeDescription == null ? '' : formValues.typeDescription;
+    formValues.typeFamily = formValues.typeFamily == null ? '' : formValues.typeFamily;
+    formValues.typeNumber = formValues.typeNumber == null ? '' : formValues.typeNumber;
+    formValues.typeVariant = formValues.typeVariant == null ? '' : formValues.typeVariant;
+
 
     this.detailedFormArray.push(formValues);
     this.formService.detailedFormArray.next(this.detailedFormArray);
+
+    this.selectedValue = '';
+    this.typeDescription = '';
+    this.activeDetailedForm.reset();
 
     this.weightString = '';
     this.weightSum = '';
@@ -85,6 +127,20 @@ export class DetailedProcessingComponent implements OnInit, OnDestroy {
     this.detailedFormArray.splice(this.indexEditing, 1);
     formValues.weight = this.weightSum;
     formValues.weightType = formValues.weightType === true ? 'kg' : 'g';
+    formValues.isDrawn = formValues.isDrawn === true ? 1: 0;
+    formValues.rimsTstc = formValues.rimsTstc === true ? 1: 0;
+
+    formValues.typeNumber = this.selectedValue;
+    formValues.typeDescription = this.typeDescription == null ? '': formValues.typeDescription;
+
+    formValues.diameter = formValues.diameter == null ? 0 : formValues.diameter;
+    formValues.fabricType = formValues.fabricType == null ? '' : formValues.fabricType;
+    formValues.percentage = formValues.percentage == null ? 0 : formValues.percentage;
+    formValues.sheetNumber = formValues.sheetNumber == null ? '' : formValues.sheetNumber;
+    formValues.typeDescription = formValues.typeDescription == null ? '' : formValues.typeDescription;
+    formValues.typeFamily = formValues.typeFamily == null ? '' : formValues.typeFamily;
+    formValues.typeNumber = formValues.typeNumber == null ? '' : formValues.typeNumber;
+    formValues.typeVariant = formValues.typeVariant == null ? '' : formValues.typeVariant;
 
     this.detailedFormArray.push(formValues);
     this.formService.detailedFormArray.next(this.detailedFormArray);
@@ -94,7 +150,7 @@ export class DetailedProcessingComponent implements OnInit, OnDestroy {
     this.isEditMode = false;
     this.isFormActive = false;
     this.indexEditing = undefined;
-    console.log(this.detailedFormArray);
+    // console.log(this.detailedFormArray);
     this.createNewTriageForm();
   }
 
@@ -116,29 +172,78 @@ export class DetailedProcessingComponent implements OnInit, OnDestroy {
     const item = this.detailedFormArray[index];
     this.weightSum = item.weight;
     console.log(item);
+    // this.activeDetailedForm = this.fb.group({
+    //   fabricType: [item.fabricType, Validators.compose([Validators.required])],
+    //   surfaceTreatment: [item.surfaceTreatment, Validators.compose([Validators.required])],
+    //   sherdType: [item.sherdType, Validators.compose([Validators.required])],
+    //   count: [item.count, Validators.compose([Validators.required, Validators.minLength(1)])],
+    //   weight: [item.weight, Validators.compose([Validators.required, Validators.minLength(1)])],
+    //   weightType: [(item.weightType === 'kg' ? true : false), null],
+    //   comments: [item.comments, null],
+    //   notes: [item.notes, null]
+    // });
+
     this.activeDetailedForm = this.fb.group({
-      fabricType: [item.fabricType, Validators.compose([Validators.required])],
-      surfaceTreatment: [item.surfaceTreatment, Validators.compose([Validators.required])],
-      sherdType: [item.sherdType, Validators.compose([Validators.required])],
-      count: [item.count, Validators.compose([Validators.required, Validators.minLength(1)])],
-      weight: [item.weight, Validators.compose([Validators.required, Validators.minLength(1)])],
-      weightType: [(item.weightType === 'kg' ? true : false), null],
-      comments: [item.comments, null],
-      notes: [item.notes, null]
+      bodyOrDiagnostic: item.bodyOrDiagnostic,
+      objectNumber: item.objectNumber,
+      rimsTstc: item.rimsTstc,
+      ware: item.ware,
+      surfaceTreatment: item.surfaceTreatment,
+      decoration: item.decoration,
+      blackening: item.blackening,
+      count: item.count,
+      weight: item.weight,
+      weightType: item.weightType === 'kg' ? true : false,
+      quantity: 1,
+      diameter: item.diameter,
+      percentage: item.percentage,
+      typeFamily: item.typeFamily,
+      typeNumber: item.typeNumber,
+      typeVariant: item.typeVariant,
+      typeDescription: item.typeDescription,
+      isDrawn: item.isDrawn,
+      fabricType: item.fabricType,
+      sheetNumber: item.sheetNumber,
+      notes: item.notes
     });
   }
 
   createNewTriageForm() {
+    // this.activeDetailedForm = this.fb.group({
+    //   fabricType: ['', Validators.compose([Validators.required])],
+    //   surfaceTreatment: ['', Validators.compose([Validators.required])],
+    //   sherdType: ['', Validators.compose([Validators.required])],
+    //   count: ['', Validators.compose([Validators.required, Validators.minLength(1)])],
+    //   weight: ['', Validators.compose([Validators.required, Validators.minLength(1)])],
+    //   weightType: null,
+    //   comments: null,
+    //   notes: null
+    // });
     this.activeDetailedForm = this.fb.group({
-      fabricType: ['', Validators.compose([Validators.required])],
-      surfaceTreatment: ['', Validators.compose([Validators.required])],
-      sherdType: ['', Validators.compose([Validators.required])],
-      count: ['', Validators.compose([Validators.required, Validators.minLength(1)])],
-      weight: ['', Validators.compose([Validators.required, Validators.minLength(1)])],
+      bodyOrDiagnostic: 'body',
+      objectNumber: null,
+      rimsTstc: null,
+      ware: null,
+      surfaceTreatment: null,
+      decoration: null,
+      blackening: null,
+      count: null,
+      weight: null,
       weightType: null,
-      comments: null,
+      quantity: 1,
+      diameter: null,
+      percentage: null,
+      typeFamily: null,
+      typeNumber: null,
+      typeVariant: null,
+      typeDescription: null,
+      isDrawn: null,
+      fabricType: null,
+      sheetNumber: null,
       notes: null
     });
+
+    // console.warn(this.activeDetailedForm);
 
   }
 
@@ -165,9 +270,9 @@ export class DetailedProcessingComponent implements OnInit, OnDestroy {
   }
 
   // Change the Surface Treatment Options depending on the Fabric Type Selected
-  onFabricTypeChange(fabricType: any) {
-    this.surfaceTreatmentOptions = this.khppFormSerivce.getSurfaceTreatmentOptions(fabricType);
-  }
+  // onFabricTypeChange(fabricType: any) {
+  //   this.surfaceTreatmentOptions = this.khppFormSerivce.getSurfaceTreatmentOptions(fabricType);
+  // }
 
   /** Custom function to restrict a field to only allow specific characters */
   restrictNumeric(e: any) {
@@ -187,4 +292,36 @@ export class DetailedProcessingComponent implements OnInit, OnDestroy {
     input = String.fromCharCode(e.which);
     return !!/^[0-9.+-]/.test(input);
    }
+
+   public onFamilySelect(value: any) {
+    const matchingFamily = ceramicTypes.filter(e => {
+      return e.family === value;
+    });
+
+    this.selectedValue = matchingFamily[0].image;
+    this.typeDescription = matchingFamily[0].typeDesc;
+    this.familyImages = matchingFamily;
+  }
+
+  createFamilyTypes() {
+    // console.log(ceramicTypes);
+    this.ceramicFamilyTypes = _.uniqBy(ceramicTypes, (e) => {
+      return e.family;
+    });
+  }
+
+  public getImage(item: any) {
+    const image =  'assets/ceramics/' + item.image + '.png';
+    return image;
+  }
+
+  public onSelectImage(item: any) {
+
+    const words = item.image.split('.');
+    // console.log(item);
+    this.selectedValue = item.image;
+    this.activeDetailedForm.value.typeNumber = item.image;
+    // console.log(words);
+    this.typeDescription = item.typeDesc;
+  }
 }

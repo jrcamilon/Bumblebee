@@ -25,6 +25,15 @@ export class KhppFormService {
     {value: 'Other Marl', name: 'Other Marl'},
   ];
 
+  wareOptions = [
+    {value: 'Coarse', name: 'Coarse'},
+    {value: 'Medium', name: 'Medium'},
+    {value: 'Fine', name: 'Fine'},
+    {value: 'Marl-A', name: 'Marl-A'},
+    {value: 'Marl-C', name: 'Marl-C'},
+    {value: 'Other Marl', name: 'Other Marl'},
+  ];
+
   // Detailed Surface Treatment Options
   surfaceTreatmentOptions = [
     {value: 'Unslipped', name: 'Unslipped'},
@@ -33,6 +42,22 @@ export class KhppFormService {
     {value: 'R Slip Both', name: 'R Slip Both'},
     {value: 'Cream Slip In', name: 'Cream Slip In'},
     {value: 'Cream Slip Out', name: 'Cream Slip Out'},
+  ];
+
+  decorationOptions = [
+    {value: 'lines', name: 'Lines'},
+    {value: 'wavy', name: 'Wavy'},
+    {value: 'other', name: 'Other'},
+    {value: 'red rim band', name: 'Red Rim Band'},
+    {value: 'black rim band', name: 'Black Rim Band'},
+    {value: 'white rim band', name: 'White Rim Band'},
+  ];
+
+  blackeningOptions = [
+    {value: 'None', name: 'None'},
+    {value: 'In', name: 'In'},
+    {value: 'Out', name: 'Out'},
+    {value: 'In/Out', name: 'In / Out'}
   ];
 
   // Detailed Surface Treatment Options for anything other than Coarse, Medium, Fine Fabric Type
@@ -74,13 +99,25 @@ export class KhppFormService {
 
 
   getSurfaceTreatmentOptions(fabricType?: string): any[] {
-    if (fabricType === 'Coarse' || fabricType === 'Medium' || fabricType === 'Fine') {
-      return this.surfaceTreatmentOptions;
-    } else {
-      return this.surfaceTreatmentOptions_other;
-    }
+    // if (fabricType === 'Coarse' || fabricType === 'Medium' || fabricType === 'Fine') {
+    //   return this.surfaceTreatmentOptions;
+    // } else {
+    //   return this.surfaceTreatmentOptions_other;
+    // }
+    return this.surfaceTreatmentOptions;
   }
 
+  getBlackeningOptions() {
+    return this.blackeningOptions;
+  }
+
+  getDecorationOptions(): any[] {
+    return this.decorationOptions;
+  }
+
+  getWareOptions(): any[] {
+    return this.wareOptions;
+  }
   getSurfaceTreatmentOption(): any[] {
     return this.surfaceTreatmentOptions_other;
   }

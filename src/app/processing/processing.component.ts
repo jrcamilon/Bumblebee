@@ -97,10 +97,6 @@ export class ProcessingComponent implements OnInit {
   save() {
     let toInsert: any = " ";
     switch (this.selection) {
-      case 'Red Notebook':
-        console.log('Saving Red Notebook');
-
-        break;
       case 'Elephantine':
         console.log('Saving Elephantine');
 
@@ -179,7 +175,6 @@ export class ProcessingComponent implements OnInit {
         console.log(toInsert);
         //  let insertFailed = false;
 
-        console.log(this.isOnline);
         if (this.isOnline) {
           for (let i = 0; i < toInsert.length; i++) {
             console.log(toInsert[i]);
