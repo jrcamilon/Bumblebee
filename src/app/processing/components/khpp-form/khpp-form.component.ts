@@ -146,7 +146,8 @@ export class KhppFormComponent implements OnInit, OnDestroy {
         this.isFormBodyVisible = false;
         this.tagNumber = '';
         this.processedby = '';
-        this.dueDate = '';
+        let d: Date = new Date();
+        this.dueDate =  d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate();;
     }
 
     public clearSubFormsArray() {

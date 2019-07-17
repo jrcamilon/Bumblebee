@@ -163,7 +163,7 @@
  
                 <label>Type Number</label>
                 <div class="example-wrapper">
-                    <input type="text" class="form-control" [value]="selectedValue" formControlName="typeNumber">
+                    <input type="text" class="form-control" [value]="selectedValue" (change)="onTypeNumberChange($event)" formControlName="typeNumber">
                 </div>
              </div>
 

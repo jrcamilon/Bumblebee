@@ -182,6 +182,10 @@ export class ProcessingComponent implements OnInit {
               console.log(res);
               if (res.status === 201) {
                 console.log(res);
+                this.deleteOfflineDB();
+                this.completedForms = [];
+                this.offlineDB.clearAll();
+                this._khpp.responseObject.next([]);
                 this.openSnackBar();
               } else {
 
@@ -193,7 +197,7 @@ export class ProcessingComponent implements OnInit {
         }
 
 
-          // Clear the completed forms array and clear the service store.
+          // // Clear the completed forms array and clear the service store.
           // this.deleteOfflineDB();
           // this.completedForms = [];
           // // this._formsService.activeForm.next(this.completedForms);

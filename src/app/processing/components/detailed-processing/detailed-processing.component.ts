@@ -275,6 +275,12 @@ export class DetailedProcessingComponent implements OnInit, OnDestroy {
   //   this.surfaceTreatmentOptions = this.khppFormSerivce.getSurfaceTreatmentOptions(fabricType);
   // }
 
+  onTypeNumberChange(e: any) {
+    console.log(e.target.value);
+    this.selectedValue = e.target.value;
+    this.activeDetailedForm.typeNumber = e.target.value;
+  }
+
   /** Custom function to restrict a field to only allow specific characters */
   restrictNumeric(e: any) {
     let input;
