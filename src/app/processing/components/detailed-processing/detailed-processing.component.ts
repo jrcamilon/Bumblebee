@@ -97,6 +97,7 @@ export class DetailedProcessingComponent implements OnInit, OnDestroy {
     formValues.isDrawn = formValues.isDrawn === true ? 1: 0;
     formValues.rimsTstc = formValues.rimsTstc === true ? 1: 0;
 
+    // SELECTED VALUE
     formValues.typeNumber = this.selectedValue;
     formValues.typeDescription = this.typeDescription;
 
@@ -194,7 +195,7 @@ export class DetailedProcessingComponent implements OnInit, OnDestroy {
       count: item.count,
       weight: item.weight,
       weightType: item.weightType === 'kg' ? true : false,
-      quantity: 1,
+      quantity: item.quantity,
       diameter: item.diameter,
       percentage: item.percentage,
       typeFamily: item.typeFamily,
@@ -227,7 +228,7 @@ export class DetailedProcessingComponent implements OnInit, OnDestroy {
       surfaceTreatment: null,
       decoration: null,
       blackening: null,
-      count: null,
+      count: 1,
       weight: null,
       weightType: null,
       quantity: 1,

@@ -17,12 +17,22 @@ export class KhppFormService {
 
   // Detailed Fabric Type Options
   fabricTypeOptions = [
-    {value: 'Coarse', name: 'Coarse'},
-    {value: 'Medium', name: 'Medium'},
-    {value: 'Fine', name: 'Fine'},
-    {value: 'Marl-A', name: 'Marl-A'},
-    {value: 'Marl-C', name: 'Marl-C'},
-    {value: 'Other Marl', name: 'Other Marl'},
+    {value: 'KHA.1', name: 'KHA.1'},
+    {value: 'KHA.2', name: 'KHA.2'},
+    {value: 'KHA.3', name: 'KHA.3'},
+    {value: 'KHB.1', name: 'KHB.1'},
+    {value: 'KHB.2', name: 'KHB.2'},
+    {value: 'KHB.3', name: 'KHB.3'},
+    {value: 'KHB.4', name: 'KHB.4'},
+    {value: 'KHC.1', name: 'KHC.1'},
+    {value: 'KHC.2', name: 'KHC.2'},
+    {value: 'KHC.3', name: 'KHC.3'},
+    {value: 'Marl A1', name: 'Marl A1'},
+    {value: 'Marl A2', name: 'Marl A2'},
+    {value: 'Marl A3', name: 'Marl A3'},
+    {value: 'Marl A4', name: 'Marl A4'},
+    {value: 'Marl C1', name: 'Marl C1'},
+    {value: 'Marl C2', name: 'Marl C2'},
   ];
 
   wareOptions = [
@@ -45,6 +55,7 @@ export class KhppFormService {
   ];
 
   decorationOptions = [
+    {value: 'none', name: 'None'},
     {value: 'lines', name: 'Lines'},
     {value: 'wavy', name: 'Wavy'},
     {value: 'other', name: 'Other'},
