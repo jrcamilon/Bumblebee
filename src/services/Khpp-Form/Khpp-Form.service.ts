@@ -52,7 +52,14 @@ export class KhppFormService {
     {value: 'R Slip Both', name: 'R Slip Both'},
     {value: 'Cream Slip In', name: 'Cream Slip In'},
     {value: 'Cream Slip Out', name: 'Cream Slip Out'},
+    {value: 'Cream Slip In/Out', name: 'Cream Slip In/Out'},
   ];
+
+  burnishingOptions = [
+    {value: 'In', name: 'Burnishing in'},
+    {value: 'Out', name: 'Burnishing Out'},
+    {value: 'In/Out', name: 'Burnishing In/Out'},
+  ]
 
   decorationOptions = [
     {value: 'none', name: 'None'},
@@ -124,6 +131,10 @@ export class KhppFormService {
 
   getDecorationOptions(): any[] {
     return this.decorationOptions;
+  }
+
+  getBurnihsingOptions(): any[] {
+    return this.burnishingOptions;
   }
 
   getWareOptions(): any[] {

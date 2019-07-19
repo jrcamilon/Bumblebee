@@ -22,6 +22,7 @@ export class DetailedProcessingComponent implements OnInit, OnDestroy {
   // Fabric Type Options
   fabricTypeOptions: any[];
   surfaceTreatmentOptions: any[];
+  burnishingOptions: any[];
   sherdTypeOptions: any[];
 
   weightString: string;
@@ -56,6 +57,7 @@ export class DetailedProcessingComponent implements OnInit, OnDestroy {
     this.wareOptions = this.khppFormSerivce.getWareOptions();
     this.fabricTypeOptions = this.khppFormSerivce.getFabricTypeOptions();
     this.decorationOptions = this.khppFormSerivce.getDecorationOptions();
+    this.burnishingOptions = this.khppFormSerivce.getBurnihsingOptions();
 
     this.surfaceTreatmentOptions = this.khppFormSerivce.getSurfaceTreatmentOptions();
     this.sherdTypeOptions = this.khppFormSerivce.getSherdTypeOptions();
@@ -91,11 +93,18 @@ export class DetailedProcessingComponent implements OnInit, OnDestroy {
   onFormSave(formValues: any): void {
     this.isFormActive = false;
     formValues.notes = formValues.fabricType + ' Notes - ' + (formValues.notes === null ? '' : formValues.notes);
-    formValues.weight = this.weightSum;
+    formValues.weight = this.weightSum == null ? 0 : this.weightSum;
 
     formValues.weightType = formValues.weightType === true ? 'kg' : 'g';
     formValues.isDrawn = formValues.isDrawn === true ? 1: 0;
     formValues.rimsTstc = formValues.rimsTstc === true ? 1: 0;
+    formValues.hasPhoto = formValues.hasPhoto === true ? 1: 0;
+    formValues.objectNumber = formValues.objectNumber == null ? 0: formValues.objectNumber;
+    formValues.blackening = formValues.blackening == null ? '' : formValues.blackening;
+    formValues.decoration = formValues.decoration == null ? '' : formValues.decoration;
+    formValues.surfaceTreatment = formValues.surfaceTreatment == null ? '' : formValues.surfaceTreatment;
+    formValues.ware = formValues.ware == null ? '' : formValues.ware;
+
 
     // SELECTED VALUE
     formValues.typeNumber = this.selectedValue;
@@ -126,10 +135,17 @@ export class DetailedProcessingComponent implements OnInit, OnDestroy {
 
   onFormEditSave(formValues: any) {
     this.detailedFormArray.splice(this.indexEditing, 1);
-    formValues.weight = this.weightSum;
+    formValues.weight = this.weightSum == null ? 0 : this.weightSum;
     formValues.weightType = formValues.weightType === true ? 'kg' : 'g';
     formValues.isDrawn = formValues.isDrawn === true ? 1: 0;
     formValues.rimsTstc = formValues.rimsTstc === true ? 1: 0;
+    formValues.hasPhoto = formValues.hasPhoto === true ? 1: 0;
+    formValues.objectNumber = formValues.objectNumber == null ? 0: formValues.objectNumber;
+    formValues.blackening = formValues.blackening == null ? '' : formValues.blackening;
+    formValues.decoration = formValues.decoration == null ? '' : formValues.decoration;
+    formValues.surfaceTreatment = formValues.surfaceTreatment == null ? '' : formValues.surfaceTreatment;
+    formValues.ware = formValues.ware == null ? '' : formValues.ware;
+
 
     formValues.typeNumber = this.selectedValue;
     formValues.typeDescription = this.typeDescription == null ? '': formValues.typeDescription;
@@ -195,7 +211,7 @@ export class DetailedProcessingComponent implements OnInit, OnDestroy {
       count: item.count,
       weight: item.weight,
       weightType: item.weightType === 'kg' ? true : false,
-      quantity: item.quantity,
+      hasPhoto: item.hasPhoto,
       diameter: item.diameter,
       percentage: item.percentage,
       typeFamily: item.typeFamily,
@@ -223,7 +239,7 @@ export class DetailedProcessingComponent implements OnInit, OnDestroy {
     this.activeDetailedForm = this.fb.group({
       bodyOrDiagnostic: 'body',
       objectNumber: null,
-      rimsTstc: null,
+      rimsTstc: false,
       ware: null,
       surfaceTreatment: null,
       decoration: null,
@@ -231,14 +247,14 @@ export class DetailedProcessingComponent implements OnInit, OnDestroy {
       count: 1,
       weight: null,
       weightType: null,
-      quantity: 1,
+      hasPhoto: false,
       diameter: null,
       percentage: null,
       typeFamily: null,
       typeNumber: null,
       typeVariant: null,
       typeDescription: null,
-      isDrawn: null,
+      isDrawn: false,
       fabricType: null,
       sheetNumber: null,
       notes: null
@@ -331,4 +347,5 @@ export class DetailedProcessingComponent implements OnInit, OnDestroy {
     // console.log(words);
     this.typeDescription = item.typeDesc;
   }
+
 }

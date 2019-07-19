@@ -107,10 +107,10 @@ export class KhppFormComponent implements OnInit, OnDestroy {
             e.target.value = dash;
         }
 
-        if (e.target.value.length === 12) {
-            const dot = e.target.value + '.';
-            e.target.value = dot;
-        }
+        // if (e.target.value.length === 12) {
+        //     const dot = e.target.value + '.';
+        //     e.target.value = dot;
+        // }
 
 
         this.tagNumber = e.target.value;

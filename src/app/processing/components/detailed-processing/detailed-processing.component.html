@@ -11,8 +11,8 @@
       <li class="list-group-item d-flex justify-content-between align-items-center" >
           <div class="row">
             <div class="col-md-2 col-sm-2 col-xs-2 list-headers">Body or Diag</div>
-            <div class="col-md-3 col-sm-3 col-xs-3 list-headers">Fabric Type</div>
-            <div class="col-md-2 col-sm-2 col-xs-2 list-headers">Surface</div>
+            <div class="col-md-3 col-sm-3 col-xs-3 list-headers">Ware Type</div>
+            <div class="col-md-2 col-sm-2 col-xs-2 list-headers">Type Number</div>
             <div class="col-md-1 col-sm-1 col-xs-1 list-headers">Count</div>
             <div class="col-md-1 col-sm-2 col-xs-1 list-headers">Weight</div>
           </div>
@@ -22,8 +22,8 @@
           <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let item of detailedFormArray; let i = index" (click)="onCollapseList()">
               <div class="row">
                 <div class="col-md-2 col-sm-2 col-xs-2">{{item.bodyOrDiagnostic}}</div>
-                <div class="col-md-3 col-sm-3 col-xs-3">{{item.fabricType}}</div>
-                <div class="col-md-2 col-sm-2 col-xs-2">{{item.surfaceTreatment}}</div>
+                <div class="col-md-3 col-sm-3 col-xs-3">{{item.ware}}</div>
+                <div class="col-md-2 col-sm-2 col-xs-2">{{item.typeNumber}}</div>
                 <div class="col-md-1 col-sm-1 col-xs-1" style="white-space: nowrap">{{item.count}}</div>
                 <div class="col-md-1 col-sm-1 col-xs-1" style="white-space: nowrap">{{item.weight}} {{item.weightType}}</div>
                 <div class="col-md-3 col-sm-3 col-xs-3">
@@ -75,26 +75,30 @@
                 <label>Rims TSTC?</label>
                 <input style="margin-top: 35px; margin-left: 10px;" type="checkbox" class="form-check-input" formControlName="rimsTstc">
               </div>
+              <div class="col-md-3 col-sm-3" >
+                <label>Photo'd?</label>
+                <input style="margin-top: 35px; margin-left: 10px;" type="checkbox" class="form-check-input" formControlName="rimsTstc">
+              </div>
             </div>
 
             <!-- Third Row -->
             <div class="row" style="margin-top: 7px;">
 
-                <div class="col-md-3 col-sm-3">
+                <div class="col-md-2 col-sm-2">
                   <label>Ware</label>
                   <select class="form-control" placeholder="#####" formControlName="ware">
                       <option [value]="option.value" *ngFor="let option of wareOptions" >{{option.name}}</option>
                   </select>
                 </div>
 
-                <div class="col-md-3 col-sm-3">
+                <div class="col-md-2 col-sm-2">
                   <label>Surface Treatment</label>
                   <select class="form-control"placeholder="#####" formControlName="surfaceTreatment">
                       <option [value]="option.value" *ngFor="let option of surfaceTreatmentOptions">{{option.name}}</option>
                   </select>
                 </div>
 
-                <div class="col-md-3 col-sm-3">
+                <div class="col-md-2 col-sm-2">
                   <label>Blackening</label>
                   <select class="form-control"placeholder="#####" formControlName="blackening">
                       <option [value]="option.value" *ngFor="let option of blackeningOptions">{{option.name}}</option>
@@ -108,7 +112,12 @@
                   </select>
                 </div>
 
-
+                <div class="col-md-3 col-sm-3">
+                  <label>Burnishing</label>
+                  <select class="form-control"placeholder="#####" formControlName="surfaceTreatment">
+                      <option [value]="option.value" *ngFor="let option of surfaceTreatmentOptions">{{option.name}}</option>
+                  </select>
+                </div>
 
             </div>
 
@@ -204,7 +213,7 @@
               </div>
               </div>
 
-              <div class="row">
+              <div class="row" *ngIf="activeDetailedForm.controls.isDrawn.value === true">
                 <div class="col-md-3 col-sm-3">
                   <label>Fabric Type</label>
                   <select class="form-control" placeholder="#####" formControlName="fabricType">
@@ -216,8 +225,6 @@
                   <label>Sheet No.</label>
                     <input type="number" class="form-control" placeholder="#" formControlName="sheetNumber" id="sheetNumber">
                 </div>
-
-
               </div>
 
               <div class="row">

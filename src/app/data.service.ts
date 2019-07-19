@@ -13,6 +13,9 @@ export class DataService {
   public redNotebookData = new Subject<any>();
   public selectedData = new Subject<any>();
   public headers = new Headers({ 'Content-Type': 'application/json' });
+  public env = 'vm1.infosol.com';
+
+
   constructor(private _http: Http) { }
 
   // Get All Data
