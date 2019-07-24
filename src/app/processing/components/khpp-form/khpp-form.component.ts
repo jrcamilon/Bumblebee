@@ -41,6 +41,8 @@ export class KhppFormComponent implements OnInit, OnDestroy {
     onlineDBRecords = [];
 
 
+    isEditingOnlineDB = false;
+
     constructor(
         public editService: KhppFormService,
         public onlinService: OnlineServiceService,
@@ -54,18 +56,17 @@ export class KhppFormComponent implements OnInit, OnDestroy {
         this.offlineDB.getAll().then( res => { this.offlineDBRecords = res; });
         if (this.isOnline) {
             this.formSerivce.readFromKHPP().subscribe(res => {
-                console.log('online db records', res);
+                // console.log('online db records', res);
                 this.onlineDBRecords = res;
             });
         }
 
         let d: Date = new Date();
-        console.log(d);
-        // 2019-07-10
-        // this.selDate = {year: d.getFullYear(), month: d.getMonth() + 1, day: d.getDate()};
-        console.log(d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate());
-        this.dueDate = d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate();
-        
+        // console.log(d.getMonth());
+
+        // console.log(d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate());
+        this.dueDate = d.getFullYear() + '-' + (d.getMonth() + 1)+ '-' + d.getDate();
+        // console.log('DUE DATE', this.dueDate);
     }
 
 
@@ -147,7 +148,7 @@ export class KhppFormComponent implements OnInit, OnDestroy {
         this.tagNumber = '';
         this.processedby = '';
         let d: Date = new Date();
-        this.dueDate =  d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate();;
+        this.dueDate =  d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();;
     }
 
     public clearSubFormsArray() {
@@ -167,7 +168,7 @@ export class KhppFormComponent implements OnInit, OnDestroy {
                 // fetch
                 if (this.isOnline) {
                     this.formSerivce.readFromKHPP().subscribe(res => {
-                        console.log('online db records', res);
+                        // console.log('online db records', res);
                         this.onlineDBRecords = res;
                     });
                 }
@@ -186,23 +187,40 @@ export class KhppFormComponent implements OnInit, OnDestroy {
 
         if (this.isBasicVisible) {
             form = {
+                idForm: this.editFormID,
                 tagNumber: this.tagNumber,
                 dueDate: this.dueDate,
                 processedBy: this.processedby,
                 basicRecords: this.basicRecords,
+                type: 'basic'
             }
 
         } else {
             form = {
+                idForm: this.editFormID,
                 tagNumber: this.tagNumber,
                 dueDate: this.dueDate,
                 processedBy: this.processedby,
-                detailedRecords: this.detailedRecords
+                detailedRecords: this.detailedRecords,
+                type: 'detailed'
             }
-
         }
 
+        // console.log(form);
+        // console.log('TO REMOVE', this.formSerivce.getRemoveArray());
+
+
         if (this.isEditing) {
+            //TO DO:
+            //Send edited online db records to DB
+            if (this.isEditingOnlineDB === true) {
+                const recordsToRemove = this.formSerivce.getRemoveArray();
+
+                this.formSerivce.updateToKHPP(form, recordsToRemove).subscribe(res => {
+                    console.log(res);
+                });
+            }
+
             this.offlineDB.update(this.editFormID, form);
             this.isEditing = false;
             this.editFormID = undefined;
@@ -215,7 +233,7 @@ export class KhppFormComponent implements OnInit, OnDestroy {
         } else {
             this.editService.combineObjects(form);
         }
-
+        this.formSerivce.clearToRemoveArray();
         this.clearForm();
         this.clearSubFormsArray();
     }
@@ -251,9 +269,56 @@ export class KhppFormComponent implements OnInit, OnDestroy {
             const recordToEdit = res.map(ele => {
                 if (ele.id === record.id) { return ele; }
             }).filter(el => { return el !== undefined; });
+            console.log(recordToEdit[0]);
+
             this.dbRecordEdit(recordToEdit[0]);
             this.isEditing = true;
-            this.buttonValue = 'SAVE EDITS';
+            this.buttonValue = 'SAVE OFFLINE DB EDITS';
+            this.visibleTab = 'input';
+        });
+    }
+
+    /**
+     *  Editing an Online Record from the Database
+     * @param record 
+     */
+    public onDBOnlineEdit(record: any) {
+        // console.log(record);
+        const type = record.basicCount > record.detailedCount ? 'basic': 'detailed';
+    
+        this.formSerivce.editFromKHPP(record.id, type).subscribe(res => {
+
+            let splitDate = record.dueDate.split('-');
+            const newDate = splitDate[0]+ '-' + splitDate[1] + '-' + splitDate[2];
+
+            let recordToEdit;
+
+            if (type === 'detailed') {
+                recordToEdit = {
+                    tagNumber: record.tagNumber,
+                    dueDate: newDate,
+                    id: record.id,
+                    processedBy: record.processedBy,
+                    detailedRecords: res.records
+                }
+            } else {
+                recordToEdit = {
+                    tagNumber: record.tagNumber,
+                    dueDate: newDate,
+                    id: record.id,
+                    processedBy: record.processedBy,
+                    detailedRecords: res.records
+                }
+            }
+
+            this.isEditingOnlineDB = true;
+
+            console.log('RECORD TO EDIT', recordToEdit);
+
+            this.dbRecordEdit(recordToEdit);
+            this.editFormID = record.id;
+            this.isEditing = true;
+            this.buttonValue = 'SAVE ONLINE DB EDITS';
             this.visibleTab = 'input';
 
         });
@@ -263,16 +328,6 @@ export class KhppFormComponent implements OnInit, OnDestroy {
         console.log(record);
         this.recordToDelete = record;
         this.opened = true;
-
-        // prompt if the user wants to delete the record
-
-        // this.formSerivce.deleteFromKHPP(record.id).subscribe(res => {
-        //     console.log(res);
-        //     this.formSerivce.readFromKHPP().subscribe(res => {
-        //         console.log('online db records', res);
-        //         this.onlineDBRecords = res;
-        //     });
-        // })
     }
 
     // Close dialog
@@ -312,10 +367,10 @@ export class KhppFormComponent implements OnInit, OnDestroy {
 
         // load the record to the child processing
         if (this.isBasicVisible) {
-            console.log(record.basicRecords);
+            // console.log(record.basicRecords);
             this.formSerivce.recordToEdit.next(record.basicRecords);
         } else {
-            console.log(record.detailedRecords);
+            // console.log(record.detailedRecords);
             this.formSerivce.recordToEdit.next(record.detailedRecords);
         }
 

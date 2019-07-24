@@ -79,7 +79,7 @@
       
           <div *ngIf="!isBasicVisible">
             <div style="text-align: center"><h4>Detailed Processing</h4></div>
-            <app-detailed-processing></app-detailed-processing>
+            <app-detailed-processing ></app-detailed-processing>
           </div>
         
         </div>
@@ -148,7 +148,7 @@
         <td>{{record.detailedCount }}</td>
         <td>
           <div class="btn-group" role="group" aria-label="Basic example">
-            <!-- <button type="button" class="btn btn-info" disabled="true">EDIT</button> -->
+            <button type="button" class="btn btn-info" (click)="onDBOnlineEdit(record)">EDIT</button>
             <button type="button" class="btn btn-danger" (click)="onDelete(record)">DELETE</button>
           </div>
         </td>

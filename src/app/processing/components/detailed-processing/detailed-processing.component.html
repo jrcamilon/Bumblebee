@@ -114,8 +114,8 @@
 
                 <div class="col-md-3 col-sm-3">
                   <label>Burnishing</label>
-                  <select class="form-control"placeholder="#####" formControlName="surfaceTreatment">
-                      <option [value]="option.value" *ngFor="let option of surfaceTreatmentOptions">{{option.name}}</option>
+                  <select class="form-control"placeholder="#####" formControlName="burnishing">
+                      <option [value]="option.value" *ngFor="let option of burnishingOptions">{{option.name}}</option>
                   </select>
                 </div>
 
@@ -227,7 +227,7 @@
                 </div>
               </div>
 
-              <div class="row">
+              <!-- <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="form-group">
                         <label>Notes</label>
@@ -235,6 +235,16 @@
                             formControlName="notes"></textarea>
                     </div>
                 </div>
+              </div> -->
+            </div>
+
+            <div class="row" style="margin-top: 5px;">
+              <div class="col-md-12 col-sm-12">
+                  <div class="form-group">
+                      <label>Notes</label>
+                      <textarea rows="3" class="form-control" placeholder="Enter Notes here...."
+                          formControlName="notes"></textarea>
+                  </div>
               </div>
             </div>
 

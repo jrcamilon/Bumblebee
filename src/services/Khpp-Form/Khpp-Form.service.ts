@@ -40,7 +40,11 @@ export class KhppFormService {
     {value: 'Medium', name: 'Medium'},
     {value: 'Fine', name: 'Fine'},
     {value: 'Marl-A', name: 'Marl-A'},
+    {value: 'Marl-A2', name: 'Marl-A2'},
+    {value: 'Marl-A4', name: 'Marl-A4'},
     {value: 'Marl-C', name: 'Marl-C'},
+    {value: 'Marl-C', name: 'Marl-C1'},
+    {value: 'Marl-C', name: 'Marl-C2'},
     {value: 'Other Marl', name: 'Other Marl'},
   ];
 
@@ -53,9 +57,16 @@ export class KhppFormService {
     {value: 'Cream Slip In', name: 'Cream Slip In'},
     {value: 'Cream Slip Out', name: 'Cream Slip Out'},
     {value: 'Cream Slip In/Out', name: 'Cream Slip In/Out'},
+
+    {value: 'Black Slip In', name: 'Black Slip In'},
+    {value: 'Black Slip Out', name: 'Black Slip In'},
+    {value: 'Black Slip In/Out', name: 'Black Slip In/Out'},
+    {value: 'Black Other', name: 'Black Other'},
+
   ];
 
   burnishingOptions = [
+    {value: 'none', name: 'None'},
     {value: 'In', name: 'Burnishing in'},
     {value: 'Out', name: 'Burnishing Out'},
     {value: 'In/Out', name: 'Burnishing In/Out'},
@@ -72,7 +83,7 @@ export class KhppFormService {
   ];
 
   blackeningOptions = [
-    {value: 'None', name: 'None'},
+    {value: 'none', name: 'None'},
     {value: 'In', name: 'In'},
     {value: 'Out', name: 'Out'},
     {value: 'In/Out', name: 'In / Out'}

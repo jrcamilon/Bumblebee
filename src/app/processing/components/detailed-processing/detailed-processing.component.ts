@@ -1,9 +1,10 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormsService } from 'app/processing/services/forms.service';
 import { KhppFormService } from 'services/Khpp-Form/Khpp-Form.service';
 import { ceramicTypes } from '../ceramics-form/ceramic-types';
 import * as _ from 'lodash'; 
+import { EventEmitter } from 'events';
 
 @Component({
   selector: 'app-detailed-processing',
@@ -40,6 +41,8 @@ export class DetailedProcessingComponent implements OnInit, OnDestroy {
   selectedValue = '';
   familyImages;
   typeDescription;
+
+  @Output() onFormIdChange = new EventEmitter();
 
   constructor(
     public fb: FormBuilder,
@@ -178,6 +181,8 @@ export class DetailedProcessingComponent implements OnInit, OnDestroy {
   }
 
   onFormRemove(index: number): void {
+    // console.log('REMOVING', this.detailedFormArray[index]);
+    this.formService.addToRemoveArray(this.detailedFormArray[index]);
     this.detailedFormArray.splice(index, 1);
     this.formService.detailedFormArray.next(this.detailedFormArray);
   }
@@ -201,6 +206,8 @@ export class DetailedProcessingComponent implements OnInit, OnDestroy {
     // });
 
     this.activeDetailedForm = this.fb.group({
+      id: item.id,
+      formId: item.formId,
       bodyOrDiagnostic: item.bodyOrDiagnostic,
       objectNumber: item.objectNumber,
       rimsTstc: item.rimsTstc,
@@ -217,6 +224,7 @@ export class DetailedProcessingComponent implements OnInit, OnDestroy {
       typeFamily: item.typeFamily,
       typeNumber: item.typeNumber,
       typeVariant: item.typeVariant,
+      burnishing: item.burnishing,
       typeDescription: item.typeDescription,
       isDrawn: item.isDrawn,
       fabricType: item.fabricType,
@@ -242,8 +250,8 @@ export class DetailedProcessingComponent implements OnInit, OnDestroy {
       rimsTstc: false,
       ware: null,
       surfaceTreatment: null,
-      decoration: null,
-      blackening: null,
+      decoration: 'none',
+      blackening: 'none',
       count: 1,
       weight: null,
       weightType: null,
@@ -254,6 +262,7 @@ export class DetailedProcessingComponent implements OnInit, OnDestroy {
       typeNumber: null,
       typeVariant: null,
       typeDescription: null,
+      burnishing: 'none',
       isDrawn: false,
       fabricType: null,
       sheetNumber: null,
