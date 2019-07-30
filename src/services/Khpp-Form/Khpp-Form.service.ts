@@ -16,13 +16,22 @@ export class KhppFormService {
   offlineDBrecordToEdit = new Subject<any>();
 
   // Detailed Fabric Type Options
+  // Add KHB.6, KHB.5, and KHA.4
   fabricTypeOptions = [
     {value: 'KHA.1', name: 'KHA.1'},
     {value: 'KHA.2', name: 'KHA.2'},
     {value: 'KHA.3', name: 'KHA.3'},
+    {value: 'KHA.4', name: 'KHA.4'},
+
     {value: 'KHB.1', name: 'KHB.1'},
     {value: 'KHB.2', name: 'KHB.2'},
     {value: 'KHB.3', name: 'KHB.3'},
+
+    {value: 'KHB.5', name: 'KHB.5'},
+
+    {value: 'KHB.6', name: 'KHB.6'},
+
+
     {value: 'KHB.4', name: 'KHB.4'},
     {value: 'KHC.1', name: 'KHC.1'},
     {value: 'KHC.2', name: 'KHC.2'},
