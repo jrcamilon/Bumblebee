@@ -205,6 +205,9 @@ export class DetailedProcessingComponent implements OnInit, OnDestroy {
     //   notes: [item.notes, null]
     // });
 
+    this.typeDescription = item.typeDescription !== null ? item.typeDescription : '';
+    this.selectedValue = item.typeNumber !== null ? item.typeNumber : '';
+
     this.activeDetailedForm = this.fb.group({
       id: item.id,
       formId: item.formId,
