@@ -207,11 +207,13 @@
               <div class="col-md-12">
                   <div class="form-group">
                       <label>Type Description</label>
-                      <textarea rows="3" class="form-control" placeholder="Here can be your description" [value]="typeDescription"
+                      <textarea rows="3" class="form-control" placeholder="Here can be your description" (change)="onTypeDescriptionChange($event)" [value]="typeDescription"
                           formControlName="typeDescription"></textarea>
                   </div>
               </div>
               </div>
+
+
 
               <div class="row" *ngIf="activeDetailedForm.controls.isDrawn.value === true">
                 <div class="col-md-3 col-sm-3">

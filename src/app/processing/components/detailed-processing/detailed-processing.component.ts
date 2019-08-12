@@ -151,7 +151,7 @@ export class DetailedProcessingComponent implements OnInit, OnDestroy {
 
 
     formValues.typeNumber = this.selectedValue;
-    formValues.typeDescription = this.typeDescription == null ? '': formValues.typeDescription;
+    formValues.typeDescription = this.typeDescription == null ? '' : formValues.typeDescription;
 
     formValues.diameter = formValues.diameter == null ? 0 : formValues.diameter;
     formValues.fabricType = formValues.fabricType == null ? '' : formValues.fabricType;
@@ -162,7 +162,9 @@ export class DetailedProcessingComponent implements OnInit, OnDestroy {
     formValues.typeNumber = formValues.typeNumber == null ? '' : formValues.typeNumber;
     formValues.typeVariant = formValues.typeVariant == null ? '' : formValues.typeVariant;
 
-    this.detailedFormArray.push(formValues);
+    // console.log('HERE', this.detailedFormArray);
+    this.detailedFormArray.splice(this.indexEditing, 0, formValues);
+    // this.detailedFormArray.push(formValues);
     this.formService.detailedFormArray.next(this.detailedFormArray);
 
     this.weightString = '';
@@ -299,7 +301,7 @@ export class DetailedProcessingComponent implements OnInit, OnDestroy {
   }
 
   // Change the Surface Treatment Options depending on the Fabric Type Selected
-  // onFabricTypeChange(fabricType: any) {
+  // onFabricTypeChange(fabricType: an.y) {
   //   this.surfaceTreatmentOptions = this.khppFormSerivce.getSurfaceTreatmentOptions(fabricType);
   // }
 
@@ -307,6 +309,13 @@ export class DetailedProcessingComponent implements OnInit, OnDestroy {
     console.log(e.target.value);
     this.selectedValue = e.target.value;
     this.activeDetailedForm.typeNumber = e.target.value;
+  }
+
+  // Function to override type description when changed 
+  onTypeDescriptionChange(e: any) {
+    console.log(e.target.value);
+    this.typeDescription = e.target.value;
+    this.activeDetailedForm.typeDescription = e.target.value;
   }
 
   /** Custom function to restrict a field to only allow specific characters */
