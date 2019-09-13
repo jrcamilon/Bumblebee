@@ -3,7 +3,29 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormsService } from 'app/processing/services/forms.service';
 import { OnlineServiceService } from 'services/OnlineServices/online-service.service';
 import { KhppFormService } from 'services/Khpp-Form/Khpp-Form.service';
+import {MatTableDataSource} from '@angular/material/table';
+import * as _ from 'lodash';
+import { ExporterService } from 'services/excel/exporter.service';
 
+// export interface PeriodicElement {
+//     name: string;
+//     position: number;
+//     weight: number;
+//     symbol: string;
+//   }
+
+//   const ELEMENT_DATA: PeriodicElement[] = [
+//     {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
+//     {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
+//     {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
+//     {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
+//     {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
+//     {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
+//     {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
+//     {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
+//     {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
+//     {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
+//   ];
 
 @Component({
     selector: 'app-khpp-form',
@@ -39,13 +61,22 @@ export class KhppFormComponent implements OnInit, OnDestroy {
 
     offlineDBRecords = [];
     onlineDBRecords = [];
+    onlineDBRecordsCopy = [];
+    filteredDBRecords = [];
+
+    detailed = [];
+    basic = [];
 
 
     isEditingOnlineDB = false;
 
+    // displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+    // dataSource = new MatTableDataSource(ELEMENT_DATA);
+
     constructor(
         public editService: KhppFormService,
         public onlinService: OnlineServiceService,
+        public exporter: ExporterService,
         public offlineDB: OfflineDBService,
         public formSerivce: FormsService) {
         // Subscriptions
@@ -58,6 +89,7 @@ export class KhppFormComponent implements OnInit, OnDestroy {
             this.formSerivce.readFromKHPP().subscribe(res => {
                 // console.log('online db records', res);
                 this.onlineDBRecords = res;
+                this.onlineDBRecordsCopy = res;
             });
         }
 
@@ -74,12 +106,84 @@ export class KhppFormComponent implements OnInit, OnDestroy {
         this.clearSubFormsArray();
     }
 
-    public ngOnInit(): void { 
+    // applyFilter(filterValue: string) {
+    //     this.dataSource.filter = filterValue.trim().toLowerCase();
+    // }
+
+    onTagSearch(e: any) {
+        // const conlineDBRecordsCount = this.onlineDBRecordsCopy.length;
+        // console.log(conlineDBRecordsCount);
+        this.detailed = [];
+        this.basic = [];
+        const value = e.target.value;
+
+        // console.log(value);
+
+        // Filter Values
+        const _filterVals = _.map(this.onlineDBRecordsCopy, function(o) {
+            if (o.tagNumber.includes(value)) { return o; }
+        });
+        const _newVals = _.without(_filterVals, undefined);
+
+        // console.log(_newVals);
+
+        this.filteredDBRecords = _newVals;
+        this.onlineDBRecords = _newVals;
+        // console.log(value === '');
+
+        if (value === '') {
+            this.onlineDBRecords = this.onlineDBRecordsCopy;
+        }
+    }
+
+    onExportToExcel(): void {
+        console.log(this.filteredDBRecords);
+
+        if (this.filteredDBRecords.length !== 0) {
+            for (let i = 0; i < this.filteredDBRecords.length; i++) {
+                const element = this.filteredDBRecords[i];
+                if (element.detailedCount !== 0) {
+                    this.detailed.push(element);
+                } else {
+                    this.basic.push(element);
+                }
+            }
+        } else {
+            for (let i = 0; i < this.onlineDBRecordsCopy.length; i++) {
+                const element = this.onlineDBRecordsCopy[i];
+                if (element.detailedCount !== 0) {
+                    this.detailed.push(element);
+                } else {
+                    this.basic.push(element);
+                }
+            }
+        }
+
+        const detailedTagNumbers = this.detailed.map(ele => {
+            return ele.tagNumber;
+        });
+
+        const basicTagNumbers = this.basic.map(ele => {
+            return ele.tagNumber;
+        });
+
+        // console.log('detailed', detailedTagNumbers);
+        // console.log('basic', basicTagNumbers);
+        console.log(basicTagNumbers.length + detailedTagNumbers.length);
+
+        // make query to get detailed and basic sheets
+        this.formSerivce.getExcelRecords(detailedTagNumbers, basicTagNumbers).subscribe(res => {
+            console.log(res);
+            this.exporter.exportToExcel(res.data, 'FILTERED');
+        });
+    }
+
+    public ngOnInit(): void {
 
     }
 
     public onTagChange(e: any) {
-      
+
         this.validTagChar = true;
         this.tagHasError = false
 
@@ -90,7 +194,7 @@ export class KhppFormComponent implements OnInit, OnDestroy {
             if (!isNaN(e.target.value[0])) {
                 this.validTagChar = false;
                 this.tagHasError = true;
-            } 
+            }
         }
 
         if (e.target.value.length === 3) {
