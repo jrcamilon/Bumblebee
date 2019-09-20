@@ -48,7 +48,7 @@ import { KhppFabricRadarComponent } from '../../dashboard/visualizations/KhppFab
 import { AgmCoreModule } from '@agm/core';
 import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
 
-import { WebcamModule } from 'ngx-webcam';
+// import { WebcamModule } from 'ngx-webcam';
 
 
 //Directives
@@ -103,7 +103,6 @@ import { DashboardTwoComponent } from 'app/dashboard-two/dashboard-two.component
 
 @NgModule({
   imports: [
-    WebcamModule,
     CommonModule,
     RouterModule.forChild(AdminLayoutRoutes),
     FormsModule,

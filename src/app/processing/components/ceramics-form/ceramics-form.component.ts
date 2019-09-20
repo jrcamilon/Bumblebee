@@ -8,9 +8,9 @@ import { OnlineServiceService } from 'services/OnlineServices/online-service.ser
 import { TypesService} from 'services/TypeService/types.service';
 import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
-import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
+// import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
 import { ceramicTypes } from './ceramic-types';
-import * as _ from 'lodash';  
+import * as _ from 'lodash';
 
 interface CeramicTypes {
   image: string,
@@ -50,7 +50,7 @@ export class CeramicsFormComponent implements OnInit {
 
   public isOnline: any;
   public imageObjectData: any;
-  public webCamImages = [];
+  // public webCamImages = [];
 
   // CAMERA
 
@@ -65,15 +65,15 @@ export class CeramicsFormComponent implements OnInit {
       // width: {ideal: 1024},
       // height: {ideal: 576}
     };
-    public errors: WebcamInitError[] = [];
+    // public errors: WebcamInitError[] = [];
 
     // latest snapshot
-    public webcamImage: WebcamImage = null;
+    // public webcamImage: WebcamImage = null;
 
     // webcam snapshot trigger
     private trigger: Subject<void> = new Subject<void>();
     // switch to next / previous / specific webcam; true/false: forward/backwards, string: deviceId
-    private nextWebcam: Subject<boolean|string> = new Subject<boolean|string>();
+    // private nextWebcam: Subject<boolean|string> = new Subject<boolean|string>();
 
 
   constructor(public _onlineService: OnlineServiceService,
@@ -148,10 +148,10 @@ export class CeramicsFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    WebcamUtil.getAvailableVideoInputs()
-    .then((mediaDevices: MediaDeviceInfo[]) => {
-      this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
-    });
+    // WebcamUtil.getAvailableVideoInputs()
+    // .then((mediaDevices: MediaDeviceInfo[]) => {
+    //   this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
+    // });
   }
 
   createFamilyTypes() {
@@ -161,11 +161,11 @@ export class CeramicsFormComponent implements OnInit {
   }
 
   submitForm(formValue: any) {
-    if (this.webcamImage !== null) {
-      console.log(this.webcamImage.imageAsBase64);
-      console.log(this.webcamImage.imageData);
-      formValue.image = this.webcamImage.imageAsBase64;
-    }
+    // if (this.webcamImage !== null) {
+    //   console.log(this.webcamImage.imageAsBase64);
+    //   console.log(this.webcamImage.imageData);
+    //   formValue.image = this.webcamImage.imageAsBase64;
+    // }
 
     formValue.typeNumber = this.selectedValue;
     formValue.typeDescription = this.typeDescription;
@@ -198,38 +198,38 @@ export class CeramicsFormComponent implements OnInit {
     this.showWebcam = !this.showWebcam;
   }
 
-  public handleInitError(error: WebcamInitError): void {
-    this.errors.push(error);
-  }
+  // public handleInitError(error: WebcamInitError): void {
+  //   this.errors.push(error);
+  // }
 
-  public showNextWebcam(directionOrDeviceId: boolean|string): void {
-    this.nextWebcam.next(directionOrDeviceId);
-  }
+  // public showNextWebcam(directionOrDeviceId: boolean|string): void {
+  //   this.nextWebcam.next(directionOrDeviceId);
+  // }
 
-  public handleImage(webcamImage: WebcamImage): void {
-    console.log('received webcam image', webcamImage);
-    console.log(webcamImage.imageAsBase64);
-    console.log(webcamImage.imageData);
-    this.webcamImage = webcamImage;
-    this.webCamImages.push(webcamImage);
-  }
+  // public handleImage(webcamImage: WebcamImage): void {
+  //   console.log('received webcam image', webcamImage);
+  //   console.log(webcamImage.imageAsBase64);
+  //   console.log(webcamImage.imageData);
+  //   this.webcamImage = webcamImage;
+  //   this.webCamImages.push(webcamImage);
+  // }
 
-  public cameraWasSwitched(deviceId: string): void {
-    console.log('active device: ' + deviceId);
-    this.deviceId = deviceId;
-  }
+  // public cameraWasSwitched(deviceId: string): void {
+  //   console.log('active device: ' + deviceId);
+  //   this.deviceId = deviceId;
+  // }
 
-  public get triggerObservable(): Observable<void> {
-    return this.trigger.asObservable();
-  }
+  // public get triggerObservable(): Observable<void> {
+  //   return this.trigger.asObservable();
+  // }
 
-  public get nextWebcamObservable(): Observable<boolean|string> {
-    return this.nextWebcam.asObservable();
-  }
+  // public get nextWebcamObservable(): Observable<boolean|string> {
+  //   return this.nextWebcam.asObservable();
+  // }
 
-  public onCapturedImageClick(): void {
-    this.webcamImage = null;
-  }
+  // public onCapturedImageClick(): void {
+  //   this.webcamImage = null;
+  // }
 
   public handleFilter(value: any) {
     this.data = this.typeNums.filter((s) => s.toLowerCase().indexOf(value.toLowerCase()) !== -1);

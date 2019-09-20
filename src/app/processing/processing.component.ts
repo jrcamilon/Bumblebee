@@ -8,7 +8,7 @@ import { FormsService } from './services/forms.service';
 
 import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
-import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
+// import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
 import { KhppFormService } from 'services/Khpp-Form/Khpp-Form.service';
 import { OfflineDBService } from 'services/OfflineDB/offline-db.service';
 
@@ -35,22 +35,22 @@ export class ProcessingComponent implements OnInit {
     public allowCameraSwitch = true;
     public multipleWebcamsAvailable = false;
     public deviceId: string;
-    public videoOptions: MediaTrackConstraints = {
-      // width: {ideal: 1024},
-      // height: {ideal: 576}
-    };
-    public errors: WebcamInitError[] = [];
+    // public videoOptions: MediaTrackConstraints = {
+    //   // width: {ideal: 1024},
+    //   // height: {ideal: 576}
+    // };
+    // public errors: WebcamInitError[] = [];
 
-    // latest snapshot
-    public webcamImage: WebcamImage = null;
-    public webcamImageArray: WebcamImage[] = [];
+    // // latest snapshot
+    // public webcamImage: WebcamImage = null;
+    // public webcamImageArray: WebcamImage[] = [];
     public isOnline = true;
 
 
     // webcam snapshot trigger
-    private trigger: Subject<void> = new Subject<void>();
-    // switch to next / previous / specific webcam; true/false: forward/backwards, string: deviceId
-    private nextWebcam: Subject<boolean|string> = new Subject<boolean|string>();
+    // private trigger: Subject<void> = new Subject<void>();
+    // // switch to next / previous / specific webcam; true/false: forward/backwards, string: deviceId
+    // private nextWebcam: Subject<boolean|string> = new Subject<boolean|string>();
 
 
   // onFormSelect(form: any) {
@@ -69,7 +69,6 @@ export class ProcessingComponent implements OnInit {
         this.completedCeramics = res;
       });
 
-  
 
 
       // KHPP Forms
@@ -88,10 +87,10 @@ export class ProcessingComponent implements OnInit {
   ngOnInit() {
     this.selection = this.forms[1];
     // this.onFormSelect(this.selection);
-    WebcamUtil.getAvailableVideoInputs()
-    .then((mediaDevices: MediaDeviceInfo[]) => {
-      this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
-    });
+    // WebcamUtil.getAvailableVideoInputs()
+    // .then((mediaDevices: MediaDeviceInfo[]) => {
+    //   this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
+    // });
   }
 
   save() {
@@ -130,7 +129,7 @@ export class ProcessingComponent implements OnInit {
             typeDescription: ele.typeDescription === null ? 'null' : String(ele.typeDescription),
             typeNum: ele.typeNumber === null ? 'null' : String(ele.typeNumber) + '.' + String(ele.typeVariant),
             weight: ele.weight === null ? 'null' : String(ele.weight),
-         
+
           })
         });
 
@@ -222,47 +221,47 @@ export class ProcessingComponent implements OnInit {
   }
 
   // CAMERA
-  public triggerSnapshot(): void {
-    this.trigger.next();
-  }
+  // public triggerSnapshot(): void {
+  //   this.trigger.next();
+  // }
 
-  public toggleWebcam(): void {
-    this.showWebcam = !this.showWebcam;
-  }
+  // public toggleWebcam(): void {
+  //   this.showWebcam = !this.showWebcam;
+  // }
 
-  public handleInitError(error: WebcamInitError): void {
-    this.errors.push(error);
-  }
+  // public handleInitError(error: WebcamInitError): void {
+  //   this.errors.push(error);
+  // }
 
-  public showNextWebcam(directionOrDeviceId: boolean|string): void {
-    // true => move forward through devices
-    // false => move backwards through devices
-    // string => move to device with given deviceId
-    this.nextWebcam.next(directionOrDeviceId);
-  }
+  // public showNextWebcam(directionOrDeviceId: boolean|string): void {
+  //   // true => move forward through devices
+  //   // false => move backwards through devices
+  //   // string => move to device with given deviceId
+  //   this.nextWebcam.next(directionOrDeviceId);
+  // }
 
-  public handleImage(webcamImage: WebcamImage): void {
-    // console.info('received webcam image', webcamImage, this.webcamImageArray);
-    this.webcamImage = webcamImage;
-    this.webcamImageArray.push(webcamImage);
-  }
+  // public handleImage(webcamImage: WebcamImage): void {
+  //   // console.info('received webcam image', webcamImage, this.webcamImageArray);
+  //   this.webcamImage = webcamImage;
+  //   this.webcamImageArray.push(webcamImage);
+  // }
 
-  public cameraWasSwitched(deviceId: string): void {
-    console.log('active device: ' + deviceId);
-    this.deviceId = deviceId;
-  }
+  // public cameraWasSwitched(deviceId: string): void {
+  //   console.log('active device: ' + deviceId);
+  //   this.deviceId = deviceId;
+  // }
 
-  public get triggerObservable(): Observable<void> {
-    return this.trigger.asObservable();
-  }
+  // public get triggerObservable(): Observable<void> {
+  //   return this.trigger.asObservable();
+  // }
 
-  public get nextWebcamObservable(): Observable<boolean|string> {
-    return this.nextWebcam.asObservable();
-  }
+  // public get nextWebcamObservable(): Observable<boolean|string> {
+  //   return this.nextWebcam.asObservable();
+  // }
 
-  public onCapturedImageClick(): void {
-    this.webcamImage = null;
-  }
+  // public onCapturedImageClick(): void {
+  //   this.webcamImage = null;
+  // }
 
 }
 
