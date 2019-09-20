@@ -32,7 +32,7 @@ Quick start options:
 4. Run in terminal: ```npm install -g @angular/cli```
 5. Then: ```npm install```
 6. And: ```ng serve```
-7. Navigate to `http://localhost:4200/`
+7. Navigate to `http://demo.infosol.com:4200/`
 
 ### What's included
 
