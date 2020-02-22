@@ -1,4 +1,4 @@
-import { DetailedProcessingComponent } from './../../processing/components/detailed-processing/detailed-processing.component';
+
 import { BodyProcessingComponent } from './../../processing/components/body-processing/body-processing.component';
 import { HomeMapComponent } from './../../home-map/home-map.component';
 import { LoadingComponent } from './../../shared/loading/loading.component';
@@ -51,6 +51,7 @@ import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
 import { ElephantineComponent } from '../../processing/components/elephantine/elephantine.component';
 import { BasicProcessingComponent } from '../../processing/components/elephantine/components/basic-processing/basic-processing.component';
 import { DetailedEleProcessingComponent } from '../../processing/components/elephantine/components/detailed-ele-processing/detailed-ele-processing.component';
+import { DetailedProcessingComponent } from '../../processing/components/detailed-processing/detailed-processing.component';
 // tslint:disable-next-line: max-line-length
 
 
@@ -202,7 +203,7 @@ import { DashboardTwoComponent } from 'app/dashboard-two/dashboard-two.component
     FilterPipe,
     ElephantineComponent,
     BasicProcessingComponent,
-    DetailedEleProcessingComponent
+    DetailedEleProcessingComponent,
 
 
   ],
