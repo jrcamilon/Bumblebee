@@ -7,7 +7,7 @@ import * as _ from 'lodash';
 import { EventEmitter } from 'events';
 
 @Component({
-  selector: 'app-detailed-processing',
+  selector: 'app-detailed-processing-khpp',
   templateUrl: './detailed-processing.component.html',
   styleUrls: ['./detailed-processing.component.scss']
 })

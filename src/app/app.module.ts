@@ -15,6 +15,11 @@ import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { GridModule } from '@progress/kendo-angular-grid';
 import { InputsModule } from '@progress/kendo-angular-inputs';
+// import { DetailedEleProcessingComponent } from './processing/components/elephantine/components/detailed-ele-processing/detailed-ele-processing.component';
+// import { ElephantineComponent } from './processing/components/elephantine/elephantine.component';
+// import { BasicProcessingComponent } from './processing/components/elephantine/components/basic-processing/basic-processing.component';
+// // tslint:disable-next-line: max-line-length
+// import { DetailedProcessingComponent } from './processing/components/elephantine/components/detailed-processing/detailed-processing.component';
 
 
 @NgModule({
@@ -34,7 +39,11 @@ import { InputsModule } from '@progress/kendo-angular-inputs';
    ],
    declarations: [
       AppComponent,
-      AdminLayoutComponent
+      AdminLayoutComponent,
+      // DetailedEleProcessingComponent,
+      // ElephantineComponent,
+      // BasicProcessingComponent,
+      // DetailedProcessingComponent
    ],
    providers: [],
    bootstrap: [

@@ -1,4 +1,4 @@
-<!-- <div class="main-content" > -->
+
 <div class="container-fluid">
 
     <div>
@@ -15,42 +15,10 @@
         </div>
     </div>
 
-    <!-- <div class="row">
-        <div class="col-md-12">
-            <div style="text-align:center; padding-top: 20px;" *ngIf="!webcamImage">
-
-                <div (click)="triggerSnapshot();">
-                    <webcam [height]="500" [width]="500" [trigger]="triggerObservable"
-                        (imageCapture)="handleImage($event)" *ngIf="showWebcam" [allowCameraSwitch]="allowCameraSwitch"
-                        [switchCamera]="nextWebcamObservable" [videoOptions]="videoOptions" [imageQuality]="1"
-                        (cameraSwitched)="cameraWasSwitched($event)" (initError)="handleInitError($event)"></webcam>
-                    <br />
-
-                    <button class="actionBtn" (click)="toggleWebcam();">Toggle Camera</button>
-                    <br />
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="snapshot" *ngIf="webcamImage" style="text-align:center; padding-top: 20px;"
-        (click)="onCapturedImageClick()">
-
-        <img [src]="webcamImage.imageAsDataUrl" style="height: 500px;" />
-    </div>
-
-    <h4 *ngIf="errors.length > 0">Messages:</h4>
-    <ul *ngFor="let error of errors">
-        <li>{{error | json}}</li>
-    </ul>
-
-    <div *ngFor="let image of webCamImages" >
-        <img [src]="image.imageAsDataUrl"  style="height: 100px;"/>
-    </div> -->
-
+   
 
     <div class="row" *ngIf="visibleTab === 'input'">
-        <div class="col-md-12">
+        <!-- <div class="col-md-12">
             <div class="card">
                 <div class="header">
                     <h4 class="title">Elephantine Processing Details</h4>
@@ -58,7 +26,7 @@
                 <div class="content">
                     <form [formGroup]="ceramicsForm" (ngSubmit)="submitForm(ceramicsForm.value)">
                         <div class="row">
-                            <!-- LOCUS NUMBER -->
+                 
                             <div class="col-md-3">
                                 <div class="form-group"
                                     [ngClass]="{'has-error' : !ceramicsForm.controls['locusNumber'].valid && ceramicsForm.controls['locusNumber'].touched}">
@@ -84,33 +52,7 @@
                                 </span>
                             </div>
                         </div>
-                            <!-- LOCUS NUM PRE
-                            <div class="col-md-2">
-                                <div class="form-group"
-                                    [ngClass]="{'has-error' : !ceramicsForm.controls['locusNumPre'].valid && ceramicsForm.controls['locusNumPre'].touched}">
-                                    <label>Locus Num Pre</label>
-                                    <input type="text" class="form-control" maxlength="1" placeholder="A"
-                                        formControlName="locusNumPre">
-                                    <span class="help-block"
-                                        *ngIf="!ceramicsForm.controls['locusNumPre'].valid && ceramicsForm.controls['locusNumPre'].touched">
-                                        Uh-oh! This is required
-                                    </span>
-                                </div>
-                            </div> 
-
-
-                            <div class="col-md-2">
-                                <div class="form-group"
-                                    [ngClass]="{'has-error' : !ceramicsForm.controls['locusNumSuf'].valid && ceramicsForm.controls['locusNumSuf'].touched}">
-                                    <label>Locus Num Suf</label>
-                                    <input type="text" class="form-control" maxlength="1" placeholder="a"
-                                        formControlName="locusNumSuf">
-                                    <span class="help-block"
-                                        *ngIf="!ceramicsForm.controls['locusNumSuf'].valid && ceramicsForm.controls['locusNumSuf'].touched">
-                                        Uh-oh! This is required
-                                    </span>
-                                </div>
-                            </div>-->
+                            
 
                             <div class="col-md-3">
                                 <div class="form-group"
@@ -141,7 +83,7 @@
                             </div>
                         </div>
 
-                        <!-- Validation for above fields -->
+       
                         <div class="row"
                             *ngIf="!ceramicsForm.controls['locusNumber'].valid && ceramicsForm.controls['locusNumber'].touched
                            
@@ -153,14 +95,7 @@
                                         *ngIf="!ceramicsForm.controls['locusNumber'].valid && ceramicsForm.controls['locusNumber'].touched">
                                         <b>Locus Number</b> is a Required Field. Select a Locus Number from the drop
                                         down list.</p>
-                                    <!-- <p
-                                        *ngIf="!ceramicsForm.controls['locusNumPre'].valid && ceramicsForm.controls['locusNumPre'].touched">
-                                        <b>Locus Number Prefix</b>is a Required Field with a minimum of ONE character.
-                                        e.g. A, B, C</p>
-                                    <p
-                                        *ngIf="!ceramicsForm.controls['locusNumSuf'].valid && ceramicsForm.controls['locusNumSuf'].touched">
-                                        <b>Locus Number Suffix</b> is a Required Field with a minimum of ONE character.
-                                        e.g. a, b, c</p>-->
+            
                                     <p 
                                         *ngIf="!ceramicsForm.controls['objectGroupNumber'].valid && ceramicsForm.controls['objectGroupNumber'].touched">
                                         <b>Object Group Number</b> is a Required Field with a minimum of ONE character.
@@ -185,19 +120,12 @@
                                 </div>
                             </div>
                             <div class="col-md-2">
-                                    <!-- <div class="form-group">
-                                        <label>Ordinal Number</label>
-                                        <div class="example-wrapper">
-                                                <input type="text" class="form-control" maxlength="2" [value]="selectedValue" formControlName="typeVariant" >
-                                          </div> -->
+            
                                     <label>Type Number</label>
                                     <div class="example-wrapper">
                                         <input type="text" class="form-control" disabled [value]="selectedValue" formControlName="typeNumber">
         
-                                        <!-- <kendo-autocomplete [data]="data" class="form-control" [filterable]="true"
-                                            (filterChange)="handleFilter($event)" formControlName="typeNumber"
-                                            [placeholder]="'e.g. O.A1.1'">
-                                        </kendo-autocomplete> -->
+           
                                     </div>
                                 </div>
                                 <div class="col-md-2">
@@ -211,7 +139,7 @@
                                     </div>
                         </div>
 
-                        <!-- </div> -->
+            
 
 
                         <div class="row" *ngIf="ceramicsForm.value.typeFamily">
@@ -221,34 +149,6 @@
                               </div>
                         </div>
 
-                        <!-- <div class="row" *ngIf="ceramicsForm.value.typeNumber">
-                            <div class="col-md-4">
-                                <img [src]="getTypeImage()" alt="NO IMAGE" style="width: 200px; height: 200px;">
-                            </div>
-                            <div class="col-md-8">
-                                <p style="font-size: 12px; color: #9A9A9A;">OBJECT NUMS RELATED: </p>
-                                <p style="font-size: 12px; color: #9A9A9A;">TYPE DESCRIPTION:
-                                    {{imageObjectData.typeDesc}}</p>
-                                <p style="font-size: 12px; color: #9A9A9A;">FAMILY: {{imageObjectData.family}} </p>
-                                <p style="font-size: 12px; color: #9A9A9A;">FAMILY DESC: {{imageObjectData.familyDesc}}
-                                </p>
-                            </div>
-                        </div>
-
-
-                        <div class="row"
-                            *ngIf="!ceramicsForm.controls['numberOfObjects'].valid && ceramicsForm.controls['numberOfObjects'].touched">
-                            <div class="col-md-12 alert">
-                                <div class="alert alert-danger" role="alert">
-                                    <p
-                                        *ngIf="!ceramicsForm.controls['numberOfObjects'].valid && ceramicsForm.controls['numberOfObjects'].touched">
-                                        <b>Number of Objects</b> is a Required Field. maximum of THREE characters.</p>
-                                </div>
-                            </div>
-                        </div> -->
-
-
-                        <!-- Type Description -->
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -258,7 +158,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Validation for Type Description -->
+                        
                         <div class="row"
                             *ngIf="!ceramicsForm.controls['typeDescription'].valid && ceramicsForm.controls['typeDescription'].touched ">
                             <div class="col-md-12 alert">
@@ -483,7 +383,7 @@
                             <div class="col-md-12">
                                 <input [disabled]="!ceramicsForm.valid" type="submit"
                                     class="btn btn-info btn-fill btn-block" value="SAVE">
-                                <!-- <input type="submit" form="mainForm"  [disabled]="!isKhppFormValid" class="btn btn-info btn-fill btn-block" (click)="onFormSubmit()" [value]="buttonValue"> -->
+                            
                             </div>
                         </div>
 
@@ -491,7 +391,7 @@
                     </form>
                 </div>
             </div>
-        </div>
+        </div> -->
 
     </div>
 
@@ -503,4 +403,3 @@
 
     </div>
 </div>
-<!-- </div> -->

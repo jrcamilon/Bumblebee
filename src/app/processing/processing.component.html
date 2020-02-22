@@ -49,23 +49,10 @@
 
 
 <div class="main-content">
-
-  
-<!--   
-    <div class="snapshot" *ngIf="webcamImage" style="text-align:center; padding-top: 20px;" (click)="onCapturedImageClick()">
-
-    <img [src]="webcamImage.imageAsDataUrl" style="height: 500px;"/>
-    </div>
-
-    <h4 *ngIf="errors.length > 0">Messages:</h4>
-    <ul *ngFor="let error of errors">
-    <li>{{error | json}}</li>
-    </ul> -->
-
     <div class="container-fluid">
-        <app-ceramics-form *ngIf="selection === 'Elephantine'"></app-ceramics-form>
         <app-rednotebook-form *ngIf="selection === 'Red Notebook'"></app-rednotebook-form>
         <app-khpp-form *ngIf="selection === 'KHPP'"> </app-khpp-form>
+        <app-elephantine *ngIf="selection === 'Elephantine'"></app-elephantine>
     </div>
 </div> 
 

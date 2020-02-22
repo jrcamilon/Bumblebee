@@ -7,6 +7,11 @@ import {MatTableDataSource} from '@angular/material/table';
 import * as _ from 'lodash';
 import { ExporterService } from 'services/excel/exporter.service';
 
+import * as redsBasicData from './redsBasic.json';
+import * as redsDetailedData from './redsDetailed.json';
+
+// REDS IMPORT
+
 // export interface PeriodicElement {
 //     name: string;
 //     position: number;
@@ -38,6 +43,8 @@ export class KhppFormComponent implements OnInit, OnDestroy {
     recordToDelete = null;
     isOnline: boolean;
     visibleTab = 'input';
+    public redsBasic = redsBasicData;
+    public redsDetailed = redsDetailedData;
 
 
     tagHasError = false;
@@ -94,11 +101,8 @@ export class KhppFormComponent implements OnInit, OnDestroy {
         }
 
         let d: Date = new Date();
-        // console.log(d.getMonth());
-
-        // console.log(d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate());
         this.dueDate = d.getFullYear() + '-' + (d.getMonth() + 1)+ '-' + d.getDate();
-        // console.log('DUE DATE', this.dueDate);
+  
     }
 
 
@@ -310,13 +314,12 @@ export class KhppFormComponent implements OnInit, OnDestroy {
             }
         }
 
-        // console.log(form);
-        // console.log('TO REMOVE', this.formSerivce.getRemoveArray());
+        console.log('FORM', form);
 
 
         if (this.isEditing) {
-            //TO DO:
-            //Send edited online db records to DB
+            // TO DO:
+            // Send edited online db records to DB
             if (this.isEditingOnlineDB === true) {
                 const recordsToRemove = this.formSerivce.getRemoveArray();
 
@@ -340,6 +343,132 @@ export class KhppFormComponent implements OnInit, OnDestroy {
         this.formSerivce.clearToRemoveArray();
         this.clearForm();
         this.clearSubFormsArray();
+    }
+    // REDS Detailed
+    onJsonDetailedProcess() {
+        console.log('processing Red Notebook Data for Detailed');
+        console.log(this.redsDetailed);
+        const grouped = _.groupBy(this.redsDetailed, (ele) => {
+            return ele.tagNumber;
+        });
+
+        // console.log(grouped);
+        Object.keys(grouped).forEach((tagNumber, index) => {
+            // console.log(tagNumber); // tagNumber
+            // console.log(grouped[tagNumber]); // array of records
+
+            const processedBy = grouped[tagNumber][0].processedBy;
+            const dueDate = grouped[tagNumber][0].dueDate;
+            const detailedRecrods = grouped[tagNumber].map(ele => {
+                return {
+                    bodyOrDiagnostic: ele.bodyOrDiagnostic,
+                    objectNumber: ele.objectNumber,
+                    rimsTstc: ele.rimsTstc === '' ? 0 : 1,
+                    ware: ele.ware,
+                    surfaceTreatment: ele.surfaceTreatment,
+                    decoration: ele.decoration,
+                    blackening: ele.blackening,
+                    count: ele.count,
+                    weight: ele.weight === '' ? 0 : ele.weight,
+                    weightType: ele.weightType === '' ? 'g' : ele.weight,
+                    hasPhoto: ele.hasPhoto === 'yes' ? 1 : 0,
+                    diameter: ele.diameter,
+                    percentage: ele.percentage,
+                    typeFamily: ele.typeFamily,
+                    typeNumber: ele.typeNumber,
+                    typeVariant: ele.typeVariant,
+                    typeDescription: ele.typeDescription,
+                    burnishing: ele.burnishing,
+                    isDrawn: ele.isDrawn === '' ? 0 : 1,
+                    fabricType: ele.fabricType,
+                    sheetNumber: ele.sheetNumber,
+                    notes: ele.notes
+                }
+            });
+
+            const jsDate = new Date(dueDate);
+            const newDate = jsDate.getFullYear() + '-' + (jsDate.getMonth() + 1) + '-' + jsDate.getDate();
+
+            const form = {
+                idForm: undefined,
+                tagNumber: tagNumber,
+                dueDate: newDate,
+                processedBy: processedBy,
+                detailedRecords: detailedRecrods,
+                type: 'detailed'
+            }
+
+            console.log('Reds Form #: ', index + 1, form);
+
+            // console.log('writing form');
+            // this.formSerivce.write(form).subscribe(res => {
+            //     console.log('response #:', index + 1, res);
+            // });
+
+            this.editService.combineObjects(form);
+            this.formSerivce.clearToRemoveArray();
+            this.clearForm();
+            this.clearSubFormsArray();
+
+        });
+
+    }
+
+    // REDS Basic
+    onJsonBasicProcess() {
+        console.log('processing Red Notebook Data for Basic');
+        console.log(this.redsBasic);
+        const grouped = _.groupBy(this.redsBasic, (ele) => {
+            return ele.tagNumber;
+        });
+
+        // console.log(grouped);
+        Object.keys(grouped).forEach((tagNumber, index) => {
+            // console.log(tagNumber); // tagNumber
+            // console.log(grouped[tagNumber]); // array of records
+
+            const processedBy = grouped[tagNumber][0].processedBy;
+            const dueDate = grouped[tagNumber][0].dueDate;
+
+            const basicRecords = grouped[tagNumber].map(ele => {
+                return {
+                    fabricType: ele.fabricType,
+                    bodyOrDiagnostic: ele.bodyOrDiagnostic,
+                    sherdType: ele.sherdType,
+                    count: parseInt(ele.count, 0),
+                    weight: parseFloat(ele.weight),
+                    weightType: ele.weightType,
+                    comments: ele.comments,
+                    notes: ele.notes,
+                }
+            });
+
+            const jsDate = new Date(dueDate);
+            const newDate = jsDate.getFullYear() + '-' + (jsDate.getMonth() + 1) + '-' + jsDate.getDate();
+
+            const form = {
+                idForm: undefined,
+                tagNumber: tagNumber,
+                dueDate: newDate,
+                processedBy: processedBy,
+                basicRecords: basicRecords,
+                type: 'basic'
+            }
+
+            console.log('Reds Form Basic #: ', index + 1, form);
+
+            // console.log('writing form');
+            // this.formSerivce.write(form).subscribe(res => {
+            //     console.log('response #:', index + 1, res);
+            // });
+
+            this.editService.combineObjects(form);
+            this.formSerivce.clearToRemoveArray();
+            this.clearForm();
+            this.clearSubFormsArray();
+
+        });
+
     }
 
     public onCancelEdit() {
@@ -384,12 +513,12 @@ export class KhppFormComponent implements OnInit, OnDestroy {
 
     /**
      *  Editing an Online Record from the Database
-     * @param record 
+     * @param record
      */
     public onDBOnlineEdit(record: any) {
         // console.log(record);
-        const type = record.basicCount > record.detailedCount ? 'basic': 'detailed';
-    
+        const type = record.basicCount > record.detailedCount ? 'basic' : 'detailed';
+
         this.formSerivce.editFromKHPP(record.id, type).subscribe(res => {
 
             let splitDate = record.dueDate.split('-');
@@ -456,7 +585,6 @@ export class KhppFormComponent implements OnInit, OnDestroy {
         this.opened = false;
         this.recordToDelete = null;
       }
-  
 
     public dbRecordEdit(record: any) {
         this.tagNumber = record.tagNumber;

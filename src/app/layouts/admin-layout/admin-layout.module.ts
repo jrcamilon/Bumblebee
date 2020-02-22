@@ -48,10 +48,13 @@ import { KhppFabricRadarComponent } from '../../dashboard/visualizations/KhppFab
 import { AgmCoreModule } from '@agm/core';
 import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
 
-// import { WebcamModule } from 'ngx-webcam';
+import { ElephantineComponent } from '../../processing/components/elephantine/elephantine.component';
+import { BasicProcessingComponent } from '../../processing/components/elephantine/components/basic-processing/basic-processing.component';
+import { DetailedEleProcessingComponent } from '../../processing/components/elephantine/components/detailed-ele-processing/detailed-ele-processing.component';
+// tslint:disable-next-line: max-line-length
 
 
-//Directives
+
 import { PopupAnchorDirective } from '../../processing/components/khpp-form/popupanchor.directive';
 import 'hammerjs';
 import { TableGridComponent } from 'app/tables/components/table-grid/table-grid.component';
@@ -196,7 +199,10 @@ import { DashboardTwoComponent } from 'app/dashboard-two/dashboard-two.component
     KhppBlackenedChartComponent,
     FabricComparisonChartComponent,
     DashFilterBarComponent,
-    FilterPipe
+    FilterPipe,
+    ElephantineComponent,
+    BasicProcessingComponent,
+    DetailedEleProcessingComponent
 
 
   ],

@@ -1,0 +1,99 @@
+
+<!-- TOP CONTROLS, TOGGLE BETWEEN INPUT AND DB VIEW -->
+<div>
+  <div class="btn-group btn-group-justified" style="padding-bottom: 10px;">
+    <a class="btn btn-primary" (click)="toggleScreens('input')" [ngClass]="{'active-btn': visibleTab === 'input'}" style="border: 1px solid white; background-color: #4b4b4b; color: white;">INPUT</a>
+    <a class="btn btn-primary" (click)="toggleScreens('offlineDB')" [ngClass]="{'active-btn': visibleTab === 'offlineDB'}" style="border: 1px solid white; background-color: #4b4b4b; color: white;">OFFLINE DB RECORDS</a>
+    <a class="btn btn-primary" (click)="toggleScreens('onlineDB')" [ngClass]="{'active-btn': visibleTab === 'onlineDB'}" style="border: 1px solid white; background-color: #4b4b4b; color: white;">ONLINE DB RECORDS</a>
+  </div>
+</div>
+
+<!-- FORM BODY -->
+<div *ngIf="visibleTab === 'input'">
+  <form id="mainForm">
+      <!-- TAGNUMBER, DATE, ENTERED BY, PROCESSING TYPE FIELDS -->
+      <div class="row container-fluid">
+    
+        <div class="form-group" [ngClass]="{'has-error': tagHasError}">
+          <label for="tagNumber" style="font-size: 10px !important">Tag Number</label>
+          <input 
+            name="tagNumber"
+            
+            id="tagNumber"
+            class='col-sm-12 col-xs-12 form-control' 
+            type="text" 
+            [value]="tagNumber" 
+            (keypress)="restrictTagChars($event)"
+            (keyup)="onTagChange($event)"
+            required 
+            maxlength="10"
+            placeholder="44501A/a-1">
+            <span class="help-block" *ngIf="tagHasError">Please correct the error</span>
+        </div>
+      
+        <div class="form-group" style="padding-top: 25px;">
+          <label for="date" style="font-size: 10px !important">Date</label>
+          <input 
+            id="date"
+            autocomplete="on"
+            name="date"
+            class='col-sm-10 col-xs-10 form-control' 
+            type="date" 
+            [value]="dueDate" 
+            [ngModel]="dueDate | date:'yyyy-MM-dd'"
+            (change)="onDueDateChange($event)"
+            required 
+            placeholder="Due Date">
+        </div>
+      
+        <div class="form-group" style="padding-top: 25px;">
+          <label for="processedby" style="font-size: 10px !important">Procesed By</label>
+          <input 
+          autocomplete="on"
+          name="processedby"
+          id="processedby"
+          class='col-sm-12 col-xs-12 form-control' 
+          type="text" 
+          [value]="processedby" 
+          (keyup)="onProcessedByChange($event)"
+          required placeholder="Processed By">
+        </div>
+      
+        <div class="form-group" style="padding-top: 25px;">
+          <label for="sel1" style="font-size: 10px !important">Processing Type</label>
+          <select class="form-control" id="sel1"  [value]="isBasicVisible ? 'basic' : 'detailed'" (change)="onProcessingTypeChange($event.target.value)">
+            <option value="basic">Basic Processing</option>
+            <option value="detailed">Detailed Processing</option>
+          </select>
+        </div>
+    
+      </div>
+    
+      <!-- FORM BODY FOR SUB-FORMS -->
+      <div class="row" *ngIf="isFormBodyVisible" style="margin-top: -30px">
+      
+        <div *ngIf="isBasicVisible">
+          <div style="text-align: center"><h4>Basic Processing</h4></div>
+          <app-basic-processing></app-basic-processing>
+        </div>
+    
+        <div *ngIf="!isBasicVisible">
+          <div style="text-align: center"><h4>Detailed Processing</h4></div>
+          <app-detailed-ele-processing></app-detailed-ele-processing>
+        </div>
+      
+      </div>
+
+            <!-- ON FORM SUBMIT BUTTON -->
+    <input type="submit" form="mainForm"  [disabled]="!isKhppFormValid" class="btn btn-info btn-fill btn-block" (click)="onFormSubmit()" [value]="buttonValue">
+
+
+
+
+    <!-- ON FORM CANCEL BUTTON -->
+    <input *ngIf="isEditing" type="button" form="mainForm"  class="btn btn-secondary btn-fill btn-block" (click)="onCancelEdit()" value="CANCEL">
+    
+    </form>
+
+
+</div>

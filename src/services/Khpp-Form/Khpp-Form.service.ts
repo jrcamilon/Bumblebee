@@ -169,9 +169,9 @@ export class KhppFormService {
   }
 
   combineObjects(form: any) {
-    console.log(form);
+    console.log('combineObjects', form);
 
-    // this.offLineArray.push(form);
+
     this.offlineDB.add(form);
 
     this.offlineDB.getAll().then( res => {
@@ -261,6 +261,10 @@ export class KhppFormService {
 
   tagNumberFiledValid(tagNumber: string) {
     return (tagNumber.length >= 12)
+  }
+
+  tagNumberElephantineFiledValid(tagNumber: string) {
+    return (tagNumber.length === 10)
   }
 
 }

@@ -20,7 +20,7 @@ export class TypesService {
 public getTypeVariantsLocations(): Observable<any> {
 
 
-  return this._http.get('http://demo.infosol.com:3092/typevariants')
+  return this._http.get('http://localhost:3092/typevariants')
   .map((response: Response) => {
     const tmpData = response.json();
     console.log(tmpData);

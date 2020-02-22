@@ -79,13 +79,19 @@
       
           <div *ngIf="!isBasicVisible">
             <div style="text-align: center"><h4>Detailed Processing</h4></div>
-            <app-detailed-processing ></app-detailed-processing>
+            <app-detailed-processing></app-detailed-processing>
           </div>
         
         </div>
 
               <!-- ON FORM SUBMIT BUTTON -->
       <input type="submit" form="mainForm"  [disabled]="!isKhppFormValid" class="btn btn-info btn-fill btn-block" (click)="onFormSubmit()" [value]="buttonValue">
+
+      <!-- <input type="submit" form="mainForm" class="btn btn-info btn-fill btn-block" (click)="onJsonDetailedProcess()" value="PROCESS REDS DETAILED DATA">
+      <input type="submit" form="mainForm" class="btn btn-info btn-fill btn-block" (click)="onJsonBasicProcess()" value="PROCESS REDS BASIC DATA"> -->
+
+
+
 
       <!-- ON FORM CANCEL BUTTON -->
       <input *ngIf="isEditing" type="button" form="mainForm"  class="btn btn-secondary btn-fill btn-block" (click)="onCancelEdit()" value="CANCEL">
