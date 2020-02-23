@@ -10,5 +10,8 @@ export class DexieService extends Dexie {
     // this.version(1).stores({
     //   todos: '++id',
     // });
+    this.version(2).stores({
+      todos2: '++id',
+    });
   }
 }

@@ -35,9 +35,9 @@
                             <mat-menu #menu="matMenu">
                             <button mat-menu-item (click)="save()" [disabled]="!isOnline">
                                 <mat-icon>unarchive</mat-icon>
-                                <span >Save <b>{{completedCeramics.length}}</b> Records to DB</span>
+                                <span >Save <b>{{completedElephantineForms.length}}</b> Records to DB</span>
                             </button>
-                            <button mat-menu-item (click)="deleteOfflineDB()" disabled="true">
+                            <button mat-menu-item (click)="deleteOfflineDB()" [disabled]="completedElephantineForms.length == 0">
                                 <mat-icon>delete_forever</mat-icon>
                                 <span>Clear Offline DB</span>
                             </button>

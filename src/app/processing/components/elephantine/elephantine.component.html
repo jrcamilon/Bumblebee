@@ -45,6 +45,21 @@
             required 
             placeholder="Due Date">
         </div>
+
+        <div class="form-group" style="padding-top: 25px;">
+          <label for="date" style="font-size: 10px !important">Deposit Date</label>
+          <input 
+            id="depositDate"
+            autocomplete="on"
+            name="date"
+            class='col-sm-10 col-xs-10 form-control' 
+            type="date" 
+            [value]="depositDate" 
+            [ngModel]="depositDate | date:'yyyy-MM-dd'"
+            (change)="onDepositDateChange($event)"
+            required 
+            placeholder="Due Date">
+        </div>
       
         <div class="form-group" style="padding-top: 25px;">
           <label for="processedby" style="font-size: 10px !important">Procesed By</label>
@@ -73,19 +88,19 @@
       <div class="row" *ngIf="isFormBodyVisible" style="margin-top: -30px">
       
         <div *ngIf="isBasicVisible">
-          <div style="text-align: center"><h4>Basic Processing</h4></div>
+          <div style="text-align: center"><h4>Elephantine Basic Processing</h4></div>
           <app-basic-processing></app-basic-processing>
         </div>
     
         <div *ngIf="!isBasicVisible">
-          <div style="text-align: center"><h4>Detailed Processing</h4></div>
+          <div style="text-align: center"><h4>Elephantine Detailed Processing</h4></div>
           <app-detailed-ele-processing></app-detailed-ele-processing>
         </div>
       
       </div>
 
             <!-- ON FORM SUBMIT BUTTON -->
-    <input type="submit" form="mainForm"  [disabled]="!isKhppFormValid" class="btn btn-info btn-fill btn-block" (click)="onFormSubmit()" [value]="buttonValue">
+    <input type="submit" form="mainForm"  [disabled]="!isElephantineFormValid" class="btn btn-info btn-fill btn-block" (click)="onFormSubmit()" [value]="buttonValue">
 
 
 
@@ -96,4 +111,35 @@
     </form>
 
 
+</div>
+
+<!-- OFFLINE DB RECORDS VIEW -->
+<div *ngIf="visibleTab === 'offlineDB'">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">TAG#</th>
+        <th scope="col">DATE</th>
+        <th scope="col">PROCESSED BY</th>
+        <th scope="col">Basic Records</th>
+        <th scope="col">Detailed Records</th>
+        <th scope="col">Command</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let record of offlineDBRecords">
+        <th scope="row">{{record.tagNumber}}</th>
+        <td>{{record.dueDate}}</td>
+        <td>{{record.processedBy}}</td>
+        <td>{{record.basicRecords ? record.basicRecords.length : 0 }}</td>
+        <td>{{record.detailedRecords ? record.detailedRecords.length : 0 }}</td>
+        <td>
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-info" (click)="onDBedit(record)" style="background-color: #1dc7ea; color: white; border: none; width: 70px !important">EDIT</button>
+            <button type="button" class="btn btn-danger" (click)="onDBdelete(record)"  style="background-color: #ff1b1b; color: white; border: none;">DELETE</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>

@@ -1,5 +1,10 @@
+
 import { Component, OnInit } from '@angular/core';
 import { KhppFormService } from 'services/Khpp-Form/Khpp-Form.service';
+import { OnlineServiceService } from 'services/OnlineServices/online-service.service';
+import { FormsService } from 'app/processing/services/forms.service';
+import { OfflineDBService } from 'services/OfflineDB/offline-db.service';
+import { ElephantineFormService } from 'services/Elephantine-Form/elephantine-form.service';
 // import { ElephantineFormsService } from '/'
 
 @Component({
@@ -20,7 +25,7 @@ export class ElephantineComponent implements OnInit {
   isFormBodyVisible = false;
   isBasicVisible = true;
 
-  isKhppFormValid = false;
+  isElephantineFormValid = false;
   buttonValue = 'SUBMIT';
   isEditing = false;
 
@@ -30,6 +35,7 @@ export class ElephantineComponent implements OnInit {
   tagNumber = '';
   processedby = '';
   dueDate = '';
+  depositDate
   basicRecords = [];
   detailedRecords = [];
 
@@ -41,23 +47,42 @@ export class ElephantineComponent implements OnInit {
   detailed = [];
   basic = [];
 
-
   isEditingOnlineDB = false;
 
-
   constructor(
-    public editService: KhppFormService
+    public editService: ElephantineFormService,
+    public onlineSerivice: OnlineServiceService,
+    public formSerivce: FormsService,
+    public offlineDB: OfflineDBService
   ) {
+    this.onlineSerivice.isOnline.subscribe(status => { this.isOnline = status; console.log('online-status', status)});
+    this.formSerivce.eleTriageFormArray.subscribe(triageArray => {this.basicRecords = triageArray; this.checkFormValidity()});
+    this.formSerivce.eleDetailedFormArray.subscribe(detailedArray => { this.detailedRecords = detailedArray; this.checkFormValidity()});
+    this.editService.eleResponseObject.subscribe(res => { this.offlineDBRecords = res; });
+    this.offlineDB.getAllEle().then(res => { this.offlineDBRecords = res; });
 
-    const d = new Date();
-    this.dueDate = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+    if (this.isOnline) {
+      this.formSerivce.readFromElephantine().subscribe(res => {
+          // console.log('online db records', res);
+          this.onlineDBRecords = res;
+          this.onlineDBRecordsCopy = res;
+      });
+    }
+
+    // Set Form Date
+    this.setFormDateToTodaysDate();
   }
 
   ngOnInit() {
   }
 
+  setFormDateToTodaysDate() {
+    const d = new Date();
+    this.dueDate = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+    this.depositDate = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+  }
+
   public restrictTagChars(e: any) {
-    // const char = e.target.value;
     return this.validTagChar;
   }
 
@@ -125,6 +150,13 @@ export class ElephantineComponent implements OnInit {
     this.checkFormValidity();
   }
 
+  public onDepositDateChange(e: any) {
+    console.log(e.target.value);
+    this.depositDate = e.target.value;
+    this.showBody();
+    this.checkFormValidity();
+  }
+
   /** Custom function to check weather the to show the body based on three fields */
   private showBody() {
     this.isFormBodyVisible = (this.editService.tagNumberElephantineFiledValid(this.tagNumber)
@@ -138,21 +170,113 @@ export class ElephantineComponent implements OnInit {
   }
 
   public onFormSubmit() {
+    let form: any;
+
+    if (this.isBasicVisible) {
+      form = {
+        idForm: this.editFormID,
+        tagNumber: this.tagNumber,
+        dueDate: this.dueDate,
+        depositDate: this.depositDate,
+        processedby: this.processedby,
+        basicRecords: this.basicRecords,
+        type: 'basic'
+      }
+    } else {
+      form = {
+        idForm: this.editFormID,
+        tagNumber: this.tagNumber,
+        dueDate: this.dueDate,
+        depositDate: this.depositDate,
+        processedBy: this.processedby,
+        detailedRecords: this.detailedRecords,
+        type: 'detailed'
+      }
+    }
+
+    console.log('Elephantine FORM', form);
+
+    if (this.isEditing) {
+      // TO DO:
+      // Send edited online db records to DB
+      if (this.isEditingOnlineDB === true) {
+          const recordsToRemove = this.formSerivce.getRemoveArray_elephantine();
+
+          this.formSerivce.updateToElephantine(form, recordsToRemove).subscribe(res => {
+              console.log(res);
+          });
+      }
+
+      this.offlineDB.updateEle(this.editFormID, form);
+      this.isEditing = false;
+      this.editFormID = undefined;
+      this.formSerivce.eleRecordToEdit.next([]);
+      this.offlineDB.getAllEle().then(res => {
+          this.offlineDBRecords = res;
+          this.editService.eleResponseObject.next(res);
+      });
+      this.buttonValue = 'SUBMIT';
+  } else {
+      this.editService.combineObjects(form);
+  }
+  this.formSerivce.clearToRemoveArray_elephantine();
+  this.clearForm();
+  this.clearSubFormsArray();
 
   }
 
+public onDBedit(record: any) {
+    this.offlineDB.getAllEle().then(res => {
+        const recordToEdit = res.map(ele => {
+            if (ele.id === record.id) { return ele; }
+        }).filter(el => { return el !== undefined; });
+        console.log(recordToEdit[0]);
+
+        this.dbRecordEdit(recordToEdit[0]);
+        this.isEditing = true;
+        this.buttonValue = 'SAVE OFFLINE DB EDITS';
+        this.visibleTab = 'input';
+    });
+}
+
+
+
+public onDBdelete(record: any) {
+  console.log(record);
+  this.offlineDB.removeEle(record.id);
+  this.offlineDB.getAllEle().then(res => {
+      this.offlineDBRecords = res;
+      this.editService.eleResponseObject.next(res);
+  });
+}
+
+  public clearSubFormsArray() {
+    this.formSerivce.eleTriageFormArray.next([]);
+    this.formSerivce.eleDetailedFormArray.next([]);
+}
+
+
+  public clearForm() {
+    this.isFormBodyVisible = false;
+    this.tagNumber = '';
+    this.processedby = '';
+    const d: Date = new Date();
+    this.dueDate =  d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();;
+}
+
+
   public onCancelEdit() {
-    // this.isEditing = false;
-    // this.visibleTab = 'offlineDB';
-    // this.editFormID = undefined;
-    // this.formSerivce.recordToEdit.next([]);
-    // this.offlineDB.getAll().then(res => {
-    //     this.offlineDBRecords = res;
-    //     this.editService.responseObject.next(res);
-    // });
-    // this.buttonValue = 'SUBMIT';
-    // this.clearForm();
-    // this.clearSubFormsArray();
+    this.isEditing = false;
+    this.visibleTab = 'offlineDB';
+    this.editFormID = undefined;
+    this.formSerivce.eleRecordToEdit.next([]);
+    this.offlineDB.getAllEle().then(res => {
+        this.offlineDBRecords = res;
+        this.editService.eleResponseObject.next(res);
+    });
+    this.buttonValue = 'SUBMIT';
+    this.clearForm();
+    this.clearSubFormsArray();
   }
 
   public onProcessingTypeChange(value: any) {
@@ -160,7 +284,7 @@ export class ElephantineComponent implements OnInit {
   }
 
   public checkFormValidity() {
-    this.isKhppFormValid = this.isFormBodyVisible && this.detailedRecords.length !== 0 || this.basicRecords.length !== 0;
+    this.isElephantineFormValid = this.isFormBodyVisible && this.detailedRecords.length !== 0 || this.basicRecords.length !== 0;
   }
 
 
@@ -182,5 +306,28 @@ export class ElephantineComponent implements OnInit {
             break;
     }
     this.visibleTab = value;
-}
+  }
+
+  public dbRecordEdit(record: any) {
+    this.tagNumber = record.tagNumber;
+    this.dueDate = record.dueDate;
+    this.processedby = record.processedby;
+    this.showBody();
+    this.checkFormValidity();
+    // check if the record being edited has basic or detailed records
+    this.isBasicVisible = record.basicRecords !== undefined;
+
+    this.editFormID = record.id;
+
+    // load the record to the child processing
+    if (this.isBasicVisible) {
+        // console.log(record.basicRecords);
+        this.formSerivce.eleRecordToEdit.next(record.basicRecords);
+    } else {
+        // console.log(record.detailedRecords);
+        this.formSerivce.eleRecordToEdit.next(record.detailedRecords);
+    }
+
+
+  }
 }

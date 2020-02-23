@@ -1,3 +1,123 @@
-<p>
-  basic-processing works!
-</p>
+<div class="container-fluid" style="margin-top: 5px;">
+
+
+  <div class="row container-fluid">
+    <button type="button" class="btn btn-primary btn-sm btn-block" (click)="onAdd()" [disabled]="isFormActive">ADD</button>
+  </div>
+
+
+  <ul class="list-group"  *ngIf="!isFormActive">
+
+      <li class="list-group-item d-flex justify-content-between align-items-center" >
+          <div class="row">
+            <div class="col-md-2 col-sm-2 col-xs-2 list-headers">Fabric</div>
+            <div class="col-md-3 col-sm-3 col-xs-3 list-headers">Body/Diagnostic</div>
+            <div class="col-md-2 col-sm-2 col-xs-2 list-headers">Sherd-Type</div>
+            <div class="col-md-1 col-sm-1 col-xs-1 list-headers">Count</div>
+            <div class="col-md-1 col-sm-2 col-xs-1 list-headers">Weight</div>
+          </div>
+        </li>
+
+      <div>
+          <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let item of eleTriageFormArray; let i = index" (click)="onCollapseList()">
+              <div class="row">
+                <div class="col-md-2 col-sm-2 col-xs-2">{{item.fabricType}}</div>
+                <div class="col-md-3 col-sm-3 col-xs-3">{{item.bodyOrDiagnostic}}</div>
+                <div class="col-md-2 col-sm-2 col-xs-2">{{item.sherdType}}</div>
+                <div class="col-md-1 col-sm-1 col-xs-1" style="white-space: nowrap">{{item.count}}</div>
+                <div class="col-md-1 col-sm-1 col-xs-1" style="white-space: nowrap">{{item.weight}} {{item.weightType}}</div>
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                  <div class="btn-group" style="float: right">
+                    <button type="button" class="btn btn-info btn-sm" style="width: 70px !important" (click)="onFormEdit(i)">EDIT</button>
+                    <button type="button" class="btn btn-danger btn-sm" (click)="onFormRemove(i)">REMOVE</button>
+                  </div>
+                </div>  
+              </div>
+              <div class="row" *ngIf="!isCollapsed">
+                <div class="col-md-6">
+                  <label>Comments</label>
+                  {{item.comments}}
+                </div>
+                <div class="col-md-6">
+                  <label>Notes on Diagnostic</label>
+                  {{item.notes}}
+                </div>
+              </div>
+          </li>
+      </div>
+
+  </ul>
+
+  <div *ngIf="isFormActive" style="border: 2px solid rgb(173, 173, 173); border-radius: 5px; margin-top: 10px;">
+    <div style="margin: 7px; ">
+        <form style="margin-top: 10px;" [formGroup]="activeTriageForm">
+            <div class="row" style="margin-top: 7px;">
+              <div class="col-md-3 col-sm-3">
+                  <label>Ware</label>
+                  <select class="form-control"placeholder="#####" formControlName="fabricType">
+                      <option [value]="'Coarse'">Coarse</option>
+                      <option [value]="'Medium'">Medium</option>
+                      <option [value]="'Fine'">Fine</option>
+                      <option [value]="'MK BM'">MK BM</option>
+                      <option [value]="'Marl>'">Marl</option>
+                  </select>
+              </div>
+              <div class="col-md-3 col-sm-3">
+                  <label>Body or Diagnostic</label>
+                  <select class="form-control"placeholder="#####" formControlName="bodyOrDiagnostic">
+                      <option [value]="'Body'">Body</option>
+                      <option [value]="'Diagnostic'">Diagnostic</option>
+                  </select>
+              </div>
+              <div class="col-md-3 col-sm-3">
+                  <label>Sherd Type</label>
+                  <select class="form-control"placeholder="#####" formControlName="sherdType">
+                      <option [value]="'Body'">Body</option>
+                      <option [value]="'Rim'">Rim</option>
+                      <option [value]="'Base'">Base</option>
+                      <option [value]="'Decorated'">Decorated</option>
+                  </select>
+              </div>
+              <div class="col-md-3 col-sm-3">
+                  <label>Count</label>
+                  <input type="number" class="form-control" maxlength="8" placeholder="0" formControlName="count">
+              </div>
+            </div>
+            <div class="row" style="margin-top: 7px;">
+                <div class="col-md-6 col-sm-6">
+                    <label>Weight <i style="font-size: 14px;"> {{weightString}} = {{weightSum}}</i></label>
+                    <input type="tel" class="form-control" placeholder="0.00" formControlName="weight" id="weight" 
+                    (change)="onWeightFieldChange($event)" (keypress)="restrictNumeric($event)">
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <label>Weight Type</label>
+                    <span> is in kilograms (kg) ? </span> 
+                    <input style="margin-top: 35px" type="checkbox" class="form-check-input" formControlName="weightType">
+                </div>
+            </div>
+            <div class="row" style="margin-top: 7px;">
+                <div class="col-md-12 ">
+                    <label>Comments</label>
+                    <textarea rows="3" class="form-control" placeholder="Enter Comments if any.." formControlName="comments"></textarea>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 7px;">
+                <div class="col-md-12">
+                    <label>Notes on Diagnostic</label>
+                    <textarea rows="3" class="form-control" placeholder="Enter Notes if any.." formControlName="notes"></textarea>
+                </div>
+            </div>
+        </form>
+    
+          <div class="row container-fluid" style="padding-top: 20px;">
+              <div class="btn-group btn-group-justified" style="padding-bottom: 10px;">
+                  <input style="width: 50%" type="submit" class="btn btn-primary" (click)="onFormSave(activeTriageForm.value)" [disabled]="!activeTriageForm.valid" value="SAVE" *ngIf="!isEditMode">
+                  <input style="width: 50%" type="submit" class="btn btn-primary" (click)="onFormEditSave(activeTriageForm.value)" [disabled]="!activeTriageForm.valid" value="SAVE EDITS" *ngIf="isEditMode">
+                  <input style="width: 50%" type="button" class="btn btn-primary" (click)="onFormCancel()" value="CANCEL">
+              </div>
+          </div>
+    </div>
+
+  </div>
+
+</div>
