@@ -114,14 +114,11 @@ export class KhppFormComponent implements OnInit, OnDestroy {
     //     this.dataSource.filter = filterValue.trim().toLowerCase();
     // }
 
+    // custom function to search through tag numbers and filter applicable ones
     onTagSearch(e: any) {
-        // const conlineDBRecordsCount = this.onlineDBRecordsCopy.length;
-        // console.log(conlineDBRecordsCount);
         this.detailed = [];
         this.basic = [];
-        const value = e.target.value;
-
-        // console.log(value);
+        const value = e.target.value.toUpperCase();
 
         // Filter Values
         const _filterVals = _.map(this.onlineDBRecordsCopy, function(o) {

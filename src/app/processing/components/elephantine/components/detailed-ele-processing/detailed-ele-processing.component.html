@@ -1,3 +1,269 @@
-<p>
-  detailed-ele-processing works!
-</p>
+<div class="container-fluid" style="margin-top: 5px;">
+
+
+  <div class="row container-fluid">
+    <button type="button" class="btn btn-primary btn-sm btn-block" (click)="onAdd()" [disabled]="isFormActive">ADD</button>
+  </div>
+
+
+  <ul class="list-group"  *ngIf="!isFormActive">
+
+      <li class="list-group-item d-flex justify-content-between align-items-center" >
+          <div class="row">
+            <div class="col-md-2 col-sm-2 col-xs-2 list-headers">Body or Diag</div>
+            <div class="col-md-3 col-sm-3 col-xs-3 list-headers">Ware Type</div>
+            <div class="col-md-2 col-sm-2 col-xs-2 list-headers">Type Number</div>
+            <div class="col-md-1 col-sm-1 col-xs-1 list-headers">Count</div>
+            <div class="col-md-1 col-sm-2 col-xs-1 list-headers">Weight</div>
+          </div>
+        </li>
+
+      <div>
+          <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let item of detailedFormArray; let i = index" (click)="this.isCollapsed = !this.isCollapsed">
+              <div class="row">
+                <div class="col-md-2 col-sm-2 col-xs-2">{{item.bodyOrDiagnostic}}</div>
+                <div class="col-md-3 col-sm-3 col-xs-3">{{item.ware}}</div>
+                <div class="col-md-2 col-sm-2 col-xs-2">{{item.typeNumber}}</div>
+                <div class="col-md-1 col-sm-1 col-xs-1" style="white-space: nowrap">{{item.count}}</div>
+                <div class="col-md-1 col-sm-1 col-xs-1" style="white-space: nowrap">{{item.weight}} {{item.weightType}}</div>
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                  <div class="btn-group" style="float: right">
+                    <button type="button" class="btn btn-info btn-sm" (click)="onFormEdit(i)" style="background-color: #1dc7ea; color: white; border: none; width: 70px !important">EDIT</button>
+                    <button type="button" class="btn btn-danger btn-sm" (click)="onFormRemove(i)" style="background-color: #ff1b1b; color: white; border: none;">REMOVE</button>
+                  </div>
+                </div>  
+              </div>
+              <div class="row" *ngIf="!isCollapsed">
+                <div class="col-md-6">
+                  <label>Comments</label>
+                  {{item.comments}}
+                </div>
+                <div class="col-md-6">
+                  <label>Notes</label>
+                  {{item.notes}}
+                </div>
+              </div>
+          </li>
+      </div>
+
+  </ul>
+
+  <div *ngIf="isFormActive" style="border: 2px solid rgb(173, 173, 173); border-radius: 5px; margin-top: 10px;">
+    <div style="margin: 7px; ">
+
+        <!-- Body Detailed Form -->
+        <form style="margin-top: 10px;" [formGroup]="activeDetailedForm">
+
+            <!-- First Row -->
+            <div class="row" style="margin-top: 7px;">
+              <div class="col-md-3 col-sm-3">
+                <label>Body or Diagnostic</label>
+                <select class="form-control" placeholder="body or diag?" formControlName="bodyOrDiagnostic">
+                    <option value="body" >Body</option>
+                    <option value="diagnostic" >Diagnostic</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Second Row -->
+            <div class="row" style="margin-top: 7px;">
+              <div class="col-md-3 col-sm-3">
+                <label>Object No.</label>
+                <input type="number" class="form-control" maxlength="8" placeholder="0" formControlName="objectNumber">
+              </div>
+              <div class="col-md-3 col-sm-3" *ngIf="activeDetailedForm.controls.bodyOrDiagnostic.value === 'body'">
+                <label>Rims TSTC?</label>
+                <input style="margin-top: 35px; margin-left: 10px;" type="checkbox" class="form-check-input" formControlName="rimsTstc">
+              </div>
+              <div class="col-md-3 col-sm-3" >
+                <label>Photo'd?</label>
+                <input style="margin-top: 35px; margin-left: 10px;" type="checkbox" class="form-check-input" formControlName="rimsTstc">
+              </div>
+            </div>
+
+            <!-- Third Row -->
+            <div class="row" style="margin-top: 7px;">
+
+                <div class="col-md-2 col-sm-2">
+                  <label>Ware</label>
+                  <select class="form-control" placeholder="#####" formControlName="ware">
+                      <option [value]="option.value" *ngFor="let option of wareOptions" >{{option.name}}</option>
+                  </select>
+                </div>
+
+                <div class="col-md-2 col-sm-2">
+                  <label>Surface Treatment</label>
+                  <select class="form-control"placeholder="#####" formControlName="surfaceTreatment">
+                      <option [value]="option.value" *ngFor="let option of surfaceTreatmentOptions">{{option.name}}</option>
+                  </select>
+                </div>
+
+                <div class="col-md-2 col-sm-2">
+                  <label>Blackening</label>
+                  <select class="form-control"placeholder="#####" formControlName="blackening">
+                      <option [value]="option.value" *ngFor="let option of blackeningOptions">{{option.name}}</option>
+                  </select>
+                </div>
+
+                <div class="col-md-3 col-sm-3">
+                  <label>Decoration</label>
+                  <select class="form-control"placeholder="#####" formControlName="decoration">
+                      <option [value]="option.value" *ngFor="let option of decorationOptions">{{option.name}}</option>
+                  </select>
+                </div>
+
+                <div class="col-md-3 col-sm-3">
+                  <label>Burnishing</label>
+                  <select class="form-control"placeholder="#####" formControlName="burnishing">
+                      <option [value]="option.value" *ngFor="let option of burnishingOptions">{{option.name}}</option>
+                  </select>
+                </div>
+
+            </div>
+
+            <!-- Fourth Row -->
+            <div class="row" style="margin-top: 7px;">
+                <div class="col-md-3 col-sm-3">
+                  <label>Count</label>
+                  <input type="number" class="form-control" maxlength="8" placeholder="0" formControlName="count">
+                </div>
+                <div class="col-md-5 col-sm-5">
+                  <label>Weight <i style="font-size: 14px;"> {{weightString}} = {{weightSum}}</i></label>
+                  <input type="tel" class="form-control" placeholder="0.00" formControlName="weight" id="weight" (change)="onWeightFieldChange($event)" (keypress)="restrictNumeric($event)">
+              </div>
+              <div class="col-md-4 col-sm-4">
+                  <label>Weight Type</label>
+                  <span> is in kilograms (kg) ? </span> 
+                  <input style="margin-top: 35px" type="checkbox" class="form-check-input" formControlName="weightType">
+              </div>
+
+            </div>
+
+            <div class="row" style="margin-top: 7px;" *ngIf="activeDetailedForm.controls.bodyOrDiagnostic.value === 'diagnostic'">
+              <!-- <div class="col-md-3 col-sm-3">
+                <label>Quantity</label>
+                <input type="number" class="form-control" placeholder="1" formControlName="quantity" id="quantity">
+              </div> -->
+
+              <div class="col-md-3 col-sm-3">
+                <label>Diameter</label>
+                <input type="number" class="form-control" placeholder="#" formControlName="diameter" id="diameter">
+              </div>
+
+              <div class="col-md-3 col-sm-3">
+                <label>Percentage</label>
+                <input type="number" class="form-control" placeholder="%" formControlName="percentage" id="percentage">
+              </div>
+
+            </div>
+
+            <div class="row" style="margin-top: 7px;" *ngIf="activeDetailedForm.controls.bodyOrDiagnostic.value === 'diagnostic'">
+              <div class="col-md-2">
+                <div class="form-group">
+                    <label>Type Family</label>
+                    <select class="form-control" placeholder="O.A1" (change)="onFamilySelect($event.target.value)" formControlName="typeFamily">
+                        <option [value]="type.family" *ngFor="let type of ceramicFamilyTypes" >{{type.family}}</option>
+                    </select>
+
+                </div>
+              </div>
+
+              <div class="col-md-2">
+ 
+                <label>Type Number</label>
+                <div class="example-wrapper">
+                    <input type="text" class="form-control" [value]="selectedValue" (change)="onTypeNumberChange($event)" formControlName="typeNumber">
+                </div>
+             </div>
+
+              <div class="col-md-2">
+                <div class="form-group">
+                <label>Variants</label>
+                <div class="example-wrapper">
+                    <input type="text" class="form-control" maxlength="2" placeholder="1"
+                        formControlName="typeVariant">
+                </div>
+                </div>
+              </div>
+
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>Drawn</label>
+                  <span> ? </span> 
+                  <input style="margin-top: 35px" type="checkbox" class="form-check-input" formControlName="isDrawn">
+                </div>
+              </div>
+            </div>
+
+            <div  *ngIf="activeDetailedForm.controls.bodyOrDiagnostic.value === 'diagnostic'">
+              <div class="row" *ngIf="activeDetailedForm.value.typeFamily" >
+                <small style="margin-left: 15px;">Please Select one of the following images...</small>
+                <div id="container">
+                  <img style="border: 2px solid black; width: 400px;" *ngFor="let item of familyImages" [src]="getImage(item)" (click)="onSelectImage(item)" />
+                </div>
+              </div>
+  
+              <div class="row">
+              <div class="col-md-12">
+                  <div class="form-group">
+                      <label>Type Description</label>
+                      <textarea rows="3" class="form-control" placeholder="Here can be your description" (change)="onTypeDescriptionChange($event)" [value]="typeDescription"
+                          formControlName="typeDescription"></textarea>
+                  </div>
+              </div>
+              </div>
+
+
+
+              <div class="row" *ngIf="activeDetailedForm.controls.isDrawn.value === true">
+                <div class="col-md-3 col-sm-3">
+                  <label>Fabric Type</label>
+                  <select class="form-control" placeholder="#####" formControlName="fabricType">
+                    <option [value]="option.value" *ngFor="let option of fabricTypeOptions" >{{option.name}}</option>
+                </select>
+                </div>
+
+                <div class="col-md-3 col-sm-3">
+                  <label>Sheet No.</label>
+                    <input type="number" class="form-control" placeholder="#" formControlName="sheetNumber" id="sheetNumber">
+                </div>
+              </div>
+
+              <!-- <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="form-group">
+                        <label>Notes</label>
+                        <textarea rows="3" class="form-control" placeholder="Enter Notes here...."
+                            formControlName="notes"></textarea>
+                    </div>
+                </div>
+              </div> -->
+            </div>
+
+            <div class="row" style="margin-top: 5px;">
+              <div class="col-md-12 col-sm-12">
+                  <div class="form-group">
+                      <label>Notes</label>
+                      <textarea rows="3" class="form-control" placeholder="Enter Notes here...."
+                          formControlName="notes"></textarea>
+                  </div>
+              </div>
+            </div>
+
+        
+        </form>
+
+        
+    
+          <div class="row container-fluid" style="padding-top: 20px;">
+              <div class="btn-group btn-group-justified" style="padding-bottom: 10px;">
+                  <input style="width: 50%" type="submit" class="btn btn-primary" (click)="onFormSave(activeDetailedForm.value)" [disabled]="!activeDetailedForm.valid" value="SAVE" *ngIf="!isEditMode">
+                  <input style="width: 50%" type="submit" class="btn btn-primary" (click)="onFormEditSave(activeDetailedForm.value)" [disabled]="!activeDetailedForm.valid" value="SAVE EDITS" *ngIf="isEditMode">
+                  <input style="width: 50%" type="button" class="btn btn-primary" (click)="onFormCancel()" value="CANCEL">
+              </div>
+          </div>
+    </div>
+
+  </div>
+
+</div>
