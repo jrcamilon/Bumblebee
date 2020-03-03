@@ -48,7 +48,7 @@
 
         <div class="form-group" style="padding-top: 25px;">
           <label for="date" style="font-size: 10px !important">Deposit Date</label>
-          <input 
+          <!-- <input 
             id="depositDate"
             autocomplete="on"
             name="date"
@@ -58,10 +58,15 @@
             [ngModel]="depositDate | date:'yyyy-MM-dd'"
             (change)="onDepositDateChange($event)"
             required 
-            placeholder="Due Date">
+            placeholder="Due Date"> -->
+
+            <select class="form-control" id="sel2" (change)="onDepositDateChange($event)">
+              <option [value]="option.value" *ngFor="let option of depositDateOptions" >{{option.name}}</option>
+            </select>
+            
         </div>
       
-        <div class="form-group" style="padding-top: 25px;">
+        <div class="form-group" style="margin-top: -15px;">
           <label for="processedby" style="font-size: 10px !important">Procesed By</label>
           <input 
           autocomplete="on"
@@ -142,4 +147,103 @@
       </tr>
     </tbody>
   </table>
+</div>
+
+<!-- ONLINE DB RECORDS VIEW -->
+<div *ngIf="visibleTab === 'onlineDB'">
+  <!-- <div style="width: 100%">
+        <mat-form-field style="width: 100%">
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+        
+        <table style="width: 100%" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        
+  
+          <ng-container matColumnDef="position">
+            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+          </ng-container>
+        
+
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
+        
+
+          <ng-container matColumnDef="weight">
+            <th mat-header-cell *matHeaderCellDef> Weight </th>
+            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+          </ng-container>
+        
+
+          <ng-container matColumnDef="symbol">
+            <th mat-header-cell *matHeaderCellDef> Symbol </th>
+            <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+          </ng-container>
+        
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+  </div> -->
+  
+<!-- 
+    <div class="form-group" style="height: 55px;">
+      <label for="tagNumber" style="font-size: 10px !important">Search Tag Number</label>
+      <input 
+        name="tagNumber"
+        id="tagNumber"
+        class='col-sm-12 col-xs-12 form-control' 
+        type="text" 
+        (keyup)="onTagSearch($event)"
+        placeholder="D09.1-007-12.12">
+    </div>
+
+    <div style="margin-top: 5px; margin-bottom: 10px;">
+      <button class="btn btn-default" style="width: 100%; border: 2px solid green; color: green;" (click)="onExportToExcel($event)">EXPORT TO EXCEL</button>
+    </div> -->
+
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">TAG#</th>
+        <th scope="col">DATE</th>
+        <th scope="col">PROCESSED BY</th>
+        <th scope="col">Basic Records</th>
+        <th scope="col">Detailed Records</th>
+        <th scope="col">Command</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let record of onlineDBRecords">
+        <th scope="row">{{record.tagNumber}}</th>
+        <td>{{record.dueDate}}</td>
+        <td>{{record.processedBy}}</td>
+        <td>{{record.basicCount }}</td>
+        <td>{{record.detailedCount }}</td>
+        <td>
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-info" (click)="onDBOnlineEdit(record)">EDIT</button>
+            <button type="button" class="btn btn-danger" (click)="onDelete(record)">DELETE</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- Kendo Dialog for Deleting -->
+<div class="example-wrapper">
+  <kendo-dialog title="Please confirm" *ngIf="opened" (close)="close('cancel')" [minWidth]="250" [width]="450">
+      <p style="margin: 30px; text-align: center;">Are you sure you want to delete this record?</p>
+
+      <p style="margin: 30px; text-align: center;">Tag Number: {{recordToDelete.tagNumber}}</p>
+
+      <kendo-dialog-actions>
+          <button kendoButton (click)="close('no')">No</button>
+          <button kendoButton (click)="close('yes')" primary="true">Yes</button>
+      </kendo-dialog-actions>
+  </kendo-dialog>
 </div>

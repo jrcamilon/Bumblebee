@@ -35,7 +35,8 @@ export class ElephantineComponent implements OnInit {
   tagNumber = '';
   processedby = '';
   dueDate = '';
-  depositDate
+  depositDate;
+  depositDateOptions = [];
   basicRecords = [];
   detailedRecords = [];
 
@@ -48,6 +49,7 @@ export class ElephantineComponent implements OnInit {
   basic = [];
 
   isEditingOnlineDB = false;
+;
 
   constructor(
     public editService: ElephantineFormService,
@@ -69,8 +71,14 @@ export class ElephantineComponent implements OnInit {
       });
     }
 
+    // Get Deposit Date
+    this.depositDateOptions = this.editService.getBroadDate();
+
     // Set Form Date
     this.setFormDateToTodaysDate();
+
+    // set default deposit date
+    this.depositDate = this.editService.getBroadDate()[0].value;
   }
 
   ngOnInit() {
@@ -79,7 +87,6 @@ export class ElephantineComponent implements OnInit {
   setFormDateToTodaysDate() {
     const d = new Date();
     this.dueDate = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
-    this.depositDate = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
   }
 
   public restrictTagChars(e: any) {
@@ -151,7 +158,7 @@ export class ElephantineComponent implements OnInit {
   }
 
   public onDepositDateChange(e: any) {
-    console.log(e.target.value);
+    console.log('here', e.target.value);
     this.depositDate = e.target.value;
     this.showBody();
     this.checkFormValidity();
@@ -230,7 +237,7 @@ public onDBedit(record: any) {
         const recordToEdit = res.map(ele => {
             if (ele.id === record.id) { return ele; }
         }).filter(el => { return el !== undefined; });
-        console.log(recordToEdit[0]);
+        console.log('Record To Edit', recordToEdit[0]);
 
         this.dbRecordEdit(recordToEdit[0]);
         this.isEditing = true;
@@ -280,6 +287,7 @@ public onDBdelete(record: any) {
   }
 
   public onProcessingTypeChange(value: any) {
+    console.log(value);
     this.isBasicVisible = value === 'basic' ? true : false;
   }
 
@@ -308,15 +316,88 @@ public onDBdelete(record: any) {
     this.visibleTab = value;
   }
 
+  public onDBOnlineEdit(record: any) {
+    const type = record.basicCount > record.detailedCount ? 'basic' : 'detailed';
+
+    this.formSerivce.editFromElephantine(record.id, type).subscribe(res => {
+
+        const splitDate = record.dueDate.split('-');
+        const newDate = splitDate[0] + '-' + splitDate[1] + '-' + splitDate[2];
+
+        let recordToEdit;
+
+        if (type === 'detailed') {
+            recordToEdit = {
+                tagNumber: record.tagNumber,
+                dueDate: newDate,
+                depositDate: record.depositDate,
+                id: record.id,
+                processedBy: record.processedBy,
+                detailedRecords: res.records
+            }
+        } else {
+            recordToEdit = {
+                tagNumber: record.tagNumber,
+                dueDate: newDate,
+                depositDate: record.depositDate,
+                id: record.id,
+                processedBy: record.processedBy,
+                detailedRecords: res.records
+            }
+        }
+
+        this.isEditingOnlineDB = true;
+
+        console.log('RECORD TO EDIT', recordToEdit);
+
+        this.dbRecordEdit(recordToEdit);
+        this.editFormID = record.id;
+        this.isEditing = true;
+        this.buttonValue = 'SAVE ONLINE DB EDITS';
+        this.visibleTab = 'input';
+
+    });
+  }
+
+  public onDelete(record: any) {
+    console.log(record);
+    this.recordToDelete = record;
+    this.opened = true;
+  }
+
+  public close(status) {
+    console.log(`Dialog result: ${status}`);
+    switch (status) {
+        case 'no':
+            // don't delete
+            break;
+        case 'yes':
+            // delete record
+            this.formSerivce.deleteFromElephantine(this.recordToDelete.id).subscribe(res => {
+                console.log(res);
+                this.formSerivce.readFromElephantine().subscribe(res => {
+                    console.log('online db records', res);
+                    this.onlineDBRecords = res;
+                });
+            })
+            break;
+    };
+    this.opened = false;
+    this.recordToDelete = null;
+
+  }
+
   public dbRecordEdit(record: any) {
     this.tagNumber = record.tagNumber;
     this.dueDate = record.dueDate;
-    this.processedby = record.processedby;
+    this.depositDate = record.depositDate
+    this.processedby = record.processedBy;
     this.showBody();
     this.checkFormValidity();
     // check if the record being edited has basic or detailed records
     this.isBasicVisible = record.basicRecords !== undefined;
 
+    // eidt form ID from Record
     this.editFormID = record.id;
 
     // load the record to the child processing

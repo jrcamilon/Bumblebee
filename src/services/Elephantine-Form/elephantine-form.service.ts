@@ -14,44 +14,67 @@ export class ElephantineFormService {
 
   offlineDBrecordToEdit = new Subject<any>();
 
+  broadDate = [
+    {value: 'Old Kingdom', name: 'Old Kingdom'},
+    {value: 'First Intermediate Period', name: 'First Intermediate Period'},
+    {value: 'Middle Kingdom', name: 'Middle Kingdom'},
+    {value: 'Second Intermediate Period', name: 'Second Intermediate Period'},
+  ]
+
+  dynasticDate = [
+    {value: 'Dyn 4/5', name: 'Dyn 4/5'},
+    {value: 'Dyn 6', name: 'Dyn 6'},
+    {value: 'Dyn 6, late', name: 'Dyn 6 late'},
+    {value: 'Early FIP', name: 'Early FIP'},
+    {value: 'Late FIP', name: 'Late FIP'},
+    {value: 'Late FIP/early Dyn 11', name: 'Late FIP/early Dyn 11'},
+    {value: 'LateD11/early D12', name: 'LateD11/early D12'},
+    {value: 'Early-mid D12', name: 'Early-mid D12'},
+    {value: 'Late D12', name: 'Late D12'},
+    {value: 'Late D12/early D13', name: 'Late D12/early D13'},
+    {value: 'Mid D13', name: 'Mid D13'},
+    {value: 'Mid/late D13', name: 'Mid/late D13'},
+  ]
+
+  // object number is not NULL
   fabricTypeOptions = [
-    {value: 'KHA.1', name: 'KHA.1'},
-    {value: 'KHA.2', name: 'KHA.2'},
-    {value: 'KHA.3', name: 'KHA.3'},
-    {value: 'KHA.4', name: 'KHA.4'},
+    {value: 'NS I', name: 'NS I'},
+    {value: 'NS I.s', name: 'NS I.s'},
+    {value: 'NS I.b', name: 'NS I.b'},
+    {value: 'NS I.v', name: 'NS I.v'},
+    {value: 'NS II', name: 'NS II'},
+    {value: 'NS III', name: 'NS III'},
+    {value: 'NS III.b', name: 'NS III.b'},
+    {value: 'NS III.s', name: 'NS III.s'},
+    {value: 'NS IV', name: 'NS IV'},
+    {value: 'NS IV.m', name: 'NS IV.m'},
+    {value: 'NS IV.x', name: 'NS IV.x'},
+    {value: 'NS V', name: 'NS V'},
+    {value: 'NS V.b', name: 'NS V.b'},
+    {value: 'M I.a', name: 'M I.a'},
+    {value: 'M I.b', name: 'M I.b'},
+    {value: 'M I.c', name: 'M I.c'},
+    {value: 'M II.a', name: 'M II.a'},
+    {value: 'M II.b', name: 'M II.b'},
+    {value: 'M III', name: 'M III'},
+    {value: 'M IV', name: 'M IV'},
+  ];
 
-    {value: 'KHB.1', name: 'KHB.1'},
-    {value: 'KHB.2', name: 'KHB.2'},
-    {value: 'KHB.3', name: 'KHB.3'},
-
-    {value: 'KHB.5', name: 'KHB.5'},
-
-    {value: 'KHB.6', name: 'KHB.6'},
-
-
-    {value: 'KHB.4', name: 'KHB.4'},
-    {value: 'KHC.1', name: 'KHC.1'},
-    {value: 'KHC.2', name: 'KHC.2'},
-    {value: 'KHC.3', name: 'KHC.3'},
-    {value: 'Marl A1', name: 'Marl A1'},
-    {value: 'Marl A2', name: 'Marl A2'},
-    {value: 'Marl A3', name: 'Marl A3'},
-    {value: 'Marl A4', name: 'Marl A4'},
-    {value: 'Marl C1', name: 'Marl C1'},
-    {value: 'Marl C2', name: 'Marl C2'},
+  fabricTypeOptionsNullObjectNumber = [
+    {value: 'NS I', name: 'NS I'},
+    {value: 'NS II+', name: 'NS II+'},
+    {value: 'NS V', name: 'NS V'},
+    {value: 'M I', name: 'M I'},
+    {value: 'M II', name: 'M II'},
+    {value: 'M III', name: 'M III'},
+    {value: 'M IV', name: 'M IV'}
   ];
 
   wareOptions = [
     {value: 'Coarse', name: 'Coarse'},
     {value: 'Medium', name: 'Medium'},
     {value: 'Fine', name: 'Fine'},
-    {value: 'Marl-A', name: 'Marl-A'},
-    {value: 'Marl-A2', name: 'Marl-A2'},
-    {value: 'Marl-A4', name: 'Marl-A4'},
-    {value: 'Marl-C', name: 'Marl-C'},
-    {value: 'Marl-C', name: 'Marl-C1'},
-    {value: 'Marl-C', name: 'Marl-C2'},
-    {value: 'Other Marl', name: 'Other Marl'},
+    {value: 'NS V', name: 'NS V'},
   ];
 
   // Detailed Surface Treatment Options
@@ -126,8 +149,12 @@ export class ElephantineFormService {
 
   constructor(public offlineDB: OfflineDBService) { }
 
-  getFabricTypeOptions(): any[] {
-    return this.fabricTypeOptions;
+  getFabricTypeOptions(objectField: any): any[] {
+    if (objectField !== null) {
+      return this.fabricTypeOptions
+    } else {
+      return this.fabricTypeOptionsNullObjectNumber;
+    }
   }
 
 
@@ -138,6 +165,14 @@ export class ElephantineFormService {
     //   return this.surfaceTreatmentOptions_other;
     // }
     return this.surfaceTreatmentOptions;
+  }
+
+  public getDynasticDate() {
+    return this.dynasticDate;
+  }
+
+  public getBroadDate() {
+    return this.broadDate;
   }
 
   getBlackeningOptions() {

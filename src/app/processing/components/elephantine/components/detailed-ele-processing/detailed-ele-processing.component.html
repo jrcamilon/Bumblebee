@@ -69,7 +69,13 @@
             <div class="row" style="margin-top: 7px;">
               <div class="col-md-3 col-sm-3">
                 <label>Object No.</label>
-                <input type="number" class="form-control" maxlength="8" placeholder="0" formControlName="objectNumber">
+                <input type="number" class="form-control" maxlength="8" placeholder="0" formControlName="objectNumber" (change)="onObjectNumberChange($event)">
+              </div>
+              <div class="col-md-3 col-sm-3" *ngIf="isSherdDateShowing">
+                <label>Sherd Date</label>
+                <select class="form-control"placeholder="#####" formControlName="sherdDate">
+                  <option [value]="option.value" *ngFor="let option of sherdDateOptions">{{option.name}}</option>
+               </select>
               </div>
               <div class="col-md-3 col-sm-3" *ngIf="activeDetailedForm.controls.bodyOrDiagnostic.value === 'body'">
                 <label>Rims TSTC?</label>

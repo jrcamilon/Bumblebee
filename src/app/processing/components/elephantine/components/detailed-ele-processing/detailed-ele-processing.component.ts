@@ -23,6 +23,7 @@ export class DetailedEleProcessingComponent implements OnInit {
   // Fabric Type Options
   fabricTypeOptions: any[];
   surfaceTreatmentOptions: any[];
+  sherdDateOptions: any[];
   burnishingOptions: any[];
   sherdTypeOptions: any[];
 
@@ -42,6 +43,8 @@ export class DetailedEleProcessingComponent implements OnInit {
   familyImages;
   typeDescription;
 
+  isSherdDateShowing = false;
+
   @Output() onFormIdChange = new EventEmitter();
 
   constructor(
@@ -57,17 +60,21 @@ export class DetailedEleProcessingComponent implements OnInit {
     // create family types
     this.createFamilyTypes();
     this.wareOptions = this.elephantineFormService.getWareOptions();
-    this.fabricTypeOptions = this.elephantineFormService.getFabricTypeOptions();
+    this.fabricTypeOptions = this.elephantineFormService.getFabricTypeOptions(null);
     this.decorationOptions = this.elephantineFormService.getDecorationOptions();
     this.burnishingOptions = this.elephantineFormService.getBurnihsingOptions();
 
     this.surfaceTreatmentOptions = this.elephantineFormService.getSurfaceTreatmentOptions();
+    this.sherdDateOptions = this.elephantineFormService.getDynasticDate(); // Sherd Date
     this.sherdTypeOptions = this.elephantineFormService.getSherdTypeOptions();
     this.blackeningOptions = this.elephantineFormService.getBlackeningOptions();
 
   }
 
   ngOnInit() {
+    if (this.recordToEdit.length !== 0) {
+      this.detailedFormArray = this.recordToEdit;
+    }
   }
 
   createFamilyTypes() {
@@ -86,6 +93,7 @@ export class DetailedEleProcessingComponent implements OnInit {
     this.activeDetailedForm = this.fb.group({
       bodyOrDiagnostic: 'body',
       objectNumber: null,
+      sherdDate: null,
       rimsTstc: false,
       ware: null,
       surfaceTreatment: null,
@@ -191,6 +199,7 @@ export class DetailedEleProcessingComponent implements OnInit {
       formId: item.formId,
       bodyOrDiagnostic: item.bodyOrDiagnostic,
       objectNumber: item.objectNumber,
+      sherdDate: item.sherdDate,
       rimsTstc: item.rimsTstc,
       ware: item.ware,
       surfaceTreatment: item.surfaceTreatment,
@@ -214,6 +223,23 @@ export class DetailedEleProcessingComponent implements OnInit {
     });
   }
 
+  // Every time the Object Number field is touched
+  onObjectNumberChange(e: any) {
+      console.log(e.target.value);
+      // set the Fabric Type to
+      this.fabricTypeOptions =
+      this.elephantineFormService.getFabricTypeOptions(this.activeDetailedForm.value.objectNumber);
+
+      console.log(this.fabricTypeOptions);
+      if (e.target.valuericTypeOptions === null || e.target.value === '') {
+        this.isSherdDateShowing = false;
+        this.activeDetailedForm.value.sherdDate = '';
+      } else {
+        this.isSherdDateShowing = true;
+      }
+  }
+
+
   onFormRemove(index: number): void {
     // console.log('REMOVING', this.detailedFormArray[index]);
     this.formService.addToRemoveArray_elephantine(this.detailedFormArray[index]);
@@ -231,6 +257,7 @@ export class DetailedEleProcessingComponent implements OnInit {
     formValues.rimsTstc = formValues.rimsTstc === true ? 1 : 0;
     formValues.hasPhoto = formValues.hasPhoto === true ? 1 : 0;
     formValues.objectNumber = formValues.objectNumber == null ? 0 : formValues.objectNumber;
+    formValues.sherdDate = formValues.sherdDate == null ? '' : formValues.sherdDate;
     formValues.blackening = formValues.blackening == null ? '' : formValues.blackening;
     formValues.decoration = formValues.decoration == null ? '' : formValues.decoration;
     formValues.surfaceTreatment = formValues.surfaceTreatment == null ? '' : formValues.surfaceTreatment;

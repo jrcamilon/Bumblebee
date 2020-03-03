@@ -110,13 +110,14 @@ export class ProcessingComponent implements OnInit {
     switch (this.selection) {
       case 'Elephantine':
         console.log('Saving Elephantine');
-        console.log(this.completedForms);
+        console.log(this.completedElephantineForms);
 
-         toInsert = this.completedForms.map(ele => {
+         toInsert = this.completedElephantineForms.map(ele => {
           return new Object({
             triageData: ele.basicRecords === undefined ? [] : ele.basicRecords,
             diagnosticData: [],
             dueDate: ele.dueDate,
+            depositDate: ele.depositDate,
             id: ele.id,
             processedBy: ele.processedBy,
             tagNumber: ele.tagNumber,
@@ -130,14 +131,14 @@ export class ProcessingComponent implements OnInit {
         if (this.isOnline) {
           for (let i = 0; i < toInsert.length; i++) {
             console.log(toInsert[i]);
-            this._formsService.writeToKHPP(toInsert[i]).subscribe(res => {
+            this._formsService.writeToElephantine(toInsert[i]).subscribe(res => {
               console.log(res);
               if (res.status === 201) {
                 console.log(res);
                 this.deleteOfflineDB();
                 this.completedForms = [];
-                this.offlineDB.clearAll();
-                this._khpp.responseObject.next([]);
+                this.offlineDB.clearAllEle();
+                this._elephantine.eleResponseObject.next([]);
                 this.openSnackBar();
               } else {
 
@@ -148,7 +149,6 @@ export class ProcessingComponent implements OnInit {
           console.log('cant post online;')
         }
 
-        break;
         break;
         case 'KHPP':
         console.log('Saving KHPP');

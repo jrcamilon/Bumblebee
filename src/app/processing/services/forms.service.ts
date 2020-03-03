@@ -55,16 +55,16 @@ export class FormsService {
     return this.removeArray;
   }
 
-  // KHPP
-  public writeElephantineToDB (_form: any): Observable<any> {
-    const body = {form: _form};
-    const headers = new Headers({'Content-Type': 'application/json'});
-    return this._http.post('http://localhost:3092/write/elephant', body, {headers: headers})
-    .map((response: Response) => {
-      const tmpData = response.json();
-      return tmpData;
-    });
-  }
+  // // KHPP
+  // public writeElephantineToDB (_form: any): Observable<any> {
+  //   const body = {form: _form};
+  //   const headers = new Headers({'Content-Type': 'application/json'});
+  //   return this._http.post('http://localhost:3092/write/elephant', body, {headers: headers})
+  //   .map((response: Response) => {
+  //     const tmpData = response.json();
+  //     return tmpData;
+  //   });
+  // }
 
   // KHPP
   public updateToKHPP (_form: any, toDelete) {
@@ -179,7 +179,7 @@ export class FormsService {
     });
   }
 
-  // Elephantine
+  // // Elephantine
   public addToRemoveArray_elephantine(item: any) {
     this.removeArray.push(item);
   }
@@ -212,7 +212,8 @@ export class FormsService {
         formId: _form.idForm,
         processedBy: _form.processedBy,
         tagNumber: _form.tagNumber,
-        dueDate: _form.dueDate
+        dueDate: _form.dueDate,
+        depositDate: _form.depositDate
       },
       sherds: _form.detailedRecords == null ? [] : _form.detailedRecords,
       triage: _form.basicRecords == null ? [] : _form.basicRecords,
@@ -232,7 +233,7 @@ export class FormsService {
     }
 
     const headers = new Headers({'Content-Type': 'application/json'});
-    return this._http.post('http://localhost:3092/update/khpp', body, {headers: headers})
+    return this._http.post('http://localhost:3092/update/elephantine', body, {headers: headers})
     .map((response: Response) => {
       const tmpData = response.json();
       return tmpData;
@@ -246,7 +247,8 @@ export class FormsService {
         id: _form.id,
         processedBy: _form.processedBy,
         tagNumber: _form.tagNumber,
-        dueDate: _form.dueDate
+        dueDate: _form.dueDate,
+        depositDate: _form.depositDate,
       },
       sherds: _form.bodySherdData,
       triage: _form.triageData
@@ -254,7 +256,7 @@ export class FormsService {
 
     console.log(body);
     const headers = new Headers({'Content-Type': 'application/json'});
-    return this._http.post('http://localhost:3092/write/khpp', body, {headers: headers})
+    return this._http.post('http://localhost:3092/write/elephantine', body, {headers: headers})
     .map((response: Response) => {
       const tmpData = response.json();
       return tmpData;
@@ -264,7 +266,7 @@ export class FormsService {
   // Elephantine
   public readFromElephantine(): Observable<any> {
     const headers = new Headers({'Content-Type': 'application/json'});
-    return this._http.get('http://localhost:3092/read/khpp', {headers: headers})
+    return this._http.get('http://localhost:3092/read/elephantine', {headers: headers})
     .map((response: Response) => {
       const tmpData = response.json();
       return tmpData;
@@ -277,7 +279,7 @@ export class FormsService {
       formId: formId
     }
     const headers = new Headers({'Content-Type': 'application/json'});
-    return this._http.post('http://localhost:3092/delete/khpp', body, {headers: headers})
+    return this._http.post('http://localhost:3092/delete/elephantine', body, {headers: headers})
     .map((response: Response) => {
       const tmpData = response.json();
       return tmpData;
@@ -291,7 +293,7 @@ export class FormsService {
       type: type
     }
     const headers = new Headers({'Content-Type': 'application/json'});
-    return this._http.post('http://localhost:3092/edit/khpp', body, {headers: headers})
+    return this._http.post('http://localhost:3092/edit/elephantine', body, {headers: headers})
     .map((response: Response) => {
       const tmpData = response.json();
       return tmpData;
