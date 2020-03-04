@@ -163,7 +163,29 @@
 
             </div>
 
+
+            <div class="row" style="margin-top: 7px;">
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>House Number</label>
+                  <select class="form-control" formControlName="houseNumber">
+                    <option [value]="option.value" *ngFor="let option of houseNumberOptions">{{option.name}}</option>
+                </select>
+                </div>
+              </div>
+
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>Room Number</label>
+                  <select class="form-control" formControlName="roomNumber">
+                    <option [value]="option.value" *ngFor="let option of roomNumberOptions">{{option.name}}</option>
+                </select>
+                </div>
+              </div>
+            </div>
+
             <div class="row" style="margin-top: 7px;" *ngIf="activeDetailedForm.controls.bodyOrDiagnostic.value === 'diagnostic'">
+             
               <div class="col-md-2">
                 <div class="form-group">
                     <label>Type Family</label>
@@ -175,12 +197,11 @@
               </div>
 
               <div class="col-md-2">
- 
                 <label>Type Number</label>
                 <div class="example-wrapper">
                     <input type="text" class="form-control" [value]="selectedValue" (change)="onTypeNumberChange($event)" formControlName="typeNumber">
                 </div>
-             </div>
+              </div>
 
               <div class="col-md-2">
                 <div class="form-group">
@@ -199,6 +220,7 @@
                   <input style="margin-top: 35px" type="checkbox" class="form-check-input" formControlName="isDrawn">
                 </div>
               </div>
+
             </div>
 
             <div  *ngIf="activeDetailedForm.controls.bodyOrDiagnostic.value === 'diagnostic'">

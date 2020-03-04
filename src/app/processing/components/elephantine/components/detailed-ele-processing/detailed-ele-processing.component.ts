@@ -36,6 +36,8 @@ export class DetailedEleProcessingComponent implements OnInit {
   wareOptions: any[];
   decorationOptions: any[];
   blackeningOptions: any[];
+  houseNumberOptions: any[];
+  roomNumberOptions: any[];
 
   ceramicTypes: any[];
   ceramicFamilyTypes;
@@ -68,6 +70,8 @@ export class DetailedEleProcessingComponent implements OnInit {
     this.sherdDateOptions = this.elephantineFormService.getDynasticDate(); // Sherd Date
     this.sherdTypeOptions = this.elephantineFormService.getSherdTypeOptions();
     this.blackeningOptions = this.elephantineFormService.getBlackeningOptions();
+    this.houseNumberOptions = this.elephantineFormService.getHouseNumber();
+    this.roomNumberOptions = this.elephantineFormService.getRoomNumber();
 
   }
 
@@ -93,6 +97,8 @@ export class DetailedEleProcessingComponent implements OnInit {
     this.activeDetailedForm = this.fb.group({
       bodyOrDiagnostic: 'body',
       objectNumber: null,
+      houseNumber: null,
+      roomNumber: null,
       sherdDate: null,
       rimsTstc: false,
       ware: null,
@@ -199,6 +205,8 @@ export class DetailedEleProcessingComponent implements OnInit {
       formId: item.formId,
       bodyOrDiagnostic: item.bodyOrDiagnostic,
       objectNumber: item.objectNumber,
+      houseNumber: item.houseNumber,
+      roomNumber: item.roomNumber,
       sherdDate: item.sherdDate,
       rimsTstc: item.rimsTstc,
       ware: item.ware,
@@ -257,6 +265,8 @@ export class DetailedEleProcessingComponent implements OnInit {
     formValues.rimsTstc = formValues.rimsTstc === true ? 1 : 0;
     formValues.hasPhoto = formValues.hasPhoto === true ? 1 : 0;
     formValues.objectNumber = formValues.objectNumber == null ? 0 : formValues.objectNumber;
+    formValues.houseNumber = formValues.houseNumber === null ? '' : formValues.houseNumber;
+    formValues.roomNumber = formValues.roomNumber === null ? '' : formValues.roomNumber;
     formValues.sherdDate = formValues.sherdDate == null ? '' : formValues.sherdDate;
     formValues.blackening = formValues.blackening == null ? '' : formValues.blackening;
     formValues.decoration = formValues.decoration == null ? '' : formValues.decoration;
@@ -298,6 +308,8 @@ export class DetailedEleProcessingComponent implements OnInit {
     formValues.rimsTstc = formValues.rimsTstc === true ? 1 : 0;
     formValues.hasPhoto = formValues.hasPhoto === true ? 1 : 0;
     formValues.objectNumber = formValues.objectNumber == null ? 0 : formValues.objectNumber;
+    formValues.houseNumber = formValues.houseNumber === null ? '' : formValues.houseNumber;
+    formValues.roomNumber = formValues.roomNumber === null ? '' : formValues.roomNumber;
     formValues.blackening = formValues.blackening == null ? '' : formValues.blackening;
     formValues.decoration = formValues.decoration == null ? '' : formValues.decoration;
     formValues.surfaceTreatment = formValues.surfaceTreatment == null ? '' : formValues.surfaceTreatment;

@@ -19,7 +19,24 @@ export class ElephantineFormService {
     {value: 'First Intermediate Period', name: 'First Intermediate Period'},
     {value: 'Middle Kingdom', name: 'Middle Kingdom'},
     {value: 'Second Intermediate Period', name: 'Second Intermediate Period'},
-  ]
+  ];
+
+  room = [
+    {value: 'R02', name: 'R02'},
+    {value: 'R04a', name: 'R04a'},
+    {value: 'R07', name: 'R07'},
+    {value: 'R04', name: 'R04'},
+    {value: 'R05', name: 'R05'},
+    {value: 'R10', name: 'R10'},
+    {value: 'R08', name: 'R08'},
+  ];
+
+  house = [
+    {value: 'H73', name: 'H73'},
+    {value: 'H166', name: 'H166'},
+    {value: 'H175', name: 'H175'},
+    {value: 'H169', name: 'H169'}
+  ];
 
   dynasticDate = [
     {value: 'Dyn 4/5', name: 'Dyn 4/5'},
@@ -31,6 +48,7 @@ export class ElephantineFormService {
     {value: 'LateD11/early D12', name: 'LateD11/early D12'},
     {value: 'Early-mid D12', name: 'Early-mid D12'},
     {value: 'Late D12', name: 'Late D12'},
+    {value: 'Late D12-D13', name: 'Late D12-D13'},
     {value: 'Late D12/early D13', name: 'Late D12/early D13'},
     {value: 'Mid D13', name: 'Mid D13'},
     {value: 'Mid/late D13', name: 'Mid/late D13'},
@@ -173,6 +191,14 @@ export class ElephantineFormService {
 
   public getBroadDate() {
     return this.broadDate;
+  }
+
+  public getRoomNumber(){
+    return this.room;
+  }
+
+  public getHouseNumber() {
+    return this.house;
   }
 
   getBlackeningOptions() {

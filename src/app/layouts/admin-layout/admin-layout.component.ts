@@ -2,11 +2,11 @@ import { DataService } from 'app/data.service';
 import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy, PopStateEvent } from '@angular/common';
 import 'rxjs/add/operator/filter';
-import { NavbarComponent } from '../../shared/navbar/navbar.component';
+// import { NavbarComponent } from '../../shared/navbar/navbar.component';
 import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import PerfectScrollbar from 'perfect-scrollbar';
-import { Observable } from 'rxjs';
+// import PerfectScrollbar from 'perfect-scrollbar';
+
 import { AdminLayoutService } from './admin-layout.service';
 
 @Component({
@@ -80,8 +80,8 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
            elemSidebar.scrollTop = 0;
       });
       if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
-          let ps = new PerfectScrollbar(elemMainPanel);
-          ps = new PerfectScrollbar(elemSidebar);
+        //   let ps = new PerfectScrollbar(elemMainPanel);
+        //   ps = new PerfectScrollbar(elemSidebar);
       }
   }
 
@@ -100,8 +100,8 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
   runOnRouteChange(): void {
     if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
       const elemMainPanel = <HTMLElement>document.querySelector('.main-panel');
-      const ps = new PerfectScrollbar(elemMainPanel);
-      ps.update();
+    //   const ps = new PerfectScrollbar(elemMainPanel);
+    //   ps.update();
     }
   }
   isMac(): boolean {

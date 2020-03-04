@@ -33,7 +33,7 @@ export class ElephantineComponent implements OnInit {
 
   // Form records
   tagNumber = '';
-  processedby = '';
+  processedBy = '';
   dueDate = '';
   depositDate;
   depositDateOptions = [];
@@ -65,7 +65,7 @@ export class ElephantineComponent implements OnInit {
 
     if (this.isOnline) {
       this.formSerivce.readFromElephantine().subscribe(res => {
-          // console.log('online db records', res);
+          console.log('online db records', res);
           this.onlineDBRecords = res;
           this.onlineDBRecordsCopy = res;
       });
@@ -167,11 +167,11 @@ export class ElephantineComponent implements OnInit {
   /** Custom function to check weather the to show the body based on three fields */
   private showBody() {
     this.isFormBodyVisible = (this.editService.tagNumberElephantineFiledValid(this.tagNumber)
-    && this.processedby !== '' && this.dueDate !== '') ? true : false;
+    && this.processedBy !== '' && this.dueDate !== '') ? true : false;
   }
 
   public onProcessedByChange(e: any) {
-    this.processedby = e.target.value;
+    this.processedBy = e.target.value;
     this.showBody();
     this.checkFormValidity();
   }
@@ -185,7 +185,7 @@ export class ElephantineComponent implements OnInit {
         tagNumber: this.tagNumber,
         dueDate: this.dueDate,
         depositDate: this.depositDate,
-        processedby: this.processedby,
+        processedBy: this.processedBy,
         basicRecords: this.basicRecords,
         type: 'basic'
       }
@@ -195,7 +195,7 @@ export class ElephantineComponent implements OnInit {
         tagNumber: this.tagNumber,
         dueDate: this.dueDate,
         depositDate: this.depositDate,
-        processedBy: this.processedby,
+        processedBy: this.processedBy,
         detailedRecords: this.detailedRecords,
         type: 'detailed'
       }
@@ -266,7 +266,7 @@ public onDBdelete(record: any) {
   public clearForm() {
     this.isFormBodyVisible = false;
     this.tagNumber = '';
-    this.processedby = '';
+    this.processedBy = '';
     const d: Date = new Date();
     this.dueDate =  d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();;
 }
@@ -301,12 +301,12 @@ public onDBdelete(record: any) {
     switch (value) {
         case 'onlineDB':
             // fetch
-            // if (this.isOnline) {
-            //     this.formSerivce.readFromKHPP().subscribe(res => {
-            //         // console.log('online db records', res);
-            //         this.onlineDBRecords = res;
-            //     });
-            // }
+            if (this.isOnline) {
+                this.formSerivce.readFromElephantine().subscribe(res => {
+                    console.log('online db records', res);
+                    this.onlineDBRecords = res;
+                });
+            }
             break;
         case 'offlineDB':
             break;
@@ -391,7 +391,7 @@ public onDBdelete(record: any) {
     this.tagNumber = record.tagNumber;
     this.dueDate = record.dueDate;
     this.depositDate = record.depositDate
-    this.processedby = record.processedBy;
+    this.processedBy = record.processedBy;
     this.showBody();
     this.checkFormValidity();
     // check if the record being edited has basic or detailed records

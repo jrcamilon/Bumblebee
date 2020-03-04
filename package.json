@@ -42,7 +42,7 @@
     "@progress/kendo-data-query": "^1.5.1",
     "@progress/kendo-drawing": "^1.5.12",
     "@progress/kendo-theme-bootstrap": "^2.18.0",
-    "@progress/kendo-theme-default": "latest",
+    "@progress/kendo-theme-default": "^4.12.2",
     "@progress/kendo-theme-material": "^2.5.2",
     "@types/googlemaps": "3.30.16",
     "animate.css": "^3.7.2",
@@ -69,7 +69,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.12.4",
-    "@angular/cli": "7.1.4",
+    "@angular/cli": "^7.1.4",
     "@angular/compiler-cli": "7.1.4",
     "@types/jasmine": "3.3.4",
     "@types/node": "10.12.18",

@@ -61,7 +61,7 @@ export class KhppFormComponent implements OnInit, OnDestroy {
 
     // Form records
     tagNumber = '';
-    processedby = '';
+    processedBy = '';
     dueDate = '';
     basicRecords = [];
     detailedRecords = [];
@@ -230,7 +230,7 @@ export class KhppFormComponent implements OnInit, OnDestroy {
     }
 
     public onProcessedByChange(e: any) {
-        this.processedby = e.target.value;
+        this.processedBy = e.target.value;
         this.showBody();
         this.checkFormValidity();
     }
@@ -244,14 +244,14 @@ export class KhppFormComponent implements OnInit, OnDestroy {
     /** Custom function to check weather the to show the body based on three fields */
     private showBody() {
         this.isFormBodyVisible = (this.editService.tagNumberFiledValid(this.tagNumber)
-        && this.processedby !== '' && this.dueDate !== '') ? true : false;
+        && this.processedBy !== '' && this.dueDate !== '') ? true : false;
     }
 
 
     public clearForm() {
         this.isFormBodyVisible = false;
         this.tagNumber = '';
-        this.processedby = '';
+        this.processedBy = '';
         let d: Date = new Date();
         this.dueDate =  d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();;
     }
@@ -295,7 +295,7 @@ export class KhppFormComponent implements OnInit, OnDestroy {
                 idForm: this.editFormID,
                 tagNumber: this.tagNumber,
                 dueDate: this.dueDate,
-                processedBy: this.processedby,
+                processedBy: this.processedBy,
                 basicRecords: this.basicRecords,
                 type: 'basic'
             }
@@ -305,7 +305,7 @@ export class KhppFormComponent implements OnInit, OnDestroy {
                 idForm: this.editFormID,
                 tagNumber: this.tagNumber,
                 dueDate: this.dueDate,
-                processedBy: this.processedby,
+                processedBy: this.processedBy,
                 detailedRecords: this.detailedRecords,
                 type: 'detailed'
             }
@@ -585,7 +585,7 @@ export class KhppFormComponent implements OnInit, OnDestroy {
     public dbRecordEdit(record: any) {
         this.tagNumber = record.tagNumber;
         this.dueDate = record.dueDate;
-        this.processedby = record.processedBy;
+        this.processedBy = record.processedBy;
         this.showBody();
         this.checkFormValidity();
         // check if the record being edited has basic or detailed records
