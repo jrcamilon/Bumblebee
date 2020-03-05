@@ -97,7 +97,9 @@ import {
 } from '@angular/material';
 import { SplitterPaneRowComponent } from 'app/maps/components/splitter-pane-row/splitter-pane-row.component';
 import { RednotebookFormComponent } from 'app/processing/components/rednotebook-form/rednotebook-form.component';
+// tslint:disable-next-line: max-line-length
 import { KhppBlackenedChartComponent } from 'app/dashboard/visualizations/KhppBlackenedChart/khpp-blackened-chart/khpp-blackened-chart.component';
+// tslint:disable-next-line: max-line-length
 import { FabricComparisonChartComponent } from 'app/dashboard/visualizations/FabricComparison/fabric-comparison-chart/fabric-comparison-chart.component';
 
 import { DashFilterBarComponent } from 'app/dashboard/filterbar/filterbar.component';
