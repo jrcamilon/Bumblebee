@@ -12,74 +12,131 @@
 <div *ngIf="visibleTab === 'input'">
   <form id="mainForm">
       <!-- TAGNUMBER, DATE, ENTERED BY, PROCESSING TYPE FIELDS -->
-      <div class="row container-fluid">
+      <div>
+
+        <div>
+          <label style="font-size: 10px !important;">Tag Number</label>
+        </div>
     
-        <div class="form-group" [ngClass]="{'has-error': tagHasError}">
-          <label for="tagNumber" style="font-size: 10px !important">Tag Number</label>
-          <input 
-            name="tagNumber"
-            
-            id="tagNumber"
-            class='col-sm-12 col-xs-12 form-control' 
-            type="text" 
-            [value]="tagNumber" 
-            (keypress)="restrictTagChars($event)"
-            (keyup)="onTagChange($event)"
-            required 
-            maxlength="10"
-            placeholder="44501A/a-1">
-            <span class="help-block" *ngIf="tagHasError">Please correct the error</span>
-        </div>
-      
-        <div class="form-group" style="padding-top: 25px;">
-          <label for="date" style="font-size: 10px !important">Date</label>
-          <input 
-            id="date"
-            autocomplete="on"
-            name="date"
-            class='col-sm-10 col-xs-10 form-control' 
-            type="date" 
-            [value]="dueDate" 
-            [ngModel]="dueDate | date:'yyyy-MM-dd'"
-            (change)="onDueDateChange($event)"
-            required 
-            placeholder="Due Date">
+        <!-- Tag Number -->
+        <div class="row">
+          <div class="col-sm-6 col-md-6 col-lg-6 col-xs-6">
+            <div [ngClass]="{'has-error': tagNumberContextHasError}">
+              <label for="tagNumberContext" style="font-size: 10px !important">Context</label>
+              <input 
+                class="form-control"
+                name="tagNumberContext"
+                id="tagNumberContext"
+                type="text" 
+                [value]="tagNumberContext" 
+                (keypress)="restrictTagChars($event)"
+                (keyup)="onTagChange($event)"
+                required 
+                maxlength="8"
+                placeholder="47501A/a">
+                <span class="help-block" *ngIf="tagNumberContextHasError">Please correct the error</span>
+            </div>  
+          </div>
+
+          <div class="col-sm-6 col-md-6 col-lg-6 col-xs-6">
+            <div>
+              <label for="tagNumberGroupNumber" style="font-size: 10px !important">Object Group Number</label>
+              <input 
+                class="form-control"
+                name="tagNumberGroupNumber"
+                id="tagNumberGroupNumber"
+                type="text" 
+                [value]="tagNumberGroupNumber" 
+                (keyup)="onTagNumberGroupChange($event)"
+                required 
+                minlength="1"
+                placeholder="1-2-2">
+            </div>  
+          </div>
+          
         </div>
 
-        <div class="form-group" style="padding-top: 25px;">
-          <label for="date" style="font-size: 10px !important">Deposit Date</label>
-          <!-- <input 
-            id="depositDate"
-            autocomplete="on"
-            name="date"
-            class='col-sm-10 col-xs-10 form-control' 
-            type="date" 
-            [value]="depositDate" 
-            [ngModel]="depositDate | date:'yyyy-MM-dd'"
-            (change)="onDepositDateChange($event)"
-            required 
-            placeholder="Due Date"> -->
+        <!-- Line -->
+        <div style="border: 1px solid #dadada; margin-top: 20px"></div>
 
-            <select class="form-control" id="sel2" (change)="onDepositDateChange($event)">
-              <option [value]="option.value" *ngFor="let option of depositDateOptions" >{{option.name}}</option>
+        <!-- House and Room Number -->
+        <div class="row" style="margin-top: 7px;">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label style="font-size: 10px !important">House Number</label>
+              <select class="form-control" (change)="onHouseNumberRoomNumberChange($event, 'house')" [value]="selectedHouseNumber">
+                <option [value]="option.value" *ngFor="let option of houseNumberOptions" >{{option.name}}</option>
             </select>
-            
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label style="font-size: 10px !important">Room Number</label>
+              <select class="form-control"  (change)="onHouseNumberRoomNumberChange($event, 'room')" [value]="selectedRoomNumber">
+                <option [value]="option.value" *ngFor="let option of roomNumberOptions">{{option.name}}</option>
+            </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Line -->
+        <div style="border: 1px solid #dadada; margin-bottom: 10px"></div>
+      
+        <div>
+          <label style="font-size: 10px !important;">Deposit Date</label>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 col-sm-6">
+            <label for="date2" style="font-size: 10px !important">Broad Date</label>
+            <select class="form-control" id="sel2" (change)="onDepositDateChange($event, 'broad')" [value]="selectedBroadDate">
+              <option [value]="option.value" *ngFor="let option of broadDateOptions" >{{option.name}}</option>
+            </select>   
+          </div>
+
+          <div class="col-md-6 col-sm-6">
+            <label for="date3" style="font-size: 10px !important">Detailed Date</label>
+            <select class="form-control" id="sel3" (change)="onDepositDateChange($event, 'detailed')" [value]="selectedDetailedDate">
+              <option [value]="option.value" *ngFor="let option of detailedDateOptions" >{{option.name}}</option>
+            </select>   
+          </div>
+        </div>
+
+        <!-- Line -->
+        <div style="border: 1px solid #dadada; margin-top: 20px"></div>
+      
+        <div class="row" style="margin-top: 7px;">
+          <div class="col-md-6 col-sm-6 col-lg-6">
+            <label for="processedBy" style="font-size: 10px !important">Procesed By</label>
+            <input 
+            autocomplete="on"
+            name="processedBy"
+            id="processedBy"
+            class='form-control' 
+            type="text" 
+            [value]="processedBy" 
+            (keyup)="onProcessedByChange($event)"
+            required placeholder="Processed By">
+          </div>
+  
+          <div class="col-md-6 col-sm-6 col-lg-6">
+            <label for="date" style="font-size: 10px !important">Processed On</label>
+            <input 
+              id="date"
+              autocomplete="on"
+              name="date"
+              class='form-control' 
+              type="date" 
+              [value]="dueDate" 
+              [ngModel]="dueDate | date:'yyyy-MM-dd'"
+              (change)="onDueDateChange($event)"
+              required 
+              placeholder="Due Date">
+          </div>
         </div>
       
-        <div class="form-group" style="margin-top: -15px;">
-          <label for="processedBy" style="font-size: 10px !important">Procesed By</label>
-          <input 
-          autocomplete="on"
-          name="processedBy"
-          id="processedBy"
-          class='col-sm-12 col-xs-12 form-control' 
-          type="text" 
-          [value]="processedBy" 
-          (keyup)="onProcessedByChange($event)"
-          required placeholder="Processed By">
-        </div>
-      
-        <div class="form-group" style="padding-top: 25px;">
+        <div class="form-group" style="padding-top: 5px;">
           <label for="sel1" style="font-size: 10px !important">Processing Type</label>
           <select class="form-control" id="sel1"  [value]="isBasicVisible ? 'basic' : 'detailed'" (change)="onProcessingTypeChange($event.target.value)">
             <option value="basic">Basic Processing</option>
@@ -105,10 +162,7 @@
       </div>
 
             <!-- ON FORM SUBMIT BUTTON -->
-    <input type="submit" form="mainForm"  [disabled]="!isElephantineFormValid" class="btn btn-info btn-fill btn-block" (click)="onFormSubmit()" [value]="buttonValue">
-
-
-
+    <input type="submit" form="mainForm"  [disabled]="!isElephantineFormValid" class="btn btn-info btn-fill btn-block" (click)="onFormSubmit('save')" [value]="buttonValue">
 
     <!-- ON FORM CANCEL BUTTON -->
     <input *ngIf="isEditing" type="button" form="mainForm"  class="btn btn-secondary btn-fill btn-block" (click)="onCancelEdit()" value="CANCEL">
@@ -151,58 +205,6 @@
 
 <!-- ONLINE DB RECORDS VIEW -->
 <div *ngIf="visibleTab === 'onlineDB'">
-  <!-- <div style="width: 100%">
-        <mat-form-field style="width: 100%">
-          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-        </mat-form-field>
-        
-        <table style="width: 100%" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-        
-  
-          <ng-container matColumnDef="position">
-            <th mat-header-cell *matHeaderCellDef> No. </th>
-            <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-          </ng-container>
-        
-
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-          </ng-container>
-        
-
-          <ng-container matColumnDef="weight">
-            <th mat-header-cell *matHeaderCellDef> Weight </th>
-            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-          </ng-container>
-        
-
-          <ng-container matColumnDef="symbol">
-            <th mat-header-cell *matHeaderCellDef> Symbol </th>
-            <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-          </ng-container>
-        
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-  </div> -->
-  
-<!-- 
-    <div class="form-group" style="height: 55px;">
-      <label for="tagNumber" style="font-size: 10px !important">Search Tag Number</label>
-      <input 
-        name="tagNumber"
-        id="tagNumber"
-        class='col-sm-12 col-xs-12 form-control' 
-        type="text" 
-        (keyup)="onTagSearch($event)"
-        placeholder="D09.1-007-12.12">
-    </div>
-
-    <div style="margin-top: 5px; margin-bottom: 10px;">
-      <button class="btn btn-default" style="width: 100%; border: 2px solid green; color: green;" (click)="onExportToExcel($event)">EXPORT TO EXCEL</button>
-    </div> -->
-
 
   <table class="table">
     <thead>

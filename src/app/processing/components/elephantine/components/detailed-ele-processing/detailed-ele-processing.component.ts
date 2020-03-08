@@ -36,8 +36,8 @@ export class DetailedEleProcessingComponent implements OnInit {
   wareOptions: any[];
   decorationOptions: any[];
   blackeningOptions: any[];
-  houseNumberOptions: any[];
-  roomNumberOptions: any[];
+  // houseNumberOptions: any[];
+  // roomNumberOptions: any[];
 
   ceramicTypes: any[];
   ceramicFamilyTypes;
@@ -70,8 +70,8 @@ export class DetailedEleProcessingComponent implements OnInit {
     this.sherdDateOptions = this.elephantineFormService.getDynasticDate(); // Sherd Date
     this.sherdTypeOptions = this.elephantineFormService.getSherdTypeOptions();
     this.blackeningOptions = this.elephantineFormService.getBlackeningOptions();
-    this.houseNumberOptions = this.elephantineFormService.getHouseNumber();
-    this.roomNumberOptions = this.elephantineFormService.getRoomNumber();
+    // this.houseNumberOptions = this.elephantineFormService.getHouseNumber();
+    // this.roomNumberOptions = this.elephantineFormService.getRoomNumber();
 
   }
 
@@ -129,7 +129,7 @@ export class DetailedEleProcessingComponent implements OnInit {
     this.activeDetailedForm.typeNumber = e.target.value;
   }
 
-  // Function to override type description when changed 
+  // Function to override type description when changed
   onTypeDescriptionChange(e: any) {
     console.log(e.target.value);
     this.typeDescription = e.target.value;

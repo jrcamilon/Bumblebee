@@ -117,15 +117,20 @@ export class ProcessingComponent implements OnInit {
             triageData: ele.basicRecords === undefined ? [] : ele.basicRecords,
             diagnosticData: [],
             dueDate: ele.dueDate,
-            depositDate: ele.depositDate,
             id: ele.id,
             processedBy: ele.processedBy,
             tagNumber: ele.tagNumber,
+            tagNumberContext: ele.tagNumberContext,
+            tagNumberGroupNumber: ele.tagNumberGroupNumber,
+            houseNumber: ele.houseNumber,
+            roomNumber: ele.roomNumber,
+            broadDate: ele.broadDate,
+            detailedDate: ele.detailedDate,
             bodySherdData: ele.detailedRecords === undefined ? [] : ele.detailedRecords
           });
         });
 
-        console.log(toInsert);
+        console.log('TO INSERT', toInsert);
         //  let insertFailed = false;
 
         if (this.isOnline) {

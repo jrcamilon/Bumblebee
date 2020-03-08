@@ -19,8 +19,9 @@ export class ElephantineComponent implements OnInit {
   isOnline: boolean;
   visibleTab = 'input';
 
-  tagHasError = false;
+  tagNumberContextHasError = false;
   validTagChar = true;
+  validTagGroupChar = true;
 
   isFormBodyVisible = false;
   isBasicVisible = true;
@@ -33,10 +34,16 @@ export class ElephantineComponent implements OnInit {
 
   // Form records
   tagNumber = '';
+  tagNumberContext = '';
+  tagNumberGroupNumber = '';
+
   processedBy = '';
+
   dueDate = '';
-  depositDate;
-  depositDateOptions = [];
+  // depositDate;
+  broadDateOptions = [];
+  detailedDateOptions = [];
+
   basicRecords = [];
   detailedRecords = [];
 
@@ -47,6 +54,15 @@ export class ElephantineComponent implements OnInit {
 
   detailed = [];
   basic = [];
+
+  houseNumberOptions: any[];
+  roomNumberOptions: any[];
+
+  selectedHouseNumber;
+  selectedRoomNumber;
+
+  selectedBroadDate;
+  selectedDetailedDate;
 
   isEditingOnlineDB = false;
 ;
@@ -72,16 +88,34 @@ export class ElephantineComponent implements OnInit {
     }
 
     // Get Deposit Date
-    this.depositDateOptions = this.editService.getBroadDate();
+    this.broadDateOptions = this.editService.getBroadDate();
+    this.detailedDateOptions = this.editService.getDynasticDate();
+    // Broad and Detailed Date defailt selected
+    this.setDefaultDepositDates();
 
     // Set Form Date
     this.setFormDateToTodaysDate();
 
-    // set default deposit date
-    this.depositDate = this.editService.getBroadDate()[0].value;
+    // house and room number options
+    this.houseNumberOptions = this.editService.getHouseNumber();
+    this.roomNumberOptions = this.editService.getRoomNumber();
+    // house and room number default selected
+    this.setDefaultRoomAndHouse();
+
+
   }
 
   ngOnInit() {
+  }
+
+  setDefaultRoomAndHouse() {
+    this.selectedHouseNumber = this.editService.getHouseNumber()[0].value;
+    this.selectedRoomNumber = this.editService.getRoomNumber()[0].value;
+  }
+
+  setDefaultDepositDates() {
+    this.selectedBroadDate = this.editService.getBroadDate()[0].value;
+    this.selectedDetailedDate = this.editService.getDynasticDate()[0].value;
   }
 
   setFormDateToTodaysDate() {
@@ -89,17 +123,18 @@ export class ElephantineComponent implements OnInit {
     this.dueDate = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
   }
 
+  // Tag Number Context
   public restrictTagChars(e: any) {
     return this.validTagChar;
   }
-
+  // Tag Number Context
   public onTagChange(e: any) {
 
     // console.log(e.key);
     if (e.key === 'Backspace') { return; }
 
     this.validTagChar = true;
-    this.tagHasError = false
+    this.tagNumberContextHasError = false
 
     const position = e.target.selectionStart;
     // console.log(position);
@@ -108,7 +143,7 @@ export class ElephantineComponent implements OnInit {
         console.log(position)
         if (isNaN(e.target.value[position - 1])) {
           this.validTagChar = false;
-          this.tagHasError = true;
+          this.tagNumberContextHasError = true;
         }
     }
 
@@ -116,7 +151,7 @@ export class ElephantineComponent implements OnInit {
       e.target.value = e.target.value.toUpperCase();
          if (!isNaN(e.target.value[position - 1])) {
             this.validTagChar = false;
-            this.tagHasError = true;
+            this.tagNumberContextHasError = true;
         }
         e.target.value = e.target.value + '/';
     }
@@ -124,7 +159,7 @@ export class ElephantineComponent implements OnInit {
     if (position === 7) {
       if (e.target.value !== '/') {
         this.validTagChar = false;
-        this.tagHasError = true;
+        this.tagNumberContextHasError = true;
       }
     }
 
@@ -132,23 +167,22 @@ export class ElephantineComponent implements OnInit {
       // e.target.value = e.target.value.toLowerCase();
         if (!isNaN(e.target.value[position - 1])) {
           this.validTagChar = false;
-          this.tagHasError = true;
+          this.tagNumberContextHasError = true;
         }
-        const dash = e.target.value + '-';
-        e.target.value = dash;
     }
 
-    if (position === 9) {
-      if (e.target.value !== '-') {
-        this.validTagChar = false;
-        this.tagHasError = true;
-      }
-    }
-
-    this.tagNumber = e.target.value;
+    this.tagNumberContext = e.target.value;
     this.showBody();
     this.checkFormValidity();
   }
+
+  onTagNumberGroupChange(e: any) {
+    if (e.key === 'Backspace') { return; }
+    this.tagNumberGroupNumber = e.target.value;
+    this.showBody();
+    this.checkFormValidity();
+  }
+
 
   public onDueDateChange(e: any) {
     console.log(e.target.value);
@@ -157,17 +191,46 @@ export class ElephantineComponent implements OnInit {
     this.checkFormValidity();
   }
 
-  public onDepositDateChange(e: any) {
-    console.log('here', e.target.value);
-    this.depositDate = e.target.value;
+  public onDepositDateChange(e: any, type) {
+    const value = e.target.value;
+    switch (type) {
+      case 'broad':
+        this.selectedBroadDate = value;
+        break;
+      case 'detailed':
+        this.selectedDetailedDate = value;
+        break;
+      default:
+        break;
+    }
     this.showBody();
     this.checkFormValidity();
   }
 
   /** Custom function to check weather the to show the body based on three fields */
   private showBody() {
-    this.isFormBodyVisible = (this.editService.tagNumberElephantineFiledValid(this.tagNumber)
-    && this.processedBy !== '' && this.dueDate !== '') ? true : false;
+    this.isFormBodyVisible = (
+      // this.tagNumberContext.length !==  7 &&
+      this.processedBy !== '' &&
+      this.selectedRoomNumber !== '' &&
+      this.selectedHouseNumber !== '' &&
+      this.selectedBroadDate !== '' &&
+      this.selectedDetailedDate !== '' &&
+      this.dueDate !== '' &&
+      this.tagNumberGroupNumber !== '' );
+
+    console.log(this.isFormBodyVisible);
+  }
+
+  public onHouseNumberRoomNumberChange(e: any, type) {
+    console.log(e.target.value);
+    switch (type) {
+      case 'house':
+        this.selectedHouseNumber = e.target.value;
+        break;
+      case 'room':
+        this.selectedRoomNumber = e.target.value;
+    }
   }
 
   public onProcessedByChange(e: any) {
@@ -176,15 +239,22 @@ export class ElephantineComponent implements OnInit {
     this.checkFormValidity();
   }
 
-  public onFormSubmit() {
+  public onFormSubmit(type) {
     let form: any;
+
+    this.tagNumber = this.tagNumberContext + '-' + this.tagNumberGroupNumber;
 
     if (this.isBasicVisible) {
       form = {
         idForm: this.editFormID,
         tagNumber: this.tagNumber,
+        tagNumberContext: this.tagNumberContext,
+        tagNumberGroupNumber: this.tagNumberGroupNumber,
+        houseNumber: this.selectedHouseNumber,
+        roomNumber: this.selectedRoomNumber,
+        broadDate: this.selectedBroadDate,
+        detailedDate: this.selectedDetailedDate,
         dueDate: this.dueDate,
-        depositDate: this.depositDate,
         processedBy: this.processedBy,
         basicRecords: this.basicRecords,
         type: 'basic'
@@ -193,8 +263,13 @@ export class ElephantineComponent implements OnInit {
       form = {
         idForm: this.editFormID,
         tagNumber: this.tagNumber,
+        tagNumberContext: this.tagNumberContext,
+        tagNumberGroupNumber: this.tagNumberGroupNumber,
+        houseNumber: this.selectedHouseNumber,
+        roomNumber: this.selectedRoomNumber,
+        broadDate: this.selectedBroadDate,
+        detailedDate: this.selectedDetailedDate,
         dueDate: this.dueDate,
-        depositDate: this.depositDate,
         processedBy: this.processedBy,
         detailedRecords: this.detailedRecords,
         type: 'detailed'
@@ -203,32 +278,37 @@ export class ElephantineComponent implements OnInit {
 
     console.log('Elephantine FORM', form);
 
-    if (this.isEditing) {
-      // TO DO:
-      // Send edited online db records to DB
-      if (this.isEditingOnlineDB === true) {
-          const recordsToRemove = this.formSerivce.getRemoveArray_elephantine();
+    if (type === 'save') {
+        if (this.isEditing) {
+          // Send edited online db records to DB
+          if (this.isEditingOnlineDB === true) {
+              const recordsToRemove = this.formSerivce.getRemoveArray_elephantine();
 
-          this.formSerivce.updateToElephantine(form, recordsToRemove).subscribe(res => {
-              console.log(res);
+              this.formSerivce.updateToElephantine(form, recordsToRemove).subscribe(res => {
+                  console.log(res);
+              });
+          }
+
+          this.offlineDB.updateEle(this.editFormID, form);
+          this.isEditing = false;
+          this.editFormID = undefined;
+          this.formSerivce.eleRecordToEdit.next([]);
+          this.offlineDB.getAllEle().then(res => {
+            this.offlineDBRecords = res;
+            this.editService.eleResponseObject.next(res);
           });
-      }
+          this.buttonValue = 'SUBMIT';
 
-      this.offlineDB.updateEle(this.editFormID, form);
-      this.isEditing = false;
-      this.editFormID = undefined;
-      this.formSerivce.eleRecordToEdit.next([]);
-      this.offlineDB.getAllEle().then(res => {
-          this.offlineDBRecords = res;
-          this.editService.eleResponseObject.next(res);
-      });
-      this.buttonValue = 'SUBMIT';
-  } else {
-      this.editService.combineObjects(form);
-  }
-  this.formSerivce.clearToRemoveArray_elephantine();
-  this.clearForm();
-  this.clearSubFormsArray();
+        } else {
+          // this.editing === false
+            this.editService.combineObjects(form);
+        }
+      this.formSerivce.clearToRemoveArray_elephantine();
+      this.clearForm();
+      this.clearSubFormsArray();
+    } else {
+
+    }
 
   }
 
@@ -266,6 +346,14 @@ public onDBdelete(record: any) {
   public clearForm() {
     this.isFormBodyVisible = false;
     this.tagNumber = '';
+    this.tagNumberContext = '';
+    this.tagNumberGroupNumber = '';
+    // this.selectedBroadDate = '';
+    // this.selectedDetailedDate = '';
+    // this.selectedHouseNumber = '';
+    // this.selectedRoomNumber = '';
+    this.setDefaultRoomAndHouse();
+    this.setDefaultDepositDates();
     this.processedBy = '';
     const d: Date = new Date();
     this.dueDate =  d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();;
@@ -292,7 +380,8 @@ public onDBdelete(record: any) {
   }
 
   public checkFormValidity() {
-    this.isElephantineFormValid = this.isFormBodyVisible && this.detailedRecords.length !== 0 || this.basicRecords.length !== 0;
+    this.isElephantineFormValid =
+    this.isFormBodyVisible && this.detailedRecords.length !== 0 || this.basicRecords.length !== 0;
   }
 
 
@@ -317,10 +406,11 @@ public onDBdelete(record: any) {
   }
 
   public onDBOnlineEdit(record: any) {
+
     const type = record.basicCount > record.detailedCount ? 'basic' : 'detailed';
 
     this.formSerivce.editFromElephantine(record.id, type).subscribe(res => {
-
+        console.log(res);
         const splitDate = record.dueDate.split('-');
         const newDate = splitDate[0] + '-' + splitDate[1] + '-' + splitDate[2];
 
@@ -329,8 +419,17 @@ public onDBdelete(record: any) {
         if (type === 'detailed') {
             recordToEdit = {
                 tagNumber: record.tagNumber,
+                tagNumberContext: record.tagNumberContext,
+                tagNumberGroupNumber: record.tagNumberGroupNumber,
+
                 dueDate: newDate,
-                depositDate: record.depositDate,
+
+                broadDate: record.broadDate,
+                detailedDate: record.detailedDate,
+
+                houseNumber: record.houseNumber,
+                roomNumber: record.roomNumber,
+
                 id: record.id,
                 processedBy: record.processedBy,
                 detailedRecords: res.records
@@ -338,11 +437,20 @@ public onDBdelete(record: any) {
         } else {
             recordToEdit = {
                 tagNumber: record.tagNumber,
+                tagNumberContext: record.tagNumberContext,
+                tagNumberGroupNumber: record.tagNumberGroupNumber,
+
                 dueDate: newDate,
-                depositDate: record.depositDate,
+
+                broadDate: record.broadDate,
+                detailedDate: record.detailedDate,
+
+                houseNumber: record.houseNumber,
+                roomNumber: record.roomNumber,
+
                 id: record.id,
                 processedBy: record.processedBy,
-                detailedRecords: res.records
+                basicRecords: res.records
             }
         }
 
@@ -388,9 +496,19 @@ public onDBdelete(record: any) {
   }
 
   public dbRecordEdit(record: any) {
+    console.log(record.roomNumber);
+    console.log(record.houseNumber);
+
     this.tagNumber = record.tagNumber;
+    this.tagNumberContext = record.tagNumberContext;
+    this.tagNumberGroupNumber = record.tagNumberGroupNumber;
     this.dueDate = record.dueDate;
-    this.depositDate = record.depositDate
+
+    this.selectedBroadDate = record.broadDate;
+    this.selectedDetailedDate = record.detailedDate;
+    this.selectedRoomNumber = record.roomNumber;
+    this.selectedHouseNumber = record.houseNumber;
+
     this.processedBy = record.processedBy;
     this.showBody();
     this.checkFormValidity();
