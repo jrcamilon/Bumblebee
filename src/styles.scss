@@ -5,4 +5,9 @@
 // @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 
 @import '../node_modules/@progress/kendo-theme-material/dist/all.css';
-@import '../node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css';
+@import '../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+body {
+    font-family: Roboto, Arial, sans-serif;
+    margin: 0;
+  }

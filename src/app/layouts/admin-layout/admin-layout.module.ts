@@ -50,11 +50,13 @@ import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
 
 import { ElephantineComponent } from '../../processing/components/elephantine/elephantine.component';
 import { BasicProcessingComponent } from '../../processing/components/elephantine/components/basic-processing/basic-processing.component';
+// tslint:disable-next-line: max-line-length
 import { DetailedEleProcessingComponent } from '../../processing/components/elephantine/components/detailed-ele-processing/detailed-ele-processing.component';
 import { DetailedProcessingComponent } from '../../processing/components/detailed-processing/detailed-processing.component';
 // tslint:disable-next-line: max-line-length
 
-
+import { TreeMapComponent } from '../../dashboard-two/components/tree-map/tree-map.component';
+import { FlowChartComponent } from '../../dashboard-two/components/flow-chart/flow-chart.component';
 
 import { PopupAnchorDirective } from '../../processing/components/khpp-form/popupanchor.directive';
 import 'hammerjs';
@@ -206,6 +208,8 @@ import { DashboardTwoComponent } from 'app/dashboard-two/dashboard-two.component
     ElephantineComponent,
     BasicProcessingComponent,
     DetailedEleProcessingComponent,
+    TreeMapComponent,
+    FlowChartComponent
 
 
   ],

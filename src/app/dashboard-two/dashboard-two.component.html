@@ -1,18 +1,113 @@
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-md-6">
-      Hello
+  <div class="row" style="margin-top:20px">
+
+    <div class="col-md-3 marginTop">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-title>Filter Panel</mat-card-title>
+          <mat-card-subtitle>Select fitlers to adjust data in dashboard.</mat-card-subtitle>
+        </mat-card-header>
+        <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+        <mat-card-content>
+
+          <!-- Site Selector for Radio Button -->
+          <mat-radio-group aria-label="Select an option" [(ngModel)]="selectedSite" (change)="onSiteSelection($event)" >
+            <mat-radio-button class="example-radio-button" *ngFor="let site of sites" [value]="site">
+              {{site}}
+            </mat-radio-button>
+          </mat-radio-group>
+
+          <!-- MultiSlect -->
+          <div style="margin-top: 6px;">
+            <p>Tag Number:</p>
+            <kendo-multiselect [data]="tagNumbers" [(ngModel)]="selectedTagNumbers"></kendo-multiselect>
+          </div>
+
+
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button style="width: 100%" (click)="onSubmitSelection()">SUBMIT</button>
+        </mat-card-actions>
+      </mat-card>
     </div>
-    <div class="col-md-6">
-      Hello
+
+    <div class="col-md-3 marginTop">
+      <div class="row ">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Number of Sherds</mat-card-title>
+            <mat-card-subtitle>Total number of sherds for a list/single of tag numbers</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <h3 style="text-align: center;">{{numberOfSherds}}</h3>
+            <!-- <div><mat-spinner style="margin:0 auto;"></mat-spinner></div> -->
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div class="row " style="margin-top: 10px;">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Sum of Count</mat-card-title>
+            <mat-card-subtitle>Sum of the count for a list/single tag numbers</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <h3 style="text-align: center;">{{sumOfCount}}</h3>
+            <!-- <div><mat-spinner style="margin:0 auto;"></mat-spinner></div> -->
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div class="row " style="margin-top: 10px;">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Sum of Weights</mat-card-title>
+            <mat-card-subtitle>Sumf of all the weights in grams for list/single tag numbers</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <h3 style="text-align: center;">{{numberOfSherds}}</h3>
+            <!-- <div><mat-spinner style="margin:0 auto;"></mat-spinner></div> -->
+          </mat-card-content>
+        </mat-card>
+      </div>
     </div>
+
+    <div class="col-md-6 marginTop ">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Ware Distribution</mat-card-title>
+          <mat-card-subtitle>Select fitlers to adjust data in dashboard.</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div style="height: 500px;" *ngIf="treeMapData === undefined"><mat-spinner style="margin:0 auto;"></mat-spinner></div>
+          <app-tree-map [inputData]="this.treeMapData"*ngIf="treeMapData !== undefined" ></app-tree-map>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
   </div>
-  <div class="row">
-    <div class="col-md-6">
+
+  <div class="row" style="margin-top: 10px">
+
+    <div class="col-md-6 marginTop">
       Hello
     </div>
-    <div class="col-md-6">
-      Hello
+
+    <div class="col-md-6 marginTop">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Tag Numbers > Ware > SurfaceTreatment > Blackening</mat-card-title>
+          <mat-card-subtitle>Relationships between Ware, Surface Treatment and Blackening</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div style="height: 500px;" *ngIf="treeMapData === undefined"><mat-spinner style="margin:0 auto;"></mat-spinner></div>
+          <app-flow-chart [inputData]="flowChartData"></app-flow-chart>
+        </mat-card-content>
+      </mat-card>
     </div>
+
   </div>
+
+  <div class="row">
+    <div style="height: 100px;"></div>
+  </div>
+
 </div>
