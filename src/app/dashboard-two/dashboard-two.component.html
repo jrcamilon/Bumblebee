@@ -5,17 +5,22 @@
       <mat-card class="example-card">
         <mat-card-header>
           <mat-card-title>Filter Panel</mat-card-title>
-          <mat-card-subtitle>Select fitlers to adjust data in dashboard.</mat-card-subtitle>
+          <mat-card-subtitle>Select fitlers to adjust data in dashboard. Filters will be applied to all visualizations shown</mat-card-subtitle>
         </mat-card-header>
-        <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
         <mat-card-content>
 
           <!-- Site Selector for Radio Button -->
           <mat-radio-group aria-label="Select an option" [(ngModel)]="selectedSite" (change)="onSiteSelection($event)" >
-            <mat-radio-button class="example-radio-button" *ngFor="let site of sites" [value]="site">
-              {{site}}
+            <mat-radio-button [ngStyle]="{'margin-left': i === 1 ? '10px' : '0px'}" class="example-radio-button" *ngFor="let site of sites; index as i" [value]="site">
+              <span>{{site}}</span>
             </mat-radio-button>
           </mat-radio-group>
+
+          <!-- Selector for Weight or Count -->
+          <section class="example-section">
+            <mat-label ngClass="labelBeforeSlide">Count</mat-label>
+            <mat-slide-toggle [(ngModel)]="isWeight" (change)="onCountOrWeightSelect($event)">Weight</mat-slide-toggle>
+          </section>
 
           <!-- MultiSlect -->
           <div style="margin-top: 6px;">
@@ -32,6 +37,7 @@
     </div>
 
     <div class="col-md-3 marginTop">
+
       <div class="row ">
         <mat-card>
           <mat-card-header>
@@ -39,24 +45,26 @@
             <mat-card-subtitle>Total number of sherds for a list/single of tag numbers</mat-card-subtitle>
           </mat-card-header>
           <mat-card-content>
-            <h3 style="text-align: center;">{{numberOfSherds}}</h3>
-            <!-- <div><mat-spinner style="margin:0 auto;"></mat-spinner></div> -->
+            <div style="height: 500px;" *ngIf="sumOfCount === undefined"><mat-spinner style="margin:0 auto;"></mat-spinner></div>
+            <h3 style="text-align: center;">{{sumOfCount}}</h3>
           </mat-card-content>
         </mat-card>
       </div>
+
       <div class="row " style="margin-top: 10px;">
         <mat-card>
           <mat-card-header>
-            <mat-card-title>Sum of Count</mat-card-title>
-            <mat-card-subtitle>Sum of the count for a list/single tag numbers</mat-card-subtitle>
+            <mat-card-title>Sum of Weight</mat-card-title>
+            <mat-card-subtitle>Sum of all the weights in grams for list/single tag numbers</mat-card-subtitle>
           </mat-card-header>
           <mat-card-content>
-            <h3 style="text-align: center;">{{sumOfCount}}</h3>
-            <!-- <div><mat-spinner style="margin:0 auto;"></mat-spinner></div> -->
+            <div style="height: 500px;" *ngIf="sumOfWeight === undefined"><mat-spinner style="margin:0 auto;"></mat-spinner></div>
+            <h3 style="text-align: center;">{{sumOfWeight | number}} g</h3>
+
           </mat-card-content>
         </mat-card>
       </div>
-      <div class="row " style="margin-top: 10px;">
+      <!-- <div class="row " style="margin-top: 10px;">
         <mat-card>
           <mat-card-header>
             <mat-card-title>Sum of Weights</mat-card-title>
@@ -64,17 +72,17 @@
           </mat-card-header>
           <mat-card-content>
             <h3 style="text-align: center;">{{numberOfSherds}}</h3>
-            <!-- <div><mat-spinner style="margin:0 auto;"></mat-spinner></div> -->
+
           </mat-card-content>
         </mat-card>
-      </div>
+      </div> -->
     </div>
 
     <div class="col-md-6 marginTop ">
       <mat-card>
         <mat-card-header>
           <mat-card-title>Ware Distribution</mat-card-title>
-          <mat-card-subtitle>Select fitlers to adjust data in dashboard.</mat-card-subtitle>
+          <mat-card-subtitle>Ware distribution by {{isWeight ? ' Weight in (g) grams' : ' Count '}}  </mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
           <div style="height: 500px;" *ngIf="treeMapData === undefined"><mat-spinner style="margin:0 auto;"></mat-spinner></div>
@@ -88,23 +96,54 @@
   <div class="row" style="margin-top: 10px">
 
     <div class="col-md-6 marginTop">
-      Hello
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Tag Numbers > Ware > SurfaceTreatment > Blackening</mat-card-title>
+          <mat-card-subtitle>Relationships between Ware, Surface Treatment and Blackening. Values by {{isWeight ? 'Weight (g) grams' : 'Count'}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div style="height: 500px;" *ngIf="partitionedBarData === undefined"><mat-spinner style="margin:0 auto;"></mat-spinner></div>
+          <app-partitioned-bar-chart [inputData]="partitionedBarData"></app-partitioned-bar-chart>
+        </mat-card-content>
+
+      </mat-card>
     </div>
 
     <div class="col-md-6 marginTop">
       <mat-card>
         <mat-card-header>
           <mat-card-title>Tag Numbers > Ware > SurfaceTreatment > Blackening</mat-card-title>
-          <mat-card-subtitle>Relationships between Ware, Surface Treatment and Blackening</mat-card-subtitle>
+          <mat-card-subtitle>Relationships between Ware, Surface Treatment and Blackening. Values by {{isWeight ? 'Weight (g) grams' : 'Count'}}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-          <div style="height: 500px;" *ngIf="treeMapData === undefined"><mat-spinner style="margin:0 auto;"></mat-spinner></div>
-          <app-flow-chart [inputData]="flowChartData"></app-flow-chart>
+          <div style="height: 500px;" *ngIf="flowChartData === undefined"><mat-spinner style="margin:0 auto;"></mat-spinner></div>
+          <app-flow-chart *ngIf="cardOption[0].status === 'active'" [inputData]="flowChartData"></app-flow-chart>
+          <app-chord-chart *ngIf="cardOption[1].status === 'active'" [inputData]="flowChartData"></app-chord-chart>
         </mat-card-content>
+        <!-- <mat-card-actions>
+          <button mat-button *ngFor="let item of cardOption" (click)="onChartSelect(item.type)">{{item.title}}</button>
+        </mat-card-actions> -->
       </mat-card>
     </div>
 
   </div>
+
+  <!-- <div class="row" style="margin-top: 10px">
+
+    <div class="col-md-12 marginTop">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Timeline</mat-card-title>
+          <mat-card-subtitle>Shows changes of Ware, Surface Treatment, and Blackening over time</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <app-timeline-chart></app-timeline-chart>
+        </mat-card-content>
+
+      </mat-card>
+    </div>
+
+  </div> -->
 
   <div class="row">
     <div style="height: 100px;"></div>

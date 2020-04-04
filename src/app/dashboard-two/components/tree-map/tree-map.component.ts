@@ -43,7 +43,7 @@ export class TreeMapComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
       // console.log(this.inputData);
 
       chart.data = this.inputData;
-
+      chart.responsive.enabled = true;
 
       chart.colors.step = 2;
       chart.padding(0, 0, 0, 0);

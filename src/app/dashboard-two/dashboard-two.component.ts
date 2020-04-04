@@ -21,30 +21,57 @@ export class DashboardTwoComponent implements OnInit {
 
   numberOfSherds;
   sumOfCount;
+  sumOfWeight;
   treeMapData;
   flowChartData;
+  partitionedBarData;
+
+  // count or weight
+  isWeight = false;
+
+  cardOption = [
+    {type: 'flow-chart', title: 'Flow Chart', status: 'active'},
+    {type: 'chord-chhart', title: 'Chord Chart', status: 'inactive'},
+  ]
 
   constructor(public data: DashboardTwoService) {
-    console.log('dashboard constructor - two');
+    // console.log('dashboard constructor - two');
     this.getAllTagNumbers();
 
    }
 
   ngOnInit() {
-    console.log('dashboard ngOnInit - two')
+    // console.log('dashboard ngOnInit - two')
   }
 
+  onChartSelect(type: string) {
+    this.cardOption.forEach(option => {
+      if (option.type === type) {
+        option.status = 'active';
+      } else {
+        option.status = 'inactive';
+      }
+    });
+    // console.log(this.cardOption);
+  }
+
+
   onSubmitSelection() {
-    console.log('Submit clicked...');
+
+    console.log('isWeight', this.isWeight);
+    // console.log('Submit clicked...');
     if (this.selectedSite !== null && this.selectedTagNumbers.length !== 0) {
-      console.log('Selected Site: ', this.selectedSite);
-      console.log('Selected Tag Numbers: ', this.selectedTagNumbers);
+      // console.log('Selected Site: ', this.selectedSite);
+      // console.log('Selected Tag Numbers: ', this.selectedTagNumbers);
       this.loadDashboardData();
     }
   }
 
+  onCountOrWeightSelect(e: any) {  this.isWeight = e.checked; }
+
+
   onSiteSelection(e?: any) {
-    console.log('changed');
+    // console.log('changed');
     this.tagNumbers = [];
     this.setSiteSelection();
   }
@@ -52,7 +79,7 @@ export class DashboardTwoComponent implements OnInit {
   getAllTagNumbers() {
     this.data.getTagNumbers().subscribe(res => {
       const allTagNumbers = res[0];
-      console.log(allTagNumbers);
+      // console.log(allTagNumbers);
       this.tagNumbers_khpp = allTagNumbers.map(tag => {
         if (tag.type === 'khppform') {
           return tag.tagNumber;
@@ -60,7 +87,7 @@ export class DashboardTwoComponent implements OnInit {
           return null
         }
       }).filter(tags => { return tags !== null});
-      console.log('KHPP TAGS', this.tagNumbers_khpp);
+      // console.log('KHPP TAGS', this.tagNumbers_khpp);
 
       this.tagNumbers_elephantine = allTagNumbers.map(tag => {
         if (tag.type === 'eleform') {
@@ -69,7 +96,7 @@ export class DashboardTwoComponent implements OnInit {
           return null
         }
       }).filter(tags => { return tags !== null});
-      console.log('ELE TAGS', this.tagNumbers_elephantine);
+      // console.log('ELE TAGS', this.tagNumbers_elephantine);
 
       this.setSiteSelection();
 
@@ -79,124 +106,122 @@ export class DashboardTwoComponent implements OnInit {
 
   setSiteSelection() {
     this.tagNumbers = this.selectedSite === 'KHPP' ? this.tagNumbers_khpp : this.tagNumbers_elephantine;
-    //this.selectedTagNumbers = this.tagNumbers[0] ? [this.tagNumbers[0]] : [];
+    // this.selectedTagNumbers = this.tagNumbers[0] ? [this.tagNumbers[0]] : [];
     // test
     this.selectedTagNumbers = ['D09.1-002-61'];
   }
 
   loadDashboardData() {
-    console.log('LOADING DASHBOARD DATA');
-    this.data.getSherdCount(this.selectedTagNumbers, this.selectedSite).subscribe(res => {
-      // console.log(res);
-      this.numberOfSherds = res.number_of_sherds;
-      this.data.getSumOfCount(this.selectedTagNumbers, this.selectedSite).subscribe(res => {
-        // console.log(res);
-        this.sumOfCount = res.sum_of_sherds;
-      });
-      this.data.getWareDistribution(this.selectedTagNumbers, this.selectedSite).subscribe(res => {
-        // console.log('treemapdata', res);
-        const grouped = _.groupBy(res, 'tagNumber');
-        // console.log(Object.keys(grouped))
-        const keys = Object.keys(grouped);
-        const values = Object.keys(grouped).map(i => grouped[i]);
-        const treeMapData = [];
 
-        for (let i = 0; i < keys.length; i++) {
-          const key = keys[i];
-          treeMapData.push({
-            name: key,
-            children: values[i].map(ele => {
-              return { name: ele.fabricType, value: ele.count }
-            })
-          });
-        }
-
-        console.log('treeMapData', treeMapData);
-        this.treeMapData = treeMapData;
-
-      });
-      this.data.getFlowChartData(this.selectedTagNumbers, this.selectedSite).subscribe(res => {
-        console.log('flowchart data', res);
-
-        const grouped = _.groupBy(res, 'tagNumber');
-        const keys = Object.keys(grouped);
-        const values = Object.keys(grouped).map(i => grouped[i]);
-
-        const flowData = [];
-
-        console.log(keys);
-        console.log('RAW', values[0]);
-
-        // Ware
-        for (let i = 0; i < keys.length; i++) {
-          const tagNumber = keys[i];
-          const groupByWare = _.groupBy(values[i], 'ware');
-          Object.keys(groupByWare).forEach((ware, index) => {
-            const to = ware;
-            const from = tagNumber;
-            const wareValues = Object.keys(groupByWare).map(s => groupByWare[s]);
-            flowData.push({ from: from, to: to, value: wareValues[index].length, id: ware + index + '-0'});
-          });
-        }
-        //  Surface Treatment
-        for (let i = 0; i < keys.length; i++) {
-          const groupBySurfaceTreatment = _.groupBy(values[i], 'surfaceTreatment');
-          Object.keys(groupBySurfaceTreatment).forEach((surface) => {
-            const valuesBySurface = groupBySurfaceTreatment[surface];
-            const surfaceByWareGroup = _.groupBy(valuesBySurface, 'ware');
-            const ware = Object.keys(surfaceByWareGroup);
-            const wareValues = (Object.keys(surfaceByWareGroup).map(j => surfaceByWareGroup[j]));
-            ware.forEach((w, index) => {
-              flowData.push({ from: w, to: surface, value: wareValues[index].length, id: surface + index + '-0'});
-            });
-          });
-        }
-        // Blackening
-        for (let i = 0; i < keys.length; i++) {
-          const groupBySurfaceTreatment = _.groupBy(values[i], 'blackening');
-          Object.keys(groupBySurfaceTreatment).forEach((surface) => {
-            const valuesBySurface = groupBySurfaceTreatment[surface];
-            const surfaceByWareGroup = _.groupBy(valuesBySurface, 'surfaceTreatment');
-            const ware = Object.keys(surfaceByWareGroup);
-            const wareValues = (Object.keys(surfaceByWareGroup).map(j => surfaceByWareGroup[j]));
-            ware.forEach((w, index) => {
-              flowData.push({ from: w, to: surface, value: wareValues[index].length, id: surface + index + '-0'});
-            });
-          });
-        }
-
-        console.log(flowData);
-
-        this.flowChartData = flowData;
-
-
-        // this.flowChartData =  [
-        //     { from: 'D09.1-002-61', to: 'Coarse', value: 7, id: 'A0-0' },
-        //     { from: 'D09.1-002-61', to: 'Medium', value: 14, id: 'A1-0' },
-        //     { from: 'D09.1-002-61', to: 'Fine', value: 9, id: 'A2-0' },
-
-        //     { from: 'Coarse', to: 'Unslipped', value: 3, id: 'B0-0' },
-        //     { from: 'Coarse', to: 'R Slip In', value: 1, id: 'B1-0' },
-        //     { from: 'Coarse', to: 'R Slip Out', value: 1, id: 'B2-0' },
-        //     { from: 'Coarse', to: 'Cream Slip Out', value: 1, id: 'B3-0' },
-        //     { from: 'Coarse', to: 'Cream Slip In', value: 1, id: 'B4-0' },
-
-        //     { from: 'Medium', to: 'Unslipped', value: 4, id: 'B0-0' },
-        //     { from: 'Medium', to: 'R Slip In', value: 1, id: 'B1-0' },
-        //     { from: 'Medium', to: 'R Slip Out', value: 1, id: 'B2-0' },
-        //     { from: 'Medium', to: 'R Slip Both', value: 3, id: 'B3-0' },
-        //     { from: 'Medium', to: 'Cream Slip Out', value: 1, id: 'B4-0' },
-        //     { from: 'Fine', to: 'Unslipped', value: 3, id: 'B0-0' },
-        //     { from: 'Fine', to: 'R Slip In', value: 1, id: 'B1-0' }, 
-        //     { from: 'Fine', to: 'R Slip Both', value: 3, id: 'B3-0' },
-        //     { from: 'Unslipped', to: 'Out', value: 3, id: 'B0-0' },
-        //     { from: 'Unslipped', to: 'None', value: 3, id: 'B1-0' }, 
-        //     { from: 'Unslipped', to: 'In/Out', value: 4, id: 'B3-0' },
-        //   ];
-
-      });
+    this.data.getSherdCount(this.selectedTagNumbers, this.selectedSite).subscribe(sherd => {
+      console.log('FETCHING SHERD COUNT...');
+      this.numberOfSherds = sherd.number_of_sherds;
     });
-  }
 
+    this.data.getSumOfCount(this.selectedTagNumbers, this.selectedSite).subscribe(count => {
+      console.log('FETCHING SHERD COUNT...');
+      this.sumOfCount = count.sum_of_sherds;
+    });
+
+    this.data.getSumOfWeight(this.selectedTagNumbers, this.selectedSite).subscribe(weightRes => {
+      console.log('FETCHING SUM OF WEIGHT...');
+      this.sumOfWeight = weightRes.sum_of_weight;
+    });
+
+    this.data.getWareDistribution(this.selectedTagNumbers, this.selectedSite, this.isWeight).subscribe(res => {
+      console.log('FETCHING WARE DISTRIBUTION...', res.query);
+      const grouped = _.groupBy(res.response, 'tagNumber');
+      const keys = Object.keys(grouped);
+      const values = Object.keys(grouped).map(i => grouped[i]);
+      const treeMapData = [];
+
+      for (let i = 0; i < keys.length; i++) {
+        const key = keys[i];
+        treeMapData.push({
+          name: key,
+          children: values[i].map(ele => {
+            return { name: ele.fabricType, value: ele.count }
+          })
+        });
+      }
+
+      this.treeMapData = treeMapData;
+
+    });
+
+    this.data.getFlowChartData(this.selectedTagNumbers, this.selectedSite, this.isWeight).subscribe(flowRes => {
+      console.log('FETCHING FLOW CHART DATA...', flowRes);
+
+      const grouped = _.groupBy(flowRes.response, 'tagNumber');
+      const keys = Object.keys(grouped);
+      const values = Object.keys(grouped).map(i => grouped[i]);
+      const flowData = [];
+
+      // Ware
+      for (let i = 0; i < keys.length; i++) {
+        const tagNumber = keys[i];
+        const groupByWare = _.groupBy(values[i], 'ware');
+        Object.keys(groupByWare).forEach((ware, index) => {
+          const to = ware;
+          const from = tagNumber;
+          const wareValues = Object.keys(groupByWare).map(s => groupByWare[s]);
+          const sum = wareValues[index].map(item => item['count']).reduce((prev, next) => prev + next)
+          flowData.push({ from: from, to: to, value: sum, id: (ware + '-0')});
+        });
+      }
+
+      //  Surface Treatment
+      for (let i = 0; i < keys.length; i++) {
+        const groupBySurfaceTreatment = _.groupBy(values[i], 'surfaceTreatment');
+
+        Object.keys(groupBySurfaceTreatment).forEach((surface) => {
+          const valuesBySurface = groupBySurfaceTreatment[surface];
+          const surfaceByWareGroup = _.groupBy(valuesBySurface, 'ware');
+          const ware = Object.keys(surfaceByWareGroup);
+          const wareValues = Object.keys(surfaceByWareGroup).map(j => surfaceByWareGroup[j]);
+
+          ware.forEach((w, index) => {
+            const sum = wareValues[index].map(item => item['count']).reduce((prev, next) => prev + next);
+            flowData.push({ from: w, to: surface, value: sum, id: surface + '-0'});
+          });
+        });
+      }
+
+      // Blackening
+      for (let i = 0; i < keys.length; i++) {
+        const groupBySurfaceTreatment = _.groupBy(values[i], 'blackening');
+        Object.keys(groupBySurfaceTreatment).forEach((blackening) => {
+          const valuesBySurface = groupBySurfaceTreatment[blackening];
+          const surfaceByWareGroup = _.groupBy(valuesBySurface, 'surfaceTreatment');
+          const ware = Object.keys(surfaceByWareGroup);
+          const wareValues = (Object.keys(surfaceByWareGroup).map(j => surfaceByWareGroup[j]));
+          ware.forEach((w, index) => {
+            const sum = wareValues[index].map(item => item['count']).reduce((prev, next) => prev + next);
+            flowData.push({ from: w, to: blackening, value: sum, id: blackening + '-0'});
+          });
+        });
+      }
+
+
+      console.log('getFlowChartData', (flowData));
+
+      this.flowChartData = flowData;
+
+    });
+
+    this.data.getDirectedTreeData(this.selectedTagNumbers, this.selectedSite, this.isWeight).subscribe(response => {
+      console.log('FETCHING DIRECTED TREE DATA...', response);
+      this.partitionedBarData = response.map(ele => {
+        return {
+          'region': ele.type,
+          'state': ele.category,
+          'sales': ele.count
+        }
+      });
+      // console.log(this.partitionedBarData);
+
+    });
+
+  }
 
 }

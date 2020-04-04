@@ -73,6 +73,8 @@ export class FormsService {
         formId: _form.idForm,
         processedBy: _form.processedBy,
         tagNumber: _form.tagNumber,
+        broadDate: _form.broadDate,
+        detailedDate: _form.detailedDate,
         dueDate: _form.dueDate
       },
       sherds: _form.detailedRecords == null ? [] : _form.detailedRecords,
@@ -107,6 +109,8 @@ export class FormsService {
         id: _form.id,
         processedBy: _form.processedBy,
         tagNumber: _form.tagNumber,
+        broadDate: _form.broadDate,
+        detailedDate: _form.detailedDate,
         dueDate: _form.dueDate
       },
       sherds: _form.bodySherdData,

@@ -17,6 +17,9 @@ import { GridModule } from '@progress/kendo-angular-grid';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 
 
+
+
+
 @NgModule({
    imports: [
       BrowserAnimationsModule,
@@ -35,6 +38,7 @@ import { InputsModule } from '@progress/kendo-angular-inputs';
    declarations: [
       AppComponent,
       AdminLayoutComponent
+      
    ],
    providers: [],
    bootstrap: [

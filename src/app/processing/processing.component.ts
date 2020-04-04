@@ -163,6 +163,8 @@ export class ProcessingComponent implements OnInit {
           return new Object({
             triageData: ele.basicRecords === undefined ? [] : ele.basicRecords,
             diagnosticData: [],
+            broadDate: ele.broadDate,
+            detailedDate: ele.detailedDate,
             dueDate: ele.dueDate,
             id: ele.id,
             processedBy: ele.processedBy,

@@ -10,7 +10,8 @@ import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 })
 export class FlowChartComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
-  public chart: am4charts.TreeMap;
+  // public chart: am4charts.TreeMap;
+  public amChart;
   @Input() inputData: any[];
 
   constructor(private zone: NgZone) {
@@ -18,10 +19,12 @@ export class FlowChartComponent implements OnInit, AfterViewInit, OnDestroy, OnC
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    // console.log(changes.inputData);
     if (changes.inputData.previousValue !== changes.inputData.currentValue) {
-      // console.log(changes.inputData.currentValue);
-      // console.log(this.chart);
+      this.zone.runOutsideAngular(() => {
+        if (this.amChart) {
+          this.amChart.dispose();
+        }
+      });
       this.buildChart();
     }
   }
@@ -32,64 +35,25 @@ export class FlowChartComponent implements OnInit, AfterViewInit, OnDestroy, OnC
     });
   }
 
+  setData() {
+    this.amChart.data = this.inputData;
+  }
+
   buildChart() {
-    // const chart = am4core.create('chartdiv2', am4charts.SankeyDiagram);
-    // chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
-    // chart.marginRight = 100;
-    // chart.data = this.inputData;
-    // const hoverState = chart.links.template.states.create('hover');
-    // hoverState.properties.fillOpacity = 0.6;
-    // chart.dataFields.fromName = 'from';
-    // chart.dataFields.toName = 'to';
-    // chart.dataFields.value = 'value';
-    // chart.links.template.propertyFields.id = 'id';
-    // chart.links.template.colorMode = 'solid';
-    // chart.links.template.fill = new am4core.InterfaceColorSet().getFor('alternativeBackground');
-    // chart.links.template.fillOpacity = 0.1;
-    // chart.links.template.tooltipText = '';
 
-    // // highlight all links with the same id beginning
-    // chart.links.template.events.on('over', function(event) {
-    //   const link = event.target;
-    //   const id = link.id.split('-')[0];
+    this.amChart = am4core.create('chartdiv2', am4charts.SankeyDiagram);
 
-    //   // tslint:disable-next-line: no-shadowed-variable
-    //   chart.links.each((link) => {
-    //     if (link.id.indexOf(id) !== -1){
-    //       link.isHover = true;
-    //     }
-    //   })
-    // })
+    this.amChart.data = this.inputData;
 
-    // chart.links.template.events.on('out', function(event) {
-    //   chart.links.each(function(link) {
-    //     link.isHover = false;
-    //   })
-    // })
-
-    // // for right-most label to fit
-    // chart.paddingRight = 100;
-
-    // // make nodes draggable
-    // const nodeTemplate = chart.nodes.template;
-    // nodeTemplate.inert = true;
-    // nodeTemplate.width = 20;
-    // nodeTemplate.readerTitle = 'Click to show/hide or drag to rearrange';
-    // nodeTemplate.showSystemTooltip = true;
-    // nodeTemplate.cursorOverStyle = am4core.MouseCursorStyle.pointer;
-
-    // // Create chart instance
-    const chart = am4core.create('chartdiv2', am4charts.SankeyDiagram);
-
-    chart.data = this.inputData;
+    this.amChart.responsive.enabled = true;
 
     // Configure data fields
-    chart.dataFields.fromName = 'from';
-    chart.dataFields.toName = 'to';
-    chart.dataFields.value = 'value';
+    this.amChart.dataFields.fromName = 'from';
+    this.amChart.dataFields.toName = 'to';
+    this.amChart.dataFields.value = 'value';
 
     // Configure nodes
-    const nodeTemplate = chart.nodes.template;
+    const nodeTemplate = this.amChart.nodes.template;
     nodeTemplate.width = 30;
     // nodeTemplate.stroke = am4core.color('#fff');
     // nodeTemplate.strokeWidth = 2;
@@ -97,24 +61,20 @@ export class FlowChartComponent implements OnInit, AfterViewInit, OnDestroy, OnC
     nodeTemplate.nameLabel.label.fill = am4core.color('#3c3c3c');
     nodeTemplate.nameLabel.label.fontWeight = 'bold';
 
-    chart.paddingRight = 50;
+    this.amChart.paddingRight = 50;
 
     // Configure links
-    const linkTemplate = chart.links.template;
+    const linkTemplate = this.amChart.links.template;
     linkTemplate.tension = 2;
     linkTemplate.controlPointDistance = 0.1;
     linkTemplate.fill = am4core.color('#A8C686');
-
-    // chart.legend = new am4charts.Legend();
-
-
   }
 
 
   ngOnDestroy() {
     this.zone.runOutsideAngular(() => {
-      if (this.chart) {
-        this.chart.dispose();
+      if (this.amChart) {
+        this.amChart.dispose();
       }
     });
   }

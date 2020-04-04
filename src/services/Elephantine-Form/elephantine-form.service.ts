@@ -15,6 +15,8 @@ export class ElephantineFormService {
   offlineDBrecordToEdit = new Subject<any>();
 
   broadDate = [
+    {value: 'Undated', name: 'Undated'},
+    {value: 'Spoil', name: 'Spoil'},
     {value: 'Old Kingdom', name: 'Old Kingdom'},
     {value: 'First Intermediate Period', name: 'First Intermediate Period'},
     {value: 'Middle Kingdom', name: 'Middle Kingdom'},
@@ -39,6 +41,7 @@ export class ElephantineFormService {
   ];
 
   dynasticDate = [
+    {value: 'Undated', name: 'Undated'},
     {value: 'Dyn 4/5', name: 'Dyn 4/5'},
     {value: 'Dyn 6', name: 'Dyn 6'},
     {value: 'Dyn 6, late', name: 'Dyn 6 late'},
@@ -46,6 +49,7 @@ export class ElephantineFormService {
     {value: 'Late FIP', name: 'Late FIP'},
     {value: 'Late FIP/early Dyn 11', name: 'Late FIP/early Dyn 11'},
     {value: 'LateD11/early D12', name: 'LateD11/early D12'},
+    {value: 'D12', name: 'D12'},
     {value: 'Early-mid D12', name: 'Early-mid D12'},
     {value: 'Late D12', name: 'Late D12'},
     {value: 'Late D12-D13', name: 'Late D12-D13'},

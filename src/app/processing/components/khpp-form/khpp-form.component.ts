@@ -9,6 +9,7 @@ import { ExporterService } from 'services/excel/exporter.service';
 
 import * as redsBasicData from './redsBasic.json';
 import * as redsDetailedData from './redsDetailed.json';
+import { ElephantineFormService } from 'services/Elephantine-Form/elephantine-form.service';
 
 // REDS IMPORT
 
@@ -74,6 +75,11 @@ export class KhppFormComponent implements OnInit, OnDestroy {
     detailed = [];
     basic = [];
 
+    broadDateOptions = [];
+    detailedDateOptions = [];
+    selectedBroadDate;
+    selectedDetailedDate;
+
 
     isEditingOnlineDB = false;
 
@@ -82,6 +88,7 @@ export class KhppFormComponent implements OnInit, OnDestroy {
 
     constructor(
         public editService: KhppFormService,
+        public elephantineFormService: ElephantineFormService,
         public onlinService: OnlineServiceService,
         public exporter: ExporterService,
         public offlineDB: OfflineDBService,
@@ -102,8 +109,18 @@ export class KhppFormComponent implements OnInit, OnDestroy {
 
         let d: Date = new Date();
         this.dueDate = d.getFullYear() + '-' + (d.getMonth() + 1)+ '-' + d.getDate();
+        // Get Deposit Date
+        this.broadDateOptions = this.elephantineFormService.getBroadDate();
+        this.detailedDateOptions = this.elephantineFormService.getDynasticDate();
+        // Broad and Detailed Date defailt selected
+        this.setDefaultDepositDates();
 
     }
+
+    setDefaultDepositDates() {
+        this.selectedBroadDate = this.elephantineFormService.getBroadDate()[0].value;
+        this.selectedDetailedDate = this.elephantineFormService.getDynasticDate()[0].value;
+      }
 
 
     ngOnDestroy(): void {
@@ -243,8 +260,13 @@ export class KhppFormComponent implements OnInit, OnDestroy {
 
     /** Custom function to check weather the to show the body based on three fields */
     private showBody() {
-        this.isFormBodyVisible = (this.editService.tagNumberFiledValid(this.tagNumber)
-        && this.processedBy !== '' && this.dueDate !== '') ? true : false;
+        this.isFormBodyVisible =
+        (this.editService.tagNumberFiledValid(this.tagNumber)
+        && this.processedBy !== ''
+        && this.dueDate !== ''
+        && this.selectedBroadDate !== ''
+        && this.selectedDetailedDate !== ''
+        ) ? true : false;
     }
 
 
@@ -294,6 +316,8 @@ export class KhppFormComponent implements OnInit, OnDestroy {
             form = {
                 idForm: this.editFormID,
                 tagNumber: this.tagNumber,
+                broadDate: this.selectedBroadDate,
+                detailedDate: this.selectedDetailedDate,
                 dueDate: this.dueDate,
                 processedBy: this.processedBy,
                 basicRecords: this.basicRecords,
@@ -304,6 +328,8 @@ export class KhppFormComponent implements OnInit, OnDestroy {
             form = {
                 idForm: this.editFormID,
                 tagNumber: this.tagNumber,
+                broadDate: this.selectedBroadDate,
+                detailedDate: this.selectedDetailedDate,
                 dueDate: this.dueDate,
                 processedBy: this.processedBy,
                 detailedRecords: this.detailedRecords,
@@ -409,6 +435,22 @@ export class KhppFormComponent implements OnInit, OnDestroy {
         });
 
     }
+
+    public onDepositDateChange(e: any, type) {
+        const value = e.target.value;
+        switch (type) {
+          case 'broad':
+            this.selectedBroadDate = value;
+            break;
+          case 'detailed':
+            this.selectedDetailedDate = value;
+            break;
+          default:
+            break;
+        }
+        this.showBody();
+        this.checkFormValidity();
+      }
 
     // REDS Basic
     onJsonBasicProcess() {
@@ -517,7 +559,7 @@ export class KhppFormComponent implements OnInit, OnDestroy {
 
         this.formSerivce.editFromKHPP(record.id, type).subscribe(res => {
 
-            let splitDate = record.dueDate.split('-');
+            const splitDate = record.dueDate.split('-');
             const newDate = splitDate[0]+ '-' + splitDate[1] + '-' + splitDate[2];
 
             let recordToEdit;
@@ -525,6 +567,8 @@ export class KhppFormComponent implements OnInit, OnDestroy {
             if (type === 'detailed') {
                 recordToEdit = {
                     tagNumber: record.tagNumber,
+                    broadDate: record.broadDate,
+                    detailedDate: record.detailedDate,
                     dueDate: newDate,
                     id: record.id,
                     processedBy: record.processedBy,
@@ -533,6 +577,8 @@ export class KhppFormComponent implements OnInit, OnDestroy {
             } else {
                 recordToEdit = {
                     tagNumber: record.tagNumber,
+                    broadDate: record.broadDate,
+                    detailedDate: record.detailedDate,
                     dueDate: newDate,
                     id: record.id,
                     processedBy: record.processedBy,
@@ -584,6 +630,8 @@ export class KhppFormComponent implements OnInit, OnDestroy {
 
     public dbRecordEdit(record: any) {
         this.tagNumber = record.tagNumber;
+        this.selectedBroadDate = record.broadDate;
+        this.selectedDetailedDate = record.detailedDate;
         this.dueDate = record.dueDate;
         this.processedBy = record.processedBy;
         this.showBody();

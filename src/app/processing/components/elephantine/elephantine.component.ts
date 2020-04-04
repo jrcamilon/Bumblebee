@@ -496,8 +496,8 @@ public onDBdelete(record: any) {
   }
 
   public dbRecordEdit(record: any) {
-    console.log(record.roomNumber);
-    console.log(record.houseNumber);
+    // console.log(record.roomNumber);
+    // console.log(record.houseNumber);
 
     this.tagNumber = record.tagNumber;
     this.tagNumberContext = record.tagNumberContext;

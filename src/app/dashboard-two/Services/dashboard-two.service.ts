@@ -43,10 +43,24 @@ export class DashboardTwoService {
       })
   }
 
-  public getWareDistribution(_selectedTagNumbers: any[], _site: string): Observable<any> {
+  public getSumOfWeight(_selectedTagNumbers: any[], _site: string): Observable<any> {
     const body = {
       tagNumbers: _selectedTagNumbers,
       site: _site
+    };
+    return this._http.post('http://localhost:3092/sites/sumOfWeight', body, { headers: this.headers })
+      .map((response: Response) => {
+        const tmpData = response.json();
+        return tmpData;
+      })
+  }
+
+
+  public getWareDistribution(_selectedTagNumbers: any[], _site: string, isWeight: boolean): Observable<any> {
+    const body = {
+      tagNumbers: _selectedTagNumbers,
+      site: _site,
+      type: isWeight ? 'weight' : 'count'
     };
     return this._http.post('http://localhost:3092/sites/distribution/wares', body, { headers: this.headers })
       .map((response: Response) => {
@@ -55,10 +69,11 @@ export class DashboardTwoService {
       })
   }
 
-  public getFlowChartData(_selectedTagNumbers: any[], _site: string): Observable<any> {
+  public getFlowChartData(_selectedTagNumbers: any[], _site: string, isWeight: boolean): Observable<any> {
     const body = {
       tagNumbers: _selectedTagNumbers,
-      site: _site
+      site: _site,
+      type: isWeight ? 'weight' : 'count'
     };
     return this._http.post('http://localhost:3092/sites/relationships/all', body, { headers: this.headers })
       .map((response: Response) => {
@@ -66,6 +81,21 @@ export class DashboardTwoService {
         return tmpData;
       })
   }
+
+  public getDirectedTreeData(_selectedTagNumbers: any[], _site: string, isWeight: boolean): Observable<any> {
+    const body = {
+      tagNumbers: _selectedTagNumbers,
+      site: _site,
+      type: isWeight ? 'weight' : 'count'
+    };
+    return this._http.post('http://localhost:3092/sites/treedata/all', body, { headers: this.headers })
+      .map((response: Response) => {
+        const tmpData = response.json();
+        return tmpData;
+      })
+  }
+
+
 
 
 }
