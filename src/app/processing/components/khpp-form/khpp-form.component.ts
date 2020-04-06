@@ -108,7 +108,7 @@ export class KhppFormComponent implements OnInit, OnDestroy {
         }
 
         let d: Date = new Date();
-        this.dueDate = d.getFullYear() + '-' + (d.getMonth() + 1)+ '-' + d.getDate();
+        this.dueDate = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
         // Get Deposit Date
         this.broadDateOptions = this.elephantineFormService.getBroadDate();
         this.detailedDateOptions = this.elephantineFormService.getDynasticDate();

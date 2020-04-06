@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardTwoService } from './Services/dashboard-two.service';
 import * as _ from 'lodash';
+import { ElephantineFormService } from 'services/Elephantine-Form/elephantine-form.service';
 
 @Component({
   selector: 'app-dashboard-two',
@@ -13,7 +14,12 @@ export class DashboardTwoComponent implements OnInit {
   tagNumbers: Array<string> = [];
   tagNumbers_elephantine: Array<string> = [];
   tagNumbers_khpp: Array<string> = [];
+  broadDateOptions: Array<string> = [];
+  detailedDateOptions: Array<string> = [];
+
   selectedTagNumbers: any = ['Baseball'];
+  selectedBroadDates: any = [''];
+  selectedDetailedDates: any = [''];
 
   // Radio Button
   sites: string[] = ['KHPP', 'Elephantine'];
@@ -32,11 +38,18 @@ export class DashboardTwoComponent implements OnInit {
   cardOption = [
     {type: 'flow-chart', title: 'Flow Chart', status: 'active'},
     {type: 'chord-chhart', title: 'Chord Chart', status: 'inactive'},
-  ]
+  ];
 
-  constructor(public data: DashboardTwoService) {
+  constructor(public data: DashboardTwoService, public elephantineService: ElephantineFormService) {
     // console.log('dashboard constructor - two');
     this.getAllTagNumbers();
+    this.broadDateOptions = this.elephantineService.getBroadDate().map(ele => {
+      return ele.value;
+    });
+    this.detailedDateOptions = this.elephantineService.getDynasticDate().map(ele => {
+      return ele.value;
+    });
+
 
    }
 
@@ -109,26 +122,27 @@ export class DashboardTwoComponent implements OnInit {
     // this.selectedTagNumbers = this.tagNumbers[0] ? [this.tagNumbers[0]] : [];
     // test
     this.selectedTagNumbers = ['D09.1-002-61'];
+    this.selectedBroadDates = [];
+    this.selectedDetailedDates = [];
   }
 
   loadDashboardData() {
 
-    this.data.getSherdCount(this.selectedTagNumbers, this.selectedSite).subscribe(sherd => {
-      console.log('FETCHING SHERD COUNT...');
-      this.numberOfSherds = sherd.number_of_sherds;
-    });
 
-    this.data.getSumOfCount(this.selectedTagNumbers, this.selectedSite).subscribe(count => {
+    this.data.getSumOfCount(this.selectedTagNumbers,
+      this.selectedBroadDates, this.selectedDetailedDates, this.selectedSite).subscribe(count => {
       console.log('FETCHING SHERD COUNT...');
       this.sumOfCount = count.sum_of_sherds;
     });
 
-    this.data.getSumOfWeight(this.selectedTagNumbers, this.selectedSite).subscribe(weightRes => {
+    this.data.getSumOfWeight(this.selectedTagNumbers,
+      this.selectedBroadDates, this.selectedDetailedDates, this.selectedSite).subscribe(weightRes => {
       console.log('FETCHING SUM OF WEIGHT...');
       this.sumOfWeight = weightRes.sum_of_weight;
     });
 
-    this.data.getWareDistribution(this.selectedTagNumbers, this.selectedSite, this.isWeight).subscribe(res => {
+    this.data.getWareDistribution(this.selectedTagNumbers,
+      this.selectedSite, this.selectedBroadDates, this.selectedDetailedDates, this.isWeight).subscribe(res => {
       console.log('FETCHING WARE DISTRIBUTION...', res.query);
       const grouped = _.groupBy(res.response, 'tagNumber');
       const keys = Object.keys(grouped);
@@ -149,7 +163,8 @@ export class DashboardTwoComponent implements OnInit {
 
     });
 
-    this.data.getFlowChartData(this.selectedTagNumbers, this.selectedSite, this.isWeight).subscribe(flowRes => {
+    this.data.getFlowChartData(this.selectedTagNumbers,
+      this.selectedBroadDates, this.selectedDetailedDates, this.selectedSite, this.isWeight).subscribe(flowRes => {
       console.log('FETCHING FLOW CHART DATA...', flowRes);
 
       const grouped = _.groupBy(flowRes.response, 'tagNumber');
@@ -209,7 +224,10 @@ export class DashboardTwoComponent implements OnInit {
 
     });
 
-    this.data.getDirectedTreeData(this.selectedTagNumbers, this.selectedSite, this.isWeight).subscribe(response => {
+    this.data.getDirectedTreeData(this.selectedTagNumbers,
+      this.selectedBroadDates,
+      this.selectedDetailedDates,
+      this.selectedSite, this.isWeight).subscribe(response => {
       console.log('FETCHING DIRECTED TREE DATA...', response);
       this.partitionedBarData = response.map(ele => {
         return {

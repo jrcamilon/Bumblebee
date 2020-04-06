@@ -35,28 +35,41 @@ export class TreeMapComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
     });
   }
 
+  setData() {
+    console.log('TREEMAP DATA', this.inputData);
+    if (this.inputData.length === 0) {
+      this.chart.data = [];
+
+    } else {
+      this.chart.data = this.inputData;
+    }
+
+  }
+
   buildChart() {
     // console.log('TREEMAP');
-      const chart = am4core.create('chartdiv', am4charts.TreeMap);
-      chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
+       this.chart = am4core.create('chartdiv', am4charts.TreeMap);
+      this.chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
 
       // console.log(this.inputData);
 
-      chart.data = this.inputData;
-      chart.responsive.enabled = true;
+      // this.chart.data = this.inputData;
+      this.setData();
+      this.chart.responsive.enabled = true;
 
-      chart.colors.step = 2;
-      chart.padding(0, 0, 0, 0);
+      this.chart.colors.step = 2;
+      this.chart.padding(0, 0, 0, 0);
       // define data fields
-      chart.dataFields.value = 'value';
-      chart.dataFields.name = 'name';
-      chart.dataFields.children = 'children';
-      chart.layoutAlgorithm = chart.binaryTree;
+      this.chart.dataFields.value = 'value';
+      this.chart.dataFields.name = 'name';
+      this.chart.dataFields.children = 'children';
+      this.chart.layoutAlgorithm = this.chart.binaryTree;
 
-      chart.zoomable = true;
+      this.chart.zoomable = true;
       // level 0 series template
-      const level0SeriesTemplate = chart.seriesTemplates.create('0');
+      const level0SeriesTemplate = this.chart.seriesTemplates.create('0');
       const level0ColumnTemplate = level0SeriesTemplate.columns.template;
+
 
       level0ColumnTemplate.column.cornerRadius(10, 10, 10, 10);
       level0ColumnTemplate.column.fillOpacity = 0;
@@ -64,7 +77,7 @@ export class TreeMapComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
       level0ColumnTemplate.column.strokeOpacity = 0;
 
       // level 1 series template
-      const level1SeriesTemplate = chart.seriesTemplates.create('1');
+      const level1SeriesTemplate = this.chart.seriesTemplates.create('1');
       const level1ColumnTemplate = level1SeriesTemplate.columns.template;
 
       level1SeriesTemplate.tooltip.animationDuration = 0;
@@ -84,20 +97,16 @@ export class TreeMapComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
       bullet1.label.fill = am4core.color('#ffffff');
 
       /* Add a navigation bar */
-      chart.navigationBar = new am4charts.NavigationBar();
+      this.chart.navigationBar = new am4charts.NavigationBar();
 
       /* Add a lagend */
-      chart.legend = new am4charts.Legend();
+      this.chart.legend = new am4charts.Legend();
 
-      chart.maxLevels = 2;
+      this.chart.maxLevels = 2;
 
-      this.chart = chart;
+      // this.chart = this.chart;
   }
 
-  loadNewData(chart: any, data: any) {
-    // console.log('TREEMAP');
-    chart.data = data;
-  }
 
   ngOnDestroy() {
     this.zone.runOutsideAngular(() => {

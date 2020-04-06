@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" style="background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(67,75,75,0.9037990196078431) 42%, rgba(153,191,199,1) 100%);">
   <div class="row" style="margin-top:20px">
 
     <div class="col-md-3 marginTop">
@@ -26,6 +26,18 @@
           <div style="margin-top: 6px;">
             <p>Tag Number:</p>
             <kendo-multiselect [data]="tagNumbers" [(ngModel)]="selectedTagNumbers"></kendo-multiselect>
+          </div>
+
+          <!-- MultiSlect -->
+          <div style="margin-top: 6px;">
+            <p>Broad Date:</p>
+            <kendo-multiselect [data]="broadDateOptions" [(ngModel)]="selectedBroadDates"></kendo-multiselect>
+          </div>
+
+          <!-- MultiSlect -->
+          <div style="margin-top: 6px;">
+            <p>Detailed Date:</p>
+            <kendo-multiselect [data]="detailedDateOptions" [(ngModel)]="selectedDetailedDates"></kendo-multiselect>
           </div>
 
 
@@ -80,14 +92,24 @@
 
     <div class="col-md-6 marginTop ">
       <mat-card>
+
         <mat-card-header>
           <mat-card-title>Ware Distribution</mat-card-title>
           <mat-card-subtitle>Ware distribution by {{isWeight ? ' Weight in (g) grams' : ' Count '}}  </mat-card-subtitle>
+
+          <!-- <mat-card-actions>
+            <button mat-button>SHARE</button>
+          </mat-card-actions> -->
+
         </mat-card-header>
         <mat-card-content>
           <div style="height: 500px;" *ngIf="treeMapData === undefined"><mat-spinner style="margin:0 auto;"></mat-spinner></div>
           <app-tree-map [inputData]="this.treeMapData"*ngIf="treeMapData !== undefined" ></app-tree-map>
         </mat-card-content>
+        <!-- <mat-card-actions>
+          <button mat-button>LIKE</button>
+          <button mat-button>SHARE</button>
+        </mat-card-actions> -->
       </mat-card>
     </div>
 
@@ -98,7 +120,7 @@
     <div class="col-md-6 marginTop">
       <mat-card>
         <mat-card-header>
-          <mat-card-title>Tag Numbers > Ware > SurfaceTreatment > Blackening</mat-card-title>
+          <mat-card-title>Tag Numbers / Ware / SurfaceTreatment / Blackening</mat-card-title>
           <mat-card-subtitle>Relationships between Ware, Surface Treatment and Blackening. Values by {{isWeight ? 'Weight (g) grams' : 'Count'}}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
@@ -112,7 +134,7 @@
     <div class="col-md-6 marginTop">
       <mat-card>
         <mat-card-header>
-          <mat-card-title>Tag Numbers > Ware > SurfaceTreatment > Blackening</mat-card-title>
+          <mat-card-title>Tag Numbers / Ware / SurfaceTreatment / Blackening</mat-card-title>
           <mat-card-subtitle>Relationships between Ware, Surface Treatment and Blackening. Values by {{isWeight ? 'Weight (g) grams' : 'Count'}}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
@@ -128,9 +150,9 @@
 
   </div>
 
-  <!-- <div class="row" style="margin-top: 10px">
+  <div class="row" style="margin-top: 10px">
 
-    <div class="col-md-12 marginTop">
+    <!-- <div class="col-md-12 marginTop">
       <mat-card>
         <mat-card-header>
           <mat-card-title>Timeline</mat-card-title>
@@ -141,9 +163,9 @@
         </mat-card-content>
 
       </mat-card>
-    </div>
+    </div> -->
 
-  </div> -->
+  </div>
 
   <div class="row">
     <div style="height: 100px;"></div>
