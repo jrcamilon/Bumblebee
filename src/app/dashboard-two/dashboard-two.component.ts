@@ -3,6 +3,7 @@ import { DashboardTwoService } from './Services/dashboard-two.service';
 import * as _ from 'lodash';
 import { ElephantineFormService } from 'services/Elephantine-Form/elephantine-form.service';
 
+
 @Component({
   selector: 'app-dashboard-two',
   templateUrl: './dashboard-two.component.html',
@@ -32,16 +33,35 @@ export class DashboardTwoComponent implements OnInit {
   flowChartData;
   partitionedBarData;
 
+  dialogOpen = false;
+  weightSymbol = 'g';
+
+  windowHeight;
+  windowWidth;
+
   // count or weight
   isWeight = false;
+
+  customFullStyle = {
+    'width' : '100%',
+    'height' : '100%'
+  }
 
   cardOption = [
     {type: 'flow-chart', title: 'Flow Chart', status: 'active'},
     {type: 'chord-chhart', title: 'Chord Chart', status: 'inactive'},
   ];
 
+  dialogTitle = '';
+  treeMapVisible = false;
+  flowChartVisible = false;
+  partitionedBarVisible = false;
+
   constructor(public data: DashboardTwoService, public elephantineService: ElephantineFormService) {
-    // console.log('dashboard constructor - two');
+
+    this.windowHeight = window.innerHeight;
+    this.windowWidth = window.innerWidth;
+
     this.getAllTagNumbers();
     this.broadDateOptions = this.elephantineService.getBroadDate().map(ele => {
       return ele.value;
@@ -54,7 +74,32 @@ export class DashboardTwoComponent implements OnInit {
    }
 
   ngOnInit() {
-    // console.log('dashboard ngOnInit - two')
+    // // console.log('dashboard ngOnInit - two')
+  }
+
+  close() {
+    this.dialogOpen = !this.dialogOpen;
+  }
+
+  onDialogOpen(type) {
+    this.treeMapVisible = false;
+    this.flowChartVisible = false;
+    this.partitionedBarVisible = false;
+    switch (type) {
+      case 'tree-map':
+        this.treeMapVisible = true;
+        this.dialogTitle = 'Ware Distribution';
+        break;
+      case 'partitioned-bar':
+        this.partitionedBarVisible = true;
+        this.dialogTitle = 'Relationships between Ware, Surface Treatment and Blackening. Values by Count';
+        break;
+      case 'flow-chart':
+        this.flowChartVisible = true;
+        this.dialogTitle = 'Relationships between Ware, Surface Treatment and Blackening. Values by Count';
+        break;
+    }
+    this.dialogOpen = !this.dialogOpen;
   }
 
   onChartSelect(type: string) {
@@ -65,26 +110,29 @@ export class DashboardTwoComponent implements OnInit {
         option.status = 'inactive';
       }
     });
-    // console.log(this.cardOption);
+    // // console.log(this.cardOption);
   }
 
 
   onSubmitSelection() {
+    console.log('submitted');
+    console.log(this.selectedTagNumbers);
+    // // console.log('isWeight', this.isWeight);
+    // // console.log('Submit clicked...');
+    // if (this.selectedSite !== null && this.selectedTagNumbers.length !== 0) {
 
-    console.log('isWeight', this.isWeight);
-    // console.log('Submit clicked...');
-    if (this.selectedSite !== null && this.selectedTagNumbers.length !== 0) {
-      // console.log('Selected Site: ', this.selectedSite);
-      // console.log('Selected Tag Numbers: ', this.selectedTagNumbers);
+      if (this.selectedSite !== null && this.selectedTagNumbers.length !== 0) {
+      // // console.log('Selected Site: ', this.selectedSite);
+      // // console.log('Selected Tag Numbers: ', this.selectedTagNumbers);
       this.loadDashboardData();
-    }
+      }
   }
 
   onCountOrWeightSelect(e: any) {  this.isWeight = e.checked; }
 
 
   onSiteSelection(e?: any) {
-    // console.log('changed');
+    // // console.log('changed');
     this.tagNumbers = [];
     this.setSiteSelection();
   }
@@ -92,7 +140,7 @@ export class DashboardTwoComponent implements OnInit {
   getAllTagNumbers() {
     this.data.getTagNumbers().subscribe(res => {
       const allTagNumbers = res[0];
-      // console.log(allTagNumbers);
+      // // console.log(allTagNumbers);
       this.tagNumbers_khpp = allTagNumbers.map(tag => {
         if (tag.type === 'khppform') {
           return tag.tagNumber;
@@ -100,7 +148,9 @@ export class DashboardTwoComponent implements OnInit {
           return null
         }
       }).filter(tags => { return tags !== null});
-      // console.log('KHPP TAGS', this.tagNumbers_khpp);
+
+      this.tagNumbers_khpp.unshift('ALL');
+      // // console.log('KHPP TAGS', this.tagNumbers_khpp);
 
       this.tagNumbers_elephantine = allTagNumbers.map(tag => {
         if (tag.type === 'eleform') {
@@ -109,7 +159,9 @@ export class DashboardTwoComponent implements OnInit {
           return null
         }
       }).filter(tags => { return tags !== null});
-      // console.log('ELE TAGS', this.tagNumbers_elephantine);
+      // // console.log('ELE TAGS', this.tagNumbers_elephantine);
+
+      this.tagNumbers_elephantine.unshift('ALL');
 
       this.setSiteSelection();
 
@@ -118,89 +170,154 @@ export class DashboardTwoComponent implements OnInit {
   }
 
   setSiteSelection() {
-    this.tagNumbers = this.selectedSite === 'KHPP' ? this.tagNumbers_khpp : this.tagNumbers_elephantine;
-    // this.selectedTagNumbers = this.tagNumbers[0] ? [this.tagNumbers[0]] : [];
-    // test
-    this.selectedTagNumbers = ['D09.1-002-61'];
+    // this.tagNumbers = this.selectedSite === 'KHPP' ? this.tagNumbers_khpp : this.tagNumbers_elephantine;
+
+    if (this.selectedSite === 'KHPP') {
+      this.tagNumbers = this.tagNumbers_khpp;
+      this.selectedTagNumbers = ['D09.1-002-61'];
+    } else if (this.selectedSite === 'Elephantine') {
+      this.tagNumbers = this.tagNumbers_elephantine;
+      this.selectedTagNumbers = ['46501F/h-1'];
+    }
     this.selectedBroadDates = [];
     this.selectedDetailedDates = [];
+    this.loadDashboardData();
   }
 
   loadDashboardData() {
 
+    let selected = this.selectedTagNumbers;
+    let key = 'tagNumber';
+    if (this.selectedTagNumbers.includes('ALL')) {
+      selected = this.tagNumbers;
+      key = 'ware';
+    }
 
-    this.data.getSumOfCount(this.selectedTagNumbers,
+    selected = selected.filter((ele) => { return ele !== 'ALL'});
+
+    console.log('loading dashboard data', selected);
+
+
+    this.data.getSumOfCount(selected,
       this.selectedBroadDates, this.selectedDetailedDates, this.selectedSite).subscribe(count => {
-      console.log('FETCHING SHERD COUNT...');
+      // console.log('FETCHING SHERD COUNT...');
       this.sumOfCount = count.sum_of_sherds;
     });
 
-    this.data.getSumOfWeight(this.selectedTagNumbers,
+    this.data.getSumOfWeight(selected,
       this.selectedBroadDates, this.selectedDetailedDates, this.selectedSite).subscribe(weightRes => {
-      console.log('FETCHING SUM OF WEIGHT...');
+      // console.log('FETCHING SUM OF WEIGHT...');
       this.sumOfWeight = weightRes.sum_of_weight;
     });
 
-    this.data.getWareDistribution(this.selectedTagNumbers,
-      this.selectedSite, this.selectedBroadDates, this.selectedDetailedDates, this.isWeight).subscribe(res => {
-      console.log('FETCHING WARE DISTRIBUTION...', res.query);
+    this.data.getWareDistribution(
+      selected,
+      this.selectedSite,
+      this.selectedBroadDates,
+      this.selectedDetailedDates,
+      this.isWeight).subscribe(res => {
+      console.log('FETCHING WARE DISTRIBUTION...', res.response);
+
+
       const grouped = _.groupBy(res.response, 'tagNumber');
       const keys = Object.keys(grouped);
       const values = Object.keys(grouped).map(i => grouped[i]);
       const treeMapData = [];
 
       for (let i = 0; i < keys.length; i++) {
-        const key = keys[i];
-        treeMapData.push({
-          name: key,
-          children: values[i].map(ele => {
-            return { name: ele.fabricType, value: ele.count }
-          })
-        });
+        treeMapData.push(
+          { name: keys[i], children: values[i].map(ele => {
+            return { name: ele.fabricType, value: ele.count }})
+          }
+        );
       }
-
       this.treeMapData = treeMapData;
 
     });
 
-    this.data.getFlowChartData(this.selectedTagNumbers,
-      this.selectedBroadDates, this.selectedDetailedDates, this.selectedSite, this.isWeight).subscribe(flowRes => {
-      console.log('FETCHING FLOW CHART DATA...', flowRes);
+    this.data.getFlowChartData(
+      selected,
+      this.selectedBroadDates,
+      this.selectedDetailedDates,
+      this.selectedSite,
+      this.isWeight).subscribe(flowRes => {
+      // console.log('FETCHING FLOW CHART DATA...', flowRes.response);
 
-      const grouped = _.groupBy(flowRes.response, 'tagNumber');
+
+      const grouped = _.groupBy(flowRes.response, key);
       const keys = Object.keys(grouped);
       const values = Object.keys(grouped).map(i => grouped[i]);
       const flowData = [];
 
-      // Ware
-      for (let i = 0; i < keys.length; i++) {
-        const tagNumber = keys[i];
-        const groupByWare = _.groupBy(values[i], 'ware');
-        Object.keys(groupByWare).forEach((ware, index) => {
-          const to = ware;
-          const from = tagNumber;
-          const wareValues = Object.keys(groupByWare).map(s => groupByWare[s]);
-          const sum = wareValues[index].map(item => item['count']).reduce((prev, next) => prev + next)
-          flowData.push({ from: from, to: to, value: sum, id: (ware + '-0')});
-        });
-      }
+      console.log('FETCHING FLOW CHART DATA...', grouped);
 
-      //  Surface Treatment
-      for (let i = 0; i < keys.length; i++) {
-        const groupBySurfaceTreatment = _.groupBy(values[i], 'surfaceTreatment');
-
-        Object.keys(groupBySurfaceTreatment).forEach((surface) => {
-          const valuesBySurface = groupBySurfaceTreatment[surface];
-          const surfaceByWareGroup = _.groupBy(valuesBySurface, 'ware');
-          const ware = Object.keys(surfaceByWareGroup);
-          const wareValues = Object.keys(surfaceByWareGroup).map(j => surfaceByWareGroup[j]);
-
-          ware.forEach((w, index) => {
-            const sum = wareValues[index].map(item => item['count']).reduce((prev, next) => prev + next);
-            flowData.push({ from: w, to: surface, value: sum, id: surface + '-0'});
+      // REDO
+      if (key === 'ware') {
+        for (let i = 0; i < keys.length; i++) {
+          const wr = keys[i];
+          const groupBySF = _.groupBy(values[i], 'surfaceTreatment');
+          Object.keys(groupBySF).forEach((sf, index) => {
+            const to = sf;
+            const from = wr;
+            const wareValues = Object.keys(groupBySF).map(s => groupBySF[s]);
+            const sum = wareValues[index].map(item => item['count']).reduce((prev, next) => prev + next)
+            flowData.push({ from: from, to: to, value: sum, id: (from + '-' + index + '-0')});
           });
-        });
+        }
+      } else {
+          // Tag Numbers
+          for (let i = 0; i < keys.length; i++) {
+            const groupBySurfaceTreatment = _.groupBy(values[i], 'surfaceTreatment');
+
+            Object.keys(groupBySurfaceTreatment).forEach((surface) => {
+              const valuesBySurface = groupBySurfaceTreatment[surface];
+              const surfaceByWareGroup = _.groupBy(valuesBySurface, 'ware');
+              const ware = Object.keys(surfaceByWareGroup);
+              const wareValues = Object.keys(surfaceByWareGroup).map(j => surfaceByWareGroup[j]);
+
+              ware.forEach((w, index) => {
+                const sum = wareValues[index].map(item => item['count']).reduce((prev, next) => prev + next);
+                flowData.push({ from: w, to: surface, value: sum, id: 'tag' + index + '-0'});
+              });
+            });
+          }
+
+        // Ware
+        if (selected.length <= 10) {
+          for (let i = 0; i < keys.length; i++) {
+            const tagNumber = keys[i];
+            const groupByWare = _.groupBy(values[i], 'ware');
+            Object.keys(groupByWare).forEach((ware, index) => {
+              const to = ware;
+              const from = tagNumber;
+              const wareValues = Object.keys(groupByWare).map(s => groupByWare[s]);
+              const sum = wareValues[index].map(item => item['count']).reduce((prev, next) => prev + next)
+              flowData.push({ from: from, to: to, value: sum, id: (from + '-' + index + '-0')});
+            });
+          }
+        }
+
+
+        // Surface Treatment
+        for (let i = 0; i < keys.length; i++) {
+          const groupBySurfaceTreatment = _.groupBy(values[i], 'surfaceTreatment');
+
+          Object.keys(groupBySurfaceTreatment).forEach((surface) => {
+            const valuesBySurface = groupBySurfaceTreatment[surface];
+            const surfaceByWareGroup = _.groupBy(valuesBySurface, 'ware');
+            const ware = Object.keys(surfaceByWareGroup);
+            const wareValues = Object.keys(surfaceByWareGroup).map(j => surfaceByWareGroup[j]);
+
+            ware.forEach((w, index) => {
+              const sum = wareValues[index].map(item => item['count']).reduce((prev, next) => prev + next);
+              flowData.push({ from: w, to: surface, value: sum, id: 'tag' + index + '-0'});
+            });
+          });
+        }
       }
+
+
+
 
       // Blackening
       for (let i = 0; i < keys.length; i++) {
@@ -212,7 +329,7 @@ export class DashboardTwoComponent implements OnInit {
           const wareValues = (Object.keys(surfaceByWareGroup).map(j => surfaceByWareGroup[j]));
           ware.forEach((w, index) => {
             const sum = wareValues[index].map(item => item['count']).reduce((prev, next) => prev + next);
-            flowData.push({ from: w, to: blackening, value: sum, id: blackening + '-0'});
+            flowData.push({ from: w, to: blackening, value: sum, id: w + index + '-0'});
           });
         });
       }
@@ -224,11 +341,11 @@ export class DashboardTwoComponent implements OnInit {
 
     });
 
-    this.data.getDirectedTreeData(this.selectedTagNumbers,
+    this.data.getDirectedTreeData(selected,
       this.selectedBroadDates,
       this.selectedDetailedDates,
       this.selectedSite, this.isWeight).subscribe(response => {
-      console.log('FETCHING DIRECTED TREE DATA...', response);
+      // console.log('FETCHING DIRECTED TREE DATA...', response);
       this.partitionedBarData = response.map(ele => {
         return {
           'region': ele.type,
@@ -236,7 +353,7 @@ export class DashboardTwoComponent implements OnInit {
           'sales': ele.count
         }
       });
-      // console.log(this.partitionedBarData);
+      // // console.log(this.partitionedBarData);
 
     });
 

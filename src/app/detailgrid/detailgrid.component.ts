@@ -33,12 +33,12 @@ export class DetailgridComponent implements OnInit {
 
 
     public exportToPDF(grid: GridComponent): void {
-        console.log(grid);
+        // console.log(grid);
         // grid.saveAsPDF();
     }
 
     public exportToExcel(grid: GridComponent): void {
-        console.log(grid);
+        // console.log(grid);
         // grid.saveAsExcel();
       }
 

@@ -1,7 +1,8 @@
-import { Component, OnInit, AfterViewInit, OnDestroy, OnChanges, Input, NgZone, SimpleChanges } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, OnChanges, Input, NgZone, SimpleChanges, ViewChild, ElementRef } from '@angular/core';
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
+am4core.options.queue = true;
 
 @Component({
   selector: 'app-chord-chart',
@@ -12,9 +13,10 @@ export class ChordChartComponent implements OnInit, AfterViewInit, OnDestroy, On
 
   public chart: am4charts.ChordDiagram;
   @Input() inputData: any[];
+  @ViewChild('chartDiv') chartDiv: ElementRef;
 
   constructor(private zone: NgZone) {
-    // console.log('TREEMAP');
+
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -35,7 +37,7 @@ export class ChordChartComponent implements OnInit, AfterViewInit, OnDestroy, On
   buildChart() {
 
     // Create chart instance
-    const chart = am4core.create('chartdiv3', am4charts.ChordDiagram);
+    const chart = am4core.create(this.chartDiv.nativeElement, am4charts.ChordDiagram);
     chart.hiddenState.properties.opacity = 0;
     chart.responsive.enabled = true;
 

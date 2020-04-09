@@ -1,4 +1,4 @@
-import { Component, NgZone, OnInit, AfterViewInit, OnDestroy, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, NgZone, OnInit, AfterViewInit, OnDestroy, Input, OnChanges, SimpleChanges, ElementRef, ViewChild } from '@angular/core';
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
@@ -14,18 +14,18 @@ export class TreeMapComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
 
   public chart: am4charts.TreeMap;
   @Input() inputData: any[];
-
-  constructor(private zone: NgZone) {
-    // console.log('TREEMAP');
+  @ViewChild('chartDiv') chartDiv: ElementRef
+  @Input() customStyle = {
+    'width' : '100%',
+    'height' : '500px'
   }
 
+
+  constructor(private zone: NgZone) { }
+
   ngOnChanges(changes: SimpleChanges) {
-    // console.log(changes.inputData);
     if (changes.inputData.previousValue !== changes.inputData.currentValue) {
-      // console.log(changes.inputData.currentValue);
-      // console.log(this.chart);
-      // this.loadNewData(this.chart, changes.inputData.currentValue);
-      this.buildChart();
+      this.chart.data = this.inputData;
     }
   }
 
@@ -35,26 +35,16 @@ export class TreeMapComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
     });
   }
 
-  setData() {
-    console.log('TREEMAP DATA', this.inputData);
-    if (this.inputData.length === 0) {
-      this.chart.data = [];
-
-    } else {
-      this.chart.data = this.inputData;
-    }
-
-  }
 
   buildChart() {
     // console.log('TREEMAP');
-       this.chart = am4core.create('chartdiv', am4charts.TreeMap);
+       this.chart = am4core.create(this.chartDiv.nativeElement, am4charts.TreeMap);
       this.chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
 
       // console.log(this.inputData);
 
-      // this.chart.data = this.inputData;
-      this.setData();
+      this.chart.data = this.inputData;
+
       this.chart.responsive.enabled = true;
 
       this.chart.colors.step = 2;

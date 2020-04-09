@@ -43,7 +43,7 @@ export class DetailspanelComponent implements OnInit {
     this._fs.LocationFilterValues.subscribe(response=>{
       if(response.length>0){
         this._ds.getDashboardDetailTotals(response).subscribe(res=>{
-          console.log(res);
+          // console.log(res);
           this.totalArtifacts = res.artifact;
           this.totalWeight = res.weight
           this.totalFabrics = res.fabric
@@ -52,7 +52,7 @@ export class DetailspanelComponent implements OnInit {
       } else {
         this._fs.DefaultFilterArray.subscribe(response2=>{
           this._ds.getDashboardDetailTotals(response2).subscribe(res=>{
-            console.log(res);
+            // console.log(res);
             this.totalArtifacts = res.artifact;
             this.totalWeight = res.weight
             this.totalFabrics = res.fabric

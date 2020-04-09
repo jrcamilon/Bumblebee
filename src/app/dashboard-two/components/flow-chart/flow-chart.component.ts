@@ -1,7 +1,11 @@
-import { Component, OnInit, AfterViewInit, OnDestroy, OnChanges, Input, NgZone, SimpleChanges } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, OnChanges, Input, NgZone, SimpleChanges, ElementRef, ViewChild } from '@angular/core';
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
-import am4themes_animated from '@amcharts/amcharts4/themes/animated';
+// import am4themes_animated from '@amcharts/amcharts4/themes/animated';
+am4core.unuseAllThemes();
+// tslint:disable-next-line: no-unused-expression
+am4core.options.minPolylineStep = 5;
+am4core.options.onlyShowOnViewport = true;
 
 @Component({
   selector: 'app-flow-chart',
@@ -13,10 +17,13 @@ export class FlowChartComponent implements OnInit, AfterViewInit, OnDestroy, OnC
   // public chart: am4charts.TreeMap;
   public amChart;
   @Input() inputData: any[];
-
-  constructor(private zone: NgZone) {
-    // console.log('TREEMAP');
+  @Input() customStyle = {
+    'width': '100%',
+    'height': '500px'
   }
+  @ViewChild('chartDiv') chartDiv: ElementRef;
+
+  constructor(private zone: NgZone) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.inputData.previousValue !== changes.inputData.currentValue) {
@@ -41,7 +48,7 @@ export class FlowChartComponent implements OnInit, AfterViewInit, OnDestroy, OnC
 
   buildChart() {
 
-    this.amChart = am4core.create('chartdiv2', am4charts.SankeyDiagram);
+    this.amChart = am4core.create(this.chartDiv.nativeElement, am4charts.SankeyDiagram);
 
     this.amChart.data = this.inputData;
 

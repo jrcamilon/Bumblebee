@@ -6,6 +6,8 @@ import { FormsService } from 'app/processing/services/forms.service';
 import { OfflineDBService } from 'services/OfflineDB/offline-db.service';
 import { ElephantineFormService } from 'services/Elephantine-Form/elephantine-form.service';
 // import { ElephantineFormsService } from '/'
+import * as redsDetailedData from './eleDetailed.json';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-elephantine',
@@ -63,6 +65,8 @@ export class ElephantineComponent implements OnInit {
 
   selectedBroadDate;
   selectedDetailedDate;
+
+  public redsDetailed = redsDetailedData;
 
   isEditingOnlineDB = false;
 ;
@@ -494,6 +498,112 @@ public onDBdelete(record: any) {
     this.recordToDelete = null;
 
   }
+
+  onJsonDetailedProcess() {
+    console.log('processing Red Notebook Data for Detailed');
+    console.log(this.redsDetailed);
+    const grouped = _.groupBy(this.redsDetailed, (ele) => {
+        return ele.tagNumber;
+    });
+
+    // console.log(grouped);
+    Object.keys(grouped).forEach((tagNumber, index) => {
+        // console.log(tagNumber); // tagNumber
+        // console.log(grouped[tagNumber]); // array of records
+
+
+        const processedBy = grouped[tagNumber][0].processedBy;
+        const tagNumberContext = grouped[tagNumber][0].tagNumberContext;
+        const tagNumberGroupNumber = grouped[tagNumber][0].tagNumberGroupNumber;
+        const houseNumber = grouped[tagNumber][0].houseNumber;
+        const roomNumber = grouped[tagNumber][0].roomNumber;
+        const broadDate =  grouped[tagNumber][0].broadDate;
+        const detailedDate = grouped[tagNumber][0].detailedDate;
+        const dueDate = grouped[tagNumber][0].dueDate;
+        const detailedRecrods = grouped[tagNumber].map(ele => {
+            console.log('HERE', ele.diameter);
+            console.log('HERE', ele.percentage);
+            return {
+                bodyOrDiagnostic: ele.bodyOrDiagnostic,
+                objectNumber: ele.objectNumber === '' ? 0 : ele.objectNumber.toString(),
+                houseNumber: ele.houseNumber,
+                roomNumber: ele.roomNumber,
+                sherdDate: ele.sherdDate,
+                rimsTstc: ele.rimsTstc === '' ? 0 : 1,
+                ware: ele.ware,
+                surfaceTreatment: ele.surfaceTreatment,
+                decoration: ele.decoration,
+                blackening: ele.blackening,
+                count: ele.count,
+                weight: ele.weight === '' ? 0 : ele.weight,
+                weightType: ele.weightType === '' ? 'g' : ele.weightType,
+                hasPhoto: ele.hasPhoto === 'yes' ? 1 : 0,
+                diameter: ele.diameter === '' ? 0 : ele.diameter,
+                percentage: ele.percentage === '' ? 0 : ele.percentage,
+                typeFamily: ele.typeFamily,
+                typeNumber: ele.typeNumber,
+                typeVariant: ele.typeVariant,
+                typeDescription: ele.typeDescription,
+                burnishing: ele.burnishing,
+                isDrawn: ele.isDrawn === '' ? 0 : 1,
+                fabricType: ele.fabricType,
+                sheetNumber: ele.sheetNumber,
+                notes: ele.notes
+            }
+        });
+
+        let jsDate;
+        let newDate;
+
+        if (dueDate === '') {
+          newDate = ''
+        } else {
+          jsDate = new Date(dueDate);
+          newDate = jsDate.getFullYear() + '-' + (jsDate.getMonth() + 1) + '-' + jsDate.getDate();
+        }
+
+
+
+        // idForm: this.editFormID,
+        // tagNumber: this.tagNumber,
+        // tagNumberContext: this.tagNumberContext,
+        // tagNumberGroupNumber: this.tagNumberGroupNumber,
+        // houseNumber: this.selectedHouseNumber,
+        // roomNumber: this.selectedRoomNumber,
+        // broadDate: this.selectedBroadDate,
+        // detailedDate: this.selectedDetailedDate,
+        // dueDate: this.dueDate,
+        // processedBy: this.processedBy,
+        // detailedRecords: this.detailedRecords,
+        // type: 'detailed'
+
+        const form = {
+            idForm: undefined,
+            tagNumber: tagNumber,
+            tagNumberContext: tagNumberContext,
+            tagNumberGroupNumber: tagNumberGroupNumber === '' ? 0 : tagNumberGroupNumber.toString(),
+            houseNumber: houseNumber,
+            roomNumber: roomNumber,
+            broadDate: broadDate,
+            detailedDate: detailedDate,
+            dueDate: newDate,
+            processedBy: processedBy,
+            detailedRecords: detailedRecrods,
+            type: 'detailed'
+        }
+
+        console.log('Reds Form #: ', index + 1, form);
+
+        // console.log('writing form');
+
+        this.editService.combineObjects(form);
+        this.formSerivce.clearToRemoveArray();
+        this.clearForm();
+        this.clearSubFormsArray();
+
+    });
+
+}
 
   public dbRecordEdit(record: any) {
     // console.log(record.roomNumber);

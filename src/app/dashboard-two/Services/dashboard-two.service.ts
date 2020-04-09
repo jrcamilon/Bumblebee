@@ -40,6 +40,7 @@ export class DashboardTwoService {
       detailedDates: _detailedDates,
       site: _site
     };
+    // console.log(body);
     return this._http.post('http://localhost:3092/sites/sumOfCount', body, { headers: this.headers })
       .map((response: Response) => {
         const tmpData = response.json();
@@ -71,7 +72,7 @@ export class DashboardTwoService {
       site: _site,
       type: isWeight ? 'weight' : 'count'
     };
-    console.log(body);
+    // console.log(body);
     return this._http.post('http://localhost:3092/sites/distribution/wares', body, { headers: this.headers })
       .map((response: Response) => {
         const tmpData = response.json();

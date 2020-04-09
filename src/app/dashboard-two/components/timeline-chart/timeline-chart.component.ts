@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, OnDestroy, OnChanges, Input, NgZone, SimpleChanges } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, OnChanges, Input, NgZone, SimpleChanges, ViewChild, ElementRef } from '@angular/core';
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
@@ -12,6 +12,7 @@ export class TimelineChartComponent implements OnInit, AfterViewInit, OnDestroy,
 
   public chart: am4charts.RadarChart;
   @Input() inputData: any[];
+  @ViewChild('chartDiv') chartDiv: ElementRef;
 
   constructor(private zone: NgZone) {
     // console.log('TREEMAP');
@@ -76,7 +77,7 @@ export class TimelineChartComponent implements OnInit, AfterViewInit, OnDestroy,
   // const colorSet = new am4core.ColorSet();
 
   //   // Create chart instance
-  //   const chart = am4core.create('chartdiv5', am4charts.RadarChart);
+  //   const chart = am4core.create(this.chartDiv.nativeElement, am4charts.RadarChart);
   //   chart.paddingLeft = 50;
   //   // chart.numberFormatter.numberFormat = "+#.0°C|#.0°C|0.0°C";
   //   chart.hiddenState.properties.opacity = 0;
