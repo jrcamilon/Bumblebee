@@ -33,14 +33,23 @@ export class DashboardTwoService {
       })
   }
 
-  public getSumOfCount(_selectedTagNumbers: any[], _broadDates: any[], _detailedDates: any[], _site: string): Observable<any> {
+  public getSumOfCount(
+    _selectedTagNumbers: any[],
+    _broadDates: any[],
+    _detailedDates: any[],
+    _site: string,
+    _houseNumbers: any[],
+    _roomNumbers: any[],
+      ): Observable<any> {
     const body = {
       tagNumbers: _selectedTagNumbers,
       broadDates: _broadDates,
       detailedDates: _detailedDates,
+      houseNumbers: _houseNumbers,
+      roomNumbers: _roomNumbers,
       site: _site
     };
-    // console.log(body);
+  
     return this._http.post('http://localhost:3092/sites/sumOfCount', body, { headers: this.headers })
       .map((response: Response) => {
         const tmpData = response.json();
@@ -48,11 +57,20 @@ export class DashboardTwoService {
       })
   }
 
-  public getSumOfWeight(_selectedTagNumbers: any[], _broadDates: any[], _detailedDates: any[], _site: string): Observable<any> {
+  public getSumOfWeight(
+    _selectedTagNumbers: any[],
+    _broadDates: any[],
+    _detailedDates: any[],
+    _site: string,
+    _houseNumbers: any[],
+    _roomNumbers: any[],
+    ): Observable<any> {
     const body = {
       tagNumbers: _selectedTagNumbers,
       broadDates: _broadDates,
       detailedDates: _detailedDates,
+      houseNumbers: _houseNumbers,
+      roomNumbers: _roomNumbers,
       site: _site
     };
     return this._http.post('http://localhost:3092/sites/sumOfWeight', body, { headers: this.headers })
@@ -63,16 +81,23 @@ export class DashboardTwoService {
   }
 
 
-  public getWareDistribution(_selectedTagNumbers: any[],
-     _site: string, _broadDates: any[], _detailedDates: any[], isWeight: boolean): Observable<any> {
+  public getWareDistribution(
+    _selectedTagNumbers: any[],
+    _site: string,
+    _broadDates: any[],
+    _detailedDates: any[],
+    _houseNumbers: any[],
+    _roomNumbers: any[],
+    isWeight: boolean): Observable<any> {
     const body = {
       tagNumbers: _selectedTagNumbers,
       broadDates: _broadDates,
       detailedDates: _detailedDates,
+      houseNumbers: _houseNumbers,
+      roomNumbers: _roomNumbers,
       site: _site,
       type: isWeight ? 'weight' : 'count'
     };
-    // console.log(body);
     return this._http.post('http://localhost:3092/sites/distribution/wares', body, { headers: this.headers })
       .map((response: Response) => {
         const tmpData = response.json();
@@ -80,14 +105,19 @@ export class DashboardTwoService {
       })
   }
 
-  public getFlowChartData(_selectedTagNumbers: any[], 
+  public getFlowChartData(_selectedTagNumbers: any[],
     _broadDates: any[],
     _detailedDates: any[],
-    _site: string, isWeight: boolean): Observable<any> {
+    _site: string,
+    _houseNumbers: any[],
+    _roomNumbers: any[],
+    isWeight: boolean): Observable<any> {
     const body = {
       tagNumbers: _selectedTagNumbers,
       broadDates: _broadDates,
       detailedDates: _detailedDates,
+      houseNumbers: _houseNumbers,
+      roomNumbers: _roomNumbers,
       site: _site,
       type: isWeight ? 'weight' : 'count'
     };
@@ -98,15 +128,24 @@ export class DashboardTwoService {
       })
   }
 
-  public getDirectedTreeData(_selectedTagNumbers: any[],
-    _broadDates: any[], _detailedDates: any[], _site: string, isWeight: boolean): Observable<any> {
+  public getDirectedTreeData(
+    _selectedTagNumbers: any[],
+    _broadDates: any[],
+     _detailedDates: any[],
+     _site: string,
+     _houseNumbers: any[],
+     _roomNumbers: any[],
+     isWeight: boolean): Observable<any> {
     const body = {
       tagNumbers: _selectedTagNumbers,
       broadDates: _broadDates,
       detailedDates: _detailedDates,
+      houseNumbers: _houseNumbers,
+      roomNumbers: _roomNumbers,
       site: _site,
       type: isWeight ? 'weight' : 'count'
     };
+    console.log('getDirectedTreeData', body);
     return this._http.post('http://localhost:3092/sites/treedata/all', body, { headers: this.headers })
       .map((response: Response) => {
         const tmpData = response.json();

@@ -41,6 +41,20 @@
             <kendo-multiselect [data]="detailedDateOptions" [(ngModel)]="selectedDetailedDates"></kendo-multiselect>
           </div>
 
+          <span *ngIf="selectedSite === 'Elephantine'">
+            <!-- MultiSlect -->
+            <div style="margin-top: 6px;">
+              <p>House Number</p>
+              <kendo-multiselect [data]="houseNumbersOptions" [(ngModel)]="selectedHouseNumbers"></kendo-multiselect>
+            </div>
+
+            <!-- MultiSlect -->
+            <div style="margin-top: 6px;">
+              <p>Room Number</p>
+              <kendo-multiselect [data]="roomNumberOptions" [(ngModel)]="selectedRoomNumbers"></kendo-multiselect>
+            </div>
+          </span>
+
 
         </mat-card-content>
         <mat-card-actions>
@@ -88,13 +102,15 @@
                 <mat-card-title>Ware Distribution</mat-card-title>
                 <mat-card-subtitle>Ware distribution by {{isWeight ? ' Weight in (g) grams' : ' Count '}}  </mat-card-subtitle>
               </div>
+              <button mat-icon-button (click)="onDialogOpen('tree-map')"><img style="height: 20px;" src="assets/icons/export_excel.svg"></button>
               <button mat-icon-button (click)="onDialogOpen('tree-map')"><img style="height: 20px;" src="assets/icons/maximize.svg"></button>
           </div>
         
         </mat-card-header>
         <mat-card-content>
           <div style="height: 500px;" *ngIf="treeMapData === undefined"><mat-spinner style="margin:0 auto;"></mat-spinner></div>
-          <app-tree-map [inputData]="treeMapData" *ngIf="treeMapData"></app-tree-map>
+          <app-tree-map [inputData]="treeMapData" *ngIf="treeMapData && !isGreaterThanTen"></app-tree-map>
+          <app-radar-chart [inputData]="radarData" *ngIf="radarData && isGreaterThanTen"></app-radar-chart>
         </mat-card-content>
       </mat-card>
     </div>
@@ -112,7 +128,8 @@
                 <mat-card-title>Tag Numbers / Ware / SurfaceTreatment / Blackening</mat-card-title>
                 <mat-card-subtitle>Raw data : ware, surface treatment, blackening. Values by {{isWeight ? 'Weight (g) grams' : 'Count'}} </mat-card-subtitle>
               </div>
-              <button mat-icon-button (click)="onDialogOpen('partitioned-bar')"><img style="height: 20px;" src="assets/icons/maximize.svg"></button>
+              <button mat-icon-button (click)="onDialogOpen('tree-map')"><img style="height: 20px;" src="assets/icons/export_excel.svg"></button>
+              <button mat-icon-button (click)="onDialogOpen('tree-map')"><img style="height: 20px;" src="assets/icons/maximize.svg"></button>
           </div>
         
         </mat-card-header>
@@ -133,7 +150,8 @@
                 <mat-card-title>Tag Numbers / Ware / SurfaceTreatment / Blackening</mat-card-title>
                 <mat-card-subtitle>Relationships between Ware, Surface Treatment and Blackening. Values by {{isWeight ? 'Weight (g) grams' : 'Count'}} </mat-card-subtitle>
               </div>
-              <button mat-icon-button (click)="onDialogOpen('flow-chart')"><img style="height: 20px;" src="assets/icons/maximize.svg"></button>
+              <button mat-icon-button (click)="onDialogOpen('tree-map')"><img style="height: 20px;" src="assets/icons/export_excel.svg"></button>
+              <button mat-icon-button (click)="onDialogOpen('tree-map')"><img style="height: 20px;" src="assets/icons/maximize.svg"></button>
           </div>
         
         </mat-card-header>

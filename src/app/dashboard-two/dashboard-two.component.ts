@@ -32,6 +32,7 @@ export class DashboardTwoComponent implements OnInit {
   treeMapData;
   flowChartData;
   partitionedBarData;
+  radarData;
 
   dialogOpen = false;
   weightSymbol = 'g';
@@ -52,10 +53,17 @@ export class DashboardTwoComponent implements OnInit {
     {type: 'chord-chhart', title: 'Chord Chart', status: 'inactive'},
   ];
 
+  isGreaterThanTen = false;
+
   dialogTitle = '';
   treeMapVisible = false;
   flowChartVisible = false;
   partitionedBarVisible = false;
+
+  houseNumbersOptions = [];
+  roomNumberOptions = [];
+  selectedHouseNumbers = [];
+  selectedRoomNumbers = [];
 
   constructor(public data: DashboardTwoService, public elephantineService: ElephantineFormService) {
 
@@ -69,6 +77,12 @@ export class DashboardTwoComponent implements OnInit {
     this.detailedDateOptions = this.elephantineService.getDynasticDate().map(ele => {
       return ele.value;
     });
+    this.houseNumbersOptions = this.elephantineService.getHouseNumber().map(ele => {
+      return ele.value;
+    })
+    this.roomNumberOptions = this.elephantineService.getRoomNumber().map(ele => {
+      return ele.value;
+    })
 
 
    }
@@ -115,23 +129,16 @@ export class DashboardTwoComponent implements OnInit {
 
 
   onSubmitSelection() {
-    console.log('submitted');
-    console.log(this.selectedTagNumbers);
-    // // console.log('isWeight', this.isWeight);
-    // // console.log('Submit clicked...');
-    // if (this.selectedSite !== null && this.selectedTagNumbers.length !== 0) {
 
       if (this.selectedSite !== null && this.selectedTagNumbers.length !== 0) {
-      // // console.log('Selected Site: ', this.selectedSite);
-      // // console.log('Selected Tag Numbers: ', this.selectedTagNumbers);
-      this.loadDashboardData();
+        this.loadDashboardData();
       }
   }
 
   onCountOrWeightSelect(e: any) {  this.isWeight = e.checked; }
 
 
-  onSiteSelection(e?: any) {
+  onSiteSelection(e: any) {
     // // console.log('changed');
     this.tagNumbers = [];
     this.setSiteSelection();
@@ -181,11 +188,11 @@ export class DashboardTwoComponent implements OnInit {
     }
     this.selectedBroadDates = [];
     this.selectedDetailedDates = [];
-    this.loadDashboardData();
+    // this.loadDashboardData();
   }
 
   loadDashboardData() {
-
+    console.warn('LOADING DASHBOARD DATA');
     let selected = this.selectedTagNumbers;
     let key = 'tagNumber';
     if (this.selectedTagNumbers.includes('ALL')) {
@@ -194,19 +201,29 @@ export class DashboardTwoComponent implements OnInit {
     }
 
     selected = selected.filter((ele) => { return ele !== 'ALL'});
+    this.isGreaterThanTen = selected.length > 10;
 
-    console.log('loading dashboard data', selected);
-
-
-    this.data.getSumOfCount(selected,
-      this.selectedBroadDates, this.selectedDetailedDates, this.selectedSite).subscribe(count => {
-      // console.log('FETCHING SHERD COUNT...');
-      this.sumOfCount = count.sum_of_sherds;
+    this.data.getSumOfCount(
+      selected,
+      this.selectedBroadDates,
+      this.selectedDetailedDates,
+      this.selectedSite,
+      this.selectedHouseNumbers,
+      this.selectedRoomNumbers,
+      ).subscribe(count => {
+      console.log('getSumOfCount...');
+      this.sumOfCount = count.response.sum_of_sherds;
     });
 
-    this.data.getSumOfWeight(selected,
-      this.selectedBroadDates, this.selectedDetailedDates, this.selectedSite).subscribe(weightRes => {
-      // console.log('FETCHING SUM OF WEIGHT...');
+    this.data.getSumOfWeight(
+      selected,
+      this.selectedBroadDates,
+      this.selectedDetailedDates,
+      this.selectedSite,
+      this.selectedHouseNumbers,
+      this.selectedRoomNumbers
+      ).subscribe(weightRes => {
+      console.log('getSumOfWeight...');
       this.sumOfWeight = weightRes.sum_of_weight;
     });
 
@@ -215,14 +232,39 @@ export class DashboardTwoComponent implements OnInit {
       this.selectedSite,
       this.selectedBroadDates,
       this.selectedDetailedDates,
+      this.selectedHouseNumbers,
+      this.selectedRoomNumbers,
       this.isWeight).subscribe(res => {
-      console.log('FETCHING WARE DISTRIBUTION...', res.response);
+      console.log('getWareDistribution...');
 
+      const groupedByFabricType = _.groupBy(res.response, 'fabricType');
+      const ftKeys = Object.keys(groupedByFabricType);
+      const ftValues = Object.keys(groupedByFabricType).map(i => groupedByFabricType[i]);
+      const radarData = [];
+
+
+      // test
+      for (let j = 0; j < ftKeys.length; j++) {
+        const sum = _.sumBy(ftValues[j], (x) => {return x.count});
+        const fullValue = _.sumBy(res.response, (e) => { return e.count})
+        const test = sum / fullValue;
+
+        radarData.push({
+          category: ftKeys[j],
+          value: Math.round(test * 100),
+          full: 100
+        })
+      }
+
+      this.radarData = radarData;
 
       const grouped = _.groupBy(res.response, 'tagNumber');
       const keys = Object.keys(grouped);
       const values = Object.keys(grouped).map(i => grouped[i]);
       const treeMapData = [];
+
+
+
 
       for (let i = 0; i < keys.length; i++) {
         treeMapData.push(
@@ -240,8 +282,10 @@ export class DashboardTwoComponent implements OnInit {
       this.selectedBroadDates,
       this.selectedDetailedDates,
       this.selectedSite,
+      this.selectedHouseNumbers,
+      this.selectedRoomNumbers,
       this.isWeight).subscribe(flowRes => {
-      // console.log('FETCHING FLOW CHART DATA...', flowRes.response);
+      console.log('getFlowChartData...');
 
 
       const grouped = _.groupBy(flowRes.response, key);
@@ -249,7 +293,7 @@ export class DashboardTwoComponent implements OnInit {
       const values = Object.keys(grouped).map(i => grouped[i]);
       const flowData = [];
 
-      console.log('FETCHING FLOW CHART DATA...', grouped);
+      // console.log('FETCHING FLOW CHART DATA...', grouped);
 
       // REDO
       if (key === 'ware') {
@@ -335,25 +379,30 @@ export class DashboardTwoComponent implements OnInit {
       }
 
 
-      console.log('getFlowChartData', (flowData));
+      // console.log('getFlowChartData', (flowData));
 
       this.flowChartData = flowData;
 
     });
-
-    this.data.getDirectedTreeData(selected,
+    console.log('getDirectedTree');
+    this.data.getDirectedTreeData(
+      selected,
       this.selectedBroadDates,
       this.selectedDetailedDates,
-      this.selectedSite, this.isWeight).subscribe(response => {
-      // console.log('FETCHING DIRECTED TREE DATA...', response);
-      this.partitionedBarData = response.map(ele => {
+      this.selectedSite,
+      this.selectedHouseNumbers,
+      this.selectedRoomNumbers,
+      this.isWeight).subscribe(response => {
+      console.log('getDirectedTreeData', response)
+
+      this.partitionedBarData = response.data.map(ele => {
         return {
           'region': ele.type,
           'state': ele.category,
           'sales': ele.count
         }
       });
-      // // console.log(this.partitionedBarData);
+
 
     });
 

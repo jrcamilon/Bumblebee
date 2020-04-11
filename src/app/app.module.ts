@@ -19,7 +19,6 @@ import { InputsModule } from '@progress/kendo-angular-inputs';
 
 
 
-
 @NgModule({
    imports: [
       BrowserAnimationsModule,
@@ -37,7 +36,7 @@ import { InputsModule } from '@progress/kendo-angular-inputs';
    ],
    declarations: [
       AppComponent,
-      AdminLayoutComponent
+      AdminLayoutComponent,
       
    ],
    providers: [],

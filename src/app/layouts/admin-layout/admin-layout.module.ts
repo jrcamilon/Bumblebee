@@ -60,6 +60,10 @@ import { FlowChartComponent } from '../../dashboard-two/components/flow-chart/fl
 import { ChordChartComponent } from '../../dashboard-two/components/chord-chart/chord-chart.component';
 import { PartitionedBarChartComponent } from '../../dashboard-two/components/partitioned-bar-chart/partitioned-bar-chart.component';
 import { TimelineChartComponent } from '../../dashboard-two/components/timeline-chart/timeline-chart.component';
+import { RadarChartComponent } from '../../dashboard-two/components/radar-chart/radar-chart.component';
+
+
+
 
 import { PopupAnchorDirective } from '../../processing/components/khpp-form/popupanchor.directive';
 import 'hammerjs';
@@ -213,6 +217,7 @@ import { DashboardTwoComponent } from 'app/dashboard-two/dashboard-two.component
     DetailedEleProcessingComponent,
     TreeMapComponent,
     FlowChartComponent,
+    RadarChartComponent,
     ChordChartComponent,
     PartitionedBarChartComponent,
     TimelineChartComponent
