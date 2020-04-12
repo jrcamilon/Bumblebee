@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Http,Response } from '@angular/http';
+import { environment } from 'environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class TypesService {
 public getTypeVariantsLocations(): Observable<any> {
 
 
-  return this._http.get('http://localhost:3092/typevariants')
+  return this._http.get(environment.API.domain + ':' + environment.API.port + '/typevariants')
   .map((response: Response) => {
     const tmpData = response.json();
     console.log(tmpData);

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { Http, Response, Headers } from '@angular/http';
 import 'rxjs/Rx';
+import { environment } from 'environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +34,7 @@ export class FormsService {
     const body = {detailed: _detailed, basic: _basic};
 
     const headers = new Headers({'Content-Type': 'application/json'});
-    return this._http.post('http://localhost:3092/khpp/excel/export', body, {headers: headers})
+    return this._http.post(environment.API.domain + ':' + environment.API.port + '/khpp/excel/export', body, {headers: headers})
     .map((response: Response) => {
       const tmpData = response.json();
       return tmpData;
@@ -59,7 +60,7 @@ export class FormsService {
   // public writeElephantineToDB (_form: any): Observable<any> {
   //   const body = {form: _form};
   //   const headers = new Headers({'Content-Type': 'application/json'});
-  //   return this._http.post('http://localhost:3092/write/elephant', body, {headers: headers})
+  //   return this._http.post(environment.API.domain + ':' + environment.API.port + '/write/elephant', body, {headers: headers})
   //   .map((response: Response) => {
   //     const tmpData = response.json();
   //     return tmpData;
@@ -95,7 +96,7 @@ export class FormsService {
     }
 
     const headers = new Headers({'Content-Type': 'application/json'});
-    return this._http.post('http://localhost:3092/update/khpp', body, {headers: headers})
+    return this._http.post(environment.API.domain + ':' + environment.API.port + '/update/khpp', body, {headers: headers})
     .map((response: Response) => {
       const tmpData = response.json();
       return tmpData;
@@ -119,7 +120,7 @@ export class FormsService {
 
     console.log(body);
     const headers = new Headers({'Content-Type': 'application/json'});
-    return this._http.post('http://localhost:3092/write/khpp', body, {headers: headers})
+    return this._http.post(environment.API.domain + ':' + environment.API.port + '/write/khpp', body, {headers: headers})
     .map((response: Response) => {
       const tmpData = response.json();
       return tmpData;
@@ -129,7 +130,7 @@ export class FormsService {
   // KHPP
   public readFromKHPP (): Observable<any> {
     const headers = new Headers({'Content-Type': 'application/json'});
-    return this._http.get('http://localhost:3092/read/khpp', {headers: headers})
+    return this._http.get(environment.API.domain + ':' + environment.API.port + '/read/khpp', {headers: headers})
     .map((response: Response) => {
       const tmpData = response.json();
       return tmpData;
@@ -142,7 +143,7 @@ export class FormsService {
       formId: formId
     }
     const headers = new Headers({'Content-Type': 'application/json'});
-    return this._http.post('http://localhost:3092/delete/khpp', body, {headers: headers})
+    return this._http.post(environment.API.domain + ':' + environment.API.port + '/delete/khpp', body, {headers: headers})
     .map((response: Response) => {
       const tmpData = response.json();
       return tmpData;
@@ -156,7 +157,7 @@ export class FormsService {
       type: type
     }
     const headers = new Headers({'Content-Type': 'application/json'});
-    return this._http.post('http://localhost:3092/edit/khpp', body, {headers: headers})
+    return this._http.post(environment.API.domain + ':' + environment.API.port + '/edit/khpp', body, {headers: headers})
     .map((response: Response) => {
       const tmpData = response.json();
       return tmpData;
@@ -176,7 +177,7 @@ export class FormsService {
     const body = {detailed: _detailed, basic: _basic};
 
     const headers = new Headers({'Content-Type': 'application/json'});
-    return this._http.post('http://localhost:3092/khpp/excel/export', body, {headers: headers})
+    return this._http.post(environment.API.domain + ':' + environment.API.port + '/khpp/excel/export', body, {headers: headers})
     .map((response: Response) => {
       const tmpData = response.json();
       return tmpData;
@@ -202,7 +203,7 @@ export class FormsService {
   // public writeElephantineToDB_ (_form: any): Observable<any> {
   //   const body = {form: _form};
   //   const headers = new Headers({'Content-Type': 'application/json'});
-  //   return this._http.post('http://localhost:3092/write/elephant', body, {headers: headers})
+  //   return this._http.post(environment.API.domain + ':' + environment.API.port + '/write/elephant', body, {headers: headers})
   //   .map((response: Response) => {
   //     const tmpData = response.json();
   //     return tmpData;
@@ -242,7 +243,7 @@ export class FormsService {
     }
 
     const headers = new Headers({'Content-Type': 'application/json'});
-    return this._http.post('http://localhost:3092/update/elephantine', body, {headers: headers})
+    return this._http.post(environment.API.domain + ':' + environment.API.port + '/update/elephantine', body, {headers: headers})
     .map((response: Response) => {
       const tmpData = response.json();
       return tmpData;
@@ -270,7 +271,7 @@ export class FormsService {
 
     console.log(body);
     const headers = new Headers({'Content-Type': 'application/json'});
-    return this._http.post('http://localhost:3092/write/elephantine', body, {headers: headers})
+    return this._http.post(environment.API.domain + ':' + environment.API.port + '/write/elephantine', body, {headers: headers})
     .map((response: Response) => {
       const tmpData = response.json();
       return tmpData;
@@ -280,7 +281,7 @@ export class FormsService {
   // Elephantine
   public readFromElephantine(): Observable<any> {
     const headers = new Headers({'Content-Type': 'application/json'});
-    return this._http.get('http://localhost:3092/read/elephantine', {headers: headers})
+    return this._http.get(environment.API.domain + ':' + environment.API.port + '/read/elephantine', {headers: headers})
     .map((response: Response) => {
       const tmpData = response.json();
       return tmpData;
@@ -293,7 +294,7 @@ export class FormsService {
       formId: formId
     }
     const headers = new Headers({'Content-Type': 'application/json'});
-    return this._http.post('http://localhost:3092/delete/elephantine', body, {headers: headers})
+    return this._http.post(environment.API.domain + ':' + environment.API.port + '/delete/elephantine', body, {headers: headers})
     .map((response: Response) => {
       const tmpData = response.json();
       return tmpData;
@@ -307,7 +308,7 @@ export class FormsService {
       type: type
     }
     const headers = new Headers({'Content-Type': 'application/json'});
-    return this._http.post('http://localhost:3092/edit/elephantine', body, {headers: headers})
+    return this._http.post(environment.API.domain + ':' + environment.API.port + '/edit/elephantine', body, {headers: headers})
     .map((response: Response) => {
       const tmpData = response.json();
       return tmpData;
