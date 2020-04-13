@@ -14,7 +14,7 @@ export class DataService {
   public redNotebookData = new Subject<any>();
   public selectedData = new Subject<any>();
   public headers = new Headers({ 'Content-Type': 'application/json' });
-  public env = 'localhost';
+  public env = '70.162.253.127';
 
 
   constructor(private _http: Http) { }

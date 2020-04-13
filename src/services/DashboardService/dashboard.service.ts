@@ -10,7 +10,7 @@ export class DashboardService {
   public headers = new Headers({ 'Content-Type': 'application/json' });
   private http: String = 'http://';
   private port: String = ':3092';
-  private domain: String = 'localhost';
+  private domain: String = '70.162.253.127';
 
   constructor(private _http: Http) { }
 
