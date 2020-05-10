@@ -4,8 +4,8 @@ import * as am4charts from '@amcharts/amcharts4/charts';
 // import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 am4core.unuseAllThemes();
 // tslint:disable-next-line: no-unused-expression
-am4core.options.minPolylineStep = 5;
-am4core.options.onlyShowOnViewport = true;
+// am4core.options.minPolylineStep = 5;
+// am4core.options.onlyShowOnViewport = true;
 
 @Component({
   selector: 'app-flow-chart',
@@ -23,16 +23,24 @@ export class FlowChartComponent implements OnInit, AfterViewInit, OnDestroy, OnC
   }
   @ViewChild('chartDiv') chartDiv: ElementRef;
 
+  public dataHere;
+
   constructor(private zone: NgZone) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.inputData.previousValue !== changes.inputData.currentValue) {
       this.zone.runOutsideAngular(() => {
         if (this.amChart) {
-          this.amChart.dispose();
+          // this.amChart.dispose();
+          if (this.inputData.length === 0) {
+            this.amChart.dispose();
+          } else {
+            // this.amChart.data = this.inputData;
+            this.buildChart();
+          }
         }
       });
-      this.buildChart();
+      // this.buildChart();
     }
   }
 
@@ -52,8 +60,9 @@ export class FlowChartComponent implements OnInit, AfterViewInit, OnDestroy, OnC
 
     this.amChart.data = this.inputData;
 
-    this.amChart.responsive.enabled = true;
-
+    // this.amChart.responsive.enabled = true;
+    // series.showOnInit = false;
+    this.amChart.showOnInit = false;
     // Configure data fields
     this.amChart.dataFields.fromName = 'from';
     this.amChart.dataFields.toName = 'to';
@@ -75,6 +84,17 @@ export class FlowChartComponent implements OnInit, AfterViewInit, OnDestroy, OnC
     linkTemplate.tension = 2;
     linkTemplate.controlPointDistance = 0.1;
     linkTemplate.fill = am4core.color('#A8C686');
+
+    linkTemplate.events.on('over', function (event){
+      const node = event.target;
+
+      // console.log('event', event);
+      // console.log('event', node.dataItem.fromName);
+      // console.log('event', node.dataItem.toName);
+      // node.outgoingDataItems.each(function (dataItem) {
+      //   dataItem.link.isHover = true;
+      // });
+    })
   }
 
 

@@ -1,0 +1,26 @@
+<img src="https://images.unsplash.com/photo-1557217620-07784062e4b0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1567&q=80" alt="" class="img-bk">
+  <div class="card">
+    <div class="side form">
+      <div class="img-logo">
+        <img alt="You System Name" src="https://www.infosol.com/wp-content/uploads/2015/04/InfoSol-Seeing-Beyond-Logo-190x49.png">
+      </div>
+      
+      <label>E-mail</label>
+      <input type="text" [(ngModel)]="email">
+      
+      <label>Password</label>
+      <input type="password" [(ngModel)]="password">
+      
+      <button class="btn-submit" (click)="onLoginClick()">
+        Login
+      </button>
+      
+      <span class="text-muted">
+        New user? <a href="#">Click Here!</a>
+      </span>
+      
+    </div>
+    <div class="side picture">
+      <img src="https://images.unsplash.com/photo-1557217620-07784062e4b0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1567&q=80" alt="">
+    </div>
+  </div>

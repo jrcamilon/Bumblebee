@@ -102,15 +102,15 @@
                 <mat-card-title>Ware Distribution</mat-card-title>
                 <mat-card-subtitle>Ware distribution by {{isWeight ? ' Weight in (g) grams' : ' Count '}}  </mat-card-subtitle>
               </div>
-              <button mat-icon-button (click)="onDialogOpen('tree-map')"><img style="height: 20px;" src="assets/icons/export_excel.svg"></button>
-              <button mat-icon-button (click)="onDialogOpen('tree-map')"><img style="height: 20px;" src="assets/icons/maximize.svg"></button>
+              <button mat-icon-button ><img style="height: 20px;" src="assets/icons/export_excel.svg"></button>
+              <button mat-icon-button ><img style="height: 20px;" src="assets/icons/maximize.svg"></button>
           </div>
         
         </mat-card-header>
         <mat-card-content>
           <div style="height: 500px;" *ngIf="treeMapData === undefined"><mat-spinner style="margin:0 auto;"></mat-spinner></div>
-          <app-tree-map [inputData]="treeMapData" *ngIf="treeMapData && !isGreaterThanTen"></app-tree-map>
-          <app-radar-chart [inputData]="radarData" *ngIf="radarData && isGreaterThanTen"></app-radar-chart>
+          <app-tree-map [inputData]="treeMapData" *ngIf="treeMapData && !isGreaterThanTen && treeMapData.length !== 0"></app-tree-map>
+          <app-radar-chart [inputData]="radarData" *ngIf="radarData && isGreaterThanTen && radarData.length !== 0"></app-radar-chart>
         </mat-card-content>
       </mat-card>
     </div>
@@ -128,8 +128,8 @@
                 <mat-card-title>Tag Numbers / Ware / SurfaceTreatment / Blackening</mat-card-title>
                 <mat-card-subtitle>Raw data : ware, surface treatment, blackening. Values by {{isWeight ? 'Weight (g) grams' : 'Count'}} </mat-card-subtitle>
               </div>
-              <button mat-icon-button (click)="onDialogOpen('tree-map')"><img style="height: 20px;" src="assets/icons/export_excel.svg"></button>
-              <button mat-icon-button (click)="onDialogOpen('tree-map')"><img style="height: 20px;" src="assets/icons/maximize.svg"></button>
+              <button mat-icon-button ><img style="height: 20px;" src="assets/icons/export_excel.svg"></button>
+              <button mat-icon-button ><img style="height: 20px;" src="assets/icons/maximize.svg"></button>
           </div>
         
         </mat-card-header>
@@ -150,8 +150,8 @@
                 <mat-card-title>Tag Numbers / Ware / SurfaceTreatment / Blackening</mat-card-title>
                 <mat-card-subtitle>Relationships between Ware, Surface Treatment and Blackening. Values by {{isWeight ? 'Weight (g) grams' : 'Count'}} </mat-card-subtitle>
               </div>
-              <button mat-icon-button (click)="onDialogOpen('tree-map')"><img style="height: 20px;" src="assets/icons/export_excel.svg"></button>
-              <button mat-icon-button (click)="onDialogOpen('tree-map')"><img style="height: 20px;" src="assets/icons/maximize.svg"></button>
+              <button mat-icon-button ><img style="height: 20px;" src="assets/icons/export_excel.svg"></button>
+              <button mat-icon-button (click)="onDialogOpen('flow-chart')"><img style="height: 20px;" src="assets/icons/maximize.svg"></button>
           </div>
         
         </mat-card-header>
@@ -183,13 +183,13 @@
 
   </div>
 
-  <!-- <kendo-dialog [title]="dialogTitle" *ngIf="dialogOpen" (close)="close()" [height]="800" [width]="800">
+  <kendo-dialog [title]="dialogTitle" *ngIf="dialogOpen" (close)="close()" [height]="1024" [width]="1080">
 
-    <app-tree-map [inputData]="treeMapData" [customStyle]="customFullStyle" *ngIf="treeMapVisible"></app-tree-map>
-    <app-partitioned-bar-chart [inputData]="partitionedBarData" [customStyle]="customFullStyle" *ngIf="partitionedBarVisible"></app-partitioned-bar-chart>
+    <!-- <app-tree-map [inputData]="treeMapData" [customStyle]="customFullStyle" *ngIf="treeMapVisible"></app-tree-map>
+    <app-partitioned-bar-chart [inputData]="partitionedBarData" [customStyle]="customFullStyle" *ngIf="partitionedBarVisible"></app-partitioned-bar-chart> -->
     <app-flow-chart [inputData]="flowChartData" [customStyle]="customFullStyle" *ngIf="flowChartVisible"></app-flow-chart>
     
-  </kendo-dialog> -->
+  </kendo-dialog>
 
   <div class="row">
     <div style="height: 100px;"></div>

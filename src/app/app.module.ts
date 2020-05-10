@@ -15,6 +15,7 @@ import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { GridModule } from '@progress/kendo-angular-grid';
 import { InputsModule } from '@progress/kendo-angular-inputs';
+import { LoginPageComponent } from './login-page/login-page.component';
 
 
 
@@ -37,6 +38,7 @@ import { InputsModule } from '@progress/kendo-angular-inputs';
    declarations: [
       AppComponent,
       AdminLayoutComponent,
+      LoginPageComponent,
       
    ],
    providers: [],

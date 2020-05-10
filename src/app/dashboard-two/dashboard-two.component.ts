@@ -130,7 +130,7 @@ export class DashboardTwoComponent implements OnInit {
 
   onSubmitSelection() {
 
-      if (this.selectedSite !== null && this.selectedTagNumbers.length !== 0) {
+      if (this.selectedSite !== null && this.selectedTagNumbers.length !== 0 && this.selectedTagNumbers.length <= 15) {
         this.loadDashboardData();
       }
   }
@@ -141,6 +141,7 @@ export class DashboardTwoComponent implements OnInit {
   onSiteSelection(e: any) {
     // // console.log('changed');
     this.tagNumbers = [];
+    this.selectedTagNumbers = [];
     this.setSiteSelection();
   }
 
@@ -188,6 +189,8 @@ export class DashboardTwoComponent implements OnInit {
     }
     this.selectedBroadDates = [];
     this.selectedDetailedDates = [];
+    this.selectedHouseNumbers = [];
+    this.selectedRoomNumbers = [];
     // this.loadDashboardData();
   }
 
@@ -211,7 +214,7 @@ export class DashboardTwoComponent implements OnInit {
       this.selectedHouseNumbers,
       this.selectedRoomNumbers,
       ).subscribe(count => {
-      console.log('getSumOfCount...');
+      // console.log('getSumOfCount...');
       this.sumOfCount = count.response.sum_of_sherds;
     });
 
@@ -223,10 +226,10 @@ export class DashboardTwoComponent implements OnInit {
       this.selectedHouseNumbers,
       this.selectedRoomNumbers
       ).subscribe(weightRes => {
-      console.log('getSumOfWeight...');
+      // console.log('getSumOfWeight...');
       this.sumOfWeight = weightRes.sum_of_weight;
     });
-
+    console.log('getWareDistribution...');
     this.data.getWareDistribution(
       selected,
       this.selectedSite,
@@ -235,7 +238,7 @@ export class DashboardTwoComponent implements OnInit {
       this.selectedHouseNumbers,
       this.selectedRoomNumbers,
       this.isWeight).subscribe(res => {
-      console.log('getWareDistribution...');
+      console.log('getWareDistribution...', res);
 
       const groupedByFabricType = _.groupBy(res.response, 'fabricType');
       const ftKeys = Object.keys(groupedByFabricType);
@@ -273,6 +276,8 @@ export class DashboardTwoComponent implements OnInit {
           }
         );
       }
+      // console.log('treemapdata', res.response);
+      // console.log('treemapdata', treeMapData);
       this.treeMapData = treeMapData;
 
     });
@@ -285,7 +290,7 @@ export class DashboardTwoComponent implements OnInit {
       this.selectedHouseNumbers,
       this.selectedRoomNumbers,
       this.isWeight).subscribe(flowRes => {
-      console.log('getFlowChartData...');
+      // console.log('getFlowChartData...');
 
 
       const grouped = _.groupBy(flowRes.response, key);
@@ -378,13 +383,13 @@ export class DashboardTwoComponent implements OnInit {
         });
       }
 
-
+      // console.log('getFlowChartData', (flowRes.response));
       // console.log('getFlowChartData', (flowData));
 
       this.flowChartData = flowData;
 
     });
-    console.log('getDirectedTree');
+    // console.log('getDirectedTree');
     this.data.getDirectedTreeData(
       selected,
       this.selectedBroadDates,
@@ -393,7 +398,7 @@ export class DashboardTwoComponent implements OnInit {
       this.selectedHouseNumbers,
       this.selectedRoomNumbers,
       this.isWeight).subscribe(response => {
-      console.log('getDirectedTreeData', response)
+      // console.log('getDirectedTreeData', response)
 
       this.partitionedBarData = response.data.map(ele => {
         return {
