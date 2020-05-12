@@ -62,7 +62,7 @@ import { PartitionedBarChartComponent } from '../../dashboard-two/components/par
 import { TimelineChartComponent } from '../../dashboard-two/components/timeline-chart/timeline-chart.component';
 import { RadarChartComponent } from '../../dashboard-two/components/radar-chart/radar-chart.component';
 
-
+import { DashboardThreeComponent } from '../../dashboard-three/dashboard-three.component';
 
 
 import { PopupAnchorDirective } from '../../processing/components/khpp-form/popupanchor.directive';
@@ -114,7 +114,13 @@ import { FabricComparisonChartComponent } from 'app/dashboard/visualizations/Fab
 import { DashFilterBarComponent } from 'app/dashboard/filterbar/filterbar.component';
 import { FilterPipe } from 'app/processing/components/ceramics-form/filter.pipe';
 import { DashboardTwoComponent } from 'app/dashboard-two/dashboard-two.component';
+// import { LoginPageComponent } from 'app/login-page/login-page.component';
 // import { KhppFabricRadarComponent } from 'app/dashboard/visualizations/KhppFabricRadar/khpp-fabric-radar/khpp-fabric-radar.component';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { TokenInterceptorService } from '../../../services/security/token-interceptor.service';
+// import { AuthGuard} from '../../login-page/services/auth.guard';
+import { DashboardTwoService } from 'app/dashboard-two/Services/dashboard-two.service';
+import { DashboardService } from 'services/DashboardService/dashboard.service';
 
 @NgModule({
   imports: [
@@ -207,6 +213,7 @@ import { DashboardTwoComponent } from 'app/dashboard-two/dashboard-two.component
     DetailedProcessingComponent,
     DashboardComponent,
     DashboardTwoComponent,
+    DashboardThreeComponent,
     KhppFabricRadarComponent,
     KhppBlackenedChartComponent,
     FabricComparisonChartComponent,
@@ -220,10 +227,15 @@ import { DashboardTwoComponent } from 'app/dashboard-two/dashboard-two.component
     RadarChartComponent,
     ChordChartComponent,
     PartitionedBarChartComponent,
-    TimelineChartComponent
-
-
+    TimelineChartComponent,
   ],
+  providers: [ DashboardTwoService,
+   {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true,
+   }
+  ]
   //  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 

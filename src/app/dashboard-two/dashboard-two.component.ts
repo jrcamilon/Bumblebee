@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { DashboardTwoService } from './Services/dashboard-two.service';
 import * as _ from 'lodash';
 import { ElephantineFormService } from 'services/Elephantine-Form/elephantine-form.service';
+import { LoginService } from 'app/login-page/services/login.service';
+import { Http } from '@angular/http';
+import { Route } from '@angular/compiler/src/core';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -65,10 +69,24 @@ export class DashboardTwoComponent implements OnInit {
   selectedHouseNumbers = [];
   selectedRoomNumbers = [];
 
-  constructor(public data: DashboardTwoService, public elephantineService: ElephantineFormService) {
+  // isAuthenticated = false;
+
+  constructor(
+    public data: DashboardTwoService,
+    public elephantineService: ElephantineFormService,
+    public auth: LoginService,
+    public router: Router) {
 
     this.windowHeight = window.innerHeight;
     this.windowWidth = window.innerWidth;
+
+    // this.auth.isAuthenticated.subscribe(res => {
+    //   console.log('SITES', res);
+    //   this.isAuthenticated = res;
+    //   if (!this.isAuthenticated) {
+    //     this.router.navigate(['/login']);
+    //   }
+    // });
 
     this.getAllTagNumbers();
     this.broadDateOptions = this.elephantineService.getBroadDate().map(ele => {
@@ -174,6 +192,8 @@ export class DashboardTwoComponent implements OnInit {
       this.setSiteSelection();
 
       this.onSubmitSelection();
+    }, error => {
+      console.log(error);
     });
   }
 

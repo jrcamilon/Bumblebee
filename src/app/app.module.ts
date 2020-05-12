@@ -16,9 +16,11 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { GridModule } from '@progress/kendo-angular-grid';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { LoginPageComponent } from './login-page/login-page.component';
+import { AuthGuard } from './login-page/services/auth.guard';
 
-
-
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { TokenInterceptorService } from '../services/security/token-interceptor.service';
+import { DashboardTwoService } from './dashboard-two/Services/dashboard-two.service';
 
 @NgModule({
    imports: [
@@ -26,6 +28,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
       FormsModule,
       RouterModule,
       HttpModule,
+      HttpClientModule,
       NavbarModule,
       FooterModule,
       SidebarModule,
@@ -39,9 +42,14 @@ import { LoginPageComponent } from './login-page/login-page.component';
       AppComponent,
       AdminLayoutComponent,
       LoginPageComponent,
-      
    ],
-   providers: [],
+   providers: [ AuthGuard, DashboardTwoService, 
+   {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true,
+   }
+],
    bootstrap: [
       AppComponent
    ]

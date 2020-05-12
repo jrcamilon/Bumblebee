@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from './services/login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
@@ -11,7 +12,7 @@ export class LoginPageComponent implements OnInit {
   public email: string;
   public password: string;
 
-  constructor(public auth: LoginService) { }
+  constructor(public auth: LoginService, public router: Router) { }
 
   ngOnInit() {
   }
@@ -20,10 +21,17 @@ export class LoginPageComponent implements OnInit {
     console.log('email, password', this.email , this.password);
     // check that the email is verified
     this.auth.login(this.email, this.password).subscribe(res => {
-      // console.log(res);
       if (res.message === 'Auth Success') {
-        console.log('AUTH SUCCESS');
+
+        localStorage.setItem('IAToken', res.token);
+        localStorage.setItem('IAUser', JSON.stringify({email: res.email, name: res.name}));
+
         this.auth.isAuthenticated.next(true);
+        this.auth.user.next({email: res.email, name: res.name});
+
+        this.router.navigate(['/sites']);
+      } else {
+        this.router.navigate(['/login']);
       }
     })
   }

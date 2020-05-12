@@ -1,37 +1,28 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers } from '@angular/http';
+import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DashboardTwoService {
 
-  public headers = new Headers({ 'Content-Type': 'application/json' });
-
-  constructor(private _http: Http) { }
+  constructor(public _http: HttpClient) { }
 
   public getTagNumbers(): Observable<any> {
-    return this._http.get(environment.API.domain + ':' + environment.API.port + '/sites/tagNumbers')
-    .map((response: Response) => {
-      const tmpData = response.json();
-      return tmpData;
-    });
+    return this._http.get<any>('/sites/tagNumbers');
   }
 
   public getSherdCount(_selectedTagNumbers: any[], _broadDates: any[], _detailedDates: any[], _site: string): Observable<any> {
-    const body = {
-      tagNumbers: _selectedTagNumbers,
-      broadDates: _broadDates,
-      detailedDates: _detailedDates,
-      site: _site
-    };
-    return this._http.post(environment.API.domain + ':' + environment.API.port + '/sites/sherdCount', body, { headers: this.headers })
-      .map((response: Response) => {
-        const tmpData = response.json();
-        return tmpData;
-      })
+      const body = {
+        tagNumbers: _selectedTagNumbers,
+        broadDates: _broadDates,
+        detailedDates: _detailedDates,
+        site: _site
+      };
+      return this._http.post('/sites/sherdCount', body);
   }
 
   public getSumOfCount(
@@ -50,12 +41,7 @@ export class DashboardTwoService {
       roomNumbers: _roomNumbers,
       site: _site
     };
-  
-    return this._http.post(environment.API.domain + ':' + environment.API.port + '/sites/sumOfCount', body, { headers: this.headers })
-      .map((response: Response) => {
-        const tmpData = response.json();
-        return tmpData;
-      })
+    return this._http.post('/sites/sumOfCount', body);
   }
 
   public getSumOfWeight(
@@ -74,13 +60,8 @@ export class DashboardTwoService {
       roomNumbers: _roomNumbers,
       site: _site
     };
-    return this._http.post(environment.API.domain + ':' + environment.API.port + '/sites/sumOfWeight', body, { headers: this.headers })
-      .map((response: Response) => {
-        const tmpData = response.json();
-        return tmpData;
-      })
+    return this._http.post('/sites/sumOfWeight', body);
   }
-
 
   public getWareDistribution(
     _selectedTagNumbers: any[],
@@ -99,11 +80,7 @@ export class DashboardTwoService {
       site: _site,
       type: isWeight ? 'weight' : 'count'
     };
-    return this._http.post(environment.API.domain + ':' + environment.API.port + '/sites/distribution/wares', body, { headers: this.headers })
-      .map((response: Response) => {
-        const tmpData = response.json();
-        return tmpData;
-      })
+    return this._http.post('/sites/distribution/wares', body);
   }
 
   public getFlowChartData(_selectedTagNumbers: any[],
@@ -122,11 +99,7 @@ export class DashboardTwoService {
       site: _site,
       type: isWeight ? 'weight' : 'count'
     };
-    return this._http.post(environment.API.domain + ':' + environment.API.port + '/sites/relationships/all', body, { headers: this.headers })
-      .map((response: Response) => {
-        const tmpData = response.json();
-        return tmpData;
-      })
+    return this._http.post('/sites/relationships/all', body);
   }
 
   public getDirectedTreeData(
@@ -146,15 +119,7 @@ export class DashboardTwoService {
       site: _site,
       type: isWeight ? 'weight' : 'count'
     };
-    console.log('getDirectedTreeData', body);
-    return this._http.post(environment.API.domain + ':' + environment.API.port + '/sites/treedata/all', body, { headers: this.headers })
-      .map((response: Response) => {
-        const tmpData = response.json();
-        return tmpData;
-      })
+    return this._http.post('/sites/treedata/all', body);
   }
-
-
-
 
 }

@@ -13,13 +13,13 @@ import { LoginService } from './login-page/services/login.service';
 export class AppComponent implements OnInit {
      todosList: Array<TodoWithID> = [];
 
-     isAuthenticated = false;
+    //  isAuthenticated = false;
 
     constructor(public location: Location, public offlineDB: OfflineDBService, public auth: LoginService) {
-      auth.isAuthenticated.subscribe(res => {
-        console.log('RES', res);
-        this.isAuthenticated = res;
-      });
+      // auth.isAuthenticated.subscribe(res => {
+      //   console.log('RES', res);
+      //   this.isAuthenticated = res;
+      // });
     }
 
 

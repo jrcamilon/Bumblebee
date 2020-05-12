@@ -2,6 +2,7 @@ import { AdminLayoutService } from './../../layouts/admin-layout/admin-layout.se
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { ROUTES } from '../../sidebar/sidebar.component';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
+import { LoginService } from 'app/login-page/services/login.service';
 
 @Component({
     // moduleId: module.id,
@@ -16,8 +17,14 @@ export class NavbarComponent implements OnInit{
     private sidebarVisible: boolean;
     public isNavbarOpen = false;
 
+    public loggedUser: string;
 
-    constructor(location: Location,  private element: ElementRef, public layoutService: AdminLayoutService) {
+
+    constructor(location: Location,  private element: ElementRef, public layoutService: AdminLayoutService, public auth: LoginService) {
+        // this.auth.user.subscribe(user => {
+        //     console.log('user', user);
+        //     this.loggedUser = user.name;
+        // })
       this.location = location;
       this.sidebarVisible = false;
       this.layoutService.isNavbarOpen.subscribe(ele => {
@@ -56,6 +63,10 @@ export class NavbarComponent implements OnInit{
             this.sidebarClose();
         }
     };
+
+    logout() {
+        this.auth.logout();
+    }
 
     onTitleClick() {
         this.isNavbarOpen = !this.isNavbarOpen;
