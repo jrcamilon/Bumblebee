@@ -12,7 +12,7 @@ export class AuthGuard implements CanActivate {
   }
 
   canActivate(): boolean {
-    console.log('AUTH GUARD', this._auth.loggedIn());
+    // console.log('AUTH GUARD', this._auth.loggedIn());
     if (this._auth.loggedIn()) {
       return true;
     } else {

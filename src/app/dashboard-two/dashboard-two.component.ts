@@ -80,14 +80,6 @@ export class DashboardTwoComponent implements OnInit {
     this.windowHeight = window.innerHeight;
     this.windowWidth = window.innerWidth;
 
-    // this.auth.isAuthenticated.subscribe(res => {
-    //   console.log('SITES', res);
-    //   this.isAuthenticated = res;
-    //   if (!this.isAuthenticated) {
-    //     this.router.navigate(['/login']);
-    //   }
-    // });
-
     this.getAllTagNumbers();
     this.broadDateOptions = this.elephantineService.getBroadDate().map(ele => {
       return ele.value;
@@ -194,6 +186,9 @@ export class DashboardTwoComponent implements OnInit {
       this.onSubmitSelection();
     }, error => {
       console.log(error);
+      if (error.status === 401) {
+        this.router.navigate(['/login']);
+      }
     });
   }
 
@@ -202,10 +197,12 @@ export class DashboardTwoComponent implements OnInit {
 
     if (this.selectedSite === 'KHPP') {
       this.tagNumbers = this.tagNumbers_khpp;
-      this.selectedTagNumbers = ['D09.1-002-61'];
+      // this.selectedTagNumbers = ['D09.1-002-61'];
+      this.selectedTagNumbers = ['ALL'];
     } else if (this.selectedSite === 'Elephantine') {
       this.tagNumbers = this.tagNumbers_elephantine;
-      this.selectedTagNumbers = ['46501F/h-1'];
+      // this.selectedTagNumbers = ['46501F/h-1'];
+      this.selectedTagNumbers = ['ALL'];
     }
     this.selectedBroadDates = [];
     this.selectedDetailedDates = [];

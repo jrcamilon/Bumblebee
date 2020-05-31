@@ -3,16 +3,17 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse
 import { environment } from '../../environments/environment';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TokenInterceptorService implements HttpInterceptor {
 
-  constructor() { }
+  constructor(public router: Router) { }
 
   handleError(error: HttpErrorResponse) {
-    console.log('An Error Occurred!');
+    console.log('An Error Occurred!', error);
     return throwError(error)
   }
 

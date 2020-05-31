@@ -3,8 +3,8 @@ import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 
-// am4core.useTheme(am4themes_animated);
-am4core.unuseAllThemes();
+am4core.useTheme(am4themes_animated);
+// am4core.unuseAllThemes();
 @Component({
   selector: 'app-tree-map',
   templateUrl: './tree-map.component.html',
@@ -12,7 +12,7 @@ am4core.unuseAllThemes();
 })
 export class TreeMapComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
-  public chart: am4charts.TreeMap;
+  public chart;
   @Input() inputData: any[];
   @ViewChild('chartDiv') chartDiv: ElementRef
   @Input() customStyle = {
@@ -24,11 +24,18 @@ export class TreeMapComponent implements OnInit, AfterViewInit, OnDestroy, OnCha
   constructor(private zone: NgZone) { }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.inputData.previousValue !== changes.inputData.currentValue) { 
-      if (this.chart) {
-        console.log(this.chart.data);
-        this.chart.data = this.inputData;
-      }
+    if (changes.inputData.previousValue !== changes.inputData.currentValue) {
+      // if (this.chart) {
+      //   console.log(this.chart.data);
+      //   this.chart.data = this.inputData;
+      // }
+      this.zone.runOutsideAngular(() => {
+        this.chart.dispose();
+        if (this.chart) {
+          // this.chart.dispose();
+          this.buildChart();
+        }
+      });
     }
   }
 

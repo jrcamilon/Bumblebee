@@ -29,7 +29,7 @@ export class LoginPageComponent implements OnInit {
         this.auth.isAuthenticated.next(true);
         this.auth.user.next({email: res.email, name: res.name});
 
-        this.router.navigate(['/sites']);
+        this.router.navigate(['/site']);
       } else {
         this.router.navigate(['/login']);
       }

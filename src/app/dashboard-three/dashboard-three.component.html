@@ -1,3 +1,213 @@
-<p>
-  dashboard-three works!
-</p>
+<div class="container-fluid" style="height: 100%; background: linear-gradient(90deg, rgb(154, 154, 154) 0%, rgba(199, 199, 199, 0.9037990196078431) 42%, rgb(255, 255, 255) 100%)">
+
+  <div class="row" style="margin-top:20px;">
+
+    <div class="col-md-3 marginTop" style="height: 100%; display: inline-flex">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-title>Filter Panel</mat-card-title>
+          <mat-card-subtitle>Select filters to adjust data in dashboard. Filters will be applied to all visualizations shown</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+
+          <!-- Site Selector for Radio Button -->
+          <mat-radio-group aria-label="Select an option" [(ngModel)]="selectedSite" (change)="onSiteSelection($event, 'panel1')" >
+            <mat-radio-button [ngStyle]="{'margin-left': i === 1 ? '10px' : '0px'}" class="example-radio-button" *ngFor="let site of sites; index as i" [value]="site">
+              <span>{{site}}</span>
+            </mat-radio-button>
+          </mat-radio-group>
+
+          <!-- Selector for Weight or Count -->
+          <section class="example-section">
+            <mat-label ngClass="labelBeforeSlide">Count</mat-label>
+            <mat-slide-toggle [(ngModel)]="isWeight" (change)="onCountOrWeightSelect($event)">Weight</mat-slide-toggle>
+          </section>
+
+          <!-- MultiSlect -->
+          <div style="margin-top: 6px;">
+            <p>Tag Number:</p>
+            <kendo-multiselect [data]="tagNumbers" [(ngModel)]="selectedTagNumbers"></kendo-multiselect>
+          </div>
+
+          <!-- MultiSlect -->
+          <div style="margin-top: 6px;">
+            <p>Broad Date:</p>
+            <kendo-multiselect [data]="broadDateOptions" [(ngModel)]="selectedBroadDates"></kendo-multiselect>
+          </div>
+
+          <!-- MultiSlect -->
+          <div style="margin-top: 6px;">
+            <p>Detailed Date:</p>
+            <kendo-multiselect [data]="detailedDateOptions" [(ngModel)]="selectedDetailedDates"></kendo-multiselect>
+          </div>
+
+          <span *ngIf="selectedSite === 'Elephantine'">
+            <!-- MultiSlect -->
+            <div style="margin-top: 6px;">
+              <p>House Number</p>
+              <kendo-multiselect [data]="houseNumbersOptions" [(ngModel)]="selectedHouseNumbers"></kendo-multiselect>
+            </div>
+
+            <!-- MultiSlect -->
+            <div style="margin-top: 6px;">
+              <p>Room Number</p>
+              <kendo-multiselect [data]="roomNumberOptions" [(ngModel)]="selectedRoomNumbers"></kendo-multiselect>
+            </div>
+          </span>
+
+
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button style="width: 100%" (click)="onSubmitSelection()">SUBMIT</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+    <div class="col-md-3 marginTop">
+
+      <div class="">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Number of Sherds</mat-card-title>
+            <mat-card-subtitle>Total number of sherds</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <div style="height: 500px;" *ngIf="sumOfCount === undefined"><mat-spinner style="margin:0 auto;"></mat-spinner></div>
+            <h3 style="text-align: center;">{{sumOfCount | number}}</h3>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <div class="" style="margin-top: 10px;">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Sum of Weight</mat-card-title>
+            <mat-card-subtitle>Sum of sherd weight in g. Hover to see weight in kg</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <div style="height: 500px;" *ngIf="sumOfWeight === undefined"><mat-spinner style="margin:0 auto;"></mat-spinner></div>
+            <h3 style="text-align: center;" (mouseenter)="sumOfWeight = sumOfWeight / 1000; weightSymbol = 'kg';" (mouseleave)="sumOfWeight = sumOfWeight * 1000; weightSymbol = 'g';">{{sumOfWeight | number}} {{weightSymbol}}</h3>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+    </div>
+
+    <div class="col-md-3 marginTop">
+
+      <div class="">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Number of Sherds</mat-card-title>
+            <mat-card-subtitle>Total number of sherds</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <div style="height: 500px;" *ngIf="sumOfCount2 === undefined"><mat-spinner style="margin:0 auto;"></mat-spinner></div>
+            <h3 style="text-align: center;">{{sumOfCount2 | number}}</h3>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <div class="" style="margin-top: 10px;">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Sum of Weight</mat-card-title>
+            <mat-card-subtitle>Sum of sherd weight in g. Hover to see weight in kg</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <div style="height: 500px;" *ngIf="sumOfWeight2 === undefined"><mat-spinner style="margin:0 auto;"></mat-spinner></div>
+            <h3 style="text-align: center;" (mouseenter)="sumOfWeight2 = sumOfWeight2 / 1000; weightSymbol2 = 'kg';" (mouseleave)="sumOfWeight2 = sumOfWeight2 * 1000; weightSymbol2 = 'g';">{{sumOfWeight2 | number}} {{weightSymbol2}}</h3>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+    </div>
+
+    <div class="col-md-3 marginTop" style="height: 100%; display: inline-flex">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-title>Filter Panel</mat-card-title>
+          <mat-card-subtitle>Select filters to adjust data in dashboard. Filters will be applied to all visualizations shown</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+
+          <!-- Site Selector for Radio Button -->
+          <mat-radio-group aria-label="Select an option" [(ngModel)]="selectedSite2" (change)="onSiteSelection($event, 'panel2')" >
+            <mat-radio-button [ngStyle]="{'margin-left': i === 1 ? '10px' : '0px'}" class="example-radio-button" *ngFor="let site of sites2; index as i" [value]="site">
+              <span>{{site}}</span>
+            </mat-radio-button>
+          </mat-radio-group>
+
+          <!-- Selector for Weight or Count -->
+          <!-- <section class="example-section">
+            <mat-label ngClass="labelBeforeSlide">Count</mat-label>
+            <mat-slide-toggle [(ngModel)]="isWeight2" (change)="onCountOrWeightSelect2($event)">Weight</mat-slide-toggle>
+          </section> -->
+
+          <!-- MultiSlect -->
+          <div style="margin-top: 6px;">
+            <p>Tag Number:</p>
+            <kendo-multiselect [data]="tagNumbers2" [(ngModel)]="selectedTagNumbers2"></kendo-multiselect>
+          </div>
+
+          <!-- MultiSlect -->
+          <div style="margin-top: 6px;">
+            <p>Broad Date:</p>
+            <kendo-multiselect [data]="broadDateOptions" [(ngModel)]="selectedBroadDates2"></kendo-multiselect>
+          </div>
+
+          <!-- MultiSlect -->
+          <div style="margin-top: 6px;">
+            <p>Detailed Date:</p>
+            <kendo-multiselect [data]="detailedDateOptions" [(ngModel)]="selectedDetailedDates2"></kendo-multiselect>
+          </div>
+
+          <span *ngIf="selectedSite2 === 'Elephantine'">
+            <!-- MultiSlect -->
+            <div style="margin-top: 6px;">
+              <p>House Number</p>
+              <kendo-multiselect [data]="houseNumbersOptions" [(ngModel)]="selectedHouseNumbers2"></kendo-multiselect>
+            </div>
+
+            <!-- MultiSlect -->
+            <div style="margin-top: 6px;">
+              <p>Room Number</p>
+              <kendo-multiselect [data]="roomNumberOptions" [(ngModel)]="selectedRoomNumbers2"></kendo-multiselect>
+            </div>
+          </span>
+
+
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button style="width: 100%" (click)="onSubmitSelection2()">SUBMIT</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+  </div>
+
+  <div class="row" style="margin-top: 20px;">
+    <div class="col-md-6 marginTop ">
+      <mat-card>
+      
+        <mat-card-header>
+          <div style="width: 100%; display: inline-flex; margin-left: -15px; margin-bottom: -15px;">
+              <div style="width: 100%;">
+                <mat-card-title>Ware Distribution</mat-card-title>
+                <mat-card-subtitle>Ware distribution by {{isWeight ? ' Weight in (g) grams' : ' Count '}}  </mat-card-subtitle>
+              </div>
+              <button mat-icon-button ><img style="height: 20px;" src="assets/icons/export_excel.svg"></button>
+              <button mat-icon-button ><img style="height: 20px;" src="assets/icons/maximize.svg"></button>
+          </div>
+        
+        </mat-card-header>
+        <mat-card-content>
+          <div style="height: 500px;" *ngIf="treeMapData === undefined"><mat-spinner style="margin:0 auto;"></mat-spinner></div>
+          <app-tree-map [inputData]="treeMapData"></app-tree-map>
+          <!-- <app-radar-chart [inputData]="radarData" *ngIf="radarData && isGreaterThanTen && radarData.length !== 0"></app-radar-chart> -->
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+</div>
