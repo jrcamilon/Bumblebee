@@ -31,6 +31,12 @@ export class LoginService {
           return tmpData;
       })
     )
+  //  return this._http.post('/signin', body).pipe(
+  //    map((res: Response) => {
+  //      const tmpData = res.json();
+  //      return tmpData;
+  //    })
+  //  )
   }
 
   public logout() {

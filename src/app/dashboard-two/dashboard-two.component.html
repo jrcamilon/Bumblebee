@@ -1,4 +1,4 @@
-<div class="container-fluid" style="background: linear-gradient(90deg, rgb(154, 154, 154) 0%, rgba(199, 199, 199, 0.9037990196078431) 42%, rgb(255, 255, 255) 100%)">
+<div class="container-fluid" style=" background: linear-gradient(90deg, rgb(154, 154, 154) 0%, rgba(199, 199, 199, 0.9037990196078431) 42%, rgb(255, 255, 255) 100%)">
  
   <div class="row" style="margin-top:20px">
 
@@ -109,7 +109,7 @@
         </mat-card-header>
         <mat-card-content>
           <div style="height: 500px;" *ngIf="treeMapData === undefined"><mat-spinner style="margin:0 auto;"></mat-spinner></div>
-          <app-tree-map [inputData]="treeMapData" *ngIf="treeMapData && !isGreaterThanTen && treeMapData.length !== 0"></app-tree-map>
+          <app-tree-map *ngIf="treeMapData && !isGreaterThanTen && treeMapData.length !== 0"></app-tree-map>
           <app-radar-chart [inputData]="radarData" *ngIf="radarData && isGreaterThanTen && radarData.length !== 0"></app-radar-chart>
         </mat-card-content>
       </mat-card>

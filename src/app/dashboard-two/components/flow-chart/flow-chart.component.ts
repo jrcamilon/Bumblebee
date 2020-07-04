@@ -4,8 +4,8 @@ import * as am4charts from '@amcharts/amcharts4/charts';
 // import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 am4core.unuseAllThemes();
 // tslint:disable-next-line: no-unused-expression
-// am4core.options.minPolylineStep = 5;
-// am4core.options.onlyShowOnViewport = true;
+am4core.options.minPolylineStep = 5;
+am4core.options.onlyShowOnViewport = true;
 
 @Component({
   selector: 'app-flow-chart',
@@ -55,6 +55,8 @@ export class FlowChartComponent implements OnInit, AfterViewInit, OnDestroy, OnC
   }
 
   buildChart() {
+
+    // this.amChart.dispose();
 
     this.amChart = am4core.create(this.chartDiv.nativeElement, am4charts.SankeyDiagram);
 

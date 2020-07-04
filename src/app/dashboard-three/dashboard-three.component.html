@@ -1,4 +1,4 @@
-<div class="container-fluid" style="height: 100%; background: linear-gradient(90deg, rgb(154, 154, 154) 0%, rgba(199, 199, 199, 0.9037990196078431) 42%, rgb(255, 255, 255) 100%)">
+<div class="container-fluid" style=" background: linear-gradient(90deg, rgb(154, 154, 154) 0%, rgba(199, 199, 199, 0.9037990196078431) 42%, rgb(255, 255, 255) 100%)">
 
   <div class="row" style="margin-top:20px;">
 
@@ -193,8 +193,8 @@
         <mat-card-header>
           <div style="width: 100%; display: inline-flex; margin-left: -15px; margin-bottom: -15px;">
               <div style="width: 100%;">
-                <mat-card-title>Ware Distribution</mat-card-title>
-                <mat-card-subtitle>Ware distribution by {{isWeight ? ' Weight in (g) grams' : ' Count '}}  </mat-card-subtitle>
+                <mat-card-title>Ware Distribution Comparisson</mat-card-title>
+                <mat-card-subtitle>Ware Distribution Comparisson by {{isWeight ? ' Weight in (g) grams' : ' Count '}}  </mat-card-subtitle>
               </div>
               <button mat-icon-button ><img style="height: 20px;" src="assets/icons/export_excel.svg"></button>
               <button mat-icon-button ><img style="height: 20px;" src="assets/icons/maximize.svg"></button>
@@ -203,11 +203,35 @@
         </mat-card-header>
         <mat-card-content>
           <div style="height: 500px;" *ngIf="treeMapData === undefined"><mat-spinner style="margin:0 auto;"></mat-spinner></div>
-          <app-tree-map [inputData]="treeMapData"></app-tree-map>
-          <!-- <app-radar-chart [inputData]="radarData" *ngIf="radarData && isGreaterThanTen && radarData.length !== 0"></app-radar-chart> -->
+          <app-tree-map *ngIf="treeMapData !== undefined" [inputData]="treeMapData"></app-tree-map>
+         
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="col-md-6 marginTop ">
+      <mat-card>
+      
+        <mat-card-header>
+          <div style="width: 100%; display: inline-flex; margin-left: -15px; margin-bottom: -15px;">
+              <div style="width: 100%;">
+                <mat-card-title>Surface Treatment Comparisson</mat-card-title>
+                <mat-card-subtitle>Surface Treatment Comparisson by {{isWeight ? ' Weight in (g) grams' : ' Count '}}  </mat-card-subtitle>
+              </div>
+              <button mat-icon-button ><img style="height: 20px;" src="assets/icons/export_excel.svg"></button>
+              <button mat-icon-button ><img style="height: 20px;" src="assets/icons/maximize.svg"></button>
+          </div>
+        
+        </mat-card-header>
+        <mat-card-content>
+          <div style="height: 500px;" *ngIf="clusteredColumnData === undefined"><mat-spinner style="margin:0 auto;"></mat-spinner></div>
+          <app-clustered-column *ngIf="clusteredSeries && clusteredColumnData" [inputData]="clusteredColumnData" [inputSeries]="clusteredSeries"></app-clustered-column>
+         
         </mat-card-content>
       </mat-card>
     </div>
   </div>
+
+  <div class="row" style="margin-top: 20px"></div>
 
 </div>

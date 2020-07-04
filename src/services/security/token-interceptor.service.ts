@@ -19,6 +19,7 @@ export class TokenInterceptorService implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     const token = localStorage.getItem('IAToken');
+    console.log('intercept', req);
     const httpRequest = new HttpRequest(<any>req.method, environment.API.domain + ':' + environment.API.port + req.url, req.body);
     req = Object.assign(req, httpRequest);
 

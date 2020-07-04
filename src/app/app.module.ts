@@ -43,7 +43,7 @@ import { DashboardTwoService } from './dashboard-two/Services/dashboard-two.serv
       AdminLayoutComponent,
       LoginPageComponent,
    ],
-   providers: [ AuthGuard, DashboardTwoService, 
+   providers: [ AuthGuard, DashboardTwoService,
    {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,

@@ -2,9 +2,9 @@ export const environment = {
   production: true,
   API: {
     port: 3092,
-    domain: 'http://70.162.253.127'
+    domain: 'http://localhost'
   },
-  API_DEV_LOCAL: 'http://70.162.253.127:3092',
+  API_DEV_LOCAL: 'http://localhost:3092',
   ENDPOINTS: {
     elephantine: '/elephant',
     rednotebook: '/red'

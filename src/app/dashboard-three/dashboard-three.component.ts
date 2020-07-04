@@ -4,6 +4,8 @@ import { ElephantineFormService } from 'services/Elephantine-Form/elephantine-fo
 import { Router } from '@angular/router';
 import { LoginService } from 'app/login-page/services/login.service';
 import * as _ from 'lodash';
+import { array } from '@amcharts/amcharts4/core';
+import { ChartService } from 'app/dashboard-two/Services/chart.service';
 @Component({
   selector: 'app-dashboard-three',
   templateUrl: './dashboard-three.component.html',
@@ -43,7 +45,8 @@ export class DashboardThreeComponent implements OnInit {
     numberOfSherds;
     sumOfCount;
     sumOfWeight;
-    treeMapData;
+    // tslint:disable-next-line: max-line-length
+    treeMapData = undefined;
     flowChartData;
     partitionedBarData;
     radarData;
@@ -71,6 +74,9 @@ export class DashboardThreeComponent implements OnInit {
     // count or weight
     isWeight = false;
     // isWeight2 = false;
+
+    clusteredColumnData;
+    clusteredSeries;
 
     customFullStyle = {
       'width' : '100%',
@@ -104,6 +110,7 @@ export class DashboardThreeComponent implements OnInit {
     public data: DashboardTwoService,
     public elephantineService: ElephantineFormService,
     public auth: LoginService,
+    public chartService: ChartService,
     public router: Router) {
 
     this.getAllTagNumbers();
@@ -360,10 +367,79 @@ export class DashboardThreeComponent implements OnInit {
         console.log('treemapdata', treeMapData);
 
         this.treeMapData = treeMapData;
+        this.chartService.treeMapData.next(treeMapData);
 
 
 
-      })
+    });
+
+    this.data.getsurfaceTreatmentComparisson(
+      selected, selected2,
+      this.selectedSite, this.selectedSite2,
+      this.selectedBroadDates, this.selectedBroadDates2,
+      this.selectedDetailedDates, this.selectedDetailedDates2,
+      this.selectedHouseNumbers, this.selectedHouseNumbers2,
+      this.selectedRoomNumbers, this.selectedRoomNumbers2,
+      this.isWeight).subscribe(res => {
+        console.log('surfaceTreatment-comparisson', res.response);
+
+        const grouped = _.groupBy(res.response, 'panel');
+        // const keys = Object.keys(grouped);
+        // const values = Object.keys(grouped).map(i => grouped[i]);
+        const clusteredData = [];
+        const surfaceTreatment = [];
+
+        Object.keys(grouped).forEach((panel, index) => {
+          // console.log('surfaceTreatment-comparisson', panel);
+          // console.log('surfaceTreatment-comparisson', grouped[panel]);
+          clusteredData.push({
+            category: panel
+          });
+
+          console.log('surfaceTreatment-comparisson', grouped[panel]);
+          grouped[panel].forEach((ele, i) => {
+            clusteredData[index][ele.surfaceTreatment] = ele.count;
+            surfaceTreatment.push(ele.surfaceTreatment);
+          });
+
+          // clusteredData[index][index] = grouped[panel].map(ele => {
+          //   surfaceTreatment.push(ele.surfaceTreatment);
+          //   return ele.count;
+          // })
+        });
+
+        console.log('surfaceTreatment-comparisson', clusteredData);
+        // tslint:disable-next-line: max-line-length
+        console.log('surfaceTreatment-comparisson', surfaceTreatment.filter((item, index) => { return surfaceTreatment.indexOf(item) === index}));
+
+        this.clusteredColumnData = clusteredData;
+        this.clusteredSeries = surfaceTreatment.filter((item, index) => { return surfaceTreatment.indexOf(item) === index});
+
+
+
+      //   chart.data = [
+      //     {
+      //         category: 'Panel 1',
+      //         0: 40,
+      //         1: 55,
+      //         2: 60
+      //     },
+      //     {
+      //         category: 'Panel #2',
+      //         0: 30,
+      //         1: 78,
+      //         2: 69,
+      //         3: 33
+      //     }
+      // ]
+      // createSeries('0', 'Unslipped');
+      // createSeries('1', 'The Second');
+      // createSeries('2', 'The Third');
+      // createSeries('3', 'N/A');
+
+
+
+    });
 
   }
 

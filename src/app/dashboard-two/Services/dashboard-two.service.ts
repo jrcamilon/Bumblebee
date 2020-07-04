@@ -154,4 +154,36 @@ export class DashboardTwoService {
     return this._http.post('/comparisson/distribution/wares', body);
   }
 
+  public getsurfaceTreatmentComparisson(
+    _selectedTagNumbers: any[],
+    _selectedTagNumbers2: any[],
+    _site: string,
+    _site2: string,
+    _broadDates: any[],
+    _broadDates2: any[],
+    _detailedDates: any[],
+    _detailedDates2: any[],
+    _houseNumbers: any[],
+    _houseNumbers2: any[],
+    _roomNumbers: any[],
+    _roomNumbers2: any[],
+    isWeight: boolean): Observable<any> {
+    const body = {
+      tagNumbers: _selectedTagNumbers,
+      broadDates: _broadDates,
+      detailedDates: _detailedDates,
+      houseNumbers: _houseNumbers,
+      roomNumbers: _roomNumbers,
+      site: _site,
+      type: isWeight ? 'weight' : 'count',
+      tagNumbers2: _selectedTagNumbers2,
+      broadDates2: _broadDates2,
+      detailedDates2: _detailedDates2,
+      houseNumbers2: _houseNumbers2,
+      roomNumbers2: _roomNumbers2,
+      site2: _site2
+    };
+    return this._http.post('/comparisson/surfaceTreatment', body);
+  }
+
 }

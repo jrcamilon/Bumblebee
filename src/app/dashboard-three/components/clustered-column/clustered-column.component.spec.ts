@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HomeMapComponent } from './home-map.component';
+import { ClusteredColumnComponent } from './clustered-column.component';
 
-describe('HomeMapComponent', () => {
-  let component: HomeMapComponent;
-  let fixture: ComponentFixture<HomeMapComponent>;
+describe('ClusteredColumnComponent', () => {
+  let component: ClusteredColumnComponent;
+  let fixture: ComponentFixture<ClusteredColumnComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HomeMapComponent ]
+      declarations: [ ClusteredColumnComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HomeMapComponent);
+    fixture = TestBed.createComponent(ClusteredColumnComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
