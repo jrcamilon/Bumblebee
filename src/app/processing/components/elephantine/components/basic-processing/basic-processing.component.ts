@@ -102,6 +102,7 @@ export class BasicProcessingComponent implements OnInit {
     this.weightSum = item.weight;
     console.log(item);
     this.activeTriageForm = this.fb.group({
+      id: item.id,
       fabricType: [item.fabricType, Validators.compose([Validators.required])],
       bodyOrDiagnostic: [item.bodyOrDiagnostic, Validators.compose([Validators.required])],
       sherdType: [item.sherdType, Validators.compose([Validators.required])],

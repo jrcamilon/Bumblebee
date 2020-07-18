@@ -438,7 +438,7 @@ public onDBdelete(record: any) {
                 processedBy: record.processedBy,
                 detailedRecords: res.records
             }
-        } else {
+        } else if (type === 'basic') {
             recordToEdit = {
                 tagNumber: record.tagNumber,
                 tagNumberContext: record.tagNumberContext,

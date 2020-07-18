@@ -21,9 +21,13 @@ export class BodyProcessingComponent implements OnInit, OnDestroy {
   weightSum: any;
   recordToEdit: any;
 
-  constructor(public editserivce: KhppFormService, public fb: FormBuilder, public formService: FormsService) {
+  constructor(
+    public editserivce: KhppFormService,
+    public fb: FormBuilder,
+    public formService: FormsService) {
     this.formService.triageFormArray.subscribe(triageArray => { this.triageFormArray = triageArray; });
     this.formService.recordToEdit.subscribe( recordToEdit => {
+      console.log(recordToEdit)
       this.recordToEdit = recordToEdit;
     });
 
@@ -37,6 +41,7 @@ export class BodyProcessingComponent implements OnInit, OnDestroy {
     console.log(this.recordToEdit);
     if (this.recordToEdit.length !== 0) {
       this.triageFormArray = this.recordToEdit;
+      console.log(this.triageFormArray);
     }
   }
 
@@ -69,6 +74,7 @@ export class BodyProcessingComponent implements OnInit, OnDestroy {
   }
 
   onFormEditSave(formValues: any) {
+    console.log(formValues);
     this.triageFormArray.splice(this.indexEditing, 1);
     formValues.weight = this.weightSum;
     formValues.weightType = formValues.weightType === true ? 'kg' : 'g';
@@ -103,6 +109,7 @@ export class BodyProcessingComponent implements OnInit, OnDestroy {
     this.weightSum = item.weight;
     console.log(item);
     this.activeTriageForm = this.fb.group({
+      id: item.id,
       fabricType: [item.fabricType, Validators.compose([Validators.required])],
       bodyOrDiagnostic: [item.bodyOrDiagnostic, Validators.compose([Validators.required])],
       sherdType: [item.sherdType, Validators.compose([Validators.required])],

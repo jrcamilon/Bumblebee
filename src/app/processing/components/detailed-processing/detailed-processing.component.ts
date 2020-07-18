@@ -137,13 +137,14 @@ export class DetailedProcessingComponent implements OnInit, OnDestroy {
   }
 
   onFormEditSave(formValues: any) {
+    console.log(formValues);
     this.detailedFormArray.splice(this.indexEditing, 1);
     formValues.weight = this.weightSum == null ? 0 : this.weightSum;
     formValues.weightType = formValues.weightType === true ? 'kg' : 'g';
-    formValues.isDrawn = formValues.isDrawn === true ? 1: 0;
-    formValues.rimsTstc = formValues.rimsTstc === true ? 1: 0;
-    formValues.hasPhoto = formValues.hasPhoto === true ? 1: 0;
-    formValues.objectNumber = formValues.objectNumber == null ? 0: formValues.objectNumber;
+    formValues.isDrawn = formValues.isDrawn === true ? 1 :  0;
+    formValues.rimsTstc = formValues.rimsTstc === true ? 1 : 0;
+    formValues.hasPhoto = formValues.hasPhoto === true ? 1 : 0;
+    formValues.objectNumber = formValues.objectNumber == null ? 0 : formValues.objectNumber;
     formValues.blackening = formValues.blackening == null ? '' : formValues.blackening;
     formValues.decoration = formValues.decoration == null ? '' : formValues.decoration;
     formValues.surfaceTreatment = formValues.surfaceTreatment == null ? '' : formValues.surfaceTreatment;

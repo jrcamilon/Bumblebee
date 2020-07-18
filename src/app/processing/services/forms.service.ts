@@ -92,8 +92,17 @@ export class FormsService {
           return ele
         }
       }).filter(x => x !== undefined);
-
     }
+
+    if (body.triage.length !== 0 || body.triage !== null) {
+      body.toAdd = body.triage.map(ele => {
+        if (ele.id == null) {
+          return ele
+        }
+      }).filter(x => x !== undefined);
+    }
+
+    console.log(body);
 
     const headers = new Headers({'Content-Type': 'application/json'});
     return this._http.post(environment.API.domain + ':' + environment.API.port + '/update/khpp', body, {headers: headers})
@@ -241,6 +250,17 @@ export class FormsService {
       }).filter(x => x !== undefined);
 
     }
+
+    if (body.triage.length !== 0 || body.triage !== null) {
+      body.toAdd = body.triage.map(ele => {
+        if (ele.id == null) {
+          return ele
+        }
+      }).filter(x => x !== undefined);
+    }
+
+
+    console.log(body);
 
     const headers = new Headers({'Content-Type': 'application/json'});
     return this._http.post(environment.API.domain + ':' + environment.API.port + '/update/elephantine', body, {headers: headers})

@@ -310,6 +310,10 @@ export class KhppFormComponent implements OnInit, OnDestroy {
 
     /** Custom method when the user submits the form */
     public onFormSubmit() {
+
+        console.log('ON FORM SUBMIT', this.basicRecords);
+
+
         let form: any;
 
         if (this.isBasicVisible) {
@@ -554,13 +558,13 @@ export class KhppFormComponent implements OnInit, OnDestroy {
      * @param record
      */
     public onDBOnlineEdit(record: any) {
-        // console.log(record);
+
         const type = record.basicCount > record.detailedCount ? 'basic' : 'detailed';
 
         this.formSerivce.editFromKHPP(record.id, type).subscribe(res => {
-
+            console.log('editFromKHPP', res.records);
             const splitDate = record.dueDate.split('-');
-            const newDate = splitDate[0]+ '-' + splitDate[1] + '-' + splitDate[2];
+            const newDate = splitDate[0] + '-' + splitDate[1] + '-' + splitDate[2];
 
             let recordToEdit;
 
@@ -574,7 +578,7 @@ export class KhppFormComponent implements OnInit, OnDestroy {
                     processedBy: record.processedBy,
                     detailedRecords: res.records
                 }
-            } else {
+            } else if (type === 'basic') {
                 recordToEdit = {
                     tagNumber: record.tagNumber,
                     broadDate: record.broadDate,
@@ -582,15 +586,16 @@ export class KhppFormComponent implements OnInit, OnDestroy {
                     dueDate: newDate,
                     id: record.id,
                     processedBy: record.processedBy,
-                    detailedRecords: res.records
+                    basicRecords: res.records
                 }
             }
 
             this.isEditingOnlineDB = true;
 
-            console.log('RECORD TO EDIT', recordToEdit);
+            console.log('onDBOnlineEdit', recordToEdit);
 
             this.dbRecordEdit(recordToEdit);
+
             this.editFormID = record.id;
             this.isEditing = true;
             this.buttonValue = 'SAVE ONLINE DB EDITS';
@@ -629,6 +634,7 @@ export class KhppFormComponent implements OnInit, OnDestroy {
       }
 
     public dbRecordEdit(record: any) {
+        // debugger;
         this.tagNumber = record.tagNumber;
         this.selectedBroadDate = record.broadDate;
         this.selectedDetailedDate = record.detailedDate;
